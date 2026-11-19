@@ -1,0 +1,170 @@
+"use client";
+
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import type { CompanyProfile } from "@/lib/content";
+import { products } from "@/lib/content";
+import ProductTypewriter from "@/components/ProductTypewriter";
+import HeroHeadline from "@/components/HeroHeadline";
+import { ArrowRight, Sparkles } from "lucide-react";
+
+interface HeroMinimalProps {
+  company: CompanyProfile;
+  headline?: React.ReactNode;
+}
+
+export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.12,
+        delayChildren: shouldReduceMotion ? 0 : 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: shouldReduceMotion
+      ? { opacity: 0 }
+      : { opacity: 0, y: 24, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.85,
+        ease: easeOutExpo,
+      },
+    },
+  };
+
+  const lineScaleVariants = {
+    hidden: shouldReduceMotion ? { opacity: 0 } : { scaleX: 0, opacity: 0 },
+    visible: {
+      scaleX: 1,
+      opacity: 1,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 1.1,
+        ease: easeOutExpo,
+      },
+    },
+  };
+
+  return (
+    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col items-start max-w-4xl pointer-events-auto"
+      >
+        {/* Minimal Provenance Indicator */}
+        <motion.div
+          variants={itemVariants}
+          className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-[#B08D57]"
+        >
+          <Sparkles className="h-3.5 w-3.5 text-[#B08D57] shrink-0" aria-hidden="true" />
+          <span>EST. 1984</span>
+          <span className="text-[#B08D57]/40" aria-hidden="true">&bull;</span>
+          <span className="text-[#F8F4EC]/75">{company.name}</span>
+        </motion.div>
+
+        {/* Photonic Light Sweep & Film Blur Reveal Headline */}
+        <div className="mt-8 overflow-visible">
+          {headline ?? <HeroHeadline />}
+        </div>
+
+        {/* Dynamic Product Typewriter Strip */}
+        <motion.div variants={itemVariants} className="mt-6 sm:mt-7">
+          <ProductTypewriter
+            prefix="We make :"
+            items={products.map((p) => p.name)}
+          />
+        </motion.div>
+
+        {/* Delicate Animated Horizon Rule */}
+        <motion.div
+          variants={lineScaleVariants}
+          style={{ originX: 0 }}
+          className="my-8 h-px w-full max-w-xl bg-gradient-to-r from-[#B08D57]/80 via-[#F8F4EC]/40 to-transparent"
+          aria-hidden="true"
+        />
+
+        {/* Factual Editorial Statement from content.ts */}
+        <motion.p
+          variants={itemVariants}
+          className="max-w-2xl text-base sm:text-lg lg:text-xl font-light leading-relaxed text-[#F8F4EC]/85"
+        >
+          {company.about}
+        </motion.p>
+
+        {/* Minimalist Core Specializations Strip */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono uppercase tracking-widest text-[#F8F4EC]/90"
+        >
+          {company.specializations.map((spec, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <span className="text-[#B08D57]/50" aria-hidden="true">&bull;</span>
+              <span>{spec}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Tactile B2B Controls */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 flex flex-wrap items-center gap-4"
+        >
+          <Link
+            href="/contact"
+            className="group relative inline-flex items-center justify-center rounded-none bg-[#B08D57] hover:bg-[#9A7843] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#091B2C] shadow-lg shadow-[#B08D57]/20 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+          >
+            <span>Request Production Quote</span>
+            <ArrowRight
+              className="ml-3 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </Link>
+
+          <Link
+            href="/products"
+            className="group inline-flex items-center justify-center rounded-none border border-[#B08D57]/30 border-t-[#F8F4EC]/40 bg-[#0F2A44]/40 backdrop-blur-xl md:backdrop-blur-2xl px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F8F4EC] transition-all hover:border-[#B08D57] hover:bg-[#0F2A44]/70 hover:text-[#B08D57] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+          >
+            <span>Explore Product Catalog</span>
+          </Link>
+        </motion.div>
+
+        {/* Subtle Minimalist Scroll Indicator */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-16 sm:mt-20 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-[#B08D57]/70 uppercase"
+        >
+          <motion.span
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    y: [0, 6, 0],
+                  }
+            }
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="inline-block h-3.5 w-px bg-[#B08D57]"
+            aria-hidden="true"
+          />
+          <span>Scroll to explore</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
