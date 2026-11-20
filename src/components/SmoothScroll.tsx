@@ -15,9 +15,9 @@ export default function SmoothScroll() {
       return;
     }
 
-    // Dynamic header height to offset anchor link scrolling (111px on lg screens, 104px on mobile/tablet)
+    // Dynamic header height to offset anchor link scrolling (72px on desktop, 56px on mobile)
     const getHeaderOffset = () => {
-      return window.innerWidth >= 1024 ? -111 : -104;
+      return window.innerWidth >= 768 ? -72 : -56;
     };
 
     // Initialize Lenis with lerp of 0.09 for a smooth, weighted feel (between 0.08 and 0.1)

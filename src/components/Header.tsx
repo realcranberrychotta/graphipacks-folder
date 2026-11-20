@@ -1,11 +1,23 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import NavLinks from "@/components/NavLinks";
 
 export default function Header() {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // The full-screen infrastructure tour uses its own dedicated top-left exit button and header
   if (pathname === "/infrastructure" || pathname?.startsWith("/infrastructure/")) {
@@ -13,36 +25,35 @@ export default function Header() {
   }
 
   return (
-    <header className="grid grid-cols-[1fr_auto_1fr] items-center justify-between w-full px-4 sm:px-6 py-3 sm:py-4 fixed top-0 left-0 right-0 z-50 border-b-0 md:border-b md:border-[#B08D57]/25 border-t-0 md:border-t md:border-[#B08D57]/20 bg-[#0F2A44] md:bg-[#0F2A44]/90 md:backdrop-blur-md text-[#F8F4EC] shadow-none md:shadow-lg md:shadow-[#091B2C]/40 min-h-[80px] md:min-h-0">
-      {/* Left column: Subtle heritage badge */}
-      <div className="flex justify-start items-center">
-        <div className="hidden lg:flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#B08D57]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57] animate-pulse" />
-          <span>EST. 1984 • FLEXIBLE PACKAGING</span>
-        </div>
-      </div>
-
-      {/* Center column: Refined, compact architectural logo block */}
-      <div className="flex justify-center text-center">
-        <Link href="/" className="group inline-flex flex-col items-center max-w-[240px] sm:max-w-none">
-          <h1 className="font-[family-name:var(--font-display)] text-lg sm:text-xl lg:text-2xl font-bold tracking-wide text-[#F8F4EC] group-hover:text-[#B08D57] uppercase leading-tight transition-colors">
-            GRAPHIPACKS
-            <br />
-            <span className="font-light text-base sm:text-lg lg:text-xl opacity-90">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full border-b border-[#B08D57]/20 bg-[#0F2A44]/90 backdrop-blur-md text-[#F8F4EC] transition-all duration-300 ease-in-out ${
+        isScrolled ? "h-[56px] md:h-[60px]" : "h-[56px] md:h-[72px]"
+      }`}
+    >
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Left: Premium Minimal Logo */}
+        <div className="flex items-center">
+          <Link
+            href="/"
+            className="group flex flex-col justify-center text-left select-none transition-transform"
+          >
+            <span
+              className="font-serif font-bold tracking-[0.08em] text-[#F8F4EC] text-base xs:text-lg sm:text-xl leading-none group-hover:text-[#B08D57] transition-colors"
+              style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
+            >
+              GRAPHIPACKS
+            </span>
+            <span className="font-mono text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.22em] text-[#EFE8DC]/70 uppercase mt-0.5 sm:mt-1 leading-none">
               PRIVATE LIMITED
             </span>
-          </h1>
-          <span className="font-sans text-[8px] sm:text-[9px] tracking-[0.12em] sm:tracking-[0.2em] text-[#B08D57] uppercase mt-0.5 sm:mt-1 truncate max-w-[220px] sm:max-w-none">
-            FLEXIBLE PACKAGING SOLUTION PROVIDERS
-          </span>
-        </Link>
-      </div>
+          </Link>
+        </div>
 
-      {/* Right column: Dedicated navigation container */}
-      <div className="flex justify-end items-center gap-2 sm:gap-4 lg:gap-6">
-        <NavLinks />
+        {/* Right: Dedicated Navigation Container */}
+        <div className="flex items-center">
+          <NavLinks />
+        </div>
       </div>
     </header>
   );
 }
-

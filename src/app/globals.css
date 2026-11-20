@@ -24,13 +24,13 @@
   --text-navy-deep: var(--navy-primary);
   --background: transparent;
   --foreground: var(--ivory-bg);
-  --header-height: 104px;
+  --header-height: 56px;
   color-scheme: dark;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   :root {
-    --header-height: 111px;
+    --header-height: 72px;
   }
 }
 
