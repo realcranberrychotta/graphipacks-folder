@@ -25,6 +25,7 @@ import {
 import HomeHeroFactory from "@/components/HomeHeroFactory";
 import HeroMinimal from "@/components/HeroMinimal";
 import HeroHeadline from "@/components/HeroHeadline";
+import MobileHero from "@/components/MobileHero";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default async function HomePage() {
@@ -32,23 +33,31 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col bg-transparent text-[#F8F4EC]">
-      {/* Hero Section — Clean Monumental Typography over 3D Manufacturing Line (Desktop) / Static Fallback (Mobile) */}
-      <section className="relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC] min-h-[720px]">
-        {/* 3D Manufacturing Plant Tour (embed, height 720px) / Mobile Fallback (<768px) */}
-        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
-          <HomeHeroFactory />
+      {/* Hero Section */}
+      <section className="relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC]">
+        {/* Desktop Hero — Monumental Typography over 3D Manufacturing Line (>= 768px) */}
+        <div className="hidden md:block relative min-h-[720px] w-full">
+          {/* 3D Manufacturing Plant Tour (embed, height 720px) */}
+          <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
+            <HomeHeroFactory />
+          </div>
+
+          {/* Film-grain noise overlay */}
+          <div className="hero-grain-overlay pointer-events-none" aria-hidden="true" />
+
+          <div className="relative z-10 pointer-events-none pt-36 pb-28 lg:pt-40 lg:pb-32 min-h-[720px] flex items-center">
+            <div className="w-full">
+              <HeroMinimal
+                company={company}
+                headline={<HeroHeadline />}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Film-grain noise overlay */}
-        <div className="hero-grain-overlay pointer-events-none" aria-hidden="true" />
-
-        <div className="relative z-10 pointer-events-none pt-24 pb-16 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 min-h-[720px] flex items-center">
-          <div className="w-full">
-            <HeroMinimal
-              company={company}
-              headline={<HeroHeadline />}
-            />
-          </div>
+        {/* Mobile Hero — Interactive Product Film Roll & 3-Step Mini-Estimator (< 768px) */}
+        <div className="block md:hidden relative w-full pt-20 pb-12 px-4">
+          <MobileHero />
         </div>
       </section>
 
