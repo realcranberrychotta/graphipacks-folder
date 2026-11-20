@@ -369,7 +369,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     <Truck className="h-4 w-4 text-[#B08D57] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#0F2A44] block">Delivery Basis</span>
-                      <span className="text-[#555555]">Ex-Coimbatore, PAN India dispatch</span>
+                      <span className="text-[#555555]">Ex-Madurai, PAN India dispatch</span>
                     </div>
                   </div>
                 </div>

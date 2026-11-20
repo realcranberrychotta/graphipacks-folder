@@ -111,13 +111,13 @@ export default function AgenticFactory3D({
         <div className="status" id="status">
           <i />
           <span id="status-text">Machine running</span>
-          <span>COIMBATORE PLANT</span>
+          <span>MADURAI PLANT</span>
         </div>
       </header>
       <div className="scene-heading debug-ui">
         The line that makes your packaging <span className="index">6 STATIONS / 1 SYSTEM</span>
       </div>
-      <div className="coordinates debug-ui">COIMBATORE PLANT — SINCE 1984</div>
+      <div className="coordinates debug-ui">MADURAI PLANT — SINCE 1984</div>
       <div id="journey" className="debug-ui">
         <div className="journey-icon">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
@@ -577,7 +577,7 @@ function initMachineScene(
       c.lineWidth = 2
       c.strokeRect(2, 2, w - 4, h - 4)
       print(c, 'GRAPHIPACKS', 45, 79, 40, '#d9d8cd', 650)
-      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  COIMBATORE', 355, 79, 32, '#b8bdc1', 450)
+      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, '#b8bdc1', 450)
       print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, '#737e88', 500)
       print(c, 'EST. 1984', 1330, 130, 23, '#B08D57')
     })
@@ -930,7 +930,7 @@ function initMachineScene(
       // Technical specs
       print(c, 'MATERIAL: PET / MET-PET / LLDPE', 32, 442, 13, '#1a2228', 600)
       print(c, 'SPEC: 100 MICRON · 1000g POUCH', 32, 466, 13, '#626d76', 500)
-      print(c, 'BATCH: GP-COIMBATORE-2026', 32, 490, 13, '#626d76', 500)
+      print(c, 'BATCH: GP-MADURAI-2026', 32, 490, 13, '#626d76', 500)
 
       // Barcode block
       c.fillStyle = '#1a2228'
@@ -942,7 +942,7 @@ function initMachineScene(
       print(c, '8 901234 567890', 115, 575, 12, '#626d76', 500)
 
       // Footer
-      print(c, 'EST. 1984 · COIMBATORE, INDIA', 32, 626, 12, '#B08D57', 600)
+      print(c, 'EST. 1984 · MADURAI, INDIA', 32, 626, 12, '#B08D57', 600)
 
       videoTexture.texture.needsUpdate = true
     }
@@ -1064,7 +1064,7 @@ function initMachineScene(
       c.roundRect(359, 447, 279, 62, 7)
       c.fill()
       print(c, 'Request Tech Quote  ↗', 370, 486, 20, '#f4f1ea', 500)
-      print(c, 'COIMBATORE PACKAGING PLANT', 33, 571, 12, '#879088')
+      print(c, 'MADURAI PACKAGING PLANT', 33, 571, 12, '#879088')
     })
     screen(storefront, 2.16, 1.43, 0, 1.95, 0.011, webTexture)
     ball(storefront, 0.024, 0, 2.747, -0.05, M.dark)
@@ -1200,7 +1200,7 @@ function initMachineScene(
       print(c, 'Mulch & Pouch Film', 25, 154, 19, '#333d36')
       print(c, 'Lot # GP-2026', 25, 190, 18, '#333d36')
       print(c, 'DISPATCHED', 25, 263, 26, '#333d36', 650)
-      print(c, 'Coimbatore, TN', 25, 317, 21, '#687067')
+      print(c, 'Madurai, TN', 25, 317, 21, '#687067')
       for (let i = 0; i < 44; i++) {
         c.fillStyle = '#333d36'
         c.fillRect(25 + i * 5, 370, 1 + (i % 3), 83)
@@ -1252,7 +1252,7 @@ function initMachineScene(
       c.fillRect(0, 0, w, h)
       print(c, 'WAREHOUSE STOCK & STAGING', 22, 44, 22, '#B08D57', 600)
       print(c, 'PALLETIZED INVENTORY READY', 22, 95, 26, '#f4f1ea', 600)
-      print(c, 'Lot GP-2026 · Coimbatore Plant', 22, 142, 18, '#81848b', 500)
+      print(c, 'Lot GP-2026 · Madurai Plant', 22, 142, 18, '#81848b', 500)
     })
     screen(stockStation, 1.1, 0.4, 0, 2.25, 0.05, stockScreenTex)
 

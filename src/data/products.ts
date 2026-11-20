@@ -51,7 +51,7 @@ export const COMMON_COMMERCIAL_TERMS = {
   price: "Price on Request",
   sample: "Free sample on request — courier extra",
   payment: "50% advance, balance before dispatch",
-  delivery: "Ex-Coimbatore, PAN India",
+  delivery: "Ex-Madurai, PAN India",
 };
 
 export const PRODUCTS_DATA: ProductDetailData[] = [
@@ -63,7 +63,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
     summary:
       "Engineered for commercial horticulture and fruit farming, our agriculture mulch film provides exceptional moisture conservation, active weed suppression, and root zone temperature modulation.",
     metaDescription:
-      "UV-stabilized virgin LLDPE agriculture mulch film (20–30 microns) for weed control, moisture conservation, and commercial crop yields. MOQ 500 kg, factory-direct from Coimbatore.",
+      "UV-stabilized virgin LLDPE agriculture mulch film (20–30 microns) for weed control, moisture conservation, and commercial crop yields. MOQ 500 kg, factory-direct from Madurai.",
     moq: "500 kg",
     leadTime: "10-12 days",
     packing: "1 roll = 18-22 kg, palletised",

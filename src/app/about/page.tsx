@@ -7,11 +7,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About Us & Four Decades of Heritage | Graphipacks Private Limited",
   description:
-    "Established in 1984 in Coimbatore, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
+    "Established in 1984 in Madurai, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
   openGraph: {
     title: "About Us & Four Decades of Heritage | Graphipacks Private Limited",
     description:
-      "Established in 1984 in Coimbatore, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
+      "Established in 1984 in Madurai, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
   },
 };
 import {

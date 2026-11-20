@@ -47,7 +47,7 @@ export function generateProductPdf(
   doc.setFontSize(8);
   doc.setTextColor(...mutedText);
   doc.text(
-    "Factory & HQ: Industrial Area, Phase II, Coimbatore, Tamil Nadu, India",
+    "Factory & HQ: Industrial Area, Phase II, Madurai, Tamil Nadu, India",
     margin,
     y + 9
   );

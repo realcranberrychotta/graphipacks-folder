@@ -7,11 +7,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Contact Plant & Commercial Sales | Graphipacks Private Limited",
   description:
-    "Connect directly with Graphipacks plant engineers and B2B commercial sales in Coimbatore for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
+    "Connect directly with Graphipacks plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
   openGraph: {
     title: "Contact Plant & Commercial Sales | Graphipacks Private Limited",
     description:
-      "Connect directly with Graphipacks plant engineers and B2B commercial sales in Coimbatore for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
+      "Connect directly with Graphipacks plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
   },
 };
 import { company } from "@/lib/content";
@@ -23,7 +23,7 @@ export default async function ContactPage() {
   const phone = process.env.CONTACT_PHONE || "+91 (0) 1234 567890";
   const email = process.env.CONTACT_EMAIL || "info@graphipacks.com";
   const address =
-    process.env.CONTACT_ADDRESS || "Industrial Area, Phase II, Coimbatore, Tamil Nadu, India";
+    process.env.CONTACT_ADDRESS || "Industrial Area, Phase II, Madurai, Tamil Nadu, India";
   const whatsappUrl = `https://wa.me/${process.env.WHATSAPP_NUMBER || ""}?text=Hello%20Graphipacks`;
 
   return (

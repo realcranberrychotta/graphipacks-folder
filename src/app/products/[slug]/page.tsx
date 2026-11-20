@@ -190,7 +190,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                   Complementary Manufacturing Lines
                 </h2>
                 <p className="mt-1 text-sm text-[#555555]">
-                  Explore related flexible packaging specifications manufactured at our Coimbatore plant.
+                  Explore related flexible packaging specifications manufactured at our Madurai plant.
                 </p>
               </div>
 

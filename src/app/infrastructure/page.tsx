@@ -7,11 +7,11 @@ import InfrastructureMobileCarousel from "@/components/InfrastructureMobileCarou
 export const metadata: Metadata = {
   title: "Manufacturing Infrastructure & Plant Capabilities | Graphipacks Private Limited",
   description:
-    "Tour Graphipacks' Coimbatore manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
+    "Tour Graphipacks' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
   openGraph: {
     title: "Manufacturing Infrastructure & Plant Capabilities | Graphipacks Private Limited",
     description:
-      "Tour Graphipacks' Coimbatore manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
+      "Tour Graphipacks' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
     images: [
       {
         url: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",

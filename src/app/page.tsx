@@ -8,11 +8,11 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "Graphipacks Private Limited | Flexible Packaging Solutions (Est. 1984)",
   description:
-    "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Coimbatore, India.",
+    "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Madurai, India.",
   openGraph: {
     title: "Graphipacks Private Limited | Flexible Packaging Solutions (Est. 1984)",
     description:
-      "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Coimbatore, India.",
+      "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Madurai, India.",
   },
 };
 import {

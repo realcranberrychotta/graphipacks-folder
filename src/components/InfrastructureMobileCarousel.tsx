@@ -134,7 +134,7 @@ export default function InfrastructureMobileCarousel({
       <div className="text-center max-w-sm mx-auto mb-6">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#B08D57]/40 bg-[#1B3D5E]/40 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-[#B08D57] shadow-sm">
           <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57] animate-pulse" />
-          <span>Coimbatore Plant Capabilities</span>
+          <span>Madurai Plant Capabilities</span>
         </div>
         <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-display)]">
           {label}
