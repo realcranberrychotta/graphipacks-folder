@@ -55,8 +55,8 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Hero — Interactive Product Film Roll & 3-Step Mini-Estimator (< 768px) */}
-        <div className="block md:hidden relative w-full pt-20 pb-12 px-4">
+        {/* Mobile Hero — Animated Hero Minimal / Clean Design (< 768px) */}
+        <div className="block md:hidden relative w-full pt-24 pb-8">
           <MobileHero />
         </div>
       </section>
