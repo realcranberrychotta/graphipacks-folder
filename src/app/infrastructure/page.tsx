@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
+import InfrastructureMobileCarousel from "@/components/InfrastructureMobileCarousel";
 
 export const metadata: Metadata = {
   title: "Manufacturing Infrastructure & Plant Capabilities | Graphipacks Private Limited",
@@ -75,61 +75,12 @@ export default function InfrastructurePage() {
         />
       </div>
 
-      {/* Mobile View: Vertical Stacked Layout (Responsive at 390px) */}
-      <div className="block md:hidden w-full pt-20 pb-16 px-4 space-y-6">
-        <div className="text-center max-w-sm mx-auto mb-6">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
-            Coimbatore Plant Capabilities
-          </span>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#F8F4EC]">
-            Graphipacks Factory
-          </h1>
-          <p className="mt-2 text-xs text-[#EFE8DC]/80 leading-relaxed">
-            Tour our 6 manufacturing stations from prepress cylinder engraving to automated wicket bag converting.
-          </p>
-        </div>
-
-        <div className="space-y-6 max-w-md mx-auto">
-          {WORKS.map((station, idx) => (
-            <div
-              key={station.title}
-              className="rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl overflow-hidden shadow-xl"
-            >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#091B2C]">
-                <Image
-                  src={station.image}
-                  alt={station.title}
-                  width={600}
-                  height={450}
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 400px"
-                  loading="lazy"
-                  decoding="async"
-                  placeholder="blur"
-                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                  className="size-full object-cover"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="inline-flex items-center rounded-full bg-[#0F2A44]/90 backdrop-blur-md px-3 py-1 font-mono text-[11px] font-bold text-[#F8F4EC] border border-[#B08D57]/40 shadow-sm">
-                    Station 0{idx + 1}
-                  </span>
-                </div>
-              </div>
-              <div className="p-5 flex items-center justify-between">
-                <div>
-                  <h2 className="text-base font-bold text-[#F8F4EC]">
-                    {station.title}
-                  </h2>
-                  <span className="text-[11px] text-[#B08D57] font-mono">
-                    Verified Infrastructure
-                  </span>
-                </div>
-                <span className="flex items-center gap-1.5 text-xs font-bold text-[#B08D57] bg-[#091B2C]/70 px-3 py-1.5 rounded-lg border border-[#B08D57]/30">
-                  Inspect &rarr;
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Mobile View: Interactive Touch & Auto-Advance Carousel (Responsive at 390px) */}
+      <div className="block md:hidden w-full">
+        <InfrastructureMobileCarousel
+          items={WORKS}
+          label="Graphipacks Factory"
+        />
       </div>
     </main>
   );
