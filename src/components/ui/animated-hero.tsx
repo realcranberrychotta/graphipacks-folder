@@ -282,23 +282,23 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
   return (
     <section
-      className={`relative w-full overflow-hidden bg-[#0F2A44] text-[#F8F4EC] select-none py-8 xs:py-10 px-4 sm:px-6 ${className}`}
+      className={`relative w-full overflow-hidden bg-[#0F2A44] text-[#F8F4EC] select-none pt-1 sm:pt-6 pb-8 px-4 sm:px-6 ${className}`}
       onMouseMove={handlePointerMove}
       onTouchMove={handlePointerMove}
     >
-      {/* ─── Ambient Glow Effects (Deep Navy #0F2A44, Mid Navy #1B3D5E, Bronze #B08D57) ─── */}
+      {/* ─── Ambient Glow Effects (Deep Navy #0F2A44, Mid Navy #1B3D5E) ─── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-72 h-72 bg-[#B08D57]/8 rounded-full blur-3xl animate-pulse" />
+        <div className="hidden sm:block absolute -top-12 left-1/2 -translate-x-1/2 w-72 h-72 bg-[#B08D57]/8 rounded-full blur-3xl animate-pulse" />
         <div
-          className="absolute bottom-4 right-4 w-64 h-64 bg-[#1B3D5E]/25 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-4 right-4 w-64 h-64 bg-[#1B3D5E]/20 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "2s" }}
         />
       </div>
 
-      {/* ─── Interactive Bronze Particle Matrix ─── */}
+      {/* ─── Interactive Bronze Particle Matrix (Desktop/Tablet) ─── */}
       {showParticles && (
         <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45 sm:opacity-60"
+          className="hidden sm:flex absolute inset-0 items-center justify-center pointer-events-none opacity-45 sm:opacity-60"
           aria-hidden="true"
         >
           <div

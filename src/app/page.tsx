@@ -56,7 +56,7 @@ export default async function HomePage() {
         </div>
 
         {/* Mobile Hero — Animated Hero Minimal / Clean Design (< 768px) */}
-        <div className="block md:hidden relative w-full pt-24 pb-8">
+        <div className="block md:hidden relative w-full pt-3 pb-8 bg-[#0F2A44]">
           <MobileHero />
         </div>
       </section>

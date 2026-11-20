@@ -13,7 +13,7 @@ export default function Header() {
   }
 
   return (
-    <header className="grid grid-cols-[1fr_auto_1fr] items-center justify-between w-full px-4 sm:px-6 py-3 sm:py-4 fixed top-0 left-0 right-0 z-50 border-b border-[#B08D57]/25 border-t-[#B08D57]/20 bg-[#0F2A44]/90 backdrop-blur-md text-[#F8F4EC] shadow-lg shadow-[#091B2C]/40">
+    <header className="grid grid-cols-[1fr_auto_1fr] items-center justify-between w-full px-4 sm:px-6 py-3 sm:py-4 fixed top-0 left-0 right-0 z-50 border-b-0 md:border-b md:border-[#B08D57]/25 border-t-0 md:border-t md:border-[#B08D57]/20 bg-[#0F2A44] md:bg-[#0F2A44]/90 md:backdrop-blur-md text-[#F8F4EC] shadow-none md:shadow-lg md:shadow-[#091B2C]/40 min-h-[80px] md:min-h-0">
       {/* Left column: Subtle heritage badge */}
       <div className="flex justify-start items-center">
         <div className="hidden lg:flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#B08D57]">
