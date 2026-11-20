@@ -28,12 +28,21 @@ export interface ParticleHeroProps {
 }
 
 export const PRODUCTS_LIST = [
-  { id: "laminated-rolls-and-pouches", name: "Laminated Rolls & Pouches", moq: "500 kg film / 10,000 pouches" },
   { id: "mulch-film", name: "Agriculture Mulch Film", moq: "500 kg" },
   { id: "grow-bags", name: "Grow Bags", moq: "5,000 pcs" },
   { id: "coir-pith-bags", name: "Coir Pith 50L & 5kg Block Bags", moq: "10,000 pcs" },
+  { id: "laminated-rolls-and-pouches", name: "Laminated Rolls & Pouches", moq: "500 kg film / 10,000 pouches" },
   { id: "pp-and-lldpe-bags", name: "PP & LLDPE Bags", moq: "10,000 pcs" },
-  { id: "wicked-poly-bags", name: "Wicketed Poly Bags", moq: "25,000 pcs" },
+  { id: "wicked-poly-bags", name: "Wicked Poly Bags", moq: "25,000 pcs" },
+];
+
+export const MOBILE_TYPEWRITER_PRODUCTS = [
+  "Agriculture Mulch Film",
+  "Grow Bags",
+  "Coir Pith 50L & 5kg Block Bags",
+  "Laminated Rolls & Pouches",
+  "PP & LLDPE Bags",
+  "Wicked Poly Bags",
 ];
 
 export const ParticleHero: React.FC<ParticleHeroProps> = ({
@@ -358,18 +367,11 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               </h1>
             </motion.div>
 
-            {/* 3. Typing Line: "WE MAKE: Laminate |" */}
-            <motion.div variants={textLineVariant} className="mt-3 sm:mt-4 w-full flex justify-center">
+            {/* 3. Typing Line: "WE MAKE: [Product] |" */}
+            <motion.div variants={textLineVariant} className="mt-3 sm:mt-4 w-full flex justify-center px-2">
               <ProductTypewriter
                 prefix="WE MAKE:"
-                items={[
-                  "Laminated Rolls & Pouches",
-                  "Flexible Packaging",
-                  "Agriculture Mulch Film",
-                  "UV-Treated Grow Bags",
-                  "Coir Pith Block Bags",
-                  "Wicketed Poly Bags",
-                ]}
+                items={MOBILE_TYPEWRITER_PRODUCTS}
                 className="mx-auto"
               />
             </motion.div>

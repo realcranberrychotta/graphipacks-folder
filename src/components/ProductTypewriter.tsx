@@ -1,11 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
 
+export const DEFAULT_PRODUCTS = [
+  "Agriculture Mulch Film",
+  "Grow Bags",
+  "Coir Pith 50L & 5kg Block Bags",
+  "Laminated Rolls & Pouches",
+  "PP & LLDPE Bags",
+  "Wicked Poly Bags",
+];
+
 interface ProductTypewriterProps {
-  items: string[];
+  items?: string[];
   prefix?: string;
   className?: string;
 }
@@ -16,91 +25,193 @@ export default function ProductTypewriter({
   className = "",
 }: ProductTypewriterProps) {
   const shouldReduceMotion = useReducedMotion();
-  const [itemIndex, setItemIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Stable items list: default to the 6 core products if none provided
+  const resolvedItems = useMemo(() => {
+    if (items && items.length > 0) return items;
+    return DEFAULT_PRODUCTS;
+  }, [items ? items.join("::") : ""]);
+
+  const [displayText, setDisplayText] = useState("");
+
+  // Animation state in refs so timers are never interrupted by re-renders
+  const stateRef = useRef({
+    itemIndex: 0,
+    subIndex: 0,
+    isDeleting: false,
+    isPaused: false,
+  });
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const isInViewRef = useRef(true);
+  const itemsRef = useRef(resolvedItems);
+  const currentDelayRef = useRef(60);
+  const lastTickTimeRef = useRef(0);
+
+  // Keep itemsRef synchronized
+  useEffect(() => {
+    itemsRef.current = resolvedItems;
+  }, [resolvedItems]);
 
   useEffect(() => {
-    if (items.length === 0) return;
-
+    // If reduced motion is requested, cycle words directly without typewriter effect
     if (shouldReduceMotion) {
+      setDisplayText(resolvedItems[stateRef.current.itemIndex] || "");
       const interval = setInterval(() => {
-        setItemIndex((prev) => (prev + 1) % items.length);
-      }, 3200);
+        stateRef.current.itemIndex = (stateRef.current.itemIndex + 1) % resolvedItems.length;
+        setDisplayText(resolvedItems[stateRef.current.itemIndex] || "");
+      }, 3000);
       return () => clearInterval(interval);
     }
 
-    const currentItem = items[itemIndex] || "";
+    const scheduleNextTick = (delay: number) => {
+      currentDelayRef.current = delay;
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(tick, delay);
+    };
 
-    // 1. When paused at the full word, wait before starting backspace
-    if (isPaused) {
-      const timeout = setTimeout(() => {
-        setIsPaused(false);
-        setIsDeleting(true);
-      }, 2000);
-      return () => clearTimeout(timeout);
+    const tick = () => {
+      lastTickTimeRef.current = performance.now();
+
+      if (!isInViewRef.current) {
+        timerRef.current = null;
+        return;
+      }
+
+      const currentItems = itemsRef.current;
+      if (!currentItems || currentItems.length === 0) return;
+
+      // Safely bound itemIndex
+      if (stateRef.current.itemIndex >= currentItems.length) {
+        stateRef.current.itemIndex = 0;
+      }
+
+      const currentItem = currentItems[stateRef.current.itemIndex] || "";
+      let nextDelay = 60; // Forward typing speed: 60ms
+
+      if (stateRef.current.isPaused) {
+        // Finished 2-second hold at full word -> start backspacing
+        stateRef.current.isPaused = false;
+        stateRef.current.isDeleting = true;
+        nextDelay = 35; // Deleting speed: 35ms
+      } else if (stateRef.current.isDeleting) {
+        if (stateRef.current.subIndex > 0) {
+          stateRef.current.subIndex -= 1;
+          nextDelay = 35; // Deleting speed: 35ms
+        } else {
+          // Finished deleting -> move to next product in order
+          stateRef.current.isDeleting = false;
+          stateRef.current.itemIndex = (stateRef.current.itemIndex + 1) % currentItems.length;
+          nextDelay = 350; // Pause before typing next product: 350ms
+        }
+      } else {
+        // Typing forward
+        if (stateRef.current.subIndex < currentItem.length) {
+          stateRef.current.subIndex += 1;
+          nextDelay = 60; // Typing speed: 60ms
+        } else {
+          // Fully typed out -> hold for 2 seconds (2000ms)
+          stateRef.current.isPaused = true;
+          nextDelay = 2000; // Hold for 2 seconds
+        }
+      }
+
+      const activeItem = currentItems[stateRef.current.itemIndex] || "";
+      setDisplayText(activeItem.substring(0, stateRef.current.subIndex));
+
+      scheduleNextTick(nextDelay);
+    };
+
+    // Start typing
+    scheduleNextTick(100);
+
+    // IntersectionObserver: Pause when out of view, resume immediately when back in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const inView = entry.isIntersecting;
+        isInViewRef.current = inView;
+        if (inView) {
+          // Component back in view: resume typing immediately
+          if (!timerRef.current) {
+            scheduleNextTick(60);
+          }
+        } else {
+          // Out of view: pause timer
+          if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+          }
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
-    // 2. When backspacing has reached the beginning, pause briefly then move to next word
-    if (isDeleting && subIndex === 0) {
-      const timeout = setTimeout(() => {
-        setIsDeleting(false);
-        setItemIndex((prev) => (prev + 1) % items.length);
-      }, 350);
-      return () => clearTimeout(timeout);
-    }
+    // Mobile / Touch / Tab resume handlers: ensure typing never stalls on touch devices
+    const handleResume = () => {
+      if (document.visibilityState === "hidden") return;
 
-    // 3. When deleting, decrement one character
-    if (isDeleting) {
-      const timeout = setTimeout(() => {
-        setSubIndex((prev) => prev - 1);
-      }, 35);
-      return () => clearTimeout(timeout);
-    }
+      const now = performance.now();
+      const elapsed = now - lastTickTimeRef.current;
 
-    // 4. When full word is typed, pause
-    if (subIndex === currentItem.length) {
-      const timeout = setTimeout(() => {
-        setIsPaused(true);
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
+      // If timer stalled during backgrounding or touch scroll, restart immediately
+      if (isInViewRef.current) {
+        if (!timerRef.current || elapsed > currentDelayRef.current + 400) {
+          tick();
+        }
+      }
+    };
 
-    // 5. When typing forward, increment one character
-    const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + 1);
-    }, 60);
-    return () => clearTimeout(timeout);
-  }, [subIndex, isDeleting, isPaused, itemIndex, items, shouldReduceMotion]);
+    document.addEventListener("visibilitychange", handleResume);
+    window.addEventListener("touchstart", handleResume, { passive: true });
+    window.addEventListener("touchend", handleResume, { passive: true });
+    window.addEventListener("focus", handleResume);
 
-  const displayedText = shouldReduceMotion
-    ? items[itemIndex]
-    : items[itemIndex]?.substring(0, subIndex) || "";
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleResume);
+      window.removeEventListener("touchstart", handleResume);
+      window.removeEventListener("touchend", handleResume);
+      window.removeEventListener("focus", handleResume);
+    };
+  }, [shouldReduceMotion]);
 
   return (
     <div
-      className={`inline-flex flex-wrap items-center gap-3 rounded-xl border border-[#B08D57]/20 border-t-[#F8F4EC]/30 bg-[#0F2A44]/40 px-4 py-2.5 backdrop-blur-xl md:backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(248,244,236,0.2),0_10px_25px_rgba(9,27,44,0.5)] transition-all hover:border-[#B08D57]/50 ${className}`}
+      ref={containerRef}
+      className={`inline-flex items-center flex-nowrap max-w-[calc(100vw-1.5rem)] sm:max-w-max rounded-xl border border-[#B08D57]/20 border-t-[#F8F4EC]/30 bg-[#0F2A44]/60 px-2.5 py-1.5 xs:px-3 sm:px-4 sm:py-2.5 gap-1.5 xs:gap-2 sm:gap-3 backdrop-blur-xl md:backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(248,244,236,0.2),0_10px_25px_rgba(9,27,44,0.5)] transition-all hover:border-[#B08D57]/50 ${className}`}
       role="region"
       aria-label="Product Showcase"
     >
       {/* Category / Prefix Marker */}
-      <div className="flex items-center gap-2 shrink-0 select-none">
+      <div className="flex items-center gap-1.5 xs:gap-2 shrink-0 select-none">
         <span
           className="h-1.5 w-1.5 rounded-full bg-[#B08D57] shadow-[0_0_8px_rgba(176,141,87,0.8)]"
           aria-hidden="true"
         />
-        <span className="font-mono text-[11px] sm:text-xs font-bold tracking-[0.22em] text-[#B08D57] uppercase">
+        <span className="font-mono text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.22em] text-[#B08D57] uppercase whitespace-nowrap">
           {prefix}
         </span>
       </div>
 
       {/* Dynamic Animated Text Line */}
-      <div className="flex items-center min-h-[1.5rem] font-sans text-sm sm:text-base md:text-lg font-semibold text-[#F8F4EC] tracking-tight">
-        <span className="text-[#F8F4EC] drop-shadow-sm">{displayedText}</span>
+      <div className="flex items-center shrink min-w-0 font-sans text-xs xs:text-[13px] sm:text-base md:text-lg font-semibold text-[#F8F4EC] tracking-tight whitespace-nowrap">
+        <span className="text-[#F8F4EC] drop-shadow-sm select-none">
+          {displayText}
+        </span>
         {!shouldReduceMotion && (
           <span
-            className="inline-block w-[2px] h-4 sm:h-5 bg-[#B08D57] ml-1.5 animate-pulse shadow-[0_0_8px_rgba(176,141,87,0.7)]"
+            className="inline-block w-[2px] h-3.5 xs:h-4 sm:h-5 bg-[#B08D57] ml-1 xs:ml-1.5 shrink-0 animate-pulse shadow-[0_0_8px_rgba(176,141,87,0.7)]"
             aria-hidden="true"
           />
         )}
@@ -108,7 +219,7 @@ export default function ProductTypewriter({
 
       {/* Accessible text for screen readers */}
       <span className="sr-only">
-        Graphipacks produces: {items.join(", ")}
+        Graphipacks produces: {resolvedItems.join(", ")}
       </span>
     </div>
   );

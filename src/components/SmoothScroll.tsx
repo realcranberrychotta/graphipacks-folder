@@ -9,26 +9,23 @@ export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion: if reduced motion is requested, do NOT initialize smooth scrolling
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
+    // 1. Disable Lenis on mobile screens under 768px — use native scrolling on mobile only.
+    // 2. Respect prefers-reduced-motion: if reduced motion is requested, do NOT initialize Lenis.
+    const isMobile = window.innerWidth < 768;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (isMobile || prefersReducedMotion) {
       return;
     }
 
-    // Dynamic header height to offset anchor link scrolling (72px on desktop, 56px on mobile)
-    const getHeaderOffset = () => {
-      return window.innerWidth >= 768 ? -72 : -56;
-    };
-
-    // Initialize Lenis with lerp of 0.09 for a smooth, weighted feel (between 0.08 and 0.1)
+    // Initialize Lenis on desktop (>= 768px) with lerp of 0.09 for smooth, weighted feel
     const lenis = new Lenis({
       lerp: 0.09,
       duration: 1.2,
       smoothWheel: true,
-      autoRaf: false, // Driven by requestAnimationFrame per user requirement
+      autoRaf: false, // Driven by requestAnimationFrame loop below
       anchors: false, // Handled with custom header offset below
       prevent: (node) => {
-        // Prevent Lenis on Infrastructure page or inside any element with data-lenis-prevent
         return (
           window.location.pathname === "/infrastructure" ||
           window.location.pathname.startsWith("/infrastructure") ||
@@ -55,7 +52,7 @@ export default function SmoothScroll() {
     };
     rafId = requestAnimationFrame(raf);
 
-    // Anchor links handler accounting for sticky header height
+    // Anchor links handler accounting for desktop sticky header height (72px)
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[href*='#']");
       if (!anchor) return;
@@ -79,12 +76,12 @@ export default function SmoothScroll() {
           if (targetEl) {
             e.preventDefault();
             lenis.scrollTo(targetEl, {
-              offset: getHeaderOffset(),
+              offset: -72,
             });
             window.history.pushState(null, "", hash);
           }
         } catch {
-          // Ignore invalid selector
+          // Ignore
         }
       }
     };
@@ -98,7 +95,7 @@ export default function SmoothScroll() {
           const targetEl = document.querySelector(window.location.hash);
           if (targetEl) {
             lenis.scrollTo(targetEl, {
-              offset: getHeaderOffset(),
+              offset: -72,
               immediate: false,
             });
           }
@@ -108,19 +105,26 @@ export default function SmoothScroll() {
       }, 150);
     }
 
-    // Handle reduced motion changes dynamically
-    const handleReducedMotionChange = (e: MediaQueryListEvent) => {
-      if (e.matches) {
+    // Listen to resize and reduced motion changes
+    const mediaQueryMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mediaQueryMobile = window.matchMedia("(max-width: 767px)");
+
+    const handleConstraintChange = () => {
+      if (window.innerWidth < 768 || mediaQueryMotion.matches) {
+        cancelAnimationFrame(rafId);
         lenis.destroy();
         lenisRef.current = null;
       }
     };
-    mediaQuery.addEventListener("change", handleReducedMotionChange);
+
+    mediaQueryMotion.addEventListener("change", handleConstraintChange);
+    mediaQueryMobile.addEventListener("change", handleConstraintChange);
 
     return () => {
       cancelAnimationFrame(rafId);
       document.removeEventListener("click", handleAnchorClick, { capture: true });
-      mediaQuery.removeEventListener("change", handleReducedMotionChange);
+      mediaQueryMotion.removeEventListener("change", handleConstraintChange);
+      mediaQueryMobile.removeEventListener("change", handleConstraintChange);
       lenis.destroy();
       lenisRef.current = null;
     };
