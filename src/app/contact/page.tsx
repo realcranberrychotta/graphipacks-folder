@@ -112,7 +112,7 @@ export default async function ContactPage() {
                     </span>
                     <a
                       href={`tel:${phone.replace(/\s+/g, "")}`}
-                      className="mt-1 block font-mono text-base font-semibold text-[#F8F4EC] hover:text-[#B08D57] transition"
+                      className="mt-1 block font-mono text-base font-semibold text-[#F8F4EC] hover:text-[#B08D57] transition-colors duration-200 ease-in-out"
                     >
                       {phone}
                     </a>
@@ -124,7 +124,7 @@ export default async function ContactPage() {
                     </span>
                     <a
                       href={`mailto:${email}`}
-                      className="mt-1 block text-base font-semibold text-[#F8F4EC] hover:text-[#B08D57] transition"
+                      className="mt-1 block text-base font-semibold text-[#F8F4EC] hover:text-[#B08D57] transition-colors duration-200 ease-in-out"
                     >
                       {email}
                     </a>
@@ -161,7 +161,7 @@ export default async function ContactPage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#091B2C]/80 hover:bg-[#1B3D5E]/60 border border-[#B08D57] px-6 py-4 text-base font-bold text-[#F8F4EC] shadow-md transition hover:scale-[1.01] active:scale-[0.99] focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 text-center"
+                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#091B2C]/80 hover:bg-[#1B3D5E]/60 border border-[#B08D57] px-6 py-4 text-base font-bold text-[#F8F4EC] shadow-md transition-all duration-200 ease-in-out hover:scale-[1.01] active:scale-[0.99] focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 text-center"
                 >
                   <svg className="h-5 w-5 fill-current text-[#B08D57] shrink-0" viewBox="0 0 24 24">
                     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.77.813 2.796.814 3.183 0 5.769-2.587 5.77-5.767 0-3.181-2.587-5.767-5.77-5.767zm0 10.364c-.878 0-1.637-.246-2.316-.67l-.165-.104-1.58.414.422-1.541-.107-.171a4.582 4.582 0 01-.703-2.459c.001-2.531 2.06-4.59 4.591-4.59 2.531 0 4.59 2.059 4.59 4.59 0 2.532-2.059 4.591-4.59 4.591z"/>
@@ -195,7 +195,7 @@ export default async function ContactPage() {
             </div>
             <Link
               href="/products"
-              className="inline-flex items-center justify-center shrink-0 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-lg shadow-[#B08D57]/25 transition hover:scale-[1.02] active:scale-[0.98] text-center"
+              className="inline-flex items-center justify-center shrink-0 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-lg shadow-[#B08D57]/25 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] text-center"
             >
               Browse Catalog &rarr;
             </Link>

@@ -26,15 +26,29 @@ import HomeHeroFactory from "@/components/HomeHeroFactory";
 import HeroMinimal from "@/components/HeroMinimal";
 import HeroHeadline from "@/components/HeroHeadline";
 import MobileHero from "@/components/MobileHero";
-import ScrollReveal from "@/components/ScrollReveal";
+import HeroSkipControl from "@/components/HeroSkipControl";
+import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 
 export default async function HomePage() {
   cacheLife("days");
 
   return (
     <div className="flex flex-col bg-transparent text-[#F8F4EC]">
+      <noscript>
+        <style>{`
+          [data-stagger-card] {
+            opacity: 1 !important;
+            transform: none !important;
+            pointer-events: auto !important;
+            transition: none !important;
+          }
+        `}</style>
+      </noscript>
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC]">
+      <section id="hero" className="relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC]">
+        {/* Accessible Hero Skip Animation Control */}
+        <HeroSkipControl />
+
         {/* Desktop Hero — Monumental Typography over 3D Manufacturing Line (>= 768px) */}
         <div className="hidden md:block relative min-h-[720px] w-full">
           {/* 3D Manufacturing Plant Tour (embed, height 720px) */}
@@ -78,17 +92,17 @@ export default async function HomePage() {
             </div>
             <Link
               href="/products"
-              className="text-sm font-semibold text-white mix-blend-exclusion hover:opacity-80 shrink-0 inline-flex items-center gap-1 transition"
+              className="text-sm font-semibold text-white mix-blend-exclusion hover:opacity-80 shrink-0 inline-flex items-center gap-1 transition-opacity duration-200 ease-in-out"
             >
               View Full Product Index &rarr;
             </Link>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerCardsGrid className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product, idx) => (
-              <ScrollReveal key={product.slug} delay={idx * 0.08}>
+              <StaggerCard key={product.slug} index={idx}>
                 <article
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md shadow-2xl transition hover:border-[#B08D57]/60 hover:shadow-2xl h-full"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md shadow-2xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/60 hover:shadow-2xl h-full"
                 >
                   <div className="relative w-full h-48 overflow-hidden bg-[#091B2C]">
                     <Image
@@ -101,7 +115,7 @@ export default async function HomePage() {
                       decoding="async"
                       placeholder="blur"
                       blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                      className="w-full h-48 object-cover transition duration-300 group-hover:scale-105"
+                      className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-t from-[#091B2C] to-transparent opacity-80 pointer-events-none"
@@ -120,7 +134,7 @@ export default async function HomePage() {
                         </span>
                       </div>
 
-                      <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-white transition">
+                      <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-white transition-colors duration-200 ease-in-out">
                         <Link
                           href={`/products/${product.slug}`}
                           className="hover:underline focus:outline-hidden"
@@ -152,15 +166,15 @@ export default async function HomePage() {
                     </div>
 
                     <div className="mt-6 border-t border-[#B08D57]/25 pt-4 flex items-center justify-between text-sm font-semibold text-[#B08D57]">
-                      <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition">
+                      <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
                         View Specifications &rarr;
                       </span>
                     </div>
                   </div>
                 </article>
-              </ScrollReveal>
+              </StaggerCard>
             ))}
-          </div>
+          </StaggerCardsGrid>
         </div>
       </section>
 
@@ -179,11 +193,11 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerCardsGrid className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {packagingForms.map((item, idx) => (
-              <ScrollReveal key={item.form} delay={idx * 0.08}>
+              <StaggerCard key={item.form} index={idx}>
                 <article
-                  className="relative flex flex-col justify-between rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-6 shadow-xl transition hover:border-[#B08D57]/60 h-full"
+                  className="relative flex flex-col justify-between rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-6 shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/60 h-full"
                 >
                   <div>
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#B08D57]/40 bg-[#1B3D5E] font-mono text-sm font-bold text-[#B08D57]">
@@ -210,15 +224,15 @@ export default async function HomePage() {
                   <div className="mt-6 border-t border-[#B08D57]/25 pt-4">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#B08D57] hover:text-[#F8F4EC] transition"
+                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#B08D57] hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out"
                     >
                       Inquire For Form &rarr;
                     </Link>
                   </div>
                 </article>
-              </ScrollReveal>
+              </StaggerCard>
             ))}
-          </div>
+          </StaggerCardsGrid>
         </div>
       </section>
 
@@ -237,11 +251,11 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <StaggerCardsGrid className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
             {printingTechnology.map((tech, idx) => (
-              <ScrollReveal key={tech} delay={idx * 0.08}>
+              <StaggerCard key={tech} index={idx}>
                 <div
-                  className="flex flex-col justify-between rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-7 shadow-xl transition hover:border-[#B08D57]/60 h-full"
+                  className="flex flex-col justify-between rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-7 shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/60 h-full"
                 >
                   <div>
                     <div className="flex items-center justify-between">
@@ -264,9 +278,9 @@ export default async function HomePage() {
                     <span>Calibrated for multi-substrate flexibility</span>
                   </div>
                 </div>
-              </ScrollReveal>
+              </StaggerCard>
             ))}
-          </div>
+          </StaggerCardsGrid>
         </div>
       </section>
 
@@ -288,35 +302,34 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 space-y-8">
-            {clients.map((categoryGroup, idx) => (
-              <ScrollReveal key={categoryGroup.category} delay={idx * 0.08}>
-                <div
-                  className="rounded-2xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-6 shadow-xl"
-                >
-                  <div className="flex items-center gap-3 border-b border-[#B08D57]/25 pb-4">
-                    <span className="h-2 w-2 rounded-full bg-[#B08D57]" />
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-[#F8F4EC]">
-                      {categoryGroup.category}
-                    </h3>
-                    <span className="ml-auto rounded-full border border-[#B08D57]/30 bg-[#1B3D5E] px-2.5 py-0.5 text-xs font-semibold text-[#F8F4EC]">
-                      {categoryGroup.clients.length} Verified Partners
-                    </span>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-                    {categoryGroup.clients.map((client) => (
-                      <div
-                        key={client}
-                        className="flex min-h-[60px] sm:min-h-[64px] items-center justify-center rounded-lg border border-[#B08D57]/20 bg-[#091B2C]/70 p-2 sm:p-3 text-center transition hover:border-[#B08D57]/60 hover:bg-[#091B2C] shadow-xs"
-                      >
-                        <span className="text-xs sm:text-sm font-semibold tracking-tight text-[#F8F4EC] break-words">
-                          {client}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+            {clients.map((categoryGroup) => (
+              <div
+                key={categoryGroup.category}
+                className="rounded-2xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md p-6 shadow-xl"
+              >
+                <div className="flex items-center gap-3 border-b border-[#B08D57]/25 pb-4">
+                  <span className="h-2 w-2 rounded-full bg-[#B08D57]" />
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-[#F8F4EC]">
+                    {categoryGroup.category}
+                  </h3>
+                  <span className="ml-auto rounded-full border border-[#B08D57]/30 bg-[#1B3D5E] px-2.5 py-0.5 text-xs font-semibold text-[#F8F4EC]">
+                    {categoryGroup.clients.length} Verified Partners
+                  </span>
                 </div>
-              </ScrollReveal>
+
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+                  {categoryGroup.clients.map((client) => (
+                    <div
+                      key={client}
+                      className="flex min-h-[60px] sm:min-h-[64px] items-center justify-center rounded-lg border border-[#B08D57]/20 bg-[#091B2C]/70 p-2 sm:p-3 text-center transition-all duration-200 ease-in-out hover:border-[#B08D57]/60 hover:bg-[#091B2C] shadow-xs"
+                    >
+                      <span className="text-xs sm:text-sm font-semibold tracking-tight text-[#F8F4EC] break-words">
+                        {client}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -324,7 +337,7 @@ export default async function HomePage() {
 
       {/* Bottom Conversion CTA */}
       <section className="border-t border-[#B08D57]/25 bg-[#091B2C]/90 backdrop-blur-2xl py-20 text-[#F8F4EC]">
-        <ScrollReveal className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-2xl">
               <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#F8F4EC]">
@@ -343,19 +356,19 @@ export default async function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 shrink-0">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-lg shadow-[#B08D57]/25 transition"
+                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/60 bg-transparent hover:bg-[#B08D57]/10 hover:border-[#B08D57] px-6 py-3.5 text-sm font-bold text-[#F8F4EC] hover:text-white transition-all duration-200 ease-in-out"
               >
                 Request Technical Quote &rarr;
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-[#0F2A44]/60 px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition hover:bg-[#1B3D5E]/60"
+                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-[#0F2A44]/60 px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition-all duration-200 ease-in-out hover:bg-[#1B3D5E]/60"
               >
                 Our Journey &amp; Infrastructure
               </Link>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
     </div>
   );

@@ -21,7 +21,7 @@ export default function Preloader() {
           key="global-preloader"
           initial={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: "-100%" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#091B2C]"
         >
           <div className="flex flex-col items-center justify-center gap-6">
@@ -36,7 +36,7 @@ export default function Preloader() {
             <motion.h1
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="font-serif text-4xl sm:text-6xl md:text-7xl tracking-[0.3em] sm:tracking-[0.5em] text-[#F8F4EC] font-light ml-[0.3em] sm:ml-[0.5em]"
             >
               GRAPHIPACKS
@@ -46,7 +46,7 @@ export default function Preloader() {
             <motion.p
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
+              transition={{ duration: 0.3, ease: "easeInOut", delay: 0.05 }}
               className="uppercase text-[0.65rem] sm:text-xs tracking-[0.4em] text-[#B08D57] font-medium ml-[0.4em]"
             >
               FLEXIBLE PACKAGING • EST. 1984

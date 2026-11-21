@@ -6,6 +6,7 @@ import {
   useMotionValue,
   useSpring,
   useMotionTemplate,
+  useReducedMotion,
   type Variants,
 } from "framer-motion";
 
@@ -15,8 +16,9 @@ interface HeroHeadlineProps {
 
 export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isStarted, setIsStarted] = useState(false);
-  const [isEntranceComplete, setIsEntranceComplete] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const [isStarted, setIsStarted] = useState(Boolean(shouldReduceMotion));
+  const [isEntranceComplete, setIsEntranceComplete] = useState(Boolean(shouldReduceMotion));
   const [isHovered, setIsHovered] = useState(false);
 
   const mouseX = useMotionValue(0);
@@ -25,24 +27,41 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
   const springX = useSpring(mouseX, { stiffness: 220, damping: 26 });
   const springY = useSpring(mouseY, { stiffness: 220, damping: 26 });
 
-  // Fire entrance reveal immediately after the 800ms preloader unmounts
+  // Fire entrance reveal immediately after the 800ms preloader unmounts, or skip if reduced motion
   useEffect(() => {
+    if (shouldReduceMotion) {
+      setIsStarted(true);
+      setIsEntranceComplete(true);
+      return;
+    }
+
     const timer = setTimeout(() => {
       setIsStarted(true);
     }, 850);
 
-    return () => clearTimeout(timer);
-  }, []);
+    const handleSkip = () => {
+      setIsStarted(true);
+      setIsEntranceComplete(true);
+    };
+
+    window.addEventListener("skip-hero-animation", handleSkip);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("skip-hero-animation", handleSkip);
+    };
+  }, [shouldReduceMotion]);
 
   // Ensure interactive state is fully enabled once entrance choreography settles
   useEffect(() => {
+    if (shouldReduceMotion) return;
     if (isStarted) {
       const timer = setTimeout(() => {
         setIsEntranceComplete(true);
       }, 1600);
       return () => clearTimeout(timer);
     }
-  }, [isStarted]);
+  }, [isStarted, shouldReduceMotion]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isEntranceComplete) return;
@@ -67,29 +86,33 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
     setIsHovered(false);
   };
 
-  // Entrance variants: blur and optical emergence
+  // Entrance variants: blur and optical emergence (instantly visible on reduced motion)
   const containerVariants: Variants = {
-    hidden: { opacity: 0, filter: "blur(14px)", y: 16 },
+    hidden: shouldReduceMotion
+      ? { opacity: 1, filter: "none", y: 0 }
+      : { opacity: 0, filter: "blur(14px)", y: 16 },
     visible: {
       opacity: 1,
-      filter: "blur(0px)",
+      filter: "none",
       y: 0,
       transition: {
-        duration: 1.1,
+        duration: shouldReduceMotion ? 0 : 1.1,
         ease: [0.16, 1, 0.3, 1],
-        staggerChildren: 0.18,
+        staggerChildren: shouldReduceMotion ? 0 : 0.18,
       },
     },
   };
 
   const lineVariants: Variants = {
-    hidden: { opacity: 0, filter: "blur(14px)", y: 16 },
+    hidden: shouldReduceMotion
+      ? { opacity: 1, filter: "none", y: 0 }
+      : { opacity: 0, filter: "blur(14px)", y: 16 },
     visible: {
       opacity: 1,
-      filter: "blur(0px)",
+      filter: "none",
       y: 0,
       transition: {
-        duration: 1.1,
+        duration: shouldReduceMotion ? 0 : 1.1,
         ease: [0.16, 1, 0.3, 1],
       },
     },
@@ -107,39 +130,41 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
       className={`relative inline-block select-none overflow-visible ${className}`}
     >
       {/* ─── Photonic Light Sweep Flare (Single Entrance Exposure Sweep) ─── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-y-12 -inset-x-12 sm:-inset-x-20 overflow-hidden z-20"
-      >
-        <motion.div
-          className="w-full h-full absolute inset-0 pointer-events-none"
-          initial={{ x: "-120%" }}
-          animate={isStarted ? { x: "220%" } : { x: "-120%" }}
-          transition={{
-            duration: 1.4,
-            delay: 0.2,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+      {!shouldReduceMotion && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-y-12 -inset-x-12 sm:-inset-x-20 overflow-hidden z-20"
         >
           <motion.div
-            className="absolute -top-1/2 -bottom-1/2 w-36 sm:w-56 bg-gradient-to-r from-transparent via-[#fffdf5] to-transparent pointer-events-none shadow-[0_0_50px_rgba(248,244,236,0.8),0_0_25px_rgba(176,141,87,0.6)]"
-            style={{
-              rotate: "15deg",
-              mixBlendMode: "screen",
-            }}
-            initial={{ opacity: 0 }}
-            animate={
-              isStarted ? { opacity: [0, 1, 1, 0] } : { opacity: 0 }
-            }
+            className="w-full h-full absolute inset-0 pointer-events-none"
+            initial={{ x: "-120%" }}
+            animate={isStarted ? { x: "220%" } : { x: "-120%" }}
             transition={{
               duration: 1.4,
               delay: 0.2,
               ease: [0.16, 1, 0.3, 1],
-              times: [0, 0.15, 0.85, 1],
             }}
-          />
-        </motion.div>
-      </div>
+          >
+            <motion.div
+              className="absolute -top-1/2 -bottom-1/2 w-36 sm:w-56 bg-gradient-to-r from-transparent via-[#fffdf5] to-transparent pointer-events-none shadow-[0_0_50px_rgba(248,244,236,0.8),0_0_25px_rgba(176,141,87,0.6)]"
+              style={{
+                rotate: "15deg",
+                mixBlendMode: "screen",
+              }}
+              initial={{ opacity: 0 }}
+              animate={
+                isStarted ? { opacity: [0, 1, 1, 0] } : { opacity: 0 }
+              }
+              transition={{
+                duration: 1.4,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1],
+                times: [0, 0.15, 0.85, 1],
+              }}
+            />
+          </motion.div>
+        </div>
+      )}
 
       {/* ─── Semantic Display H1 Headline (Base Layer) ─── */}
       <motion.h1

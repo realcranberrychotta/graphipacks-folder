@@ -7,10 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Product, PackagingForm } from "@/lib/content";
 
 const bouncySpring = {
-  type: "spring",
-  stiffness: 400,
-  damping: 14,
-  mass: 0.8,
+  duration: 0.2,
+  ease: "easeInOut",
 } as const;
 
 interface ProductCatalogProps {
@@ -86,7 +84,7 @@ export default function ProductCatalog({
                   whileTap={{ scale: 0.95 }}
                   transition={bouncySpring}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 ${
+                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 ${
                     isSelected
                       ? "bg-[#B08D57] text-[#091B2C] border border-[#B08D57] shadow-lg shadow-[#091B2C]/40"
                       : "bg-[#0F2A44]/60 text-[#F8F4EC] border border-[#B08D57]/25 hover:bg-[#1B3D5E]/60 hover:border-[#B08D57]/50"
@@ -118,8 +116,8 @@ export default function ProductCatalog({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.22 }}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl transition hover:border-[#B08D57]/50 hover:shadow-2xl"
+                transition={{ duration: 0.22, ease: "easeInOut" }}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/50 hover:shadow-2xl"
               >
                 <div>
                   {/* High-Resolution Photographic Header with Navy/Bronze Overlay */}
@@ -134,7 +132,7 @@ export default function ProductCatalog({
                       decoding="async"
                       placeholder="blur"
                       blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                      className="w-full h-48 object-cover transition duration-300 group-hover:scale-105"
+                      className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-t from-[#0F2A44] to-transparent opacity-85 pointer-events-none"
@@ -152,7 +150,7 @@ export default function ProductCatalog({
                       </span>
                     </div>
 
-                    <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-[#B08D57] transition">
+                    <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
                       <Link
                         href={`/products/${product.slug}`}
                         className="hover:underline focus:outline-hidden"
@@ -192,7 +190,7 @@ export default function ProductCatalog({
                 </div>
 
                 <div className="border-t border-[#B08D57]/20 p-6 pt-4 flex items-center justify-between text-sm font-semibold text-[#B08D57]">
-                  <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition">
+                  <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
                     View Specifications Sheet &rarr;
                   </span>
                 </div>
@@ -234,7 +232,7 @@ export default function ProductCatalog({
                 whileTap={{ scale: 0.95 }}
                 transition={bouncySpring}
                 onClick={() => setSelectedFormIndex(idx)}
-                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] ${
+                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] ${
                   isSelected
                     ? "bg-[#B08D57] text-[#091B2C] border border-[#B08D57] shadow-md"
                     : "bg-[#091B2C]/50 text-[#F8F4EC] border border-[#B08D57]/25 hover:bg-[#1B3D5E]/60"
@@ -252,7 +250,7 @@ export default function ProductCatalog({
             key={activeForm.form}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="mt-8 rounded-2xl border border-[#B08D57]/30 bg-[#091B2C]/60 p-6 sm:p-8 backdrop-blur-md"
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -304,7 +302,7 @@ export default function ProductCatalog({
                 >
                   <Link
                     href="/contact"
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition hover:scale-[1.02] active:scale-[0.98] text-center"
+                    className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] text-center"
                   >
                     Request Quote for {activeForm.form} &rarr;
                   </Link>

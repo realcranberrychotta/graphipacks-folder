@@ -9,6 +9,7 @@ import {
   FileText,
   Mail,
   CheckCircle2,
+  AlertCircle,
   X,
   Maximize2,
   Truck,
@@ -35,6 +36,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [rfqModalOpen, setRfqModalOpen] = useState<boolean>(false);
   const [rfqType, setRfqType] = useState<"quote" | "sample">("quote");
   const [rfqSubmitted, setRfqSubmitted] = useState<boolean>(false);
+  const [rfqErrors, setRfqErrors] = useState<Record<string, string>>({});
+  const [rfqShaking, setRfqShaking] = useState<Record<string, boolean>>({});
   const [rfqForm, setRfqForm] = useState({
     fullName: "",
     companyName: "",
@@ -61,12 +64,60 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   const openModal = (type: "quote" | "sample") => {
     setRfqType(type);
+    setRfqErrors({});
+    setRfqShaking({});
     setRfqSubmitted(false);
     setRfqModalOpen(true);
   };
 
   const handleRfqSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+    const newShaking: Record<string, boolean> = {};
+
+    if (!rfqForm.fullName.trim() || rfqForm.fullName.trim().length < 2) {
+      newErrors.fullName = "Please enter your full name";
+      newShaking.fullName = true;
+    }
+    if (!rfqForm.companyName.trim() || rfqForm.companyName.trim().length < 2) {
+      newErrors.companyName = "Please enter your company name";
+      newShaking.companyName = true;
+    }
+    if (!rfqForm.email.trim()) {
+      newErrors.email = "Work email address is required";
+      newShaking.email = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rfqForm.email.trim())) {
+      newErrors.email = "Please enter a valid work email address";
+      newShaking.email = true;
+    }
+    const cleanPhone = rfqForm.phone.replace(/\D/g, "");
+    if (!rfqForm.phone.trim()) {
+      newErrors.phone = "Phone / WhatsApp number is required";
+      newShaking.phone = true;
+    } else if (cleanPhone.length < 7) {
+      newErrors.phone = "Please enter a valid phone number (min 7 digits)";
+      newShaking.phone = true;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setRfqErrors(newErrors);
+      setRfqShaking(newShaking);
+
+      setTimeout(() => {
+        setRfqShaking({});
+      }, 350);
+
+      const firstKey = Object.keys(newErrors)[0];
+      const el = document.getElementById(`rfq-${firstKey}`);
+      if (el) {
+        el.focus();
+      }
+      return;
+    }
+
+    setRfqErrors({});
+    setRfqShaking({});
     setRfqSubmitted(true);
   };
 
@@ -121,7 +172,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     placeholder="blur"
                     blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                   />
                 </motion.div>
               </AnimatePresence>
@@ -139,7 +190,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 type="button"
                 onClick={() => setLightboxOpen(true)}
                 aria-label="Enlarge product image"
-                className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0F2A44]/80 text-[#F8F4EC] backdrop-blur-md border border-[#B08D57]/40 hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors shadow-sm"
+                className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0F2A44]/80 text-[#F8F4EC] backdrop-blur-md border border-[#B08D57]/40 hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 ease-in-out shadow-sm"
               >
                 <Maximize2 className="h-4 w-4" />
               </button>
@@ -160,7 +211,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     key={img.label}
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[4/3] overflow-hidden rounded-xl transition-all duration-200 text-left cursor-pointer group ${
+                    className={`relative aspect-[4/3] overflow-hidden rounded-xl transition-all duration-200 ease-in-out text-left cursor-pointer group ${
                       isActive
                         ? "border-2 border-[#B08D57] shadow-md ring-2 ring-[#B08D57]/30"
                         : "border border-[#0F2A44]/15 opacity-75 hover:opacity-100 hover:border-[#B08D57]/60"
@@ -176,10 +227,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       sizes="150px"
                       placeholder="blur"
                       blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                     />
                     <div
-                      className={`absolute inset-0 transition-opacity ${
+                      className={`absolute inset-0 transition-opacity duration-200 ease-in-out ${
                         isActive
                           ? "bg-transparent"
                           : "bg-[#0F2A44]/15 group-hover:bg-transparent"
@@ -266,14 +317,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         key={v.key}
                         type="button"
                         onClick={() => setSelectedVariantKey(v.key)}
-                        className={`group relative inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                        className={`group relative inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ease-in-out cursor-pointer ${
                           isSelected
                             ? "bg-[#0F2A44] text-[#F8F4EC] border-2 border-[#B08D57] shadow-md shadow-[#0F2A44]/15"
                             : "bg-white text-[#222222] border border-[#0F2A44]/20 hover:border-[#B08D57] hover:bg-[#EFE8DC]/60"
                         }`}
                       >
                         <span
-                          className={`h-2 w-2 rounded-full transition-colors ${
+                          className={`h-2 w-2 rounded-full transition-colors duration-200 ease-in-out ${
                             isSelected ? "bg-[#B08D57]" : "bg-[#0F2A44]/30 group-hover:bg-[#B08D57]"
                           }`}
                         />
@@ -311,7 +362,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={() => openModal("quote")}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                   >
                     <Mail className="h-4 w-4 text-[#091B2C]" />
                     <span>Request Quotation</span>
@@ -323,7 +374,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     type="button"
                     onClick={handleDownloadPdf}
                     disabled={isPdfGenerating}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/40 px-6 py-3.5 text-sm font-bold shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/40 px-6 py-3.5 text-sm font-bold shadow-md transition-all duration-200 ease-in-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     <Download className={`h-4 w-4 text-[#B08D57] ${isPdfGenerating ? "animate-bounce" : ""}`} />
                     <span>
@@ -337,7 +388,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={() => openModal("sample")}
-                    className="inline-flex min-h-[44px] items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2A44] hover:text-[#B08D57] transition-colors underline underline-offset-4 decoration-[#B08D57]/50 hover:decoration-[#B08D57] cursor-pointer py-1"
+                    className="inline-flex min-h-[44px] items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2A44] hover:text-[#B08D57] transition-colors duration-200 ease-in-out underline underline-offset-4 decoration-[#B08D57]/50 hover:decoration-[#B08D57] cursor-pointer py-1"
                   >
                     <Package className="h-4 w-4 text-[#B08D57]" />
                     <span>Request Material Samples &amp; Swatches</span>
@@ -401,7 +452,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <button
               type="button"
               onClick={handleDownloadPdf}
-              className="inline-flex items-center gap-2 self-start md:self-auto rounded-lg border border-[#0F2A44]/20 bg-white hover:bg-[#EFE8DC] px-4 py-2 text-xs font-bold text-[#0F2A44] shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 self-start md:self-auto rounded-lg border border-[#0F2A44]/20 bg-white hover:bg-[#EFE8DC] px-4 py-2 text-xs font-bold text-[#0F2A44] shadow-xs transition-colors duration-200 ease-in-out cursor-pointer"
             >
               <Download className="h-3.5 w-3.5 text-[#B08D57]" />
               <span>Export Table as PDF</span>
@@ -427,7 +478,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 return (
                   <div
                     key={row.label}
-                    className={`grid grid-cols-1 sm:grid-cols-12 px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300 ${
+                    className={`grid grid-cols-1 sm:grid-cols-12 px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300 ease-in-out ${
                       row.isOverridden
                         ? "bg-[#EFE8DC]/80 border-l-4 border-l-[#B08D57]"
                         : isAlt
@@ -482,6 +533,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-[#091B2C]/90 backdrop-blur-md p-4 sm:p-8"
             onClick={() => setLightboxOpen(false)}
           >
@@ -499,7 +551,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <button
                   type="button"
                   onClick={() => setLightboxOpen(false)}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 ease-in-out"
                   aria-label="Close image preview"
                 >
                   <X className="h-5 w-5" />
@@ -541,6 +593,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-[#091B2C]/85 backdrop-blur-md p-4 sm:p-6"
             onClick={() => setRfqModalOpen(false)}
           >
@@ -548,6 +601,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               className="relative max-w-lg w-full overflow-hidden rounded-2xl border border-[#B08D57]/40 bg-white shadow-2xl text-[#222222]"
               onClick={(e) => e.stopPropagation()}
             >
@@ -560,7 +614,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={() => setRfqModalOpen(false)}
-                    className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors"
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 ease-in-out"
                     aria-label="Close request modal"
                   >
                     <X className="h-5 w-5" />
@@ -580,13 +634,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <div className="p-6">
                 {rfqSubmitted ? (
                   <div className="py-8 text-center space-y-4">
-                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#0F2A44] text-[#B08D57] border border-[#B08D57]/40">
-                      <CheckCircle2 className="h-8 w-8" />
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 border border-emerald-500/40">
+                      <CheckCircle2 className="h-8 w-8 text-emerald-600" />
                     </div>
-                    <h4 className="text-xl font-bold text-[#0F2A44]">
-                      Inquiry Registered Successfully
+                    <h4 className="text-2xl font-bold text-[#0F2A44]">
+                      Request received
                     </h4>
-                    <p className="text-sm text-[#555555] max-w-xs mx-auto">
+                    <p className="text-base font-semibold text-[#B08D57]">
+                      Our team will call you within 1 working day.
+                    </p>
+                    <p className="text-sm text-[#555555] max-w-xs mx-auto leading-relaxed">
                       Our plant commercial desk has received your request for{" "}
                       <span className="font-bold text-[#0F2A44]">
                         {product.name} ({activeVariant.name})
@@ -597,93 +654,146 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       <button
                         type="button"
                         onClick={() => setRfqModalOpen(false)}
-                        className="min-h-[44px] rounded-lg bg-[#0F2A44] px-5 py-2.5 text-xs sm:text-sm font-bold text-[#F8F4EC] hover:bg-[#1B3D5E] flex items-center justify-center"
+                        className="w-full sm:w-auto min-h-[48px] rounded-lg bg-[#0F2A44] px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F8F4EC] hover:bg-[#1B3D5E] flex items-center justify-center transition-colors duration-200 ease-in-out cursor-pointer"
                       >
                         Close Window
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleRfqSubmit} className="space-y-4 text-xs">
+                  <form onSubmit={handleRfqSubmit} noValidate className="space-y-4 text-xs">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <div className={rfqShaking.fullName ? "animate-shake" : ""}>
+                        <label htmlFor="rfq-fullName" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                           Full Name *
                         </label>
                         <input
+                          id="rfq-fullName"
                           type="text"
-                          required
                           autoComplete="name"
                           value={rfqForm.fullName}
-                          onChange={(e) =>
-                            setRfqForm({ ...rfqForm, fullName: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setRfqForm({ ...rfqForm, fullName: e.target.value });
+                            if (rfqErrors.fullName) setRfqErrors((prev) => { const n = { ...prev }; delete n.fullName; return n; });
+                          }}
                           placeholder="e.g. Ramesh Kumar"
-                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden"
+                          aria-invalid={!!rfqErrors.fullName}
+                          aria-describedby={rfqErrors.fullName ? "rfq-fullName-error" : undefined}
+                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                            rfqErrors.fullName
+                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
+                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
+                          }`}
                         />
+                        {rfqErrors.fullName && (
+                          <p id="rfq-fullName-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
+                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
+                            <span>{rfqErrors.fullName}</span>
+                          </p>
+                        )}
                       </div>
-                      <div>
-                        <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <div className={rfqShaking.companyName ? "animate-shake" : ""}>
+                        <label htmlFor="rfq-companyName" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                           Company Name *
                         </label>
                         <input
+                          id="rfq-companyName"
                           type="text"
-                          required
                           autoComplete="organization"
                           value={rfqForm.companyName}
-                          onChange={(e) =>
-                            setRfqForm({ ...rfqForm, companyName: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setRfqForm({ ...rfqForm, companyName: e.target.value });
+                            if (rfqErrors.companyName) setRfqErrors((prev) => { const n = { ...prev }; delete n.companyName; return n; });
+                          }}
                           placeholder="e.g. Apex Agri Ltd."
-                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden"
+                          aria-invalid={!!rfqErrors.companyName}
+                          aria-describedby={rfqErrors.companyName ? "rfq-companyName-error" : undefined}
+                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                            rfqErrors.companyName
+                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
+                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
+                          }`}
                         />
+                        {rfqErrors.companyName && (
+                          <p id="rfq-companyName-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
+                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
+                            <span>{rfqErrors.companyName}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <div className={rfqShaking.email ? "animate-shake" : ""}>
+                        <label htmlFor="rfq-email" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                           Work Email *
                         </label>
                         <input
+                          id="rfq-email"
                           type="email"
                           inputMode="email"
                           autoComplete="email"
                           autoCapitalize="none"
                           spellCheck={false}
-                          required
                           value={rfqForm.email}
-                          onChange={(e) =>
-                            setRfqForm({ ...rfqForm, email: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setRfqForm({ ...rfqForm, email: e.target.value });
+                            if (rfqErrors.email) setRfqErrors((prev) => { const n = { ...prev }; delete n.email; return n; });
+                          }}
                           placeholder="ramesh@company.com"
-                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden"
+                          aria-invalid={!!rfqErrors.email}
+                          aria-describedby={rfqErrors.email ? "rfq-email-error" : undefined}
+                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                            rfqErrors.email
+                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
+                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
+                          }`}
                         />
+                        {rfqErrors.email && (
+                          <p id="rfq-email-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
+                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
+                            <span>{rfqErrors.email}</span>
+                          </p>
+                        )}
                       </div>
-                      <div>
-                        <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <div className={rfqShaking.phone ? "animate-shake" : ""}>
+                        <label htmlFor="rfq-phone" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                           Phone / WhatsApp *
                         </label>
                         <input
+                          id="rfq-phone"
                           type="tel"
                           inputMode="tel"
                           autoComplete="tel"
-                          required
                           value={rfqForm.phone}
-                          onChange={(e) =>
-                            setRfqForm({ ...rfqForm, phone: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setRfqForm({ ...rfqForm, phone: e.target.value });
+                            if (rfqErrors.phone) setRfqErrors((prev) => { const n = { ...prev }; delete n.phone; return n; });
+                          }}
                           placeholder="+91 98765 43210"
-                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden"
+                          aria-invalid={!!rfqErrors.phone}
+                          aria-describedby={rfqErrors.phone ? "rfq-phone-error" : undefined}
+                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                            rfqErrors.phone
+                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
+                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
+                          }`}
                         />
+                        {rfqErrors.phone && (
+                          <p id="rfq-phone-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
+                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
+                            <span>{rfqErrors.phone}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
 
                     <div>
-                      <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <label htmlFor="rfq-volume" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                         Target Order Volume / Consumption
                       </label>
                       <input
+                        id="rfq-volume"
                         type="text"
                         value={rfqForm.estimatedVolume}
                         onChange={(e) =>
@@ -695,10 +805,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     </div>
 
                     <div>
-                      <label className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
+                      <label htmlFor="rfq-notes" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
                         Specific Dimensions / Printing Notes
                       </label>
                       <textarea
+                        id="rfq-notes"
                         rows={3}
                         value={rfqForm.specNotes}
                         onChange={(e) =>
@@ -721,9 +832,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
                       <button
                         type="submit"
-                        className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-5 py-2.5 text-xs sm:text-sm font-bold text-[#091B2C] shadow-sm transition-colors cursor-pointer"
+                        className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm sm:text-base font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out cursor-pointer"
                       >
-                        Submit Industrial Request
+                        {rfqType === "quote" ? "Submit Quotation Request" : "Submit Sample Request"}
                       </button>
                     </div>
                   </form>

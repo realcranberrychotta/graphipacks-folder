@@ -35,10 +35,10 @@ export default function Header() {
         <div className="flex items-center">
           <Link
             href="/"
-            className="group flex flex-col justify-center text-left select-none transition-transform"
+            className="group flex flex-col justify-center text-left select-none transition-transform duration-200 ease-in-out"
           >
             <span
-              className="font-serif font-bold tracking-[0.08em] text-[#F8F4EC] text-base xs:text-lg sm:text-xl leading-none group-hover:text-[#B08D57] transition-colors"
+              className="font-serif font-bold tracking-[0.08em] text-[#F8F4EC] text-base xs:text-lg sm:text-xl leading-none group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out"
               style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
             >
               GRAPHIPACKS

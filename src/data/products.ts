@@ -553,7 +553,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
     summary:
       "Providing both heavy-duty external PP woven containment bags and high-clarity internal LLDPE liners for bulk commodities, agricultural produce, and construction materials.",
     metaDescription:
-      "Industrial woven PP sacks and heavy-duty extruded LLDPE liner bags for bulk fertilizer, chemicals, flour, and grains. High puncture resistance, custom flexo print, MOQ 5,000 pcs.",
+      "Industrial woven PP sacks and heavy-duty extruded LLDPE liner bags for bulk fertilizer, chemicals, flour, and grains. High puncture resistance, custom flexo print, MOQ 10,000 pcs.",
     moq: "10,000 pcs",
     leadTime: "10-12 days",
     packing: "Standard B2B bale packing",
@@ -795,7 +795,12 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
 ];
 
 export function getProductBySlug(slug: string): ProductDetailData | undefined {
-  return PRODUCTS_DATA.find((p) => p.slug === slug);
+  return PRODUCTS_DATA.find(
+    (p) =>
+      p.slug === slug ||
+      (slug === "wicked-poly-bags" && (p.slug === "wicketted-poly-bags" || p.name.toLowerCase().includes("wicked"))) ||
+      (slug === "wicketted-poly-bags" && (p.slug === "wicked-poly-bags" || p.name.toLowerCase().includes("wicked")))
+  );
 }
 
 export function getRelatedProducts(currentSlug: string, count: number = 3): ProductDetailData[] {

@@ -56,12 +56,14 @@ export default function ScrollReveal({
     <div
       ref={elementRef}
       className={className}
+      data-scroll-reveal
+      data-visible={isVisible ? "true" : "false"}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "none" : "translateY(24px)",
         transitionProperty: "opacity, transform",
-        transitionDuration: "600ms",
-        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+        transitionDuration: "250ms",
+        transitionTimingFunction: "ease-in-out",
         transitionDelay: isVisible ? `${delay}s` : "0s",
         willChange: isVisible ? "auto" : "opacity, transform",
       }}

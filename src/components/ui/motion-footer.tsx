@@ -96,7 +96,7 @@ const STYLES = `
   border: 1px solid var(--pill-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease-in-out;
   color: #F8F4EC;
 }
 
@@ -338,18 +338,18 @@ export function CinematicFooter() {
                 <MagneticButton
                   as={Link}
                   href="/contact"
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57] bg-[#B08D57] text-[#091B2C] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#9A7843] transition-all"
+                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57] bg-[#B08D57] text-[#091B2C] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#9A7843] transition-all duration-200 ease-in-out"
                 >
-                  <ArrowUpRight className="w-5 h-5 text-[#091B2C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  <ArrowUpRight className="w-5 h-5 text-[#091B2C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ease-in-out" />
                   Request Technical Quote
                 </MagneticButton>
                 
                 <MagneticButton
                   as={Link}
                   href="/products"
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#B08D57] hover:text-[#091B2C] transition-all"
+                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out"
                 >
-                  <Package className="w-5 h-5 text-[#B08D57] group-hover:text-[#091B2C] transition-colors" />
+                  <Package className="w-5 h-5 text-[#B08D57] group-hover:text-[#091B2C] transition-colors duration-200 ease-in-out" />
                   Explore Product Line
                 </MagneticButton>
               </div>
@@ -359,35 +359,35 @@ export function CinematicFooter() {
                 <MagneticButton
                   as={Link}
                   href="/products#agriculture-mulch-film"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Mulch &amp; Grow Films
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/products#wicketted-poly-bags"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Wicketted Bags
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/products#laminated-rolls-and-pouches"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Barrier Laminates
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/infrastructure"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Our Infrastructure
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/contact"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Factory &amp; Location
                 </MagneticButton>
@@ -415,9 +415,9 @@ export function CinematicFooter() {
               as="button"
               onClick={scrollToTop}
               aria-label="Back to top"
-              className="w-11 h-11 rounded-full footer-glass-pill border border-[#B08D57]/30 flex items-center justify-center text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-all group order-3"
+              className="w-11 h-11 rounded-full footer-glass-pill border border-[#B08D57]/30 flex items-center justify-center text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out group order-3"
             >
-              <ArrowUp className="w-5 h-5 text-[#F8F4EC] group-hover:text-[#091B2C] transform group-hover:-translate-y-1 transition-all duration-300" />
+              <ArrowUp className="w-5 h-5 text-[#F8F4EC] group-hover:text-[#091B2C] transform group-hover:-translate-y-1 transition-all duration-300 ease-in-out" />
             </MagneticButton>
 
           </div>

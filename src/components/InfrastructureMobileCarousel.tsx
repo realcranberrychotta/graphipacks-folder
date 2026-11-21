@@ -156,7 +156,7 @@ export default function InfrastructureMobileCarousel({
       >
         {/* Animated Carousel Track */}
         <div
-          className={`flex w-full ${isDragging ? "" : "transition-transform duration-500 ease-out"}`}
+          className={`flex w-full ${isDragging ? "" : "transition-transform duration-300 ease-in-out"}`}
           style={{
             transform: `translateX(calc(-${activeIndex * 100}% + ${dragOffset}px))`,
           }}
@@ -207,7 +207,7 @@ export default function InfrastructureMobileCarousel({
           <button
             type="button"
             onClick={handlePrev}
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/30 transition cursor-pointer"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/30 transition-colors duration-200 ease-in-out cursor-pointer"
             aria-label="Previous station"
           >
             <ChevronLeft className="h-5 w-5 text-[#B08D57]" />
@@ -222,7 +222,7 @@ export default function InfrastructureMobileCarousel({
                   type="button"
                   onClick={() => selectStation(i)}
                   aria-label={`Go to station ${i + 1}`}
-                  className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  className={`transition-all duration-300 ease-in-out rounded-full cursor-pointer ${
                     i === activeIndex
                       ? "w-6 h-2 bg-[#B08D57]"
                       : "w-2 h-2 bg-[#EFE8DC]/30 hover:bg-[#EFE8DC]/60"
@@ -238,7 +238,7 @@ export default function InfrastructureMobileCarousel({
           <button
             type="button"
             onClick={handleNext}
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/30 transition cursor-pointer"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/30 transition-colors duration-200 ease-in-out cursor-pointer"
             aria-label="Next station"
           >
             <ChevronRight className="h-5 w-5 text-[#B08D57]" />
@@ -265,7 +265,7 @@ export default function InfrastructureMobileCarousel({
                 key={item.title}
                 type="button"
                 onClick={() => selectStation(i)}
-                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl border text-left transition-all duration-200 flex items-center justify-between cursor-pointer ${
+                className={`w-full min-h-[44px] px-4 py-2.5 rounded-xl border text-left transition-all duration-200 ease-in-out flex items-center justify-between cursor-pointer ${
                   isActive
                     ? "bg-[#0F2A44] border-[#B08D57] text-[#F8F4EC] shadow-md shadow-[#091B2C]/40"
                     : "bg-[#091B2C]/60 border-[#B08D57]/20 text-[#EFE8DC]/70 hover:bg-[#0F2A44]/60 hover:text-[#F8F4EC]"

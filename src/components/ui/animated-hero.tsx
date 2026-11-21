@@ -83,14 +83,23 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
   const [contactPhone, setContactPhone] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSkipped, setIsSkipped] = useState(false);
 
   const shouldReduceMotion = useReducedMotion();
   const rows = particleCount;
   const totalParticles = rows * rows;
 
+  useEffect(() => {
+    const handleSkip = () => {
+      setIsSkipped(true);
+    };
+    window.addEventListener("skip-hero-animation", handleSkip);
+    return () => window.removeEventListener("skip-hero-animation", handleSkip);
+  }, []);
+
   // Initialize bronze / ivory particles (hardware-accelerated DOM dots)
   useEffect(() => {
-    if (!showParticles || shouldReduceMotion || !containerRef.current) return;
+    if (!showParticles || shouldReduceMotion || isSkipped || !containerRef.current) return;
 
     const container = containerRef.current;
     container.innerHTML = "";
@@ -130,7 +139,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
         box-shadow: 0 0 ${glowSize * 0.16}rem 0 rgba(176, 141, 87, 0.45);
         mix-blend-mode: screen;
         z-index: ${Math.round(totalParticles - distanceFromCenter * 4)};
-        transition: transform 0.06s linear;
+        transition: transform 0.06s ease-in-out;
       `;
 
       container.appendChild(particle);
@@ -265,25 +274,26 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     setIsSubmitted(true);
   };
 
-  // Text Reveal Animation Variants (Transform & Opacity Only)
+  // Text Reveal Animation Variants (Transform & Opacity Only; Instant if reduced motion or skipped)
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion || isSkipped ? 1 : 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
-        delayChildren: shouldReduceMotion ? 0 : 0.06,
+        duration: shouldReduceMotion || isSkipped ? 0 : 0.2,
+        staggerChildren: shouldReduceMotion || isSkipped ? 0 : 0.12,
+        delayChildren: shouldReduceMotion || isSkipped ? 0 : 0.06,
       },
     },
   };
 
   const textLineVariant = {
-    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 },
+    hidden: shouldReduceMotion || isSkipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.7,
+        duration: shouldReduceMotion || isSkipped ? 0 : 0.7,
         ease: [0.16, 1, 0.3, 1] as const,
       },
     },
@@ -305,7 +315,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
       </div>
 
       {/* ─── Interactive Bronze Particle Matrix (Desktop/Tablet) ─── */}
-      {showParticles && (
+      {showParticles && !shouldReduceMotion && !isSkipped && (
         <div
           className="hidden sm:flex absolute inset-0 items-center justify-center pointer-events-none opacity-45 sm:opacity-60"
           aria-hidden="true"
@@ -332,12 +342,12 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             animate="visible"
             className="w-full flex flex-col items-center justify-center text-center"
           >
-            {/* 1. Top Small Label: Bronze, Letter-Spaced */}
+            {/* 1. Top Small Label: Demoted to neutral tone so main quote CTA dominates */}
             <motion.div
               variants={textLineVariant}
-              className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-[#B08D57] mb-3"
+              className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-[#EFE8DC]/80 mb-3"
             >
-              <Sparkles className="h-3 w-3 text-[#B08D57] shrink-0" aria-hidden="true" />
+              <Sparkles className="h-3 w-3 text-[#EFE8DC]/70 shrink-0" aria-hidden="true" />
               <span>EST. 1984  •  GRAPHIPACKS PRIVATE LIMITED</span>
             </motion.div>
 

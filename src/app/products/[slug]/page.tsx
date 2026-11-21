@@ -19,9 +19,9 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return PRODUCTS_DATA.map((product) => ({
-    slug: product.slug,
-  }));
+  const slugs = new Set(PRODUCTS_DATA.map((product) => product.slug));
+  slugs.add("wicked-poly-bags");
+  return Array.from(slugs).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -208,7 +208,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               {relatedProducts.map((rel, idx) => (
                 <article
                   key={rel.slug}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/30 bg-white shadow-sm hover:shadow-xl hover:border-[#B08D57] transition-all duration-300"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/30 bg-white shadow-sm hover:shadow-xl hover:border-[#B08D57] transition-all duration-300 ease-in-out"
                 >
                   <div>
                     {/* Related Product Image */}
@@ -223,7 +223,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                         decoding="async"
                         placeholder="blur"
                         blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0F2A44]/60 via-transparent to-transparent opacity-80" />
 
@@ -245,7 +245,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                       <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B08D57] block">
                         Line 0{idx + 1}
                       </span>
-                      <h3 className="mt-1 font-[family-name:var(--font-playfair)] text-xl font-bold text-[#0F2A44] group-hover:text-[#B08D57] transition-colors">
+                      <h3 className="mt-1 font-[family-name:var(--font-playfair)] text-xl font-bold text-[#0F2A44] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
                         <Link href={`/products/${rel.slug}`}>
                           <span className="absolute inset-0" aria-hidden="true" />
                           {rel.name}
@@ -257,9 +257,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  <div className="border-t border-[#0F2A44]/10 p-6 pt-3 flex items-center justify-between text-xs font-bold text-[#0F2A44] group-hover:text-[#B08D57] transition-colors">
+                  <div className="border-t border-[#0F2A44]/10 p-6 pt-3 flex items-center justify-between text-xs font-bold text-[#0F2A44] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
                     <span>View Specifications</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-in-out" />
                   </div>
                 </article>
               ))}

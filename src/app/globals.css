@@ -246,9 +246,9 @@ body {
 .hero-layer-explorer__glow,
 .hero-layer-explorer__label {
   transition:
-    fill-opacity 200ms ease,
-    stroke-opacity 200ms ease,
-    stroke-width 200ms ease;
+    fill-opacity 200ms ease-in-out,
+    stroke-opacity 200ms ease-in-out,
+    stroke-width 200ms ease-in-out;
 }
 
 /* Info card */
@@ -267,8 +267,8 @@ body {
   min-height: 56px;
   opacity: 0.85;
   transition:
-    opacity 200ms ease,
-    border-color 200ms ease;
+    opacity 200ms ease-in-out,
+    border-color 200ms ease-in-out;
 }
 
 .hero-layer-explorer__card--visible {
@@ -282,7 +282,7 @@ body {
   height: 8px;
   border-radius: 50%;
   margin-top: 4px;
-  transition: background 200ms ease;
+  transition: background 200ms ease-in-out;
 }
 
 .hero-layer-explorer__card-name {
@@ -323,25 +323,59 @@ body {
 }
 
 /* ==========================================================================
-   prefers-reduced-motion — disable layer highlight & radiance animations
+   prefers-reduced-motion — disable ALL hero, scroll, and card animations
+   and show content instantly
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .hero-layer-explorer__body,
   .hero-layer-explorer__glow,
   .hero-layer-explorer__label,
   .hero-layer-explorer__card {
-    transition: none;
+    transition: none !important;
   }
 
   .royal-backlight-source {
-    animation: none;
+    animation: none !important;
     opacity: 0.75;
-    transform: none;
+    transform: none !important;
   }
 
   .royal-text-shimmer {
-    animation: none;
+    animation: none !important;
   }
+
+  .hero-grain-overlay {
+    animation: none !important;
+  }
+
+  [data-stagger-card],
+  [data-stagger-grid] {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Instant display when user activates "Skip animation" */
+[data-skip-animation="true"] [data-stagger-card] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+[data-skip-animation="true"] .hero-grain-overlay {
+  animation: none !important;
 }
 
 /* ==========================================================================
@@ -395,4 +429,40 @@ body {
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 -2px 10px rgba(176, 141, 87, 0.25));
+}
+
+/* Staggered Cards Scroll-In — Accessible Fallbacks (JS Disabled / Reduced Motion) */
+@media (scripting: none) {
+  [data-stagger-card] {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger-card] {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    transition: none !important;
+  }
+}
+
+/* Form Validation Field Shake Animation */
+@keyframes field-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-6px);
+  }
+  40%, 80% {
+    transform: translateX(6px);
+  }
+}
+
+.animate-shake {
+  animation: field-shake 250ms ease-in-out;
 }

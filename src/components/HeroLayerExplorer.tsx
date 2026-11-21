@@ -237,7 +237,7 @@ export default function HeroLayerExplorer({}: {
                     0{idx + 1} {"//"} STAGE
                   </span>
                   <span
-                    className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                    className={`h-1.5 w-1.5 rounded-full transition-colors duration-200 ease-in-out ${
                       isSelected
                         ? "bg-[#B08D57] shadow-[0_0_6px_#B08D57]"
                         : "bg-[#1B3D5E]/60"
@@ -271,7 +271,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("surface")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
                 lightMode === "surface"
                   ? "bg-gradient-to-r from-[#B08D57] to-[#E5CCA0] text-[#091B2C] shadow-sm font-extrabold"
                   : "bg-transparent text-[#F8F4EC]/65 hover:text-[#F8F4EC] hover:bg-[#0F2A44]"
@@ -285,7 +285,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("backlight")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
                 lightMode === "backlight"
                   ? "bg-gradient-to-r from-[#F8F4EC] to-[#E5CCA0] text-[#091B2C] shadow-sm font-extrabold"
                   : "bg-transparent text-[#F8F4EC]/65 hover:text-[#F8F4EC] hover:bg-[#0F2A44]"
@@ -299,7 +299,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("uv")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
                 lightMode === "uv"
                   ? "bg-gradient-to-r from-[#a855f7] to-[#38bdf8] text-[#091B2C] shadow-sm font-extrabold"
                   : "bg-transparent text-[#F8F4EC]/65 hover:text-[#F8F4EC] hover:bg-[#0F2A44]"
@@ -320,7 +320,7 @@ export default function HeroLayerExplorer({}: {
         >
           {/* Internal Ground-Glass Diffuse Lightbox Grid */}
           <div
-            className={`absolute inset-0 transition-opacity duration-500 pointer-events-none ${
+            className={`absolute inset-0 transition-opacity duration-300 ease-in-out pointer-events-none ${
               lightMode === "backlight"
                 ? "opacity-60 bg-[radial-gradient(circle_at_center,rgba(248,244,236,0.35)_0%,rgba(27,61,94,0.3)_60%,transparent_100%)]"
                 : lightMode === "uv"

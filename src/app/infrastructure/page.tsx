@@ -60,7 +60,7 @@ export default function InfrastructurePage() {
       {/* Return to Home / Catalog button */}
       <Link
         href="/"
-        className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 flex min-h-[44px] items-center gap-2 px-4 py-2.5 bg-[#0F2A44]/80 backdrop-blur-md border border-[#B08D57]/30 rounded-full hover:bg-[#1B3D5E]/80 transition-colors text-xs sm:text-sm font-medium tracking-wide text-[#F8F4EC] shadow-lg shadow-[#091B2C]/50"
+        className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 flex min-h-[44px] items-center gap-2 px-4 py-2.5 bg-[#0F2A44]/80 backdrop-blur-md border border-[#B08D57]/30 rounded-full hover:bg-[#1B3D5E]/80 transition-colors duration-200 ease-in-out text-xs sm:text-sm font-medium tracking-wide text-[#F8F4EC] shadow-lg shadow-[#091B2C]/50"
       >
         <ArrowLeft className="w-4 h-4 text-[#B08D57]" /> Return to Catalog
       </Link>

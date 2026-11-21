@@ -803,160 +803,351 @@ function initMachineScene(
       0.032,
       M.dark
     )
-    const reels: THREE.Group[] = []
-    for (const [idx, [x, y]] of (
-      [
-        [-1.03, 1.82],
-        [-0.94, 2.78],
-      ] as const
-    ).entries()) {
-      const reel = new THREE.Group()
-      reel.position.set(x, y, -0.48)
-      engine.add(reel)
-      reel.userData.moving = true
+    // -------------------------------------------------------------------------
+    // Station 0 (Flexo): Extruder & Hopper with White Pellets, Blown-Film Bubble,
+    // ONE Large Horizontal Printed Film Roll, and Flat Stand-Up Pouch Sample
+    // -------------------------------------------------------------------------
 
-      // Central steel mandrel spindle through the roll core
-      const spindle = cyl(reel, 0.08, 0.42, 0, 0, 0, M.chrome)
-      spindle.rotation.x = Math.PI / 2
+    // 1. Plastic manufacturing cue: Extruder base, Feed Hopper with white polymer pellets
+    // Extruder barrel housing
+    box(engine, 0.50, 0.28, 0.40, -0.78, 1.05, -0.32, M.body, 0.03)
+    cyl(engine, 0.12, 0.07, -0.78, 1.05, -0.16, M.copper)
+    cyl(engine, 0.12, 0.07, -0.78, 1.05, -0.48, M.copper)
 
-      // Core chucks at both ends of the roll
-      for (const z of [-0.16, 0.16]) {
-        const chuck = cyl(reel, 0.17, 0.035, 0, 0, z, M.chrome)
-        chuck.rotation.x = Math.PI / 2
-      }
+    // Clear feed throat sight-glass
+    cyl(engine, 0.075, 0.22, -0.78, 1.30, -0.32, M.glass)
+    // Visible polymer pellets in feed throat
+    ball(engine, 0.024, -0.78, 1.24, -0.32, M.paper)
+    ball(engine, 0.025, -0.77, 1.30, -0.31, M.paper)
+    ball(engine, 0.023, -0.79, 1.36, -0.33, M.paper)
 
-      // Large horizontal printed film roll: solid cylinder wrapped in printed film
-      // in bronze / white / red printed colours like the laminated film rolls
-      const baseMat = idx === 0 ? M.amber : M.red
-      const bandMat = idx === 0 ? M.ivory : M.amber
-      const stripeMat = idx === 0 ? M.red : M.ivory
+    // Conical stainless steel feed hopper
+    const hopperGeo = new THREE.CylinderGeometry(0.24, 0.08, 0.36, 24)
+    const hopperMesh = new THREE.Mesh(hopperGeo, M.chrome)
+    hopperMesh.position.set(-0.78, 1.58, -0.32)
+    hopperMesh.castShadow = true
+    engine.add(hopperMesh)
+    cyl(engine, 0.25, 0.035, -0.78, 1.76, -0.32, M.chrome)
 
-      // Main solid film roll body (no holes, no perforations, no black film-strip)
-      const rollBody = cyl(reel, 0.44, 0.30, 0, 0, 0, baseMat, undefined, 32)
-      rollBody.rotation.x = Math.PI / 2
-
-      // Center printed wrap band
-      const centerBand = cyl(reel, 0.444, 0.15, 0, 0, 0, bandMat, undefined, 32)
-      centerBand.rotation.x = Math.PI / 2
-
-      // Flanking printed stripes
-      for (const z of [-0.09, 0.09]) {
-        const stripe = cyl(reel, 0.446, 0.035, 0, 0, z, stripeMat, undefined, 32)
-        stripe.rotation.x = Math.PI / 2
-      }
-
-      reels.push(reel)
+    // White polymer pellets mound filling the hopper mouth
+    const pelletMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.32,
+      metalness: 0.04,
+    })
+    const pelletGeo = new THREE.SphereGeometry(0.028, 10, 8)
+    const pelletGroup = new THREE.Group()
+    pelletGroup.position.set(-0.78, 1.75, -0.32)
+    engine.add(pelletGroup)
+    const pelletOffsets: [number, number, number][] = [
+      [0, 0.03, 0],
+      [-0.05, 0.02, 0.04],
+      [0.06, 0.02, 0.03],
+      [-0.03, 0.02, -0.06],
+      [0.04, 0.02, -0.05],
+      [-0.11, 0.01, 0.08],
+      [0.12, 0.01, 0.06],
+      [-0.08, 0.01, -0.11],
+      [0.10, 0.01, -0.09],
+      [-0.15, 0.0, 0.02],
+      [0.16, 0.0, -0.01],
+      [0.02, 0.0, 0.16],
+      [-0.02, 0.0, -0.15],
+      [-0.13, -0.01, -0.08],
+      [0.14, -0.01, 0.09],
+      [0.09, -0.01, -0.13],
+      [-0.08, -0.01, 0.14],
+      [0, -0.02, 0.18],
+      [0, -0.02, -0.18],
+      [-0.18, -0.02, 0],
+      [0.18, -0.02, 0],
+    ]
+    for (const [px, py, pz] of pelletOffsets) {
+      const pMesh = new THREE.Mesh(pelletGeo, pelletMat)
+      pMesh.position.set(px, py, pz)
+      pelletGroup.add(pMesh)
     }
 
-    // Continuous polymer film web guide line passing between tension rollers into the press
+    // 2. Translucent blown-film bubble rising from extrusion circular die
+    cyl(engine, 0.22, 0.10, -0.42, 1.10, -0.32, M.dark)
+    cyl(engine, 0.25, 0.05, -0.42, 1.16, -0.32, M.chrome)
+    cyl(engine, 0.23, 0.03, -0.42, 1.20, -0.32, M.copper)
+
+    const bubblePts = [
+      new THREE.Vector2(0.12, 0.0),
+      new THREE.Vector2(0.17, 0.14),
+      new THREE.Vector2(0.28, 0.32),
+      new THREE.Vector2(0.32, 0.55),
+      new THREE.Vector2(0.33, 1.05),
+      new THREE.Vector2(0.30, 1.35),
+      new THREE.Vector2(0.17, 1.50),
+      new THREE.Vector2(0.06, 1.56),
+    ]
+    const bubbleGeo = new THREE.LatheGeometry(bubblePts, 32)
+    const bubbleMat = new THREE.MeshStandardMaterial({
+      color: 0xd9eafd,
+      transparent: true,
+      opacity: 0.42,
+      roughness: 0.08,
+      metalness: 0.18,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    })
+    const blownFilmBubble = new THREE.Mesh(bubbleGeo, bubbleMat)
+    blownFilmBubble.position.set(-0.42, 1.22, -0.32)
+    blownFilmBubble.userData.moving = true
+    engine.add(blownFilmBubble)
+
+    // Frost line ring
+    const frostRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.325, 0.012, 8, 32),
+      new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.55,
+        roughness: 0.35,
+      })
+    )
+    frostRing.rotation.x = Math.PI / 2
+    frostRing.position.set(-0.42, 1.77, -0.32)
+    engine.add(frostRing)
+
+    // Collapsing A-frame guide slats & nip rollers
+    box(engine, 0.02, 0.28, 0.46, -0.52, 2.66, -0.32, M.edge, 0.005)
+    box(engine, 0.02, 0.28, 0.46, -0.32, 2.66, -0.32, M.edge, 0.005)
+    const nip1 = cyl(engine, 0.038, 0.48, -0.42, 2.78, -0.32, M.chrome)
+    nip1.rotation.x = Math.PI / 2
+
+    // Extruded film web entering the flexo print assembly
     tube(
       engine,
       [
-        [-1.36, 2.66, -0.48],
-        [-1.5, 2.34, -0.48],
-        [-1.34, 1.92, -0.48],
+        [-0.42, 2.78, -0.32],
+        [-0.30, 2.35, -0.32],
+        [-0.12, 2.10, -0.32],
       ],
-      0.035,
-      M.ivory
+      0.018,
+      bubbleMat
     )
 
-    // Printed pouch sample texture: flat white pouch with a red and bronze printed label
-    const videoTexture = canvasTexture(384, 640, () => {})
+    // 3. ONE large horizontal printed film roll lying flat (no holes, no spokes, no red disc)
+    const rollTexture = canvasTexture(1024, 512, (c, w, h) => {
+      c.fillStyle = '#f6f4ed'
+      c.fillRect(0, 0, w, h)
+
+      for (let r = 0; r < 2; r++) {
+        const rx = r * 512
+        // Navy header band
+        c.fillStyle = '#0F2A44'
+        c.fillRect(rx, 0, 512, 68)
+
+        // Bronze rules
+        c.fillStyle = '#B08D57'
+        c.fillRect(rx, 68, 512, 8)
+        c.fillRect(rx, 436, 512, 8)
+
+        print(c, 'GRAPHIPACKS', rx + 24, 46, 36, '#ffffff', 700)
+        print(c, 'FLEXO PRINTED FILM', rx + 300, 46, 16, '#B08D57', 600)
+
+        // Printed pouch layouts on roll surface
+        for (let row = 0; row < 2; row++) {
+          const ry = 88 + row * 168
+          c.fillStyle = '#ffffff'
+          c.fillRect(rx + 20, ry, 472, 150)
+          c.strokeStyle = '#B08D57'
+          c.lineWidth = 2.5
+          c.strokeRect(rx + 20, ry, 472, 150)
+
+          c.fillStyle = '#ebe6dc'
+          c.fillRect(rx + 20, ry, 18, 150)
+          c.fillRect(rx + 474, ry, 18, 150)
+
+          print(c, 'STAND-UP BARRIER POUCH', rx + 52, ry + 36, 20, '#0F2A44', 700)
+          print(c, 'HIGH-BARRIER LAMINATE · 100µm', rx + 52, ry + 60, 13, '#B08D57', 600)
+          print(c, 'PET / MET-PET / LLDPE', rx + 52, ry + 82, 12, '#505a64', 500)
+
+          c.fillStyle = '#B08D57'
+          c.beginPath()
+          c.roundRect(rx + 52, ry + 94, 150, 26, 4)
+          c.fill()
+          print(c, 'GRAPHIPACKS QC OK', rx + 62, ry + 112, 12, '#ffffff', 700)
+
+          c.fillStyle = '#0F2A44'
+          for (let b = 0; b < 24; b++) {
+            const bw = b % 3 === 0 ? 3.5 : b % 5 === 0 ? 4.5 : 2
+            c.fillRect(rx + 235 + b * 7, ry + 94, bw, 32)
+          }
+        }
+
+        const regColors = ['#0F2A44', '#B08D57', '#59616b', '#B08D57', '#0F2A44']
+        regColors.forEach((col, idx) => {
+          c.fillStyle = col
+          c.fillRect(rx + 28 + idx * 36, 460, 24, 24)
+        })
+        print(c, 'MADURAI PLANT · 8-COLOR REGISTER · LOT GP-2026', rx + 220, 478, 13, '#6e7780', 600)
+      }
+    })
+
+    // Roll cradle pillow blocks & bottom support rollers
+    box(engine, 0.14, 0.36, 0.30, 0.42 - 0.42, 0.98, -0.22, M.dark, 0.02)
+    box(engine, 0.14, 0.36, 0.30, 0.42 + 0.42, 0.98, -0.22, M.dark, 0.02)
+    const cr1 = cyl(engine, 0.065, 0.86, 0.42, 0.88, -0.32, M.chrome)
+    cr1.rotation.z = Math.PI / 2
+    const cr2 = cyl(engine, 0.065, 0.86, 0.42, 0.88, -0.12, M.chrome)
+    cr2.rotation.z = Math.PI / 2
+
+    // ONE large horizontal printed film roll lying flat
+    const horizontalRoll = new THREE.Group()
+    horizontalRoll.position.set(0.42, 1.20, -0.22)
+    horizontalRoll.userData.moving = true
+    engine.add(horizontalRoll)
+
+    const rollMat = new THREE.MeshStandardMaterial({
+      map: rollTexture.texture,
+      roughness: 0.28,
+      metalness: 0.15,
+    })
+    const rollGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.74, 36)
+    const rollMesh = new THREE.Mesh(rollGeo, rollMat)
+    rollMesh.rotation.z = Math.PI / 2
+    rollMesh.castShadow = true
+    rollMesh.receiveShadow = true
+    horizontalRoll.add(rollMesh)
+
+    // Central mandrel spindle through core
+    const coreSpindle = cyl(horizontalRoll, 0.07, 0.96, 0, 0, 0, M.chrome)
+    coreSpindle.rotation.z = Math.PI / 2
+
+    // Solid core ends with dark cardboard core and chrome chucks (no holes, no spokes, no red disc)
+    for (const x of [-0.375, 0.375]) {
+      const coreDisc = cyl(horizontalRoll, 0.15, 0.015, x, 0, 0, M.dark)
+      coreDisc.rotation.z = Math.PI / 2
+      const chuck = cyl(horizontalRoll, 0.11, 0.05, x + (x > 0 ? 0.03 : -0.03), 0, 0, M.chrome)
+      chuck.rotation.z = Math.PI / 2
+    }
+
+    // Printed film web unrolling from the horizontal roll into the flexo press
+    const rollWeb = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.70, 0.38),
+      new THREE.MeshStandardMaterial({
+        map: rollTexture.texture,
+        roughness: 0.28,
+        metalness: 0.15,
+        side: THREE.DoubleSide,
+      })
+    )
+    rollWeb.rotation.x = -Math.PI / 2
+    rollWeb.position.set(0.42, 1.20 + 0.44, -0.41)
+    engine.add(rollWeb)
+
+    // 4. Flat printed pouch sample standing up, showing a real laminated pouch design
+    const videoTexture = canvasTexture(440, 720, () => {})
     function drawVideo(t = 0) {
       const c = videoTexture.ctx,
-        w = 384,
-        h = 640
+        w = 440,
+        h = 720
 
       // White pouch substrate background
       c.fillStyle = '#fbfbfa'
       c.fillRect(0, 0, w, h)
 
       // Heat-sealed top and bottom margins with crimp lines
-      c.fillStyle = '#ece8de'
-      c.fillRect(0, 0, w, 42)
-      c.fillRect(0, 598, w, 42)
-      c.strokeStyle = '#dcd7ca'
+      c.fillStyle = '#eae5db'
+      c.fillRect(0, 0, w, 48)
+      c.fillRect(0, 672, w, 48)
+      c.strokeStyle = '#d7d1c3'
       c.lineWidth = 1.5
-      for (let y = 7; y < 38; y += 5) {
+      for (let y = 8; y < 44; y += 5) {
         c.beginPath()
         c.moveTo(0, y)
         c.lineTo(w, y)
         c.stroke()
       }
-      for (let y = 605; y < 635; y += 5) {
+      for (let y = 678; y < 714; y += 5) {
         c.beginPath()
         c.moveTo(0, y)
         c.lineTo(w, y)
         c.stroke()
       }
 
-      // Bold red printed banner header
-      c.fillStyle = '#b82626'
-      c.fillRect(0, 42, w, 102)
-
-      // Bronze accent rules
+      // Deep Navy header banner with Bronze accent lines
+      c.fillStyle = '#0F2A44'
+      c.fillRect(0, 48, w, 116)
       c.fillStyle = '#B08D57'
-      c.fillRect(0, 40, w, 3)
-      c.fillRect(0, 144, w, 4)
+      c.fillRect(0, 46, w, 3)
+      c.fillRect(0, 164, w, 4)
 
       // Brand typography in header
-      print(c, 'GRAPHIPACKS', 32, 85, 26, '#ffffff', 700)
-      print(c, 'PREMIUM FLEXIBLE PACKAGING', 32, 118, 12, '#ffe0e0', 600)
+      print(c, 'GRAPHIPACKS', 32, 98, 30, '#ffffff', 700)
+      print(c, 'PREMIUM BARRIER PACKAGING', 32, 134, 13, '#B08D57', 600)
 
       // Main product title
-      print(c, 'STAND-UP BARRIER POUCH', 32, 180, 19, '#1a2228', 700)
-      print(c, 'HIGH-BARRIER ROTOGRAVURE & FLEXO', 32, 206, 12, '#B08D57', 600)
+      print(c, 'STAND-UP BARRIER POUCH', 32, 206, 21, '#0F2A44', 700)
+      print(c, 'SOLVENTLESS LAMINATION · 3-PLY', 32, 234, 13, '#B08D57', 600)
 
       // Center printed label panel with bronze border
       c.strokeStyle = '#B08D57'
       c.lineWidth = 2
-      c.strokeRect(28, 225, 328, 185)
+      c.strokeRect(28, 256, 384, 210)
       c.fillStyle = '#f6f3eb'
-      c.fillRect(30, 227, 324, 181)
+      c.fillRect(30, 258, 380, 206)
 
-      // Red highlight badge inside panel
-      c.fillStyle = '#b82626'
+      // Bronze highlight badge inside panel
+      c.fillStyle = '#B08D57'
       c.beginPath()
-      c.roundRect(44, 245, 145, 24, 4)
+      c.roundRect(46, 276, 175, 26, 4)
       c.fill()
-      print(c, '8-COLOUR PRINT', 54, 262, 11, '#ffffff', 700)
+      print(c, '100% BARRIER INTEGRITY', 56, 294, 11, '#ffffff', 700)
 
       // Pouch features
-      print(c, '• MOISTURE & AROMA BARRIER', 44, 298, 14, '#1a2228', 600)
-      print(c, '• TEAR NOTCH & ZIPPER LOCK', 44, 328, 14, '#1a2228', 600)
-      print(c, '• FOOD GRADE COMPLIANT', 44, 358, 14, '#1a2228', 600)
-      print(c, '• SOLVENTLESS LAMINATION', 44, 388, 13, '#B08D57', 600)
+      print(c, '• MOISTURE & OXYGEN BARRIER', 46, 332, 14, '#0F2A44', 600)
+      print(c, '• HERMETIC HEAT-SEAL WITH ZIPPER', 46, 364, 14, '#0F2A44', 600)
+      print(c, '• FOOD GRADE COMPLIANT (ISO 9001)', 46, 396, 14, '#0F2A44', 600)
+      print(c, '• SOLVENTLESS ADHESIVE BONDING', 46, 428, 13, '#B08D57', 600)
 
       // Technical specs
-      print(c, 'MATERIAL: PET / MET-PET / LLDPE', 32, 442, 13, '#1a2228', 600)
-      print(c, 'SPEC: 100 MICRON · 1000g POUCH', 32, 466, 13, '#626d76', 500)
-      print(c, 'BATCH: GP-MADURAI-2026', 32, 490, 13, '#626d76', 500)
+      print(c, 'MATERIAL: PET 12µ / MET-PET 12µ / PE 80µ', 32, 492, 13, '#0F2A44', 600)
+      print(c, 'SPEC: 1000g STAND-UP POUCH · 110 MICRON', 32, 518, 13, '#5e6871', 500)
+      print(c, 'BATCH: GP-MADURAI-2026-FLEXO', 32, 544, 13, '#5e6871', 500)
 
       // Barcode block
-      c.fillStyle = '#1a2228'
+      c.fillStyle = '#0F2A44'
       for (let i = 0; i < 48; i++) {
-        const bx = 32 + i * 6.7
-        const bw = (i % 3 === 0) ? 3 : (i % 5 === 0) ? 4 : 2
-        c.fillRect(bx, 515, bw, 42)
+        const bx = 32 + i * 7.8
+        const bw = i % 3 === 0 ? 3.5 : i % 5 === 0 ? 4.5 : 2
+        c.fillRect(bx, 570, bw, 46)
       }
-      print(c, '8 901234 567890', 115, 575, 12, '#626d76', 500)
+      print(c, '8 901234 567890', 140, 638, 13, '#5e6871', 500)
 
       // Footer
-      print(c, 'EST. 1984 · MADURAI, INDIA', 32, 626, 12, '#B08D57', 600)
+      print(c, 'MADURAI PACKAGING PLANT · SINCE 1984', 32, 698, 12, '#B08D57', 600)
 
       videoTexture.texture.needsUpdate = true
     }
     drawVideo(0)
-    const outputVideo = new THREE.Group()
-    outputVideo.userData.moving = true
-    engine.add(outputVideo)
-    // Flat white pouch standing upright in the exact same position
-    box(outputVideo, 0.62, 1.06, 0.028, 0, 1.36, 0.61, M.ivory, 0.02)
-    // Top and bottom heat seal crimp bands
-    box(outputVideo, 0.624, 0.06, 0.034, 0, 1.86, 0.61, M.edge, 0.008)
-    box(outputVideo, 0.624, 0.05, 0.034, 0, 0.86, 0.61, M.edge, 0.008)
-    // Printed pouch front label
-    screen(outputVideo, 0.58, 0.96, 0, 1.36, 0.626, videoTexture)
+
+    // Flat printed pouch sample standing upright on display stand
+    const pouchSample = new THREE.Group()
+    pouchSample.userData.moving = true
+    engine.add(pouchSample)
+
+    // Acrylic / dark mounting stand on station bed
+    box(engine, 0.72, 0.08, 0.22, 0, 0.82, 0.63, M.dark, 0.02)
+    box(engine, 0.70, 0.02, 0.04, 0, 0.87, 0.72, M.chrome, 0.005)
+    box(engine, 0.22, 0.35, 0.04, 0, 1.02, 0.52, M.chrome, 0.01)
+
+    // Stand-up pouch body (slight backward tilt for natural upright stand-up presentation)
+    pouchSample.rotation.x = -0.08
+    box(pouchSample, 0.62, 1.06, 0.028, 0, 1.36, 0.61, M.ivory, 0.02)
+    // Heat seal crimp borders at top and bottom
+    box(pouchSample, 0.624, 0.06, 0.034, 0, 1.86, 0.61, M.edge, 0.008)
+    box(pouchSample, 0.624, 0.05, 0.034, 0, 0.86, 0.61, M.edge, 0.008)
+    // Tear notches on sides
+    box(pouchSample, 0.025, 0.02, 0.036, -0.31, 1.80, 0.61, M.dark, 0)
+    box(pouchSample, 0.025, 0.02, 0.036, 0.31, 1.80, 0.61, M.dark, 0)
+
+    // High-definition printed pouch front artwork
+    screen(pouchSample, 0.58, 0.96, 0, 1.36, 0.626, videoTexture)
     box(engine, 1.14, 0.12, 0.2, 0, 0.83, 0.66, M.dark, 0.025)
     for (const x of [-0.42, 0.42]) {
       const r = cyl(engine, 0.115, 0.18, x, 0.92, 0.6, M.chrome)
@@ -1276,12 +1467,12 @@ function initMachineScene(
     )
     const belt = new THREE.Group()
     machine.add(belt)
-    const frameMesh = new THREE.Mesh(new THREE.TubeGeometry(path, 150, 0.35, 8, true), M.dark)
-    frameMesh.scale.y = 0.3
+    const frameMesh = new THREE.Mesh(new THREE.TubeGeometry(path, 150, 0.58, 8, true), M.dark)
+    frameMesh.scale.y = 0.28
     frameMesh.position.y = 0.51
     belt.add(frameMesh)
     const beltCount = 148,
-      beltSlats = new THREE.InstancedMesh(boxGeo(0.135, 0.065, 0.63, 0.012), M.body, beltCount)
+      beltSlats = new THREE.InstancedMesh(boxGeo(0.14, 0.075, 1.15, 0.015), M.body, beltCount)
     beltSlats.receiveShadow = true
     beltSlats.castShadow = false
     belt.add(beltSlats)
@@ -1304,19 +1495,26 @@ function initMachineScene(
     updateBelt(0)
     for (const side of [-1, 1]) {
       const pts = []
+      const ptsLower = []
       for (let i = 0; i <= 160; i++) {
         path.getPointAt(i / 160, pVec)
         path.getTangentAt(i / 160, tVec)
         pts.push(
-          pVec.clone().add(new THREE.Vector3(-tVec.z * 0.36 * side, 0.09, tVec.x * 0.36 * side))
+          pVec.clone().add(new THREE.Vector3(-tVec.z * 0.61 * side, 0.12, tVec.x * 0.61 * side))
+        )
+        ptsLower.push(
+          pVec.clone().add(new THREE.Vector3(-tVec.z * 0.61 * side, 0.03, tVec.x * 0.61 * side))
         )
       }
       const railPath = new THREE.CatmullRomCurve3(pts)
-      belt.add(new THREE.Mesh(new THREE.TubeGeometry(railPath, 160, 0.028, 6, false), M.chrome))
+      belt.add(new THREE.Mesh(new THREE.TubeGeometry(railPath, 160, 0.024, 6, false), M.chrome))
+      const lowerRailPath = new THREE.CatmullRomCurve3(ptsLower)
+      belt.add(new THREE.Mesh(new THREE.TubeGeometry(lowerRailPath, 160, 0.018, 6, false), M.dark))
     }
     for (let i = 0; i < 16; i++) {
       const p = path.getPointAt(i / 16)
-      cyl(belt, 0.045, 0.43, p.x, 0.53, p.z, M.chrome)
+      cyl(belt, 0.06, 0.44, p.x, 0.53, p.z, M.chrome)
+      cyl(belt, 0.13, 0.03, p.x, 0.31, p.z, M.dark)
     }
     // Copper pneumatic lines link the station footings independently from the conveyor.
     const pipes = new THREE.Group()
@@ -1376,25 +1574,72 @@ function initMachineScene(
       const g = new THREE.Group()
       g.userData.moving = true
       machine.add(g)
-      box(g, 0.47, 0.71, 0.04, 0, 0, 0, M.ivory, 0.022)
-      const faces = packetTextures.map((tex) => {
-        const s = screen(g, 0.43, 0.665, 0, 0, 0.024, tex)
-        s.material.side = THREE.DoubleSide
-        s.visible = false
-        return s
-      })
+
+      const faces: THREE.Mesh< THREE.PlaneGeometry, THREE.MeshBasicMaterial>[] = []
+
+      if (i % 2 === 0) {
+        // Flat printed pouch lying flat on the wider conveyor
+        box(g, 0.54, 0.024, 0.76, 0, 0.012, 0, M.ivory, 0.012)
+        // Top and bottom heat seal crimp bands
+        box(g, 0.542, 0.028, 0.05, 0, 0.014, -0.355, M.edge, 0.005)
+        box(g, 0.542, 0.028, 0.05, 0, 0.014, 0.355, M.edge, 0.005)
+
+        // Stage face screen (lying flat on top of the pouch)
+        packetTextures.forEach((tex) => {
+          const s = screen(g, 0.48, 0.66, 0, 0.027, 0, tex)
+          s.rotation.x = -Math.PI / 2
+          s.material.side = THREE.DoubleSide
+          s.visible = false
+          faces.push(s)
+        })
+      } else {
+        // Stacked film rolls on carrier tray
+        box(g, 0.62, 0.024, 0.78, 0, 0.012, 0, M.dark, 0.008)
+        // Two bottom rolls side-by-side
+        const r1 = cyl(g, 0.13, 0.68, -0.16, 0.14, 0, M.amber, undefined, 24)
+        r1.rotation.x = Math.PI / 2
+        const r1B = cyl(g, 0.133, 0.32, -0.16, 0.14, 0, M.ivory, undefined, 24)
+        r1B.rotation.x = Math.PI / 2
+        const r1C = cyl(g, 0.04, 0.74, -0.16, 0.14, 0, M.chrome, undefined, 12)
+        r1C.rotation.x = Math.PI / 2
+
+        const r2 = cyl(g, 0.13, 0.68, 0.16, 0.14, 0, M.ivory, undefined, 24)
+        r2.rotation.x = Math.PI / 2
+        const r2B = cyl(g, 0.133, 0.32, 0.16, 0.14, 0, M.amber, undefined, 24)
+        r2B.rotation.x = Math.PI / 2
+        const r2C = cyl(g, 0.04, 0.74, 0.16, 0.14, 0, M.chrome, undefined, 12)
+        r2C.rotation.x = Math.PI / 2
+
+        // Top roll nestled on bottom two (pyramid stack)
+        const r3 = cyl(g, 0.13, 0.68, 0, 0.37, 0, M.amber, undefined, 24)
+        r3.rotation.x = Math.PI / 2
+        const r3B = cyl(g, 0.133, 0.32, 0, 0.37, 0, M.ivory, undefined, 24)
+        r3B.rotation.x = Math.PI / 2
+        const r3C = cyl(g, 0.04, 0.74, 0, 0.37, 0, M.chrome, undefined, 12)
+        r3C.rotation.x = Math.PI / 2
+
+        // Stage face screen attached to tray side
+        packetTextures.forEach((tex) => {
+          const s = screen(g, 0.38, 0.22, 0, 0.026, 0.34, tex)
+          s.material.side = THREE.DoubleSide
+          s.visible = false
+          faces.push(s)
+        })
+      }
+
+      // Golden tracking halo ring lying flat on the conveyor bed around cargo
       const halo = new THREE.Mesh(
-        new THREE.RingGeometry(0.4, 0.414, 40),
+        new THREE.RingGeometry(0.56, 0.585, 40),
         new THREE.MeshBasicMaterial({
           color: 0xB08D57,
           transparent: true,
-          opacity: 0.8,
+          opacity: 0.85,
           side: THREE.DoubleSide,
           depthWrite: false,
         })
       )
       halo.rotation.x = -Math.PI / 2
-      halo.position.y = -0.37
+      halo.position.y = 0.02
       g.add(halo)
       halo.visible = false
       packets.push({ group: g, faces, halo, stage: -1, phase: 0 })
@@ -1457,9 +1702,16 @@ function initMachineScene(
       }
     }
     // These references are animated individually and must not be merged into their parent.
-    ;[incoming, receipt, coin, outputVideo, flyPost, printhead, ...reels].forEach(
-      (g) => (g.userData.moving = true)
-    )
+    ;[
+      incoming,
+      receipt,
+      coin,
+      pouchSample,
+      flyPost,
+      printhead,
+      horizontalRoll,
+      blownFilmBubble,
+    ].forEach((g) => (g.userData.moving = true))
     compact(machine)
     stations.forEach((s) =>
       s.group.traverse((o) => {
@@ -1838,10 +2090,11 @@ function initMachineScene(
         if (vertical) g.rotation.z = t * (i % 2 ? -1 : 1) * 1.1
         else g.rotation.y = t * (i % 2 ? -1 : 1) * 1.1
       })
-      reels.forEach((r, i) => (r.rotation.z = -t * (i ? 0.65 : 0.85)))
+      horizontalRoll.rotation.x = -t * 0.4
+      blownFilmBubble.scale.x = 1 + Math.sin(tact * 1.5) * 0.015
+      blownFilmBubble.scale.z = 1 + Math.cos(tact * 1.5) * 0.015
       printhead.position.x = Math.sin(tact) * 0.42
       printhead.position.y = 1.91 + Math.sin(tact * 2) * 0.055
-      outputVideo.position.y = beat * 0.25
       flyPost.position.y = Math.sin(tact) * 0.04
       const orderPhase = (t / 24) % 1,
         cashBeat = mode === 'order' ? THREE.MathUtils.clamp((orderPhase - 0.88) / 0.12, 0, 1) : beat
@@ -1870,12 +2123,13 @@ function initMachineScene(
       packets.forEach((packet, i) => {
         const phase = (t / 24 + i / 6) % 1
         packet.phase = phase
-        const u = phase
-        path.getPointAt(u, packet.group.position)
+        path.getPointAt(phase, pVec)
+        path.getTangentAt(phase, tVec)
+        packet.group.position.copy(pVec)
         packet.group.position.x *= 1 + spread * 0.12
         packet.group.position.z *= 1 + spread * 0.15
-        packet.group.position.y += 0.43
-        packet.group.rotation.set(0, 0.18, 0)
+        packet.group.position.y += 0.04
+        packet.group.rotation.set(0, -Math.atan2(tVec.z, tVec.x) + Math.PI / 2, 0)
         let stage = Math.min(5, Math.floor(phase * 6))
         if (packet.stage !== stage) {
           packet.faces.forEach((f, j) => (f.visible = j === stage))
@@ -1883,7 +2137,7 @@ function initMachineScene(
         }
         packet.group.visible = mode !== 'order' || i === 0
         packet.halo.visible = mode === 'order' && i === 0
-        packet.group.scale.setScalar(mode === 'order' ? 1.35 : 1)
+        packet.group.scale.setScalar(mode === 'order' ? 1.25 : 1)
         if (phase > 0.94) packet.group.scale.multiplyScalar(Math.max(0.05, (1 - phase) / 0.06))
       })
       if (mode === 'order') {
@@ -2272,8 +2526,8 @@ const STYLES = String.raw`
   font-weight: 500;
   border-radius: 8px;
   transition:
-    background 0.2s,
-    color 0.2s;
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 .agentic-factory-3d .mode-bar button:hover {
   background: #ffffff08;
@@ -2310,7 +2564,7 @@ const STYLES = String.raw`
   color: #6e747e;
   padding: 5px 9px;
   font-size: 10px;
-  transition: color 0.2s;
+  transition: color 0.2s ease-in-out;
 }
 .agentic-factory-3d .camera-row button:hover,
 .agentic-factory-3d .camera-row button[aria-pressed='true'] {
@@ -2392,7 +2646,7 @@ const STYLES = String.raw`
   left: 0;
   top: 0;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease-in-out;
   will-change: transform;
   pointer-events: none;
   min-width: 138px;
@@ -2440,7 +2694,7 @@ const STYLES = String.raw`
   pointer-events: none;
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s ease-in-out;
   padding: 11px 14px;
   border: 1px solid #ffffff1a;
   background: #171a20ed;
@@ -2474,7 +2728,7 @@ const STYLES = String.raw`
   top: 148px;
   opacity: 0;
   transform: translateY(-5px);
-  transition: 0.4s;
+  transition: 0.3s ease-in-out;
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -2525,7 +2779,7 @@ const STYLES = String.raw`
   gap: 12px;
   color: #8c8f95;
   font-size: 11px;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s ease-in-out;
   z-index: 20;
 }
 .agentic-factory-3d #loading i {
@@ -2534,7 +2788,7 @@ const STYLES = String.raw`
   border-radius: 50%;
   border: 1px solid #B08D5722;
   border-top-color: var(--amber);
-  animation: agentic-factory-3d-spin 1s linear infinite;
+  animation: agentic-factory-3d-spin 0.8s ease-in-out infinite;
 }
 @keyframes agentic-factory-3d-spin {
   to {

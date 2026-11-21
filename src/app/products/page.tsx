@@ -1,9 +1,21 @@
 "use cache";
 
 import { cacheLife } from "next/cache";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { products, packagingForms } from "@/lib/content";
 import ProductCatalog from "@/components/ProductCatalog";
+
+export const metadata: Metadata = {
+  title: "Packaging Products Catalog & Specifications | Graphipacks Private Limited",
+  description:
+    "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketed poly bags.",
+  openGraph: {
+    title: "Packaging Products Catalog & Specifications | Graphipacks Private Limited",
+    description:
+      "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketed poly bags.",
+  },
+};
 
 export default async function ProductsPage() {
   cacheLife("days");

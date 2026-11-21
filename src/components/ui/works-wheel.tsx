@@ -338,7 +338,7 @@ export function WorksWheel({
                       className="size-full object-cover"
                     />
                     {action && item.href ? (
-                      <span className="bg-[#0F2A44]/90 text-[#F8F4EC] border border-[#B08D57]/40 pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
+                      <span className="bg-[#0F2A44]/90 text-[#F8F4EC] border border-[#B08D57]/40 pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition-all duration-200 ease-in-out group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
                         <svg
                           viewBox="0 0 12 12"
                           className="size-2.5 text-[#B08D57]"
@@ -392,7 +392,7 @@ export function WorksWheel({
               type="button"
               onClick={() => to(i + 1)}
               className={cn(
-                "focus-visible:outline-[#B08D57] cursor-pointer transition-colors outline-none focus-visible:outline-1 text-xs",
+                "focus-visible:outline-[#B08D57] cursor-pointer transition-colors duration-200 ease-in-out outline-none focus-visible:outline-1 text-xs",
                 i === active
                   ? "text-[#B08D57] font-semibold"
                   : "text-[#EFE8DC]/60 hover:text-[#F8F4EC]",

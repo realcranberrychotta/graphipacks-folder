@@ -34,6 +34,7 @@ export default function ProductTypewriter({
   }, [items ? items.join("::") : ""]);
 
   const [displayText, setDisplayText] = useState("");
+  const [isSkipped, setIsSkipped] = useState(false);
 
   // Animation state in refs so timers are never interrupted by re-renders
   const stateRef = useRef({
@@ -54,15 +55,30 @@ export default function ProductTypewriter({
     itemsRef.current = resolvedItems;
   }, [resolvedItems]);
 
+  // Listen for skip hero animation event
   useEffect(() => {
-    // If reduced motion is requested, cycle words directly without typewriter effect
-    if (shouldReduceMotion) {
-      setDisplayText(resolvedItems[stateRef.current.itemIndex] || "");
-      const interval = setInterval(() => {
-        stateRef.current.itemIndex = (stateRef.current.itemIndex + 1) % resolvedItems.length;
-        setDisplayText(resolvedItems[stateRef.current.itemIndex] || "");
-      }, 3000);
-      return () => clearInterval(interval);
+    const handleSkip = () => {
+      setIsSkipped(true);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      setDisplayText(resolvedItems[0] || "");
+    };
+
+    window.addEventListener("skip-hero-animation", handleSkip);
+    return () => window.removeEventListener("skip-hero-animation", handleSkip);
+  }, [resolvedItems]);
+
+  useEffect(() => {
+    // If reduced motion is requested or animation was skipped, show content instantly with no timer/animation
+    if (shouldReduceMotion || isSkipped) {
+      setDisplayText(resolvedItems[0] || "");
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
     }
 
     const scheduleNextTick = (delay: number) => {
@@ -209,7 +225,7 @@ export default function ProductTypewriter({
         <span className="text-[#F8F4EC] drop-shadow-sm select-none">
           {displayText}
         </span>
-        {!shouldReduceMotion && (
+        {!shouldReduceMotion && !isSkipped && (
           <span
             className="inline-block w-[2px] h-3.5 xs:h-4 sm:h-5 bg-[#B08D57] ml-1 xs:ml-1.5 shrink-0 animate-pulse shadow-[0_0_8px_rgba(176,141,87,0.7)]"
             aria-hidden="true"
