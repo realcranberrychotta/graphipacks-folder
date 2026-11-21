@@ -77,6 +77,162 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* From Pellet to Pouch — 4-Stage Manufacturing Sequence */}
+      <section id="pellet-to-pouch" className="border-b border-[#B08D57]/25 bg-[#0F2A44] py-20 sm:py-24 text-[#F8F4EC]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+              Manufacturing Sequence
+            </span>
+            <h2 className="mt-2 text-2xl sm:text-4xl font-serif font-bold tracking-tight text-[#F8F4EC]">
+              From Pellet to Pouch
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-[#EFE8DC]/85 leading-relaxed">
+              Our continuous converting process: taking raw polymer pellets through blown film extrusion, 8-colour rotogravure printing, and final pouch conversion.
+            </p>
+          </div>
+
+          <StaggerCardsGrid className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+            {/* Stage 1: Pellets */}
+            <StaggerCard index={0}>
+              <div className="flex flex-col h-full overflow-hidden rounded-xl border border-[#B08D57]/25 bg-[#091B2C]">
+                <div className="relative w-full h-48 sm:h-52 bg-[#071524]">
+                  <Image
+                    src="/images/products/pp-and-lldpe-bags.jpg"
+                    alt="Feed hopper and white polymer pellets"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-between p-5 border-t border-[#B08D57]/20">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[#B08D57]/15 pb-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+                        01
+                      </span>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#EFE8DC]/60">
+                        Raw Material
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold font-serif text-[#F8F4EC]">
+                      Pellets
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#EFE8DC]/85 leading-relaxed">
+                      Feed hopper loaded with white polymer pellets for extrusion.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </StaggerCard>
+
+            {/* Stage 2: Blown Film */}
+            <StaggerCard index={1}>
+              <div className="flex flex-col h-full overflow-hidden rounded-xl border border-[#B08D57]/25 bg-[#091B2C]">
+                <div className="relative w-full h-48 sm:h-52 bg-[#071524]">
+                  <Image
+                    src="/images/infrastructure/infra-02-film-lamination-rollers.jpg"
+                    alt="Extrusion bubble through nip rollers"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-between p-5 border-t border-[#B08D57]/20">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[#B08D57]/15 pb-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+                        02
+                      </span>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#EFE8DC]/60">
+                        Extrusion
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold font-serif text-[#F8F4EC]">
+                      Blown Film
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#EFE8DC]/85 leading-relaxed">
+                      Extrusion bubble cooled and flattened through nip rollers.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </StaggerCard>
+
+            {/* Stage 3: Rotogravure Printing */}
+            <StaggerCard index={2}>
+              <div className="flex flex-col h-full overflow-hidden rounded-xl border border-[#B08D57]/25 bg-[#091B2C]">
+                <div className="relative w-full h-48 sm:h-52 bg-[#071524]">
+                  <Image
+                    src="/images/infrastructure/infra-03-rotogravure-cylinders.jpg"
+                    alt="8-colour rotogravure printing cylinders and printed film roll"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-between p-5 border-t border-[#B08D57]/20">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[#B08D57]/15 pb-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+                        03
+                      </span>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#EFE8DC]/60">
+                        8-Colour Press
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold font-serif text-[#F8F4EC]">
+                      Rotogravure Printing
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#EFE8DC]/85 leading-relaxed">
+                      8-colour cylinders registering vivid print on film rolls.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </StaggerCard>
+
+            {/* Stage 4: Finished Pouch */}
+            <StaggerCard index={3}>
+              <div className="flex flex-col h-full overflow-hidden rounded-xl border border-[#B08D57]/25 bg-[#091B2C]">
+                <div className="relative w-full h-48 sm:h-52 bg-[#071524]">
+                  <Image
+                    src="/images/products/laminated-rolls-and-pouches.jpg"
+                    alt="Real laminated stand-up pouches"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-between p-5 border-t border-[#B08D57]/20">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[#B08D57]/15 pb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+                          04
+                        </span>
+                        <span className="font-mono text-[10px] font-semibold text-[#B08D57] border border-[#B08D57]/40 bg-[#091B2C] px-1.5 py-0.5 rounded-xs">
+                          LOT GP-1984
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#EFE8DC]/60">
+                        Conversion
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold font-serif text-[#F8F4EC]">
+                      Finished Pouch
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#EFE8DC]/85 leading-relaxed">
+                      Real laminated stand-up pouches sealed and ready for dispatch.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </StaggerCard>
+          </StaggerCardsGrid>
+        </div>
+      </section>
+
       {/* Core Products Grid */}
       <section id="products" className="py-24 sm:py-28 bg-transparent">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
