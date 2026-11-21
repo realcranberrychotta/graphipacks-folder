@@ -22,6 +22,7 @@ import {
   printingTechnology,
   clients,
 } from "@/lib/content";
+import { PRODUCTS_DATA } from "@/data/products";
 import HomeHeroFactory from "@/components/HomeHeroFactory";
 import HeroMinimal from "@/components/HeroMinimal";
 import HeroHeadline from "@/components/HeroHeadline";
@@ -31,6 +32,8 @@ import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 
 export default async function HomePage() {
   cacheLife("days");
+
+  const productDetailMap = new Map(PRODUCTS_DATA.map((p) => [p.slug, p]));
 
   return (
     <div className="flex flex-col bg-transparent text-[#F8F4EC]">
@@ -80,100 +83,136 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-[#B08D57]/20 pb-8">
             <div className="max-w-3xl">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-white mix-blend-exclusion">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
                 01 — Core Products
               </span>
-              <h2 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-white mix-blend-exclusion">
+              <h2 className="mt-2 text-2xl sm:text-4xl font-serif font-bold tracking-tight text-[#F8F4EC]">
                 Engineered Flexible Packaging Line
               </h2>
-              <p className="mt-3 text-sm sm:text-base font-medium text-white mix-blend-exclusion leading-relaxed">
+              <p className="mt-3 text-sm sm:text-base font-normal text-[#EFE8DC]/85 leading-relaxed">
                 Directly manufactured with multi-layer extrusion, UV stabilization, and high-barrier lamination to match global export and industrial requirements.
               </p>
             </div>
             <Link
               href="/products"
-              className="text-sm font-semibold text-white mix-blend-exclusion hover:opacity-80 shrink-0 inline-flex items-center gap-1 transition-opacity duration-200 ease-in-out"
+              className="text-sm font-semibold text-[#B08D57] hover:text-[#F8F4EC] shrink-0 inline-flex items-center gap-1 transition-colors duration-200 ease-in-out"
             >
               View Full Product Index &rarr;
             </Link>
           </div>
 
           <StaggerCardsGrid className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((product, idx) => (
-              <StaggerCard key={product.slug} index={idx}>
-                <article
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#B08D57]/40 bg-[#0F2A44]/90 backdrop-blur-md shadow-2xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/60 hover:shadow-2xl h-full"
-                >
-                  <div className="relative w-full h-48 overflow-hidden bg-[#091B2C]">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={600}
-                      height={384}
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      loading="lazy"
-                      decoding="async"
-                      placeholder="blur"
-                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                      className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    />
-                    <div
-                      className="absolute inset-0 bg-gradient-to-t from-[#091B2C] to-transparent opacity-80 pointer-events-none"
-                      aria-hidden="true"
-                    />
-                  </div>
+            {products.map((product, idx) => {
+              const detail = productDetailMap.get(product.slug);
+              const materialSpec = detail?.baseSpecs.find((s) => s.label === "Material")?.value;
+              const thicknessSpec = detail?.baseSpecs.find((s) => s.label === "Thickness / GSM")?.value;
+              const moqSpec = detail?.moq;
 
-                  <div className="flex flex-1 flex-col justify-between p-6">
-                    <div>
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center rounded-full bg-[#1B3D5E] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#F8F4EC] border border-[#B08D57]/30">
-                          {product.category}
-                        </span>
-                        <span className="font-mono text-xs text-[#EFE8DC]/70">
-                          {product.types.length} Types
-                        </span>
-                      </div>
+              return (
+                <StaggerCard key={product.slug} index={idx}>
+                  <article
+                    className="group relative flex flex-col overflow-hidden rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/50 bg-[#0A1D30] transition-colors duration-300 ease-in-out hover:border-[#B08D57]/60 hover:bg-[#0D243B] h-full"
+                  >
+                    <div className="relative w-full h-52 overflow-hidden bg-[#071524] border-b border-[#B08D57]/20">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        width={600}
+                        height={384}
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading="lazy"
+                        decoding="async"
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
+                        className="w-full h-52 object-cover transition-transform duration-300 ease-in-out group-hover:scale-[1.03]"
+                      />
+                    </div>
 
-                      <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-white transition-colors duration-200 ease-in-out">
-                        <Link
-                          href={`/products/${product.slug}`}
-                          className="hover:underline focus:outline-hidden"
-                        >
-                          <span className="absolute inset-0" aria-hidden="true" />
-                          {product.name}
-                        </Link>
-                      </h3>
+                    <div className="flex flex-1 flex-col justify-between p-6">
+                      <div>
+                        <div className="flex items-center justify-between gap-2 border-b border-[#B08D57]/15 pb-3">
+                          <span className="inline-flex items-center rounded-sm bg-[#071524] px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#B08D57] border border-[#B08D57]/30">
+                            {product.category}
+                          </span>
+                          <span className="font-mono text-[11px] tracking-wider text-[#EFE8DC]/60 uppercase">
+                            SPEC 0{idx + 1}
+                          </span>
+                        </div>
 
-                      <p className="mt-2 text-sm text-[#EFE8DC]/85 line-clamp-3 leading-relaxed">
-                        {product.whyGraphipacks}
-                      </p>
+                        <h3 className="mt-3 text-xl font-bold font-serif text-[#F8F4EC] group-hover:text-white transition-colors duration-200 ease-in-out">
+                          <Link
+                            href={`/products/${product.slug}`}
+                            className="hover:underline focus:outline-hidden"
+                          >
+                            <span className="absolute inset-0" aria-hidden="true" />
+                            {product.name}
+                          </Link>
+                        </h3>
 
-                      <div className="mt-4">
-                        <p className="text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
-                          Available Variants:
+                        <p className="mt-2 text-sm text-[#EFE8DC]/85 line-clamp-2 leading-relaxed">
+                          {product.whyGraphipacks}
                         </p>
-                        <div className="mt-2 flex flex-wrap gap-1.5">
-                          {product.types.map((type, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center rounded-md border border-[#B08D57]/25 bg-[#091B2C] px-2 py-1 text-xs font-medium text-[#F8F4EC]"
-                            >
-                              {type}
-                            </span>
-                          ))}
+
+                        <div className="mt-5 border-t border-[#B08D57]/20 pt-4 font-mono text-xs">
+                          <div className="text-[10px] font-bold uppercase tracking-widest text-[#B08D57] mb-2.5 flex items-center justify-between">
+                            <span>Technical Specifications</span>
+                            <span className="text-[#EFE8DC]/40 text-[9px]">EST. 1984</span>
+                          </div>
+                          <dl className="space-y-1.5 text-xs">
+                            {materialSpec && (
+                              <div className="flex items-baseline justify-between gap-3 border-b border-[#B08D57]/10 pb-1.5">
+                                <dt className="text-[#EFE8DC]/60 uppercase tracking-wider text-[11px] shrink-0">Substrate</dt>
+                                <dd className="font-sans font-medium text-[#F8F4EC] text-right truncate text-xs" title={materialSpec}>
+                                  {materialSpec}
+                                </dd>
+                              </div>
+                            )}
+                            {thicknessSpec && (
+                              <div className="flex items-baseline justify-between gap-3 border-b border-[#B08D57]/10 pb-1.5">
+                                <dt className="text-[#EFE8DC]/60 uppercase tracking-wider text-[11px] shrink-0">Gauge / GSM</dt>
+                                <dd className="font-sans font-medium text-[#F8F4EC] text-right text-xs">
+                                  {thicknessSpec.replace(/ — Standard:.*$/, "")}
+                                </dd>
+                              </div>
+                            )}
+                            {moqSpec && (
+                              <div className="flex items-baseline justify-between gap-3">
+                                <dt className="text-[#EFE8DC]/60 uppercase tracking-wider text-[11px] shrink-0">Min. Order (MOQ)</dt>
+                                <dd className="font-sans font-medium text-[#B08D57] text-right text-xs">
+                                  {moqSpec}
+                                </dd>
+                              </div>
+                            )}
+                          </dl>
+                        </div>
+
+                        <div className="mt-4">
+                          <div className="flex flex-wrap gap-1.5">
+                            {product.types.map((type, i) => (
+                              <span
+                                key={i}
+                                className="inline-flex items-center rounded-sm border border-[#B08D57]/20 bg-[#071524] px-2 py-0.5 font-mono text-[10px] text-[#EFE8DC]/80"
+                              >
+                                {type}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="mt-6 border-t border-[#B08D57]/25 pt-4 flex items-center justify-between text-sm font-semibold text-[#B08D57]">
-                      <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
-                        View Specifications &rarr;
-                      </span>
+                      <div className="mt-6 border-t border-[#B08D57]/20 pt-4 flex items-center justify-between font-mono text-xs text-[#B08D57]">
+                        <span className="text-[11px] uppercase tracking-wider text-[#EFE8DC]/60 group-hover:text-[#B08D57] transition-colors duration-200">
+                          RFQ / SPEC
+                        </span>
+                        <span className="inline-flex items-center gap-1 font-semibold group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
+                          View Specifications &rarr;
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              </StaggerCard>
-            ))}
+                  </article>
+                </StaggerCard>
+              );
+            })}
           </StaggerCardsGrid>
         </div>
       </section>

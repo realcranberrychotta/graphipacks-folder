@@ -205,14 +205,14 @@ export default function ProductTypewriter({
   return (
     <div
       ref={containerRef}
-      className={`inline-flex items-center flex-nowrap max-w-[calc(100vw-1.5rem)] sm:max-w-max rounded-xl border border-[#B08D57]/20 border-t-[#F8F4EC]/30 bg-[#0F2A44]/60 px-2.5 py-1.5 xs:px-3 sm:px-4 sm:py-2.5 gap-1.5 xs:gap-2 sm:gap-3 backdrop-blur-xl md:backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(248,244,236,0.2),0_10px_25px_rgba(9,27,44,0.5)] transition-all hover:border-[#B08D57]/50 ${className}`}
+      className={`inline-flex items-center flex-nowrap max-w-[calc(100vw-1.5rem)] sm:max-w-max rounded-lg border border-[#B08D57]/30 bg-[#0F2A44]/70 px-2.5 py-1.5 xs:px-3 sm:px-4 sm:py-2.5 gap-1.5 xs:gap-2 sm:gap-3 backdrop-blur-xl md:backdrop-blur-2xl transition-colors hover:border-[#B08D57]/60 ${className}`}
       role="region"
       aria-label="Product Showcase"
     >
       {/* Category / Prefix Marker */}
       <div className="flex items-center gap-1.5 xs:gap-2 shrink-0 select-none">
         <span
-          className="h-1.5 w-1.5 rounded-full bg-[#B08D57] shadow-[0_0_8px_rgba(176,141,87,0.8)]"
+          className="h-1.5 w-1.5 rounded-full bg-[#B08D57]"
           aria-hidden="true"
         />
         <span className="font-mono text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.22em] text-[#B08D57] uppercase whitespace-nowrap">
@@ -222,12 +222,12 @@ export default function ProductTypewriter({
 
       {/* Dynamic Animated Text Line */}
       <div className="flex items-center shrink min-w-0 font-sans text-xs xs:text-[13px] sm:text-base md:text-lg font-semibold text-[#F8F4EC] tracking-tight whitespace-nowrap">
-        <span className="text-[#F8F4EC] drop-shadow-sm select-none">
+        <span className="text-[#F8F4EC] select-none">
           {displayText}
         </span>
         {!shouldReduceMotion && !isSkipped && (
           <span
-            className="inline-block w-[2px] h-3.5 xs:h-4 sm:h-5 bg-[#B08D57] ml-1 xs:ml-1.5 shrink-0 animate-pulse shadow-[0_0_8px_rgba(176,141,87,0.7)]"
+            className="inline-block w-[2px] h-3.5 xs:h-4 sm:h-5 bg-[#B08D57] ml-1 xs:ml-1.5 shrink-0"
             aria-hidden="true"
           />
         )}

@@ -142,26 +142,26 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
             {/* Unique Application Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {product.targetApplications.map((app) => (
+              {product.targetApplications.map((app, idx) => (
                 <div
                   key={app.number}
-                  className="rounded-2xl border border-[#B08D57]/25 bg-white p-7 shadow-sm hover:shadow-md transition-shadow hover:border-[#B08D57]/50 flex flex-col justify-between"
+                  className="rounded-xl border border-[#B08D57]/25 bg-white p-7 shadow-xs hover:border-[#B08D57]/60 transition-colors flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-[#B08D57] bg-[#F8F4EC] px-2.5 py-1 rounded-md border border-[#B08D57]/30">
-                        APPLICATION {app.number}
+                    <div className="flex items-center justify-between border-b border-[#B08D57]/15 pb-3">
+                      <span className="font-mono text-[11px] font-bold text-[#B08D57] uppercase tracking-wider">
+                        APPLICATION REF. {app.number}
                       </span>
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0F2A44] text-[#F8F4EC]">
-                        <Check className="h-3 w-3 text-[#B08D57]" />
+                      <span className="font-mono text-[10px] text-[#555555] uppercase tracking-wider">
+                        DEPLOYMENT 0{idx + 1}
                       </span>
                     </div>
 
-                    <h3 className="mt-5 font-[family-name:var(--font-playfair)] text-xl font-bold text-[#0F2A44]">
+                    <h3 className="mt-4 font-[family-name:var(--font-playfair)] text-xl font-bold text-[#0F2A44]">
                       {app.title}
                     </h3>
 
-                    <p className="mt-3 text-xs sm:text-sm text-[#222222] leading-relaxed">
+                    <p className="mt-2 text-xs sm:text-sm text-[#333333] leading-relaxed">
                       {app.descriptor}
                     </p>
                   </div>
@@ -208,11 +208,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
               {relatedProducts.map((rel, idx) => (
                 <article
                   key={rel.slug}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/30 bg-white shadow-sm hover:shadow-xl hover:border-[#B08D57] transition-all duration-300 ease-in-out"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#B08D57]/30 bg-white shadow-sm hover:border-[#B08D57] transition-colors duration-200 ease-in-out"
                 >
                   <div>
                     {/* Related Product Image */}
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0F2A44]">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0F2A44] border-b border-[#B08D57]/20">
                       <Image
                         src={rel.images[0]?.src}
                         alt={rel.images[0]?.alt || rel.name}
@@ -223,18 +223,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
                         decoding="async"
                         placeholder="blur"
                         blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                        className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-[1.03]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F2A44]/60 via-transparent to-transparent opacity-80" />
 
                       <div className="absolute top-3 left-3">
-                        <span className="rounded-full bg-[#0F2A44]/90 backdrop-blur-xs px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase text-[#F8F4EC] border border-[#B08D57]/40">
+                        <span className="rounded-sm bg-[#0F2A44]/95 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[#F8F4EC] border border-[#B08D57]/40">
                           {rel.category}
                         </span>
                       </div>
 
                       <div className="absolute bottom-3 right-3">
-                        <span className="rounded bg-[#B08D57] px-2 py-0.5 font-mono text-[10px] font-bold text-[#091B2C]">
+                        <span className="rounded-sm bg-[#B08D57] px-2 py-0.5 font-mono text-[10px] font-bold text-[#091B2C]">
                           MOQ: {rel.moq}
                         </span>
                       </div>

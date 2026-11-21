@@ -1268,18 +1268,24 @@ function initMachineScene(
     const postTex = canvasTexture(220, 290, (c, w, h) => {
       c.fillStyle = '#f4f1ea'
       c.fillRect(0, 0, w, h)
-      c.fillStyle = '#B08D57'
+      c.fillStyle = '#0F2A44'
       c.fillRect(15, 16, 190, 168)
-      c.fillStyle = '#272e30'
-      c.beginPath()
-      c.moveTo(94, 66)
-      c.lineTo(140, 100)
-      c.lineTo(94, 134)
-      c.fill()
-      print(c, 'BARRIER', 17, 225, 23, '#283030', 600)
-      c.fillStyle = '#b0b5b0'
-      c.fillRect(17, 244, 153, 6)
-      c.fillRect(17, 258, 104, 5)
+      // 3-Layer high-barrier laminate schematic
+      c.fillStyle = '#1c3d5a'
+      c.fillRect(30, 40, 160, 24)
+      print(c, 'PET 12µ', 75, 57, 13, '#ffffff', 600)
+
+      c.fillStyle = '#B08D57'
+      c.fillRect(30, 72, 160, 24)
+      print(c, 'MET-PET 12µ', 58, 89, 13, '#0F2A44', 700)
+
+      c.fillStyle = '#d8d3c5'
+      c.fillRect(30, 104, 160, 24)
+      print(c, 'LLDPE 80µ', 68, 121, 13, '#0F2A44', 600)
+
+      print(c, 'BARRIER FILM', 17, 218, 20, '#0F2A44', 700)
+      print(c, '3-Ply Solventless Bonding', 17, 242, 12, '#B08D57', 600)
+      print(c, 'Zero Odour · High Barrier', 17, 264, 11, '#566059', 500)
     })
     screen(flyPost, 0.55, 0.72, 0.94, 0.81, 0.575, postTex)
 
@@ -1543,13 +1549,13 @@ function initMachineScene(
     const scriptTex = canvasTexture(256, 352, (c, w, h) => {
       c.fillStyle = '#eeeae0'
       c.fillRect(0, 0, w, h)
-      print(c, 'SCRIPT', 24, 47, 22, '#3b403a', 650)
-      print(c, '01 / Opening', 24, 85, 15, '#8b8d80')
+      print(c, 'JOB TICKET', 24, 47, 21, '#0F2A44', 650)
+      print(c, 'LOT GP-1984', 24, 85, 14, '#B08D57')
       for (let i = 0; i < 9; i++) {
-        c.fillStyle = i === 4 ? '#c57e45' : '#aeb2a5'
+        c.fillStyle = i === 4 ? '#B08D57' : '#9ca3af'
         c.fillRect(24, 111 + i * 21, 190 - (i % 3) * 24, 6)
       }
-      print(c, 'DONE  ✓', 24, 327, 17, '#786124', 600)
+      print(c, 'PASSED  ✓', 24, 327, 16, '#0F2A44', 600)
     })
     const orderCardTex = canvasTexture(256, 352, (c, w, h) => {
       c.fillStyle = '#c57e45'

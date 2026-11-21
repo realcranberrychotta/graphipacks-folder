@@ -151,7 +151,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* ------------------------------------------------------------- */}
           <div className="lg:col-span-6 flex flex-col gap-4">
             {/* Primary Image Frame (4:3) with subtle zoom & lightbox trigger */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[#B08D57]/35 bg-white shadow-xl shadow-[#0F2A44]/5 group">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-[#B08D57]/35 bg-white shadow-md shadow-[#0F2A44]/5 group">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImage.src}
@@ -177,9 +177,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </motion.div>
               </AnimatePresence>
 
-              {/* View Caption Pill */}
+              {/* View Caption Tag */}
               <div className="absolute top-4 left-4 z-10">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0F2A44]/90 backdrop-blur-md px-3.5 py-1 text-xs font-mono font-medium text-[#F8F4EC] border border-[#B08D57]/40 shadow-sm">
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#0F2A44]/95 px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wider text-[#F8F4EC] border border-[#B08D57]/40 shadow-sm">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
                   {activeImage.label}
                 </span>
@@ -190,16 +190,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 type="button"
                 onClick={() => setLightboxOpen(true)}
                 aria-label="Enlarge product image"
-                className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0F2A44]/80 text-[#F8F4EC] backdrop-blur-md border border-[#B08D57]/40 hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 ease-in-out shadow-sm"
+                className="absolute bottom-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-sm bg-[#0F2A44]/90 text-[#F8F4EC] border border-[#B08D57]/40 hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 ease-in-out shadow-sm"
               >
-                <Maximize2 className="h-4 w-4" />
+                <Maximize2 className="h-3.5 w-3.5" />
               </button>
-
-              {/* Subtle Warm Gradient Vignette */}
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F2A44]/20 via-transparent to-transparent"
-                aria-hidden="true"
-              />
             </div>
 
             {/* Thumbnail Navigation Row */}
@@ -211,9 +205,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     key={img.label}
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[4/3] overflow-hidden rounded-xl transition-all duration-200 ease-in-out text-left cursor-pointer group ${
+                    className={`relative aspect-[4/3] overflow-hidden rounded-lg transition-all duration-200 ease-in-out text-left cursor-pointer group ${
                       isActive
-                        ? "border-2 border-[#B08D57] shadow-md ring-2 ring-[#B08D57]/30"
+                        ? "border-2 border-[#B08D57] shadow-sm"
                         : "border border-[#0F2A44]/15 opacity-75 hover:opacity-100 hover:border-[#B08D57]/60"
                     }`}
                   >
@@ -236,7 +230,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                           : "bg-[#0F2A44]/15 group-hover:bg-transparent"
                       }`}
                     />
-                    <span className="absolute bottom-1.5 left-1.5 right-1.5 truncate text-[10px] font-mono font-bold uppercase tracking-wider text-[#F8F4EC] bg-[#0F2A44]/85 px-1.5 py-0.5 rounded backdrop-blur-xs">
+                    <span className="absolute bottom-1.5 left-1.5 right-1.5 truncate text-[10px] font-mono font-bold uppercase tracking-wider text-[#F8F4EC] bg-[#0F2A44]/85 px-1.5 py-0.5 rounded-sm">
                       {img.label}
                     </span>
                   </button>
@@ -277,7 +271,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </p>
 
               {/* Commercial Strip (Always Visible: Price on Request + MOQ Badge) */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-[#B08D57]/30 bg-white shadow-sm">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-lg border border-[#B08D57]/30 bg-white shadow-xs">
                 <div>
                   <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-[#555555]">
                     Commercial Pricing
@@ -291,7 +285,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-[#555555]">
                       Minimum Order
                     </span>
-                    <span className="inline-block rounded-md border border-[#B08D57]/40 bg-[#0F2A44] px-3 py-1 font-mono text-xs font-bold text-[#F8F4EC] shadow-xs">
+                    <span className="inline-block rounded-sm border border-[#B08D57]/40 bg-[#0F2A44] px-3 py-1 font-mono text-xs font-bold text-[#F8F4EC]">
                       MOQ: {product.moq}
                     </span>
                   </div>
@@ -300,7 +294,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
               {/* Interactive Variant Selector */}
               <div className="mt-7">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between border-b border-[#B08D57]/20 pb-2">
                   <label className="block font-mono text-xs font-bold uppercase tracking-wider text-[#0F2A44]">
                     Select Specification Variant:
                   </label>
@@ -317,21 +311,21 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         key={v.key}
                         type="button"
                         onClick={() => setSelectedVariantKey(v.key)}
-                        className={`group relative inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ease-in-out cursor-pointer ${
+                        className={`group relative inline-flex min-h-[44px] items-center gap-2.5 rounded-lg px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out cursor-pointer ${
                           isSelected
-                            ? "bg-[#0F2A44] text-[#F8F4EC] border-2 border-[#B08D57] shadow-md shadow-[#0F2A44]/15"
+                            ? "bg-[#0F2A44] text-[#F8F4EC] border-2 border-[#B08D57] shadow-sm"
                             : "bg-white text-[#222222] border border-[#0F2A44]/20 hover:border-[#B08D57] hover:bg-[#EFE8DC]/60"
                         }`}
                       >
                         <span
-                          className={`h-2 w-2 rounded-full transition-colors duration-200 ease-in-out ${
+                          className={`h-1.5 w-1.5 rounded-xs transition-colors duration-200 ease-in-out ${
                             isSelected ? "bg-[#B08D57]" : "bg-[#0F2A44]/30 group-hover:bg-[#B08D57]"
                           }`}
                         />
                         <span>{v.name}</span>
                         {v.badge && (
                           <span
-                            className={`rounded px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
+                            className={`rounded-sm px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${
                               isSelected
                                 ? "bg-[#B08D57] text-[#091B2C]"
                                 : "bg-[#EFE8DC] text-[#555555]"
@@ -346,10 +340,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </div>
 
                 {/* Active Configuration Summary Line */}
-                <div className="mt-3 flex items-start gap-2 text-xs text-[#222222] bg-[#EFE8DC]/70 p-3 rounded-lg border border-[#B08D57]/20">
-                  <CheckCircle2 className="h-4 w-4 text-[#B08D57] shrink-0 mt-0.5" />
+                <div className="mt-3.5 flex items-start gap-2.5 text-xs text-[#222222] bg-[#F4EFE6] p-3 rounded-lg border border-[#B08D57]/30">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B08D57] shrink-0 mt-0.5">
+                    CONFIG:
+                  </span>
                   <p className="leading-relaxed">
-                    <span className="font-bold text-[#0F2A44]">Active Formulation: </span>
+                    <span className="font-bold text-[#0F2A44]">{activeVariant.name} Formulation — </span>
                     {activeVariant.summary}
                   </p>
                 </div>
@@ -362,7 +358,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={() => openModal("quote")}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-xs transition-colors duration-200 ease-in-out cursor-pointer"
                   >
                     <Mail className="h-4 w-4 text-[#091B2C]" />
                     <span>Request Quotation</span>
@@ -374,7 +370,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     type="button"
                     onClick={handleDownloadPdf}
                     disabled={isPdfGenerating}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/40 px-6 py-3.5 text-sm font-bold shadow-md transition-all duration-200 ease-in-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-[#0F2A44] hover:bg-[#1B3D5E] text-[#F8F4EC] border border-[#B08D57]/40 px-6 py-3.5 text-sm font-bold shadow-xs transition-colors duration-200 ease-in-out cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     <Download className={`h-4 w-4 text-[#B08D57] ${isPdfGenerating ? "animate-bounce" : ""}`} />
                     <span>
@@ -400,27 +396,33 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
 
               {/* Compact Commercial Terms Box */}
-              <div className="mt-8 rounded-xl border border-[#B08D57]/25 bg-white p-4 shadow-sm">
+              <div className="mt-8 rounded-lg border border-[#B08D57]/30 bg-white p-4 shadow-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   <div className="flex items-start gap-2">
                     <ShieldCheck className="h-4 w-4 text-[#B08D57] shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-bold text-[#0F2A44] block">Sample Policy</span>
-                      <span className="text-[#555555]">Free sample on request — courier extra</span>
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#0F2A44] block">
+                        Sample Policy
+                      </span>
+                      <span className="text-[#555555]">{product.commercialTerms.sample}</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-[#0F2A44]/10 pt-2 sm:pt-0 sm:pl-3">
                     <CreditCard className="h-4 w-4 text-[#B08D57] shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-bold text-[#0F2A44] block">Payment Terms</span>
-                      <span className="text-[#555555]">50% advance, balance before dispatch</span>
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#0F2A44] block">
+                        Payment Terms
+                      </span>
+                      <span className="text-[#555555]">{product.commercialTerms.payment}</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-[#0F2A44]/10 pt-2 sm:pt-0 sm:pl-3">
                     <Truck className="h-4 w-4 text-[#B08D57] shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-bold text-[#0F2A44] block">Delivery Basis</span>
-                      <span className="text-[#555555]">Ex-Madurai, PAN India dispatch</span>
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#0F2A44] block">
+                        Delivery Basis
+                      </span>
+                      <span className="text-[#555555]">{product.commercialTerms.delivery}</span>
                     </div>
                   </div>
                 </div>
@@ -460,9 +462,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
 
           {/* Engineering-Grade Specification Table */}
-          <div className="overflow-hidden rounded-2xl border border-[#B08D57]/30 bg-white shadow-lg">
+          <div className="overflow-hidden rounded-xl border border-[#B08D57]/30 bg-white shadow-xs">
             {/* Table Header Bar in Deep Navy */}
-            <div className="bg-[#0F2A44] px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b-2 border-[#B08D57]">
+            <div className="bg-[#0F2A44] px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b-2 border-[#B08D57]">
               <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#F8F4EC]">
                 Technical Parameter
               </span>
@@ -472,17 +474,17 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Table Rows with Tabular Nums & Variant Highlight Pulse */}
-            <div className="divide-y divide-[#0F2A44]/10">
+            <div className="divide-y divide-[#B08D57]/15">
               {currentSpecs.map((row, idx) => {
                 const isAlt = idx % 2 === 1;
                 return (
                   <div
                     key={row.label}
-                    className={`grid grid-cols-1 sm:grid-cols-12 px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300 ease-in-out ${
+                    className={`grid grid-cols-1 sm:grid-cols-12 px-4 sm:px-6 py-3.5 transition-colors duration-200 ease-in-out ${
                       row.isOverridden
-                        ? "bg-[#EFE8DC]/80 border-l-4 border-l-[#B08D57]"
+                        ? "bg-[#F7F3EB] border-l-3 border-l-[#B08D57]"
                         : isAlt
-                        ? "bg-[#F8F4EC]/60"
+                        ? "bg-[#FAF7F2]"
                         : "bg-white"
                     }`}
                   >
@@ -491,7 +493,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         {row.label}
                       </span>
                       {row.isOverridden && (
-                        <span className="rounded bg-[#B08D57]/20 border border-[#B08D57]/40 px-1.5 py-0.2 text-[10px] font-mono font-bold text-[#0F2A44]">
+                        <span className="rounded-sm bg-[#B08D57]/25 border border-[#B08D57]/50 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#0F2A44]">
                           Active
                         </span>
                       )}
@@ -512,7 +514,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Table Footer / Standard Note */}
-            <div className="bg-[#EFE8DC]/50 border-t border-[#0F2A44]/10 px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#555555]">
+            <div className="bg-[#F4EFE6] border-t border-[#B08D57]/20 px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#555555]">
               <span className="font-mono text-[11px]">
                 Standard: Virgin polymers, ISO quality testing, batch traceability.
               </span>
@@ -538,7 +540,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             onClick={() => setLightboxOpen(false)}
           >
             <div
-              className="relative max-w-5xl w-full max-h-[90vh] overflow-hidden rounded-2xl border border-[#B08D57]/40 bg-[#0F2A44] shadow-2xl"
+              className="relative max-w-5xl w-full max-h-[90vh] overflow-hidden rounded-xl border border-[#B08D57]/40 bg-[#0F2A44] shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between p-4 border-b border-[#B08D57]/20 bg-[#0F2A44] text-[#F8F4EC]">
@@ -602,7 +604,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="relative max-w-lg w-full overflow-hidden rounded-2xl border border-[#B08D57]/40 bg-white shadow-2xl text-[#222222]"
+              className="relative max-w-lg w-full overflow-hidden rounded-xl border border-[#B08D57]/40 bg-white shadow-2xl text-[#222222]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}

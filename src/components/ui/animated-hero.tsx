@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState, ReactNode } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Sparkles, ArrowRight, X, CheckCircle2, ChevronRight } from "lucide-react";
+import { ArrowRight, X, CheckCircle2, ChevronRight } from "lucide-react";
 import ProductTypewriter from "@/components/ProductTypewriter";
 
 export interface ParticleHeroProps {
@@ -302,35 +302,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
   return (
     <section
       className={`relative w-full overflow-hidden bg-[#0F2A44] text-[#F8F4EC] select-none pt-1 sm:pt-6 pb-8 px-4 sm:px-6 ${className}`}
-      onMouseMove={handlePointerMove}
-      onTouchMove={handlePointerMove}
     >
-      {/* ─── Ambient Glow Effects (Deep Navy #0F2A44, Mid Navy #1B3D5E) ─── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="hidden sm:block absolute -top-12 left-1/2 -translate-x-1/2 w-72 h-72 bg-[#B08D57]/8 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-4 right-4 w-64 h-64 bg-[#1B3D5E]/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "2s" }}
-        />
-      </div>
-
-      {/* ─── Interactive Bronze Particle Matrix (Desktop/Tablet) ─── */}
-      {showParticles && !shouldReduceMotion && !isSkipped && (
-        <div
-          className="hidden sm:flex absolute inset-0 items-center justify-center pointer-events-none opacity-45 sm:opacity-60"
-          aria-hidden="true"
-        >
-          <div
-            ref={containerRef}
-            className="relative will-change-transform"
-            style={{
-              width: `${rows * 1.55}rem`,
-              height: `${rows * 1.55}rem`,
-            }}
-          />
-        </div>
-      )}
-
       {/* ─── Main Content Container (Centred, Exact Order) ─── */}
       <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-center">
         {children ? (
@@ -342,13 +314,13 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             animate="visible"
             className="w-full flex flex-col items-center justify-center text-center"
           >
-            {/* 1. Top Small Label: Demoted to neutral tone so main quote CTA dominates */}
+            {/* 1. Top Small Label: Provenance Indicator */}
             <motion.div
               variants={textLineVariant}
               className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-[#EFE8DC]/80 mb-3"
             >
-              <Sparkles className="h-3 w-3 text-[#EFE8DC]/70 shrink-0" aria-hidden="true" />
-              <span>EST. 1984  •  GRAPHIPACKS PRIVATE LIMITED</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57] shrink-0" aria-hidden="true" />
+              <span>EST. 1984 · MADURAI PLANT  •  GRAPHIPACKS PRIVATE LIMITED</span>
             </motion.div>
 
             {/* 2. Main Headline: Bold, Centred, Ivory with Text-Reveal Animation on Load */}
@@ -361,7 +333,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
                 {/* Line 2 (Larger): Flexible Packaging */}
                 <span
-                  className="block font-serif font-bold italic text-3xl xs:text-4xl sm:text-5xl text-[#F8F4EC] tracking-tight leading-[1.12] my-1.5 text-center drop-shadow-sm"
+                  className="block font-serif font-bold italic text-3xl xs:text-4xl sm:text-5xl text-[#F8F4EC] tracking-tight leading-[1.12] my-1.5 text-center"
                   style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
                 >
                   {subtitle}
@@ -403,7 +375,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <button
                 type="button"
                 onClick={handleOpenEstimator}
-                className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-xl bg-[#B08D57] hover:bg-[#9A7843] text-[#091B2C] text-sm xs:text-base font-bold shadow-lg shadow-[#B08D57]/20 transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] text-[#091B2C] text-sm xs:text-base font-bold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center gap-2"
               >
                 <span>{primaryButton?.text || "Get a Quote in 30 Seconds"}</span>
                 <ArrowRight className="h-4 w-4 text-[#091B2C]" />
@@ -413,14 +385,14 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               {secondaryButton?.href ? (
                 <Link
                   href={secondaryButton.href}
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-xl border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton.text}
                 </Link>
               ) : (
                 <Link
                   href="/products"
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-xl border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton?.text || "View Products"}
                 </Link>

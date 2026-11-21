@@ -6,7 +6,7 @@ import type { CompanyProfile } from "@/lib/content";
 import { products } from "@/lib/content";
 import ProductTypewriter from "@/components/ProductTypewriter";
 import HeroHeadline from "@/components/HeroHeadline";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface HeroMinimalProps {
   company: CompanyProfile;
@@ -65,13 +65,13 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         animate="visible"
         className="flex flex-col items-start max-w-4xl pointer-events-auto"
       >
-        {/* Minimal Provenance Indicator — Demoted to neutral tone so main Header CTA dominates */}
+        {/* Provenance Indicator */}
         <motion.div
           variants={itemVariants}
           className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-[#EFE8DC]/80"
         >
-          <Sparkles className="h-3.5 w-3.5 text-[#EFE8DC]/70 shrink-0" aria-hidden="true" />
-          <span>EST. 1984</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57] shrink-0" aria-hidden="true" />
+          <span>EST. 1984 · MADURAI PLANT</span>
           <span className="text-[#EFE8DC]/40" aria-hidden="true">&bull;</span>
           <span className="text-[#F8F4EC]/75">{company.name}</span>
         </motion.div>
@@ -147,19 +147,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           variants={itemVariants}
           className="mt-16 sm:mt-20 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-[#EFE8DC]/60 uppercase"
         >
-          <motion.span
-            animate={
-              shouldReduceMotion
-                ? {}
-                : {
-                    y: [0, 6, 0],
-                  }
-            }
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+          <span
             className="inline-block h-3.5 w-px bg-[#EFE8DC]/40"
             aria-hidden="true"
           />
