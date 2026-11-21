@@ -30,7 +30,11 @@ function getInitialProduct(productParam: string | null): string {
   return match ? match.name : "";
 }
 
-function ContactFormInner() {
+interface ContactFormProps {
+  initialProduct?: string;
+}
+
+function ContactFormInner({ initialProduct }: ContactFormProps) {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
 
@@ -39,7 +43,7 @@ function ContactFormInner() {
     companyName: "",
     email: "",
     phone: "",
-    product: getInitialProduct(productParam),
+    product: initialProduct || getInitialProduct(productParam),
     message: "",
   }));
 
@@ -47,6 +51,7 @@ function ContactFormInner() {
   const [shakingFields, setShakingFields] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -101,7 +106,7 @@ function ContactFormInner() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { newErrors, newShaking } = validateForm();
 
@@ -123,12 +128,34 @@ function ContactFormInner() {
 
     setErrors({});
     setShakingFields({});
+    setSubmitError(null);
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit quote request. Please try again.");
+      }
+
       setIsSubmitted(true);
-    }, 1200);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again.";
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -137,11 +164,12 @@ function ContactFormInner() {
       companyName: "",
       email: "",
       phone: "",
-      product: "",
+      product: initialProduct || "",
       message: "",
     });
     setErrors({});
     setShakingFields({});
+    setSubmitError(null);
     setIsSubmitted(false);
   };
 
@@ -392,6 +420,17 @@ function ContactFormInner() {
             )}
           </div>
 
+          {/* Submission Error Banner */}
+          {submitError && (
+            <div
+              className="rounded-lg border border-red-500/40 bg-red-950/40 p-3 text-xs text-red-300 flex items-center gap-2"
+              role="alert"
+            >
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+              <span>{submitError}</span>
+            </div>
+          )}
+
           {/* Submit Button with Framer Motion hover & tap */}
           <div className="pt-2">
             <motion.button
@@ -437,7 +476,7 @@ function ContactFormInner() {
   );
 }
 
-export default function ContactForm() {
+export default function ContactForm({ initialProduct }: ContactFormProps) {
   return (
     <Suspense
       fallback={
@@ -452,7 +491,7 @@ export default function ContactForm() {
         </div>
       }
     >
-      <ContactFormInner />
+      <ContactFormInner initialProduct={initialProduct} />
     </Suspense>
   );
 }

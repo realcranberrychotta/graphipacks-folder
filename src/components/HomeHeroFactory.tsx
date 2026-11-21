@@ -99,7 +99,20 @@ export default function HomeHeroFactory() {
 
       {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic only when in view on desktop, and disabled if reduced motion or skipped */}
       {isDesktop && isInView && !shouldReduceMotion && !isSkipped && (
-        <div className="relative z-10 w-full h-full">
+        <div className="relative z-10 w-full h-full hero-factory-3d-wrap">
+          <style>{`
+            .hero-factory-3d-wrap #scene,
+            .hero-factory-3d-wrap #labels {
+              transform-origin: 82% 48%;
+              transform: scale(0.81) translate(1.5%, 2.5%);
+            }
+            @media (min-width: 1600px) {
+              .hero-factory-3d-wrap #scene,
+              .hero-factory-3d-wrap #labels {
+                transform: scale(0.81) translate(2.5%, 2.5%);
+              }
+            }
+          `}</style>
           <AgenticFactory3D embed height={720} />
         </div>
       )}

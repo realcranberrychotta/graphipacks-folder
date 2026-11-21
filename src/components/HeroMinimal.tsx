@@ -6,6 +6,7 @@ import type { CompanyProfile } from "@/lib/content";
 import { products } from "@/lib/content";
 import ProductTypewriter from "@/components/ProductTypewriter";
 import HeroHeadline from "@/components/HeroHeadline";
+import { openQuoteModal } from "@/components/QuoteModal";
 import { ArrowRight } from "lucide-react";
 
 interface HeroMinimalProps {
@@ -118,27 +119,28 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           ))}
         </motion.div>
 
-        {/* Tactile B2B Controls — Demoted to outline so the Header's 'Get a Quote' is the single dominant solid gold CTA */}
+        {/* Hero CTAs: Dominant solid gold 'Get a Quote' + Outline 'View Products' */}
         <motion.div
           variants={itemVariants}
           className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <Link
-            href="/contact"
-            className="group relative inline-flex items-center justify-center rounded-none border border-[#B08D57]/60 bg-transparent hover:bg-[#B08D57]/10 hover:border-[#B08D57] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#F8F4EC] hover:text-white transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+          <button
+            type="button"
+            onClick={() => openQuoteModal()}
+            className="group relative inline-flex items-center justify-center rounded-none bg-[#B08D57] hover:bg-[#9A7843] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#091B2C] shadow-lg shadow-[#B08D57]/20 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
           >
-            <span>Request Production Quote</span>
+            <span>Get a Quote</span>
             <ArrowRight
-              className="ml-3 h-4 w-4 text-[#F8F4EC] transition-transform duration-200 group-hover:translate-x-1"
+              className="ml-3 h-4 w-4 text-[#091B2C] transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden="true"
             />
-          </Link>
+          </button>
 
           <Link
             href="/products"
-            className="group inline-flex items-center justify-center rounded-none border border-[#B08D57]/30 border-t-[#F8F4EC]/40 bg-[#0F2A44]/40 backdrop-blur-xl md:backdrop-blur-2xl px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F8F4EC] transition-all hover:border-[#B08D57] hover:bg-[#0F2A44]/70 hover:text-[#B08D57] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+            className="group inline-flex items-center justify-center rounded-none border border-[#B08D57]/45 bg-transparent hover:bg-[#B08D57]/10 hover:border-[#B08D57] px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F8F4EC] transition-all hover:text-[#B08D57] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
           >
-            <span>Explore Product Catalog</span>
+            <span>View Products</span>
           </Link>
         </motion.div>
 

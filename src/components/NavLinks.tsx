@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
+import { openQuoteModal } from "@/components/QuoteModal";
 
 interface NavItem {
   label: string;
@@ -76,6 +77,12 @@ export default function NavLinks() {
         >
           <Link
             href="/contact"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                openQuoteModal();
+              }
+            }}
             className="inline-flex min-h-[34px] h-[34px] items-center justify-center rounded-md bg-[#B08D57] hover:bg-[#9A7843] px-3.5 py-1 text-xs font-semibold text-[#091B2C] shadow-sm transition-all duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57] font-sans"
           >
             Get a Quote
@@ -159,7 +166,13 @@ export default function NavLinks() {
             <div className="pt-3 border-t border-[#B08D57]/20 mt-2">
               <Link
                 href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  if (pathname === "/") {
+                    e.preventDefault();
+                    openQuoteModal();
+                  }
+                }}
                 className="w-full min-h-[44px] flex items-center justify-center rounded-md bg-[#B08D57] hover:bg-[#9A7843] px-4 py-2.5 text-center text-xs font-semibold text-[#091B2C] shadow-sm transition-all duration-200 ease-in-out"
               >
                 Get a Quote

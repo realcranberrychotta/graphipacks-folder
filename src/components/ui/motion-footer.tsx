@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Package, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { company } from "@/lib/content";
+import { openQuoteModal } from "@/components/QuoteModal";
 
 // Register ScrollTrigger safely for React
 if (typeof window !== "undefined") {
@@ -19,18 +20,18 @@ if (typeof window !== "undefined") {
 // -------------------------------------------------------------------------
 const STYLES = `
 .cinematic-footer-wrapper {
-  background-color: transparent;
+  background-color: #0F2A44;
   color: #F8F4EC;
   font-family: var(--font-geist-sans, sans-serif);
   -webkit-font-smoothing: antialiased;
   
   /* Brand Tokens: Deep Navy (#091B2C), Navy Primary (#0F2A44), Bronze (#B08D57), Warm Ivory (#F8F4EC) */
-  --pill-bg-1: rgba(255, 255, 255, 0.08);
-  --pill-bg-2: rgba(255, 255, 255, 0.03);
-  --pill-shadow: rgba(9, 27, 44, 0.35);
-  --pill-highlight: rgba(248, 244, 236, 0.15);
-  --pill-inset-shadow: rgba(176, 141, 87, 0.08);
-  --pill-border: rgba(176, 141, 87, 0.3);
+  --pill-bg-1: #091B2C;
+  --pill-bg-2: #0B2238;
+  --pill-shadow: rgba(0, 0, 0, 0.35);
+  --pill-highlight: rgba(248, 244, 236, 0.08);
+  --pill-inset-shadow: rgba(0, 0, 0, 0.2);
+  --pill-border: rgba(176, 141, 87, 0.45);
   
   --pill-bg-1-hover: #B08D57;
   --pill-bg-2-hover: #9A7843;
@@ -76,38 +77,25 @@ const STYLES = `
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
 }
 
-/* Deep Aurora Glow */
+/* Pale aurora glow disabled for solid Deep Navy #0F2A44 background */
 .footer-aurora {
-  background: radial-gradient(
-    circle at 50% 50%, 
-    rgba(176, 141, 87, 0.16) 0%, 
-    rgba(15, 42, 68, 0.35) 45%, 
-    transparent 75%
-  );
+  display: none !important;
 }
 
-/* Smoked Polymer Glass Pill Theming */
+/* Solid Deep Navy / Bronze Glass Pill Theming with High Contrast */
 .footer-glass-pill {
-  background: linear-gradient(145deg, var(--pill-bg-1) 0%, var(--pill-bg-2) 100%);
-  box-shadow: 
-      0 10px 30px -10px var(--pill-shadow), 
-      inset 0 1px 1px var(--pill-highlight), 
-      inset 0 -1px 2px var(--pill-inset-shadow);
-  border: 1px solid var(--pill-border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: all 0.3s ease-in-out;
+  background: #091B2C;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  transition: all 0.25s ease-in-out;
   color: #F8F4EC;
 }
 
 .footer-glass-pill:hover {
   background: #B08D57 !important;
   border-color: #B08D57 !important;
-  box-shadow: 
-      0 20px 40px -10px var(--pill-shadow-hover), 
-      0 0 25px rgba(176, 141, 87, 0.2),
-      inset 0 1px 1px var(--pill-highlight-hover);
-  color: #091B2C !important;
+  box-shadow: 0 8px 24px rgba(176, 141, 87, 0.35);
+  color: #0F2A44 !important;
 }
 
 /* Giant Background Watermark Text */
@@ -117,8 +105,8 @@ const STYLES = `
   line-height: 0.75;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: rgba(176, 141, 87, 0.07);
-  -webkit-text-stroke: 1.5px rgba(176, 141, 87, 0.16);
+  color: rgba(176, 141, 87, 0.05);
+  -webkit-text-stroke: 1.5px rgba(176, 141, 87, 0.12);
 }
 
 .footer-heading {
@@ -290,10 +278,9 @@ export function CinematicFooter() {
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         {/* The actual footer stays fixed to the viewport underneath everything */}
-        <footer className="fixed bottom-0 left-0 flex h-screen min-h-[640px] w-full flex-col justify-between overflow-hidden bg-[#0F2A44]/90 backdrop-blur-2xl text-[#F8F4EC] cinematic-footer-wrapper border-t border-[#B08D57]/25">
+        <footer className="fixed bottom-0 left-0 flex h-screen min-h-[640px] w-full flex-col justify-between overflow-hidden bg-[#0F2A44] text-[#F8F4EC] cinematic-footer-wrapper border-t border-[#B08D57]/25">
           
-          {/* Ambient Light & Grid Background */}
-          <div className="footer-aurora absolute left-1/2 top-1/2 h-[65vh] w-[85vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[90px] pointer-events-none z-0" />
+          {/* Ambient Technical Die-Line Grid Background */}
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
           {/* Giant background text */}
@@ -315,7 +302,7 @@ export function CinematicFooter() {
           {/* 2. Main Center Content */}
           <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-16 md:mt-20 w-full max-w-5xl mx-auto">
             {/* Provenance eyebrow */}
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#B08D57]/30 bg-[#091B2C]/70 px-4 py-1 text-[11px] font-mono font-semibold tracking-widest text-[#B08D57] uppercase backdrop-blur-md">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#B08D57]/40 bg-[#091B2C] px-4 py-1 text-[11px] font-mono font-semibold tracking-widest text-[#B08D57] uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-[#B08D57] animate-pulse" />
               <span>B2B Industrial Packaging Solutions</span>
             </div>
@@ -327,7 +314,7 @@ export function CinematicFooter() {
               Ready to engineer your packaging?
             </h2>
 
-            <p className="text-sm md:text-base text-[#EFE8DC]/85 font-medium text-center max-w-2xl mb-8 leading-relaxed">
+            <p className="text-sm md:text-base text-[#F8F4EC] font-normal text-center max-w-2xl mb-8 leading-relaxed">
               Partner with Graphipacks for precision blown film extrusion, 8-color rotogravure printing, and automated wicketted poly bags tailored to your machinery.
             </p>
 
@@ -336,9 +323,9 @@ export function CinematicFooter() {
               {/* Primary RFQ & Product Links */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
                 <MagneticButton
-                  as={Link}
-                  href="/contact"
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57] bg-[#B08D57] text-[#091B2C] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#9A7843] transition-all duration-200 ease-in-out"
+                  as="button"
+                  onClick={() => openQuoteModal()}
+                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57] bg-[#B08D57] text-[#091B2C] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#9A7843] transition-all duration-200 ease-in-out cursor-pointer"
                 >
                   <ArrowUpRight className="w-5 h-5 text-[#091B2C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ease-in-out" />
                   Request Technical Quote

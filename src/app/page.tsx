@@ -29,6 +29,8 @@ import HeroHeadline from "@/components/HeroHeadline";
 import MobileHero from "@/components/MobileHero";
 import HeroSkipControl from "@/components/HeroSkipControl";
 import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
+import QuoteModal from "@/components/QuoteModal";
+import QuoteTriggerButton from "@/components/QuoteTriggerButton";
 
 export default async function HomePage() {
   cacheLife("days");
@@ -58,9 +60,6 @@ export default async function HomePage() {
           <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
             <HomeHeroFactory />
           </div>
-
-          {/* Film-grain noise overlay */}
-          <div className="hero-grain-overlay pointer-events-none" aria-hidden="true" />
 
           <div className="relative z-10 pointer-events-none pt-36 pb-28 lg:pt-40 lg:pb-32 min-h-[720px] flex items-center">
             <div className="w-full">
@@ -375,7 +374,7 @@ export default async function HomePage() {
       </section>
 
       {/* Bottom Conversion CTA */}
-      <section className="border-t border-[#B08D57]/25 bg-[#091B2C]/90 backdrop-blur-2xl py-20 text-[#F8F4EC]">
+      <section className="border-t border-[#B08D57]/25 bg-[#091B2C] py-20 text-[#F8F4EC]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-2xl">
@@ -393,15 +392,15 @@ export default async function HomePage() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/60 bg-transparent hover:bg-[#B08D57]/10 hover:border-[#B08D57] px-6 py-3.5 text-sm font-bold text-[#F8F4EC] hover:text-white transition-all duration-200 ease-in-out"
+              <QuoteTriggerButton
+                className="inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out cursor-pointer"
               >
-                Request Technical Quote &rarr;
-              </Link>
+                <span>Get a Quote</span>
+                <span className="ml-1.5" aria-hidden="true">&rarr;</span>
+              </QuoteTriggerButton>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-[#0F2A44]/60 px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition-all duration-200 ease-in-out hover:bg-[#1B3D5E]/60"
+                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-transparent hover:bg-[#B08D57]/10 hover:border-[#B08D57] px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition-all duration-200 ease-in-out"
               >
                 Our Journey &amp; Infrastructure
               </Link>
@@ -409,6 +408,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Interactive Production Quote Modal */}
+      <QuoteModal />
     </div>
   );
 }

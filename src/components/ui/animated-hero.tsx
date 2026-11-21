@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X, CheckCircle2, ChevronRight } from "lucide-react";
 import ProductTypewriter from "@/components/ProductTypewriter";
+import { openQuoteModal } from "@/components/QuoteModal";
 
 export interface ParticleHeroProps {
   title?: string;
@@ -258,15 +259,13 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     }, 4000);
   };
 
-  // Estimator Form Submissions
+  // Estimator / Quote Form Submissions
   const handleOpenEstimator = () => {
     if (primaryButton?.onClick) {
       primaryButton.onClick();
       return;
     }
-    setStep(1);
-    setIsSubmitted(false);
-    setEstimatorOpen(true);
+    openQuoteModal();
   };
 
   const handleEstimatorSubmit = (e: React.FormEvent) => {
@@ -377,7 +376,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                 onClick={handleOpenEstimator}
                 className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] text-[#091B2C] text-sm xs:text-base font-bold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center gap-2"
               >
-                <span>{primaryButton?.text || "Get a Quote in 30 Seconds"}</span>
+                <span>{primaryButton?.text || "Get a Quote"}</span>
                 <ArrowRight className="h-4 w-4 text-[#091B2C]" />
               </button>
 

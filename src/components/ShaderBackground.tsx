@@ -416,7 +416,7 @@ export default function ShaderBackground() {
         gl.uniform4f(uSurfaceLocation, 2.40, 1.16, 0.00, 1.00);
       }
       if (uFinishLocation) {
-        gl.uniform4f(uFinishLocation, 0.00, 0.00, 0.000, 0.26); // Grain at 26/100
+        gl.uniform4f(uFinishLocation, 0.00, 0.00, 0.000, 0.00); // Film grain removed for crisp type legibility
       }
       if (uTransformLocation) {
         gl.uniform4f(uTransformLocation, 1453.0, 0.00, 0.00, 0.0);

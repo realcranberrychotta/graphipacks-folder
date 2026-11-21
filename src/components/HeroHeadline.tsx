@@ -82,7 +82,7 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
         {/* Top line: Italic light serif */}
         <motion.span
           variants={lineVariants}
-          className="block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-5xl md:text-6xl lg:text-7xl leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F8F4EC]"
+          className="block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F8F4EC]"
         >
           Flexible Packaging
         </motion.span>
@@ -90,7 +90,7 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
         {/* Bottom block: Bold uppercase architectural block */}
         <motion.span
           variants={lineVariants}
-          className="block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] sm:tracking-[0.06em] text-[28px] xs:text-[34px] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.08] sm:leading-[0.92] text-[#F8F4EC] mt-1.5 sm:mt-3"
+          className="block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F8F4EC] mt-1.5 sm:mt-3"
         >
           SOLUTION<br />PROVIDERS
         </motion.span>
