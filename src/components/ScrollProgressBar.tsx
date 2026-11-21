@@ -1,11 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 
 export default function ScrollProgressBar() {
-  const pathname = usePathname();
   const { scrollYProgress } = useScroll();
   const [isScrolling, setIsScrolling] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -23,10 +21,6 @@ export default function ScrollProgressBar() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-
-  if (pathname === "/infrastructure" || pathname?.startsWith("/infrastructure/")) {
-    return null;
-  }
 
   return (
     <motion.div

@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import NavLinks from "@/components/NavLinks";
 
 export default function Header() {
-  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -18,11 +16,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // The full-screen infrastructure tour uses its own dedicated top-left exit button and header
-  if (pathname === "/infrastructure" || pathname?.startsWith("/infrastructure/")) {
-    return null;
-  }
 
   return (
     <header

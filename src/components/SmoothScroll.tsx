@@ -27,8 +27,6 @@ export default function SmoothScroll() {
       anchors: false, // Handled with custom header offset below
       prevent: (node) => {
         return (
-          window.location.pathname === "/infrastructure" ||
-          window.location.pathname.startsWith("/infrastructure") ||
           node.hasAttribute("data-lenis-prevent") ||
           !!node.closest("[data-lenis-prevent]")
         );
@@ -36,13 +34,7 @@ export default function SmoothScroll() {
     });
 
     lenisRef.current = lenis;
-
-    // Immediately stop Lenis if on /infrastructure route
-    if (pathname === "/infrastructure" || pathname?.startsWith("/infrastructure/")) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
+    lenis.start();
 
     // Drive Lenis with requestAnimationFrame loop
     let rafId = 0;
@@ -133,12 +125,8 @@ export default function SmoothScroll() {
   // Sync route transitions with Lenis
   useEffect(() => {
     if (!lenisRef.current) return;
-    if (pathname === "/infrastructure" || pathname?.startsWith("/infrastructure/")) {
-      lenisRef.current.stop();
-    } else {
-      lenisRef.current.start();
-      lenisRef.current.resize();
-    }
+    lenisRef.current.start();
+    lenisRef.current.resize();
   }, [pathname]);
 
   return null;
