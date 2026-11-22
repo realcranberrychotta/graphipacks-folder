@@ -5,10 +5,10 @@ import Link from "next/link";
 export default function HeroCtas() {
   return (
     <div className="flex flex-wrap items-center gap-4 pt-1">
-      {/* Primary Action — High-contrast Bronze Block */}
+      {/* Primary Action — High-contrast Warm Alabaster & Imperial Oxblood */}
       <Link
         href="/contact"
-        className="group relative inline-flex items-center justify-center rounded-none bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.16em] text-[#091B2C] border border-[#B08D57]/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+        className="group relative inline-flex items-center justify-center rounded-none bg-[#F6F2EB] hover:bg-[#EDE6DA] px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.16em] text-[#3D0E18] border border-[#A6864C]/50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F6F2EB]"
       >
         <span>Request Production Quote</span>
         <span
@@ -19,26 +19,25 @@ export default function HeroCtas() {
         </span>
       </Link>
 
-      {/* Secondary Action — Frosted Glassmorphism Framed Control */}
+      {/* Secondary Action — Antique Brass Framed Control */}
       <Link
         href="/products"
-        className="group relative inline-flex items-center justify-center rounded-none border border-[#B08D57]/30 border-t-[#F8F4EC]/40 bg-[#0F2A44]/40 backdrop-blur-xl md:backdrop-blur-2xl px-6 py-3.5 text-xs font-mono font-semibold uppercase tracking-[0.16em] text-[#F8F4EC] transition-all hover:border-[#B08D57]/80 hover:bg-[#0F2A44]/60 hover:text-[#B08D57] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+        className="group relative inline-flex items-center justify-center rounded-none border border-[#A6864C] bg-[#3D0E18]/60 px-6 py-3.5 text-xs font-mono font-semibold uppercase tracking-[0.16em] text-[#F6F2EB] transition-all hover:bg-[#A6864C]/20 hover:text-[#A6864C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A6864C]"
       >
-        {/* Technical Corner Crop Ticks */}
         <span
-          className="absolute -top-[1px] -left-[1px] h-1.5 w-1.5 border-t border-l border-[#B08D57] transition-colors group-hover:border-[#F8F4EC]"
+          className="absolute -top-[1px] -left-[1px] h-1.5 w-1.5 border-t border-l border-[#A6864C] transition-colors group-hover:border-[#F6F2EB]"
           aria-hidden="true"
         />
         <span
-          className="absolute -top-[1px] -right-[1px] h-1.5 w-1.5 border-t border-r border-[#B08D57] transition-colors group-hover:border-[#F8F4EC]"
+          className="absolute -top-[1px] -right-[1px] h-1.5 w-1.5 border-t border-r border-[#A6864C] transition-colors group-hover:border-[#F6F2EB]"
           aria-hidden="true"
         />
         <span
-          className="absolute -bottom-[1px] -left-[1px] h-1.5 w-1.5 border-b border-l border-[#B08D57] transition-colors group-hover:border-[#F8F4EC]"
+          className="absolute -bottom-[1px] -left-[1px] h-1.5 w-1.5 border-b border-l border-[#A6864C] transition-colors group-hover:border-[#F6F2EB]"
           aria-hidden="true"
         />
         <span
-          className="absolute -bottom-[1px] -right-[1px] h-1.5 w-1.5 border-b border-r border-[#B08D57] transition-colors group-hover:border-[#F8F4EC]"
+          className="absolute -bottom-[1px] -right-[1px] h-1.5 w-1.5 border-b border-r border-[#A6864C] transition-colors group-hover:border-[#F6F2EB]"
           aria-hidden="true"
         />
 

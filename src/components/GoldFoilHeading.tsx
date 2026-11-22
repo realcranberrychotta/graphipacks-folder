@@ -57,7 +57,7 @@ export default function GoldFoilHeading({ className = "" }: GoldFoilHeadingProps
     }
   };
 
-  const foilGradient = useMotionTemplate`radial-gradient(180px circle at ${springX}px ${springY}px, #ffffff 0%, #F8F4EC 25%, #B08D57 60%, #9A7843 100%)`;
+  const foilGradient = useMotionTemplate`radial-gradient(180px circle at ${springX}px ${springY}px, #ffffff 0%, #F6F2EB 25%, #A6864C 60%, #8C6D38 100%)`;
 
   return (
     <div
@@ -68,14 +68,14 @@ export default function GoldFoilHeading({ className = "" }: GoldFoilHeadingProps
       className={`relative inline-block cursor-pointer ${className}`}
     >
       {/* Layer 1: Base Matte Sheen Layer — Always Visible */}
-      <span className="block font-[family-name:var(--font-display)] font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight select-none bg-gradient-to-b from-[#F8F4EC] via-[#B08D57] to-[#9A7843] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(176,141,87,0.25)]">
+      <span className="block font-serif font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight select-none bg-gradient-to-b from-[#F6F2EB] via-[#A6864C] to-[#8C6D38] bg-clip-text text-transparent">
         GRAPHIPACKS PRIVATE LIMITED
       </span>
 
       {/* Layer 2: Interactive Specular Foil Overlay */}
       <motion.span
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none select-none font-[family-name:var(--font-display)] font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight"
+        className="absolute inset-0 pointer-events-none select-none font-serif font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight"
         style={{
           backgroundImage: foilGradient,
           WebkitBackgroundClip: "text",

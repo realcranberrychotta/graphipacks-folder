@@ -67,7 +67,6 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
       newErrors.fullName = "Please add your name";
       newShaking.fullName = true;
     }
-    // Company Name is optional — accept messy input or empty
     if (!cleanEmail) {
       newErrors.email = "Please add your email";
       newShaking.email = true;
@@ -75,7 +74,6 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
       newErrors.email = "That email doesn't look right — check for a typo?";
       newShaking.email = true;
     }
-    // Phone Number is optional — accept messy input or empty
     if (!cleanProduct) {
       newErrors.product = "Please select a product of interest";
       newShaking.product = true;
@@ -182,36 +180,36 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
     <div
       className={`rounded-2xl ${
         isModal
-          ? "bg-transparent border-0 shadow-none"
-          : "border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl"
-      } p-5 sm:p-10 text-[#F8F4EC]`}
+          ? "bg-transparent border-0"
+          : "border border-[#1C1917]/10 bg-[#FBF9F5]"
+      } p-5 sm:p-10 text-[#1C1917]`}
     >
-      <div className="border-b border-[#B08D57]/20 pb-5">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#B08D57]">
+      <div className="border-b border-[#1C1917]/10 pb-5">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#A6864C]">
           Direct Sales &amp; Technical Consultation
         </span>
-        <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#F8F4EC]">
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#1C1917] font-serif">
           Request a Quote &amp; Specifications
         </h2>
-        <p className="mt-1 text-sm text-[#EFE8DC]">
+        <p className="mt-1 text-sm text-[#57524E] font-sans">
           Fill out the details below. Our manufacturing sales engineers respond within 24 hours.
         </p>
       </div>
 
       {isSubmitted ? (
-        <div className="mt-8 rounded-2xl border border-[#B08D57]/30 bg-[#091B2C]/70 p-8 text-center shadow-lg">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm">
-            <CheckCircle2 className="h-8 w-8 text-emerald-400" />
+        <div className="mt-8 rounded-2xl border border-[#A6864C] bg-[#EDE6DA] p-8 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#3D0E18] text-[#F6F2EB]">
+            <CheckCircle2 className="h-8 w-8 text-[#A6864C]" />
           </div>
-          <h3 className="mt-4 text-2xl font-bold text-[#F8F4EC]">
+          <h3 className="mt-4 text-2xl font-bold text-[#1C1917] font-serif">
             Request received
           </h3>
-          <p className="mt-2 text-base font-semibold text-[#B08D57]">
+          <p className="mt-2 text-base font-semibold text-[#3D0E18]">
             Our team will call you within 1 working day.
           </p>
-          <p className="mt-2 text-xs text-[#EFE8DC]/85 max-w-md mx-auto leading-relaxed">
+          <p className="mt-2 text-xs text-[#57524E] max-w-md mx-auto leading-relaxed font-sans">
             We have registered your inquiry for{" "}
-            <span className="font-semibold text-[#F8F4EC]">
+            <span className="font-semibold text-[#1C1917]">
               {formData.product || "our flexible packaging solutions"}
             </span>
             . One of our factory sales engineers in Madurai will review your specifications and contact you directly within 24 hours.
@@ -220,7 +218,7 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <button
               type="button"
               onClick={handleReset}
-              className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-[#B08D57]/40 bg-[#091B2C]/60 px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F8F4EC] shadow-sm hover:bg-[#1B3D5E]/40 transition-colors duration-200 ease-in-out cursor-pointer"
+              className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
             >
               Submit Another Inquiry
             </button>
@@ -233,9 +231,9 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <div className={shakingFields.fullName ? "animate-shake" : ""}>
               <label
                 htmlFor="fullName"
-                className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+                className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
               >
-                Full Name <span className="text-[#B08D57]">*</span>
+                Full Name <span className="text-[#3D0E18]">*</span>
               </label>
               <input
                 id="fullName"
@@ -247,15 +245,15 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
                 placeholder="e.g. Ramesh Kumar"
                 aria-invalid={!!errors.fullName}
                 aria-describedby={errors.fullName ? "fullName-error" : undefined}
-                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:bg-[#091B2C]/80 focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden transition-colors duration-200 ease-in-out ${
                   errors.fullName
-                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                    : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
+                    ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
+                    : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
                 }`}
               />
               {errors.fullName && (
-                <p id="fullName-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
+                <p id="fullName-error" className="mt-1.5 text-xs font-semibold text-red-600 flex items-center gap-1.5" role="alert">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                   <span>{errors.fullName}</span>
                 </p>
               )}
@@ -265,7 +263,7 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <div className={shakingFields.companyName ? "animate-shake" : ""}>
               <label
                 htmlFor="companyName"
-                className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+                className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
               >
                 Company Name
               </label>
@@ -277,7 +275,7 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="e.g. Apex Agri Exports Ltd."
-                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:border-[#B08D57] focus:bg-[#091B2C]/80 focus:ring-1 focus:ring-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
+                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18] focus:outline-hidden transition-colors duration-200 ease-in-out"
               />
             </div>
           </div>
@@ -287,9 +285,9 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <div className={shakingFields.email ? "animate-shake" : ""}>
               <label
                 htmlFor="email"
-                className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+                className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
               >
-                Email Address <span className="text-[#B08D57]">*</span>
+                Email Address <span className="text-[#3D0E18]">*</span>
               </label>
               <input
                 id="email"
@@ -304,19 +302,19 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
                 placeholder="e.g. ramesh@apexagri.com"
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
-                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:bg-[#091B2C]/80 focus:outline-hidden transition-colors duration-200 ease-in-out ${
+                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden transition-colors duration-200 ease-in-out ${
                   errors.email
-                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                    : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
+                    ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
+                    : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
                 }`}
               />
               {errors.email ? (
-                <p id="email-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
+                <p id="email-error" className="mt-1.5 text-xs font-semibold text-red-600 flex items-center gap-1.5" role="alert">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                   <span>{errors.email}</span>
                 </p>
               ) : (
-                <p className="mt-1 text-[11px] text-[#EFE8DC]/60">
+                <p className="mt-1 text-[11px] text-[#57524E]">
                   We&apos;ll reply within 1 working day.
                 </p>
               )}
@@ -326,7 +324,7 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <div className={shakingFields.phone ? "animate-shake" : ""}>
               <label
                 htmlFor="phone"
-                className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+                className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
               >
                 Phone Number
               </label>
@@ -339,9 +337,9 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="e.g. +91 98765 43210"
-                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:border-[#B08D57] focus:bg-[#091B2C]/80 focus:ring-1 focus:ring-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
+                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18] focus:outline-hidden transition-colors duration-200 ease-in-out"
               />
-              <p className="mt-1 text-[11px] text-[#EFE8DC]/60">
+              <p className="mt-1 text-[11px] text-[#57524E]">
                 e.g. 98765 43210, +91 accepted
               </p>
             </div>
@@ -351,9 +349,9 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
           <div className={shakingFields.product ? "animate-shake" : ""}>
             <label
               htmlFor="product"
-              className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+              className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
             >
-              Product of Interest <span className="text-[#B08D57]">*</span>
+              Product of Interest <span className="text-[#3D0E18]">*</span>
             </label>
             <select
               id="product"
@@ -362,22 +360,22 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
               onChange={handleChange}
               aria-invalid={!!errors.product}
               aria-describedby={errors.product ? "product-error" : undefined}
-              className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] focus:bg-[#091B2C]/80 focus:outline-hidden transition-colors duration-200 ease-in-out ${
+              className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] focus:outline-hidden transition-colors duration-200 ease-in-out ${
                 errors.product
-                  ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                  : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
+                  ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
+                  : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
               }`}
             >
-              <option value="" className="bg-[#091B2C] text-[#F8F4EC]">Select a product of interest...</option>
+              <option value="" className="bg-[#FFFFFF] text-[#1C1917]">Select a product of interest...</option>
               {products.map((p) => (
-                <option key={p.slug} value={p.name} className="bg-[#091B2C] text-[#F8F4EC]">
+                <option key={p.slug} value={p.name} className="bg-[#FFFFFF] text-[#1C1917]">
                   {p.name}
                 </option>
               ))}
             </select>
             {errors.product && (
-              <p id="product-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
+              <p id="product-error" className="mt-1.5 text-xs font-semibold text-red-600 flex items-center gap-1.5" role="alert">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                 <span>{errors.product}</span>
               </p>
             )}
@@ -387,9 +385,9 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
           <div className={shakingFields.message ? "animate-shake" : ""}>
             <label
               htmlFor="message"
-              className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
+              className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
             >
-              Message &amp; Requirements <span className="text-[#B08D57]">*</span>
+              Message &amp; Requirements <span className="text-[#3D0E18]">*</span>
             </label>
             <textarea
               id="message"
@@ -400,15 +398,15 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
               placeholder="Specify gauge thickness (microns), dimensions, order quantities, print colors, or sample delivery requests..."
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? "message-error" : undefined}
-              className={`mt-1.5 block w-full min-h-[120px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:bg-[#091B2C]/80 focus:outline-hidden resize-y transition-colors duration-200 ease-in-out ${
+              className={`mt-1.5 block w-full min-h-[120px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden resize-y transition-colors duration-200 ease-in-out ${
                 errors.message
-                  ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                  : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
+                  ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
+                  : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
               }`}
             />
             {errors.message && (
-              <p id="message-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
+              <p id="message-error" className="mt-1.5 text-xs font-semibold text-red-600 flex items-center gap-1.5" role="alert">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                 <span>{errors.message}</span>
               </p>
             )}
@@ -417,10 +415,10 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
           {/* Submission Error Banner */}
           {submitError && (
             <div
-              className="rounded-lg border border-red-500/40 bg-red-950/40 p-3 text-xs text-red-300 flex items-center gap-2"
+              className="rounded-lg border border-red-600 bg-red-50 p-3 text-xs text-red-800 flex items-center gap-2"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
               <span>{submitError}</span>
             </div>
           )}
@@ -430,15 +428,15 @@ function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              whileHover={isSubmitting ? undefined : { scale: 1.02 }}
-              whileTap={isSubmitting ? undefined : { scale: 0.98 }}
+              whileHover={isSubmitting ? undefined : { scale: 1.01 }}
+              whileTap={isSubmitting ? undefined : { scale: 0.99 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-base font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2"
+              className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-[#3D0E18] hover:bg-[#27080F] px-6 py-3.5 text-base font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2"
             >
               {isSubmitting ? (
                 <>
                   <svg
-                    className="h-5 w-5 animate-spin text-[#091B2C]"
+                    className="h-5 w-5 animate-spin text-[#F6F2EB]"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -474,13 +472,13 @@ export default function ContactForm({ initialProduct, isModal }: ContactFormProp
   return (
     <Suspense
       fallback={
-        <div className={`rounded-2xl ${isModal ? "bg-transparent border-0" : "border border-[#B08D57]/20 bg-[#0F2A44]/40 backdrop-blur-xl"} p-8 shadow-xl animate-pulse`}>
-          <div className="h-6 w-1/3 bg-[#1B3D5E]/30 rounded mb-4" />
-          <div className="h-4 w-2/3 bg-[#1B3D5E]/20 rounded mb-8" />
+        <div className={`rounded-2xl ${isModal ? "bg-transparent border-0" : "border border-[#1C1917]/10 bg-[#EDE6DA]"} p-8 animate-pulse`}>
+          <div className="h-6 w-1/3 bg-[#FBF9F5] rounded mb-4" />
+          <div className="h-4 w-2/3 bg-[#FBF9F5] rounded mb-8" />
           <div className="space-y-4">
-            <div className="h-10 bg-[#1B3D5E]/20 rounded" />
-            <div className="h-10 bg-[#1B3D5E]/20 rounded" />
-            <div className="h-10 bg-[#1B3D5E]/20 rounded" />
+            <div className="h-10 bg-[#FBF9F5] rounded" />
+            <div className="h-10 bg-[#FBF9F5] rounded" />
+            <div className="h-10 bg-[#FBF9F5] rounded" />
           </div>
         </div>
       }

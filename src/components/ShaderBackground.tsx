@@ -356,12 +356,12 @@ export default function ShaderBackground() {
     const uSpaceLocation = gl.getUniformLocation(program, "u_space");
     const uCursorLocation = gl.getUniformLocation(program, "u_cursor");
 
-    // Colors: #091B2C, #1B3D5E, #B08D57, #F8F4EC (padded with zeros to 8 colors)
+    // Colors: #3D0E18, #27080F, #A6864C, #F6F2EB (padded with zeros to 8 colors)
     const colorsData = new Float32Array([
-      0.035, 0.106, 0.173, // color 0 (#091B2C - Deep Navy)
-      0.106, 0.239, 0.369, // color 1 (#1B3D5E - Navy Mid)
-      0.690, 0.553, 0.341, // color 2 (#B08D57 - Bronze Accent)
-      0.973, 0.957, 0.925, // color 3 (#F8F4EC - Warm Ivory)
+      0.239, 0.055, 0.094, // color 0 (#3D0E18 - Imperial Oxblood)
+      0.153, 0.031, 0.059, // color 1 (#27080F - Deep Oxblood)
+      0.651, 0.525, 0.298, // color 2 (#A6864C - Antique Brass)
+      0.965, 0.949, 0.922, // color 3 (#F6F2EB - Warm Alabaster)
       0.000, 0.000, 0.000, // color 4 (padded)
       0.000, 0.000, 0.000, // color 5 (padded)
       0.000, 0.000, 0.000, // color 6 (padded)

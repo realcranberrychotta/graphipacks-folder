@@ -79,7 +79,7 @@ export default function QuoteModal() {
       {isOpen && (
         <div
           id="quote-modal-overlay"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-[#071524]/85 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-[#1C1917]/80"
           onClick={handleClose}
           role="dialog"
           aria-modal="true"
@@ -90,14 +90,14 @@ export default function QuoteModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fluted-glass-card relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl shadow-2xl"
+            className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#FBF9F5] border border-[#A6864C]/35"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               type="button"
               onClick={handleClose}
-              className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-[#B08D57]/30 bg-[#091B2C]/80 text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-colors duration-200 cursor-pointer"
+              className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-[#1C1917]/15 bg-[#EDE6DA] text-[#1C1917] hover:bg-[#3D0E18] hover:text-[#F6F2EB] transition-colors duration-200 cursor-pointer"
               aria-label="Close quote dialog"
             >
               <X className="h-5 w-5" />

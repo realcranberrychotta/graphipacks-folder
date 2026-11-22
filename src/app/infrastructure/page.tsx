@@ -27,66 +27,70 @@ export const metadata: Metadata = {
 
 export default function InfrastructurePage() {
   return (
-    <div className={`${playfair.variable} flex flex-col bg-transparent text-[#F8F4EC]`}>
-      {/* Hero Header Section matching About and Products */}
-      <header className="relative overflow-hidden border-b border-[#B08D57]/20 border-t-[#B08D57]/30 bg-[#0F2A44]/60 backdrop-blur-xl md:backdrop-blur-2xl py-20 text-[#F8F4EC] sm:py-24">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(176,141,87,0.18),transparent_50%)]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(to_right,#B08D570a_1px,transparent_1px),linear-gradient(to_bottom,#B08D570a_1px,transparent_1px)] bg-[size:4rem_4rem]"
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className={`${playfair.variable} flex flex-col bg-[#F6F2EB] text-[#1C1917]`}>
+      {/* Editorial Header Section on Light Atmosphere */}
+      <header className="relative overflow-hidden bg-light-atmosphere border-b border-[#A6864C]/25 pt-32 pb-20 md:pt-40 md:pb-28 text-[#1C1917]">
+        <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#B08D57]/40 bg-[#1B3D5E]/40 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-[#B08D57] shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-[#B08D57] animate-pulse" />
-              <span>01 / MANUFACTURING INFRASTRUCTURE</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#1C1917]/15 bg-[#FBF9F5] px-3.5 py-1 text-xs font-mono font-medium text-[#1C1917] hover:border-[#3D0E18] hover:text-[#3D0E18] transition-colors"
+              >
+                <span>&larr; Return to Catalog</span>
+              </Link>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#A6864C]/40 bg-[#FBF9F5] px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-[#A6864C]">
+                <span className="h-2 w-2 rounded-full bg-[#A6864C] animate-pulse" />
+                <span>01 / MANUFACTURING INFRASTRUCTURE</span>
+              </div>
             </div>
 
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
+            <h1 className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-normal leading-[1.06] tracking-[-0.025em] text-[#1C1917] font-[family-name:var(--font-playfair)] font-serif">
               Graphipacks Factory
             </h1>
 
-            <p className="mt-4 max-w-3xl text-sm sm:text-base lg:text-lg text-[#EFE8DC]/85 leading-relaxed font-sans">
+            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#57524E] font-sans">
               Tour our in-house manufacturing plant in Madurai—coupling multi-layer blown film extrusion, 8-color precision rotogravure printing, and automated wicketing conversion since 1984.
             </p>
           </div>
         </div>
       </header>
 
-      {/* Main Bento Grid Content Section */}
+      {/* Main Bento Grid Content Section on Warm Alabaster */}
       <section
         aria-label="Manufacturing Infrastructure Bento Grid"
-        className="mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-24 sm:px-6 lg:px-8 w-full"
+        className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-24 md:py-32 w-full"
       >
         <InfrastructureBentoGrid />
       </section>
 
-      {/* Bottom Conversion / Technical Discussion CTA */}
-      <section className="border-t border-[#B08D57]/25 bg-[#091B2C]/90 backdrop-blur-2xl py-20 text-[#F8F4EC]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Bottom Conversion / Technical Discussion CTA (Royal Statement Band) */}
+      <section className="relative overflow-hidden bg-royal-band border-t border-[#A6864C] py-24 md:py-32 text-[#F6F2EB]">
+        <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
+              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C] mb-4">
+                Plant Technical Consultation
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#F6F2EB]">
                 Discuss Your Technical Specifications
               </h2>
-              <p className="mt-3 text-sm sm:text-base text-[#EFE8DC]/85 leading-relaxed font-sans">
+              <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#F6F2EB]/80 font-sans">
                 Contact our Madurai plant leadership and production engineers to request custom machine trials, evaluate barrier test data, or discuss high-volume flexible packaging runs.
               </p>
             </div>
             <div className="shrink-0 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-lg shadow-[#B08D57]/25 transition"
+                className="inline-flex items-center justify-center rounded-lg bg-[#F6F2EB] hover:bg-white px-6 py-3.5 text-sm font-bold text-[#3D0E18] transition-colors duration-200"
               >
                 Inquire Directly &rarr;
               </Link>
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-[#0F2A44]/60 px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition hover:bg-[#1B3D5E]/60"
+                className="inline-flex items-center justify-center rounded-lg border border-[#A6864C]/60 bg-transparent px-6 py-3.5 text-sm font-semibold text-[#F6F2EB] transition hover:bg-[#A6864C]/15"
               >
                 View All 6 Product Lines
               </Link>

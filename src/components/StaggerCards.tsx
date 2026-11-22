@@ -38,7 +38,9 @@ export function StaggerCardsGrid({
   useEffect(() => {
     // Respect user motion preference immediately
     if (shouldReduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsGridVisible(true);
+      queueMicrotask(() => {
+        setIsGridVisible(true);
+      });
       return;
     }
 
@@ -100,7 +102,11 @@ export function StaggerCard({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-      setPrefersReducedMotion(media.matches);
+      if (media.matches) {
+        queueMicrotask(() => {
+          setPrefersReducedMotion(true);
+        });
+      }
       const listener = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
       media.addEventListener("change", listener);
       return () => media.removeEventListener("change", listener);

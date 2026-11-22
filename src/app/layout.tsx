@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Manrope, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Manrope, Geist_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainContent from "@/components/MainContent";
@@ -7,26 +7,28 @@ import PageTransition from "@/components/PageTransition";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
-import ShaderBackground from "@/components/ShaderBackground";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   variable: "--font-display",
+  display: "swap",
 });
 
 const manrope = Manrope({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
   variable: "--font-sans",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -45,7 +47,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${bodoni.variable} ${manrope.variable} ${geistMono.variable} h-full dark`}
+      className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} h-full`}
     >
       <head>
         <script
@@ -62,10 +64,9 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${bodoni.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-transparent text-[#F8F4EC] font-sans antialiased selection:bg-[#B08D57] selection:text-[#091B2C]`}
+        className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-[#F6F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#3D0E18] selection:text-[#F6F2EB]`}
       >
         <SmoothScroll />
-        <ShaderBackground />
         <Preloader />
         <ScrollProgressBar />
         <Header />

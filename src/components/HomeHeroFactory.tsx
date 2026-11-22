@@ -96,18 +96,19 @@ export default function HomeHeroFactory() {
         }}
         className="hero-parallax-machine relative w-full h-full will-change-transform"
       >
-        {/* Static Flexo photo fallback — always shown on mobile (<768px), while 3D loads, or when reduced motion */}
-        <div className="absolute -top-12 -bottom-12 inset-x-0 w-full z-0">
-          <Image
-            src="/images/infrastructure/infra-01-flexo-ink-rollers.jpg"
-            alt="Graphipacks Flexographic Printing Production Line"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[#0F2A44]/70 backdrop-blur-[1px]" />
-        </div>
+        {/* Static Flexo photo fallback — only shown when 3D is not running, with transparent overlay so gradient is always visible */}
+        {(!isDesktop || shouldReduceMotion || !isInView) && (
+          <div className="absolute -top-12 -bottom-12 inset-x-0 w-full z-0 opacity-20 pointer-events-none mix-blend-luminosity">
+            <Image
+              src="/images/infrastructure/infra-01-flexo-ink-rollers.jpg"
+              alt="Graphipacks Flexographic Printing Production Line"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 100vw"
+              className="object-cover object-center"
+            />
+          </div>
+        )}
 
         {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic only when in view on desktop, and disabled if reduced motion */}
         {isDesktop && isInView && !shouldReduceMotion && (

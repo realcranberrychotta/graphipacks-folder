@@ -24,7 +24,7 @@ export default function ScrollProgressBar() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-1 z-[100] origin-left bg-gradient-to-r from-[#B08D57] to-[#F8F4EC] shadow-[0_0_12px_rgba(176,141,87,0.7)] pointer-events-none"
+      className="fixed top-0 left-0 right-0 h-1 z-[100] origin-left bg-gradient-to-r from-[#3D0E18] via-[#A6864C] to-[#EDE6DA] pointer-events-none"
       style={{
         scaleX: scrollYProgress,
         willChange: isScrolling ? "transform" : "auto",

@@ -17,28 +17,26 @@ if (typeof window !== "undefined") {
 }
 
 // -------------------------------------------------------------------------
-// 1. THEME-ADAPTIVE INLINE STYLES (Heritage Industrial Palette)
+// 1. THEME-ADAPTIVE INLINE STYLES (Multi-Tone Royal Heritage & Champagne Brass)
 // -------------------------------------------------------------------------
 const STYLES = `
 .cinematic-footer-wrapper {
-  background-color: #0F2A44;
-  color: #F8F4EC;
-  font-family: var(--font-geist-sans, sans-serif);
+  color: #F6F2EB;
+  font-family: var(--font-sans, sans-serif);
   -webkit-font-smoothing: antialiased;
   
-  /* Brand Tokens: Deep Navy (#091B2C), Navy Primary (#0F2A44), Bronze (#B08D57), Warm Ivory (#F8F4EC) */
-  --pill-bg-1: #091B2C;
-  --pill-bg-2: #0B2238;
-  --pill-shadow: rgba(0, 0, 0, 0.35);
-  --pill-highlight: rgba(248, 244, 236, 0.08);
-  --pill-inset-shadow: rgba(0, 0, 0, 0.2);
-  --pill-border: rgba(176, 141, 87, 0.45);
+  --pill-bg-1: #27080F;
+  --pill-bg-2: #3D0E18;
+  --pill-shadow: rgba(0, 0, 0, 0.45);
+  --pill-highlight: rgba(246, 242, 235, 0.08);
+  --pill-inset-shadow: rgba(0, 0, 0, 0.3);
+  --pill-border: rgba(201, 161, 96, 0.45);
   
-  --pill-bg-1-hover: #B08D57;
-  --pill-bg-2-hover: #9A7843;
-  --pill-border-hover: #B08D57;
-  --pill-shadow-hover: rgba(176, 141, 87, 0.35);
-  --pill-highlight-hover: rgba(248, 244, 236, 0.4);
+  --pill-bg-1-hover: #C9A160;
+  --pill-bg-2-hover: #B88E4B;
+  --pill-border-hover: #D8B476;
+  --pill-shadow-hover: rgba(201, 161, 96, 0.35);
+  --pill-highlight-hover: rgba(246, 242, 235, 0.4);
 }
 
 @keyframes footer-breathe {
@@ -52,8 +50,8 @@ const STYLES = `
 }
 
 @keyframes footer-pulse-gold {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(176, 141, 87, 0.4)); }
-  50% { transform: scale(1.18); filter: drop-shadow(0 0 12px rgba(176, 141, 87, 0.8)); }
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(201, 161, 96, 0.4)); }
+  50% { transform: scale(1.18); filter: drop-shadow(0 0 12px rgba(201, 161, 96, 0.8)); }
 }
 
 .animate-footer-breathe {
@@ -72,54 +70,52 @@ const STYLES = `
 .footer-bg-grid {
   background-size: 64px 64px;
   background-image: 
-    linear-gradient(to right, rgba(176, 141, 87, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(176, 141, 87, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(201, 161, 96, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 161, 96, 0.08) 1px, transparent 1px);
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
 }
 
-/* Pale aurora glow disabled for solid Deep Navy #0F2A44 background */
 .footer-aurora {
   display: none !important;
 }
 
-/* Solid Deep Navy / Bronze Glass Pill Theming with High Contrast */
+/* Restrained Imperial Oxblood / Brass Pill Theming */
 .footer-glass-pill {
-  background: #091B2C;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(176, 141, 87, 0.45);
+  background: #27080F;
+  border: 1px solid rgba(201, 161, 96, 0.45);
   transition: all 0.25s ease-in-out;
-  color: #F8F4EC;
+  color: #F6F2EB;
 }
 
 .footer-glass-pill:hover {
-  background: #B08D57 !important;
-  border-color: #B08D57 !important;
-  box-shadow: 0 8px 24px rgba(176, 141, 87, 0.35);
-  color: #0F2A44 !important;
+  background: #C9A160 !important;
+  border-color: #D8B476 !important;
+  color: #27080F !important;
 }
 
 /* Giant Background Watermark Text */
 .footer-giant-bg-text {
-  font-family: var(--font-display, 'Bodoni Moda', serif);
+  font-family: var(--font-display, "Playfair Display", serif);
   font-size: 17vw;
   line-height: 0.75;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: rgba(176, 141, 87, 0.05);
-  -webkit-text-stroke: 1.5px rgba(176, 141, 87, 0.12);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(201, 161, 96, 0.18);
   mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
 }
 
 .footer-heading {
-  font-family: var(--font-display, 'Bodoni Moda', serif);
-  color: #F8F4EC;
+  font-family: var(--font-display, "Playfair Display", serif);
+  color: #F6F2EB;
 }
 `;
 
 // -------------------------------------------------------------------------
-// 2. MAGNETIC BUTTON PRIMITIVE (Zero Dependency Physics)
+// 2. MAGNETIC BUTTON PRIMITIVE
 // -------------------------------------------------------------------------
 export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & 
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -201,12 +197,12 @@ MagneticButton.displayName = "MagneticButton";
 // -------------------------------------------------------------------------
 const MarqueeItem = () => (
   <div className="flex items-center space-x-10 px-6">
-    <span>40+ Years Manufacturing Excellence</span> <span className="text-[#B08D57]">✦</span>
-    <span>In-House Multi-Layer Co-Extrusion</span> <span className="text-[#F8F4EC]">✦</span>
-    <span>8-Color Rotogravure Printing</span> <span className="text-[#B08D57]">✦</span>
-    <span>Automated Wicketted Poly Bags</span> <span className="text-[#F8F4EC]">✦</span>
-    <span>Custom Barrier Laminates &amp; Pouches</span> <span className="text-[#B08D57]">✦</span>
-    <span>UV-Stabilized Agriculture Mulch Film</span> <span className="text-[#F8F4EC]">✦</span>
+    <span>40+ Years Manufacturing Excellence</span> <span className="text-[#A6864C]">✦</span>
+    <span>In-House Multi-Layer Co-Extrusion</span> <span className="text-[#F6F2EB]">✦</span>
+    <span>8-Color Rotogravure Printing</span> <span className="text-[#A6864C]">✦</span>
+    <span>Automated Wicketted Poly Bags</span> <span className="text-[#F6F2EB]">✦</span>
+    <span>Custom Barrier Laminates &amp; Pouches</span> <span className="text-[#A6864C]">✦</span>
+    <span>UV-Stabilized Agriculture Mulch Film</span> <span className="text-[#F6F2EB]">✦</span>
   </div>
 );
 
@@ -220,7 +216,9 @@ export function CinematicFooter() {
 
   useEffect(() => {
     if (shouldReduceMotion) {
-      setIsTickerPlaying(false);
+      queueMicrotask(() => {
+        setIsTickerPlaying(false);
+      });
     }
   }, [shouldReduceMotion]);
 
@@ -237,7 +235,6 @@ export function CinematicFooter() {
       return;
     }
 
-    // React strict mode compatible GSAP context cleanup
     const ctx = gsap.context(() => {
       // Background Parallax
       gsap.fromTo(
@@ -277,7 +274,7 @@ export function CinematicFooter() {
     }, wrapperRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [shouldReduceMotion]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -287,18 +284,14 @@ export function CinematicFooter() {
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       
-      {/* 
-        The "Curtain Reveal" Wrapper:
-        It sits in standard document flow. Because it has clip-path, its contents
-        are ONLY visible within its bounding box as the user scrolls into it. 
-      */}
       <div
         ref={wrapperRef}
         className="relative h-screen min-h-[640px] w-full"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
-        {/* The actual footer stays fixed to the viewport underneath everything */}
-        <footer className="fixed bottom-0 left-0 flex h-screen min-h-[640px] w-full flex-col justify-between overflow-hidden bg-[#0F2A44] text-[#F8F4EC] cinematic-footer-wrapper border-t border-[#B08D57]/25">
+        <footer className="fixed bottom-0 left-0 flex h-screen min-h-[640px] w-full flex-col justify-between overflow-hidden bg-royal-band text-[#F6F2EB] cinematic-footer-wrapper border-t border-[#A6864C]">
+          {/* Tactile Archival Grain Layer */}
+          <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
           
           {/* Ambient Technical Die-Line Grid Background */}
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
@@ -306,7 +299,7 @@ export function CinematicFooter() {
           {/* Giant background text */}
           <div
             ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[4vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase text-[#B08D57]/15"
+            className="footer-giant-bg-text absolute -bottom-[4vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase"
             style={{
               maskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
@@ -317,12 +310,12 @@ export function CinematicFooter() {
 
           {/* 1. Diagonal Sleek Marquee (Top of footer) */}
           <div
-            className="group/ticker absolute top-10 left-0 w-full overflow-hidden border-y border-[#B08D57]/30 bg-[#091B2C]/90 backdrop-blur-md py-3.5 z-10 -rotate-2 scale-110 shadow-2xl"
+            className="group/ticker absolute top-10 left-0 w-full overflow-hidden border-y border-[#A6864C]/35 bg-[#27080F] py-3.5 z-10 -rotate-2 scale-110"
             role="region"
             aria-label="Capabilities Ticker"
           >
             <div
-              className={`flex w-max text-[11px] md:text-xs font-mono font-bold tracking-[0.25em] text-[#B08D57] uppercase transition-none ${
+              className={`flex w-max text-[11px] md:text-xs font-mono font-bold tracking-[0.25em] text-[#A6864C] uppercase transition-none ${
                 shouldReduceMotion
                   ? ""
                   : isTickerPlaying
@@ -356,7 +349,7 @@ export function CinematicFooter() {
                   ? "Pause capability ticker"
                   : "Play capability ticker"
               }
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-[#B08D57]/50 bg-[#091B2C] text-[#B08D57] hover:border-[#B08D57] hover:text-[#F8F4EC] shadow-md transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B08D57]"
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-[#A6864C]/50 bg-[#27080F] text-[#A6864C] hover:border-[#A6864C] hover:text-[#F6F2EB] transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#A6864C]"
             >
               {isTickerPlaying && !shouldReduceMotion ? (
                 <Pause className="h-3 w-3" aria-hidden="true" />
@@ -369,19 +362,19 @@ export function CinematicFooter() {
           {/* 2. Main Center Content */}
           <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-16 md:mt-20 w-full max-w-5xl mx-auto">
             {/* Provenance eyebrow */}
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#B08D57]/40 bg-[#091B2C] px-4 py-1 text-[11px] font-mono font-semibold tracking-widest text-[#B08D57] uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B08D57] animate-pulse" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#A6864C]/45 bg-[#27080F] px-4 py-1 text-[11px] font-mono font-semibold tracking-widest text-[#A6864C] uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#A6864C] animate-pulse" />
               <span>B2B Industrial Packaging Solutions</span>
             </div>
 
             <h2
               ref={headingRef}
-              className="text-2xl sm:text-6xl md:text-7xl font-extrabold text-[#F8F4EC] font-serif tracking-tight mb-4 text-center max-w-4xl leading-[1.15] sm:leading-[1.1]"
+              className="text-2xl sm:text-6xl md:text-7xl font-bold text-[#F6F2EB] font-serif tracking-tight mb-4 text-center max-w-4xl leading-[1.15] sm:leading-[1.1]"
             >
               Ready to engineer your packaging?
             </h2>
 
-            <p className="text-sm md:text-base text-[#F8F4EC] font-normal text-center max-w-2xl mb-8 leading-relaxed">
+            <p className="text-sm md:text-base text-[#F6F2EB]/85 font-normal text-center max-w-2xl mb-8 leading-relaxed">
               Partner with Graphipacks for precision blown film extrusion, 8-color rotogravure printing, and automated wicketted poly bags tailored to your machinery.
             </p>
 
@@ -392,18 +385,18 @@ export function CinematicFooter() {
                 <MagneticButton
                   as="button"
                   onClick={() => openQuoteModal()}
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57] bg-[#B08D57] text-[#091B2C] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#9A7843] transition-all duration-200 ease-in-out cursor-pointer"
+                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C] bg-[#A6864C] text-[#27080F] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#F6F2EB] hover:text-[#3D0E18] transition-all duration-200 ease-in-out cursor-pointer"
                 >
-                  <ArrowUpRight className="w-5 h-5 text-[#091B2C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ease-in-out" />
+                  <ArrowUpRight className="w-5 h-5 text-[#27080F] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ease-in-out" />
                   Request Technical Quote
                 </MagneticButton>
                 
                 <MagneticButton
                   as={Link}
                   href="/products"
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out"
+                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C]/40 text-[#F6F2EB] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out"
                 >
-                  <Package className="w-5 h-5 text-[#B08D57] group-hover:text-[#091B2C] transition-colors duration-200 ease-in-out" />
+                  <Package className="w-5 h-5 text-[#A6864C] group-hover:text-[#27080F] transition-colors duration-200 ease-in-out" />
                   Explore Product Line
                 </MagneticButton>
               </div>
@@ -413,35 +406,35 @@ export function CinematicFooter() {
                 <MagneticButton
                   as={Link}
                   href="/products#agriculture-mulch-film"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#A6864C]/35 text-[#F6F2EB]/90 font-semibold text-xs md:text-sm hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Mulch &amp; Grow Films
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/products#wicketted-poly-bags"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#A6864C]/35 text-[#F6F2EB]/90 font-semibold text-xs md:text-sm hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Wicketted Bags
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/products#laminated-rolls-and-pouches"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#A6864C]/35 text-[#F6F2EB]/90 font-semibold text-xs md:text-sm hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Barrier Laminates
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/infrastructure"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#A6864C]/35 text-[#F6F2EB]/90 font-semibold text-xs md:text-sm hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Our Infrastructure
                 </MagneticButton>
                 <MagneticButton
                   as={Link}
                   href="/contact"
-                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#B08D57]/30 text-[#F8F4EC] font-semibold text-xs md:text-sm hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out flex items-center justify-center"
+                  className="footer-glass-pill min-h-[44px] px-5 py-2.5 rounded-full border border-[#A6864C]/35 text-[#F6F2EB]/90 font-semibold text-xs md:text-sm hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out flex items-center justify-center"
                 >
                   Factory &amp; Location
                 </MagneticButton>
@@ -450,18 +443,18 @@ export function CinematicFooter() {
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-5 border-t border-[#A6864C]/25 pt-6">
             
             {/* Copyright */}
-            <div className="text-[#EFE8DC]/70 text-[10px] md:text-xs font-mono font-medium tracking-wider uppercase order-2 md:order-1 text-center md:text-left">
+            <div className="text-[rgba(246,242,235,0.72)] text-[10px] md:text-xs font-mono font-medium tracking-wider uppercase order-2 md:order-1 text-center md:text-left">
               &copy; 2026 {company.name}. All rights reserved.
             </div>
 
             {/* Heritage Badge */}
-            <div className="footer-glass-pill px-4 sm:px-6 py-2 sm:py-2.5 rounded-full flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 order-1 md:order-2 cursor-default border border-[#B08D57]/30 text-center max-w-full">
-              <span className="text-[#EFE8DC]/70 text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest">Est. 1984</span>
-              <span className="animate-footer-pulse-gold text-xs text-[#B08D57]">✦</span>
-              <span className="text-[#F8F4EC] font-bold text-xs tracking-normal">40+ Years of Manufacturing Excellence</span>
+            <div className="footer-glass-pill px-4 sm:px-6 py-2 sm:py-2.5 rounded-full flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 order-1 md:order-2 cursor-default border border-[#A6864C]/35 text-center max-w-full">
+              <span className="text-[#A6864C] text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest">Est. 1984</span>
+              <span className="animate-footer-pulse-gold text-xs text-[#A6864C]">✦</span>
+              <span className="text-[#F6F2EB] font-bold text-xs tracking-normal">40+ Years of Manufacturing Excellence</span>
             </div>
 
             {/* Back to top */}
@@ -469,9 +462,9 @@ export function CinematicFooter() {
               as="button"
               onClick={scrollToTop}
               aria-label="Back to top"
-              className="w-11 h-11 rounded-full footer-glass-pill border border-[#B08D57]/30 flex items-center justify-center text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition-all duration-200 ease-in-out group order-3"
+              className="w-11 h-11 rounded-full footer-glass-pill border border-[#A6864C]/35 flex items-center justify-center text-[#F6F2EB] hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out group order-3"
             >
-              <ArrowUp className="w-5 h-5 text-[#F8F4EC] group-hover:text-[#091B2C] transform group-hover:-translate-y-1 transition-all duration-300 ease-in-out" />
+              <ArrowUp className="w-5 h-5 text-[#F6F2EB] group-hover:text-[#27080F] transform group-hover:-translate-y-1 transition-all duration-300 ease-in-out" />
             </MagneticButton>
 
           </div>

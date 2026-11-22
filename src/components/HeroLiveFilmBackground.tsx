@@ -14,15 +14,14 @@ import {
  * HeroLiveFilmBackground
  *
  * Isolated, hero-scoped live skeuomorphic polymer film & foil sheet background.
- * Simulates a taut, moving sheet of glossy deep-navy and metallic-bronze
- * laminated packaging film (BOPP/BOPET barrier sheeting) drifting across the right
- * side of the hero section with physical light physics and interactive cursor sheen.
+ * Simulates a taut, moving sheet of glossy Imperial Oxblood and Antique Brass
+ * laminated packaging film drifting across the right side of the hero section.
  */
 export default function HeroLiveFilmBackground() {
   const shouldReduceMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
 
-  // Soft cursor tracking across the Hero section for physically reactive specular reflections
+  // Soft cursor tracking across the Hero section
   const mouseX = useMotionValue(0.65);
   const mouseY = useMotionValue(0.45);
 
@@ -55,17 +54,17 @@ export default function HeroLiveFilmBackground() {
   const cursorGlintGradient = useMotionTemplate`radial-gradient(
     720px circle at ${glintPosX} ${glintPosY},
     rgba(255, 255, 255, 0.28) 0%,
-    rgba(248, 244, 236, 0.18) 24%,
-    rgba(176, 141, 87, 0.10) 45%,
+    rgba(246, 242, 235, 0.18) 24%,
+    rgba(166, 134, 76, 0.10) 45%,
     transparent 72%
   )`;
 
   const cursorSpecularSheen = useMotionTemplate`linear-gradient(
     ${glintAngle}deg,
     transparent 0%,
-    rgba(248, 244, 236, 0.04) 30%,
+    rgba(246, 242, 235, 0.04) 30%,
     rgba(255, 255, 255, 0.22) 50%,
-    rgba(176, 141, 87, 0.06) 55%,
+    rgba(166, 134, 76, 0.06) 55%,
     transparent 78%
   )`;
 
@@ -76,18 +75,18 @@ export default function HeroLiveFilmBackground() {
     >
       {/* ─── LAYER 1: OPTIONAL LIVE VIDEO & PROCEDURAL MACRO TEXTURE FEED ─── */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        {/* Procedural Macro Substrate Base (Works out-of-the-box before / along with video) */}
+        {/* Procedural Macro Substrate Base */}
         <div
-          className="absolute inset-0 w-full h-full bg-[#091B2C]"
+          className="absolute inset-0 w-full h-full bg-[#27080F]"
           style={{
             backgroundImage: `
-              radial-gradient(ellipse 90% 70% at 80% 40%, #1B3D5E 0%, #0F2A44 45%, #091B2C 85%),
-              linear-gradient(125deg, #091B2C 0%, #0F2A44 30%, #1B3D5E 55%, #091B2C 80%)
+              radial-gradient(ellipse 90% 70% at 80% 40%, #3D0E18 0%, #27080F 45%, #1A050A 85%),
+              linear-gradient(125deg, #27080F 0%, #3D0E18 30%, #27080F 55%, #1A050A 80%)
             `,
           }}
         />
 
-        {/* Micro-Extrusion Striation Lines (Simulating Physical Film Orientation) */}
+        {/* Micro-Extrusion Striation Lines */}
         <div
           className="absolute inset-0 opacity-20 mix-blend-screen"
           style={{
@@ -95,15 +94,15 @@ export default function HeroLiveFilmBackground() {
               125deg,
               transparent 0px,
               transparent 2px,
-              rgba(248, 244, 236, 0.08) 2px,
-              rgba(248, 244, 236, 0.08) 3px,
+              rgba(246, 242, 235, 0.08) 2px,
+              rgba(246, 242, 235, 0.08) 3px,
               transparent 3px,
               transparent 7px
             )`,
           }}
         />
 
-        {/* HTML5 Live Video Layer: Blended via mix-blend-luminosity opacity-45 */}
+        {/* HTML5 Live Video Layer */}
         <video
           autoPlay
           loop
@@ -120,7 +119,6 @@ export default function HeroLiveFilmBackground() {
       </div>
 
       {/* ─── LAYER 2: MOVING SKEUOMORPHIC POLYMER RIPPLES & TENSION FOLDS ─── */}
-      {/* Positioned across the right 65% of the Hero viewport */}
       <div className="absolute top-0 right-0 w-full lg:w-[70%] xl:w-[65%] h-full overflow-hidden">
         {/* Motion Plane 1: Primary Diagonal Tension Folds drifting at 125deg */}
         <motion.div
@@ -141,23 +139,23 @@ export default function HeroLiveFilmBackground() {
           style={{
             backgroundImage: `repeating-linear-gradient(
               125deg,
-              #091B2C 0px,
-              #091B2C 38px,
-              #0F2A44 65px,
-              #1B3D5E 105px,
-              #264C72 130px,
-              rgba(176, 141, 87, 0.35) 146px,
+              #27080F 0px,
+              #27080F 38px,
+              #3D0E18 65px,
+              #4D1220 105px,
+              #5C1626 130px,
+              rgba(166, 134, 76, 0.35) 146px,
               rgba(255, 255, 255, 0.22) 149px,
-              rgba(248, 244, 236, 0.28) 152px,
-              #1B3D5E 170px,
-              #0F2A44 215px,
-              #091B2C 255px,
-              #091B2C 310px
+              rgba(246, 242, 235, 0.28) 152px,
+              #3D0E18 170px,
+              #27080F 215px,
+              #1A050A 255px,
+              #1A050A 310px
             )`,
           }}
         />
 
-        {/* Motion Plane 2: Secondary Cross-Tension Wave (Undulating Elastic Sheeting) */}
+        {/* Motion Plane 2: Secondary Cross-Tension Wave */}
         <motion.div
           animate={
             shouldReduceMotion
@@ -179,10 +177,10 @@ export default function HeroLiveFilmBackground() {
               122deg,
               transparent 0px,
               transparent 70px,
-              rgba(27, 61, 94, 0.35) 130px,
-              rgba(248, 244, 236, 0.22) 190px,
+              rgba(61, 14, 24, 0.35) 130px,
+              rgba(246, 242, 235, 0.22) 190px,
               rgba(255, 255, 255, 0.16) 194px,
-              rgba(176, 141, 87, 0.28) 220px,
+              rgba(166, 134, 76, 0.28) 220px,
               transparent 290px,
               transparent 380px
             )`,
@@ -210,11 +208,11 @@ export default function HeroLiveFilmBackground() {
               127deg,
               transparent 0px,
               transparent 120px,
-              rgba(27, 61, 94, 0.4) 180px,
-              rgba(248, 244, 236, 0.26) 230px,
+              rgba(61, 14, 24, 0.4) 180px,
+              rgba(246, 242, 235, 0.26) 230px,
               rgba(255, 255, 255, 0.22) 234px,
-              rgba(176, 141, 87, 0.24) 244px,
-              rgba(27, 61, 94, 0.3) 290px,
+              rgba(166, 134, 76, 0.24) 244px,
+              rgba(61, 14, 24, 0.3) 290px,
               transparent 370px,
               transparent 480px
             )`,
@@ -239,7 +237,7 @@ export default function HeroLiveFilmBackground() {
           className="absolute top-1/4 -right-10 w-[120%] h-64 mix-blend-overlay rotate-[125deg] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(248, 244, 236, 0.4) 0%, rgba(176, 141, 87, 0.22) 35%, transparent 70%)",
+              "radial-gradient(ellipse at center, rgba(246, 242, 235, 0.4) 0%, rgba(166, 134, 76, 0.22) 35%, transparent 70%)",
           }}
         />
       </div>
@@ -261,27 +259,25 @@ export default function HeroLiveFilmBackground() {
       />
 
       {/* ─── LAYER 4: MICRO-EMBOSSED PHYSICAL MATTE/GRAIN & EDGE VIGNETTE ─── */}
-      {/* Fine Micro-Embossed Polymer Tactile Texture */}
       <div
         className="absolute inset-0 opacity-[0.09] mix-blend-overlay"
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(248, 244, 236, 0.8) 1px, transparent 0)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(246, 242, 235, 0.8) 1px, transparent 0)`,
           backgroundSize: "6px 6px",
         }}
       />
 
-      {/* Smooth Left-to-Right Mask: High contrast for typography on the left 45% */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#091B2C] via-[#091B2C]/85 via-45% to-transparent pointer-events-none" />
+      {/* Smooth Left-to-Right Mask */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#27080F] via-[#27080F]/85 via-45% to-transparent pointer-events-none" />
 
       {/* Top Ambient Edge Vignette */}
-      <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#091B2C]/80 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#27080F]/80 to-transparent pointer-events-none" />
 
       {/* Right Edge Vignette */}
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#091B2C]/35 to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#27080F]/35 to-transparent pointer-events-none" />
 
       {/* ─── BOTTOM TRANSITION SEAM ─── */}
-      {/* Clean seamless fade into the global ShaderBackground below the Hero */}
-      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#091B2C]/95 via-[#091B2C]/65 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#27080F]/95 via-[#27080F]/65 to-transparent pointer-events-none" />
     </div>
   );
 }

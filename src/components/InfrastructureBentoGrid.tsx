@@ -145,7 +145,7 @@ export default function InfrastructureBentoGrid({
             key={item.id}
             data-stack-card
             data-index={index}
-            className="infrastructure-sticky-card relative w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[520px] rounded-2xl overflow-hidden border border-[#B08D57]/30 border-t-[#B08D57]/60 bg-[#091B2C] shadow-2xl shadow-[#091B2C]/90 select-none"
+            className="infrastructure-sticky-card group relative w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden border border-[#1C1917]/12 bg-[#1C1917] select-none"
             style={{
               position: isSticky ? "sticky" : "relative",
               top: topOffset,
@@ -158,17 +158,17 @@ export default function InfrastructureBentoGrid({
             }}
           >
             {/* Top Peeking Tab Bar (visible when previous cards peek out at top) */}
-            <div className="absolute top-0 inset-x-0 h-8 px-4 sm:px-6 flex items-center justify-between border-b border-[#B08D57]/30 bg-[#091B2C]/95 backdrop-blur-md z-20">
+            <div className="absolute top-0 inset-x-0 h-8 px-4 sm:px-6 flex items-center justify-between border-b border-[#A6864C]/30 bg-[#1C1917] z-20">
               <div className="flex items-center gap-2.5">
-                <span className="font-mono text-xs font-bold tracking-widest text-[#B08D57]">
+                <span className="font-mono text-xs font-bold tracking-widest text-[#A6864C]">
                   {item.id}
                 </span>
-                <span className="text-[#B08D57]/50" aria-hidden="true">&bull;</span>
-                <span className="font-mono text-xs font-bold tracking-wider text-[#F8F4EC] uppercase truncate max-w-[200px] sm:max-w-none">
+                <span className="text-[#A6864C]/50" aria-hidden="true">&bull;</span>
+                <span className="font-mono text-xs font-bold tracking-wider text-[#F6F2EB] uppercase truncate max-w-[200px] sm:max-w-none">
                   {item.title}
                 </span>
               </div>
-              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#B08D57] uppercase hidden xs:inline">
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#A6864C] uppercase hidden xs:inline">
                 Madurai Plant
               </span>
             </div>
@@ -182,30 +182,30 @@ export default function InfrastructureBentoGrid({
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1024px"
                 priority={index < 2}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="w-full h-full object-cover transition-transform duration-500 ease-out"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
               />
 
-              {/* Bottom Gradient Scrim for Legibility */}
+              {/* Bottom Gradient Scrim strictly over the bottom ~35% behind text; top 65-70% remains clear and unobstructed */}
               <div
-                className="absolute inset-0 bg-gradient-to-t from-[#091B2C] via-[#091B2C]/70 to-[#091B2C]/10 pointer-events-none"
+                className="absolute inset-x-0 bottom-0 h-[40%] sm:h-[35%] bg-gradient-to-t from-[#1C1917]/88 via-[#1C1917]/35 to-transparent pointer-events-none"
                 aria-hidden="true"
               />
 
               {/* Bottom-Left Anchored Content */}
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10 z-10 flex flex-col justify-end pointer-events-none max-w-3xl">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold tracking-widest text-[#B08D57] uppercase">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C]">
                     01 / MANUFACTURING INFRASTRUCTURE
                   </span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" aria-hidden="true" />
-                  <span className="font-mono text-[10px] tracking-wider text-[#EFE8DC]/60 uppercase hidden sm:inline">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C]" aria-hidden="true" />
+                  <span className="font-mono text-[10px] tracking-wider text-[#F6F2EB]/70 uppercase hidden sm:inline">
                     Continuous Plant Operation
                   </span>
                 </div>
-                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#F6F2EB] font-[family-name:var(--font-playfair)]">
                   {item.title}
                 </h2>
-                <p className="mt-3 text-sm sm:text-base text-[#EFE8DC]/85 leading-relaxed font-sans line-clamp-3 sm:line-clamp-none">
+                <p className="mt-3 max-w-[60ch] text-[15px] md:text-base leading-[1.7] text-[#F6F2EB]/85 font-sans line-clamp-3 sm:line-clamp-none">
                   {item.description}
                 </p>
               </div>

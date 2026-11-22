@@ -33,7 +33,6 @@ export default function ProductCatalog({
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedFormIndex, setSelectedFormIndex] = useState<number>(0);
 
-  // Extract unique categories preserving order
   const categories = [
     "All",
     ...Array.from(new Set(products.map((p) => p.category))),
@@ -52,21 +51,21 @@ export default function ProductCatalog({
   const activeForm = packagingForms[selectedFormIndex] || packagingForms[0];
 
   return (
-    <div className="space-y-20">
+    <div className="space-y-24 md:space-y-32">
       {/* Category Filter Controls */}
       <section aria-labelledby="catalog-heading">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#B08D57]/20 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-[#1C1917]/10 pb-8">
           <div>
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57] block">
-              01 — Product Catalog
+            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C] mb-4">
+              01 / PRODUCT CATALOG &bull; EST. 1984
             </span>
             <h2
               id="catalog-heading"
-              className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F8F4EC]"
+              className="mt-1 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1C1917]"
             >
               Manufacturing Product Index
             </h2>
-            <p className="mt-1 text-sm text-[#EFE8DC]">
+            <p className="mt-2 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#57524E]">
               Showing {filteredProducts.length} of {products.length} product lines
             </p>
           </div>
@@ -84,18 +83,18 @@ export default function ProductCatalog({
                   whileTap={{ scale: 0.95 }}
                   transition={bouncySpring}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 ${
+                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2 ${
                     isSelected
-                      ? "bg-[#B08D57] text-[#091B2C] border border-[#B08D57] shadow-lg shadow-[#091B2C]/40"
-                      : "bg-[#0F2A44]/60 text-[#F8F4EC] border border-[#B08D57]/25 hover:bg-[#1B3D5E]/60 hover:border-[#B08D57]/50"
+                      ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
+                      : "bg-[#EDE6DA] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
                   }`}
                 >
                   <span>{cat === "All" ? "All Products" : cat}</span>
                   <span
                     className={`rounded-full px-2 py-0.5 font-mono text-[11px] ${
                       isSelected
-                        ? "bg-[#091B2C] text-[#B08D57] font-bold"
-                        : "bg-[#091B2C]/60 text-[#EFE8DC]"
+                        ? "bg-[#27080F] text-[#A6864C] font-bold"
+                        : "bg-[#FBF9F5] text-[#57524E]"
                     }`}
                   >
                     {count}
@@ -107,9 +106,9 @@ export default function ProductCatalog({
         </div>
 
         {/* Product Cards Grid with Animated Filtering */}
-        <motion.div layout className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div layout className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
-            {filteredProducts.map((product, idx) => (
+            {filteredProducts.map((product) => (
               <motion.div
                 key={product.slug}
                 layout
@@ -121,63 +120,57 @@ export default function ProductCatalog({
               >
                 <Link
                   href={`/products/${product.slug}`}
-                  className="fluted-glass-card group relative flex flex-col justify-between overflow-hidden rounded-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-lg transition-colors duration-200 ease-in-out hover:border-[#A6864C]/70 h-full cursor-pointer bg-[#FBF9F5] border border-[#1C1917]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D0E18]"
                 >
                   <div>
-                    {/* High-Resolution Photographic Header with Navy/Bronze Overlay */}
-                    <div className="relative w-full h-48 overflow-hidden bg-[#091B2C]">
+                    {/* Real Product Photo — Curated Gallery Exhibit Mat */}
+                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#EDE6DA] border-b border-[#1C1917]/[0.08]">
                       <Image
                         src={PRODUCT_GRID_COVER_IMAGES[product.slug] || product.image}
                         alt={product.name}
                         width={600}
-                        height={384}
+                        height={375}
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         loading="lazy"
                         decoding="async"
-                        placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                        className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                      />
-                      <div
-                        className="absolute inset-0 bg-gradient-to-t from-[#0F2A44] to-transparent opacity-85 pointer-events-none"
-                        aria-hidden="true"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
                       />
                     </div>
 
-                    <div className="p-6">
+                    <div className="p-6 md:p-8">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center rounded-full bg-[#1B3D5E]/60 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#F8F4EC] border border-[#B08D57]/30">
+                        <span className="inline-flex items-center rounded-full bg-[#EDE6DA] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#A6864C] border border-[#A6864C]/30">
                           {product.category}
                         </span>
-                        <span className="font-mono text-xs text-[#EFE8DC]/70">
+                        <span className="font-mono text-xs text-[#57524E]">
                           {product.types.length} Variants
                         </span>
                       </div>
 
-                      <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
+                      <h3 className="mt-3 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-[#1C1917] group-hover:text-[#3D0E18] transition-colors duration-200 ease-in-out">
                         {product.name}
                       </h3>
 
                       {/* Why Graphipacks value proposition callout */}
-                      <div className="mt-3 rounded-lg border border-[#B08D57]/20 bg-[#091B2C]/50 p-3">
-                        <p className="text-xs font-bold uppercase tracking-wider text-[#B08D57]">
+                      <div className="mt-4 rounded-lg border border-[#A6864C]/25 bg-[#EDE6DA] p-3.5">
+                        <p className="text-xs font-bold uppercase tracking-wider text-[#A6864C]">
                           Why Graphipacks:
                         </p>
-                        <p className="mt-1 text-xs text-[#EFE8DC] leading-relaxed font-medium">
+                        <p className="mt-1 text-xs text-[#1C1917] leading-relaxed font-medium">
                           {product.whyGraphipacks}
                         </p>
                       </div>
 
                       {/* Types Pills */}
-                      <div className="mt-4">
-                        <p className="text-xs font-semibold uppercase tracking-wider text-[#EFE8DC]/70">
+                      <div className="mt-5">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-[#57524E]">
                           Standard Types &amp; Sizes:
                         </p>
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {product.types.map((type, i) => (
                             <span
                               key={i}
-                              className="inline-flex items-center rounded-md border border-[#B08D57]/20 bg-[#091B2C]/60 px-2 py-1 text-xs font-medium text-[#F8F4EC]"
+                              className="inline-flex items-center rounded-md border border-[#1C1917]/10 bg-[#EDE6DA] px-2 py-1 text-xs font-medium text-[#1C1917]"
                             >
                               {type}
                             </span>
@@ -187,8 +180,8 @@ export default function ProductCatalog({
                     </div>
                   </div>
 
-                  <div className="border-t border-[#B08D57]/20 p-6 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-[#B08D57]">
-                    <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
+                  <div className="border-t border-[#1C1917]/10 p-6 md:p-8 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-[#3D0E18]">
+                    <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-[#27080F] transition-colors duration-200 ease-in-out">
                       View Specifications Sheet &rarr;
                     </span>
                   </div>
@@ -202,25 +195,25 @@ export default function ProductCatalog({
       {/* Interactive Packaging by Product Form Tab Switcher */}
       <section
         aria-labelledby="packaging-forms-heading"
-        className="rounded-3xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl p-8 sm:p-12 shadow-xl"
+        className="rounded-3xl border border-[#1C1917]/10 bg-[#EDE6DA] p-8 md:p-12 text-[#1C1917]"
       >
         <div className="max-w-3xl">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#B08D57]">
-            Interactive Specification Tool
+          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C] mb-4">
+            INTERACTIVE SPECIFICATION TOOL
           </span>
           <h2
             id="packaging-forms-heading"
-            className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F8F4EC]"
+            className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1C1917]"
           >
             Packaging by Product Form
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-[#EFE8DC]">
+          <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#57524E]">
             Select a physical material state to review recommended barrier packaging structures, pouches, and containment formats.
           </p>
         </div>
 
         {/* Tab Buttons with Bouncy Spring Physics */}
-        <div className="mt-8 flex flex-wrap gap-2.5 border-b border-[#B08D57]/20 pb-4">
+        <div className="mt-8 flex flex-wrap gap-2.5 border-b border-[#A6864C]/25 pb-4">
           {packagingForms.map((item, idx) => {
             const isSelected = selectedFormIndex === idx;
             return (
@@ -231,10 +224,10 @@ export default function ProductCatalog({
                 whileTap={{ scale: 0.95 }}
                 transition={bouncySpring}
                 onClick={() => setSelectedFormIndex(idx)}
-                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#B08D57] ${
+                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] ${
                   isSelected
-                    ? "bg-[#B08D57] text-[#091B2C] border border-[#B08D57] shadow-md"
-                    : "bg-[#091B2C]/50 text-[#F8F4EC] border border-[#B08D57]/25 hover:bg-[#1B3D5E]/60"
+                    ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
+                    : "bg-[#FBF9F5] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
                 }`}
               >
                 {item.form}
@@ -250,33 +243,33 @@ export default function ProductCatalog({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="mt-8 rounded-2xl border border-[#B08D57]/30 bg-[#091B2C]/60 p-6 sm:p-8 backdrop-blur-md"
+            className="mt-8 rounded-2xl border border-[#A6864C]/30 bg-[#FBF9F5] p-6 md:p-8"
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#B08D57]/30 bg-[#1B3D5E]/50 px-3 py-1 text-xs font-semibold text-[#F8F4EC]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#A6864C]/30 bg-[#EDE6DA] px-3 py-1 text-xs font-semibold text-[#A6864C]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C]" />
                   <span>Physical State Compatibility</span>
                 </div>
-                <h3 className="mt-3 text-2xl font-bold text-[#F8F4EC]">
+                <h3 className="mt-3 text-2xl md:text-3xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-[#1C1917]">
                   {activeForm.form}
                 </h3>
-                <p className="mt-2 text-sm text-[#EFE8DC]">
+                <p className="mt-2 text-[15px] leading-[1.7] text-[#57524E]">
                   Engineered with customized barrier films, hermetic heat-seal layers, and puncture resistance tailored for filling machinery.
                 </p>
 
                 <div className="mt-6">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#B08D57]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#A6864C]">
                     Common Industrial &amp; Retail Examples:
                   </h4>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {activeForm.examples.map((example) => (
                       <span
                         key={example}
-                        className="inline-flex items-center gap-2 rounded-lg border border-[#B08D57]/20 bg-[#0F2A44]/60 px-3.5 py-2 text-sm font-semibold text-[#F8F4EC] shadow-xs"
+                        className="inline-flex items-center gap-2 rounded-lg border border-[#1C1917]/10 bg-[#EDE6DA] px-3.5 py-2 text-sm font-semibold text-[#1C1917]"
                       >
                         <svg
-                          className="h-4 w-4 text-[#B08D57] shrink-0"
+                          className="h-4 w-4 text-[#A6864C] shrink-0"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -301,12 +294,12 @@ export default function ProductCatalog({
                 >
                   <Link
                     href="/contact"
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-md shadow-[#B08D57]/20 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] text-center"
+                    className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-3.5 text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out text-center"
                   >
                     Request Quote for {activeForm.form} &rarr;
                   </Link>
                 </motion.div>
-                <p className="text-xs text-[#EFE8DC]/70 text-center">
+                <p className="text-xs text-[#57524E] text-center">
                   Technical datasheets &amp; free sample kits available
                 </p>
               </div>

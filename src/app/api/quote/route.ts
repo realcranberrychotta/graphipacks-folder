@@ -53,35 +53,35 @@ export async function POST(request: Request) {
             reply_to: cleanEmail,
             subject: `New Technical Quote Request: ${cleanProduct}${cleanCompany ? ` - ${cleanCompany}` : ""}`,
             html: `
-              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #B08D57; border-radius: 8px; background-color: #0F2A44; color: #F8F4EC;">
-                <h2 style="color: #B08D57; border-bottom: 1px solid rgba(176,141,87,0.3); padding-bottom: 10px;">New B2B Quote Request</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: #F8F4EC;">
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #A6864C; border-radius: 8px; background-color: #3D0E18; color: #F6F2EB;">
+                <h2 style="color: #A6864C; border-bottom: 1px solid rgba(166,134,76,0.3); padding-bottom: 10px;">New B2B Quote Request</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: #F6F2EB;">
                   <tr>
-                    <td style="padding: 8px 0; color: #B08D57; font-weight: bold; width: 140px;">Client Name:</td>
+                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold; width: 140px;">Client Name:</td>
                     <td style="padding: 8px 0;">${cleanFullName}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #B08D57; font-weight: bold;">Company Name:</td>
+                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Company Name:</td>
                     <td style="padding: 8px 0;">${cleanCompany || "Not specified"}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #B08D57; font-weight: bold;">Email:</td>
-                    <td style="padding: 8px 0;"><a href="mailto:${cleanEmail}" style="color: #F8F4EC;">${cleanEmail}</a></td>
+                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Email:</td>
+                    <td style="padding: 8px 0;"><a href="mailto:${cleanEmail}" style="color: #F6F2EB;">${cleanEmail}</a></td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #B08D57; font-weight: bold;">Phone:</td>
-                    <td style="padding: 8px 0;">${cleanPhone ? `<a href="tel:${cleanPhone}" style="color: #F8F4EC;">${cleanPhone}</a>` : "Not specified"}</td>
+                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Phone:</td>
+                    <td style="padding: 8px 0;">${cleanPhone ? `<a href="tel:${cleanPhone}" style="color: #F6F2EB;">${cleanPhone}</a>` : "Not specified"}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #B08D57; font-weight: bold;">Product:</td>
-                    <td style="padding: 8px 0; font-weight: bold; color: #B08D57;">${cleanProduct}</td>
+                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Product:</td>
+                    <td style="padding: 8px 0; font-weight: bold; color: #A6864C;">${cleanProduct}</td>
                   </tr>
                 </table>
-                <div style="margin-top: 20px; padding: 15px; background-color: #091B2C; border-radius: 6px; border: 1px solid rgba(176,141,87,0.2);">
-                  <strong style="color: #B08D57; display: block; margin-bottom: 8px;">Specifications & Requirements:</strong>
+                <div style="margin-top: 20px; padding: 15px; background-color: #27080F; border-radius: 6px; border: 1px solid rgba(166,134,76,0.2);">
+                  <strong style="color: #A6864C; display: block; margin-bottom: 8px;">Specifications & Requirements:</strong>
                   <p style="white-space: pre-wrap; margin: 0; line-height: 1.5;">${cleanMessage}</p>
                 </div>
-                <p style="margin-top: 25px; font-size: 11px; color: rgba(248,244,236,0.6); text-align: center;">
+                <p style="margin-top: 25px; font-size: 11px; color: rgba(246,242,235,0.7); text-align: center;">
                   Graphipacks Private Limited · Automated Quote Dispatch System
                 </p>
               </div>

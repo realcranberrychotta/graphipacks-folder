@@ -26,7 +26,11 @@ const bouncySpring = {
   mass: 0.8,
 } as const;
 
-export default function NavLinks() {
+interface NavLinksProps {
+  isDarkHero?: boolean;
+}
+
+export default function NavLinks({ isDarkHero = false }: NavLinksProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
@@ -40,7 +44,7 @@ export default function NavLinks() {
 
   return (
     <div className="flex items-center gap-4 lg:gap-6">
-      {/* Desktop Navigation Links (14-15px, regular weight, letter-spacing, active underline only) */}
+      {/* Desktop Navigation Links */}
       <nav className="hidden md:flex items-center gap-5 lg:gap-7">
         {navItems.map((item) => {
           const active = isActive(item.href);
@@ -48,17 +52,21 @@ export default function NavLinks() {
             <div key={item.href} className="relative inline-flex items-center">
               <Link
                 href={item.href}
-                className={`relative inline-flex items-center justify-center min-h-[44px] px-2 py-3 text-[14px] lg:text-[15px] font-normal font-sans tracking-[0.03em] transition-colors duration-200 ease-in-out ${
-                  active
-                    ? "text-[#F8F4EC]"
-                    : "text-[#EFE8DC]/75 hover:text-[#B08D57]"
+                className={`relative inline-flex items-center justify-center min-h-[44px] px-2 py-3 text-[14px] lg:text-[15px] font-sans tracking-[0.03em] transition-colors duration-200 ease-in-out ${
+                  isDarkHero
+                    ? active
+                      ? "text-[#F6F2EB] font-semibold"
+                      : "text-[#F6F2EB]/80 hover:text-[#A6864C]"
+                    : active
+                      ? "text-[#3D0E18] font-bold"
+                      : "text-[#1C1917] hover:text-[#3D0E18]"
                 }`}
               >
                 <span>{item.label}</span>
                 {active && (
                   <motion.span
                     layoutId="activeNavIndicator"
-                    className="absolute bottom-1.5 left-2 right-2 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F8F4EC] rounded-full shadow-xs shadow-[#B08D57]/40"
+                    className="absolute bottom-1.5 left-2 right-2 h-0.5 bg-[#A6864C] rounded-full"
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   />
                 )}
@@ -68,7 +76,7 @@ export default function NavLinks() {
         })}
       </nav>
 
-      {/* Desktop Get a Quote CTA Button (Slimmer, smaller padding, same bronze #B08D57, same text) */}
+      {/* Desktop Get a Quote CTA Button */}
       <div className="hidden md:flex items-center">
         <motion.div
           whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
@@ -83,9 +91,13 @@ export default function NavLinks() {
                 openQuoteModal();
               }
             }}
-            className="inline-flex min-h-[34px] h-[34px] items-center justify-center rounded-md bg-[#B08D57] hover:bg-[#9A7843] px-3.5 py-1 text-xs font-semibold text-[#091B2C] shadow-sm transition-all duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57] font-sans"
+            className={`inline-flex min-h-[34px] h-[34px] items-center justify-center rounded-md px-3.5 py-1 text-xs font-semibold transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans ${
+              isDarkHero
+                ? "bg-[#F6F2EB] hover:bg-[#EDE6DA] text-[#3D0E18] border border-[#A6864C]/30 focus-visible:outline-[#F6F2EB]"
+                : "bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] border border-[#3D0E18] focus-visible:outline-[#3D0E18]"
+            }`}
           >
-            Get a Quote
+            Get a Quote &rarr;
           </Link>
         </motion.div>
       </div>
@@ -95,7 +107,11 @@ export default function NavLinks() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 text-[#EFE8DC] hover:text-[#B08D57] focus:outline-hidden"
+          className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 focus:outline-hidden ${
+            isDarkHero
+              ? "text-[#F6F2EB] hover:text-[#A6864C]"
+              : "text-[#1C1917] hover:text-[#3D0E18]"
+          }`}
           aria-expanded={mobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
@@ -140,7 +156,7 @@ export default function NavLinks() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.18, ease: "easeInOut" }}
-          className="absolute top-full left-0 right-0 z-50 border-b border-[#B08D57]/20 bg-[#0F2A44]/98 backdrop-blur-2xl px-5 py-5 shadow-2xl md:hidden"
+          className="absolute top-full left-0 right-0 z-50 border-b border-[#A6864C]/25 bg-[#FBF9F5] px-5 py-5 md:hidden text-[#1C1917]"
         >
           <nav className="flex flex-col space-y-1.5">
             {navItems.map((item) => {
@@ -150,35 +166,35 @@ export default function NavLinks() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`min-h-[44px] w-full px-4 py-3 rounded-lg text-sm font-normal tracking-wide transition-colors duration-200 ease-in-out flex items-center justify-between ${
+                  className={`flex min-h-[44px] items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                     active
-                      ? "text-[#F8F4EC] font-semibold bg-[#1B3D5E]/40"
-                      : "text-[#EFE8DC]/80 hover:text-[#B08D57] hover:bg-[#091B2C]/40"
+                      ? "bg-[#EDE6DA] text-[#3D0E18] font-bold"
+                      : "text-[#1C1917] hover:bg-[#EDE6DA]/50 hover:text-[#3D0E18]"
                   }`}
                 >
                   <span>{item.label}</span>
                   {active && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C]" />
                   )}
                 </Link>
               );
             })}
-            <div className="pt-3 border-t border-[#B08D57]/20 mt-2">
-              <Link
-                href="/contact"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  if (pathname === "/") {
-                    e.preventDefault();
-                    openQuoteModal();
-                  }
-                }}
-                className="w-full min-h-[44px] flex items-center justify-center rounded-md bg-[#B08D57] hover:bg-[#9A7843] px-4 py-2.5 text-center text-xs font-semibold text-[#091B2C] shadow-sm transition-all duration-200 ease-in-out"
-              >
-                Get a Quote
-              </Link>
-            </div>
           </nav>
+          <div className="mt-4 pt-4 border-t border-[#A6864C]/20">
+            <Link
+              href="/contact"
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                if (pathname === "/") {
+                  e.preventDefault();
+                  openQuoteModal();
+                }
+              }}
+              className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-4 py-2 text-sm font-bold text-[#F6F2EB] transition-colors duration-200 text-center"
+            >
+              Get a Quote &rarr;
+            </Link>
+          </div>
         </motion.div>
       )}
     </div>

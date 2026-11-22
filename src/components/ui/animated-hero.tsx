@@ -99,7 +99,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     return () => window.removeEventListener("skip-hero-animation", handleSkip);
   }, []);
 
-  // Initialize bronze / ivory particles (hardware-accelerated DOM dots)
+  // Initialize antique brass / ivory particles
   useEffect(() => {
     if (!showParticles || shouldReduceMotion || isSkipped || !containerRef.current) return;
 
@@ -122,12 +122,10 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
         Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
       );
 
-      // Staggered scale & opacity (gentle center focus)
+      // Staggered scale & opacity
       const scale = Math.max(0.15, 1.1 - distanceFromCenter * 0.12);
       const opacity = Math.max(0.06, 0.65 - distanceFromCenter * 0.08);
 
-      // Warm bronze & ivory lightness mapping
-      const lightness = Math.max(25, 68 - distanceFromCenter * 5);
       const glowSize = Math.max(0.4, 3.5 - distanceFromCenter * 0.35);
 
       particle.style.cssText = `
@@ -137,8 +135,8 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
         top: ${row * 1.55}rem;
         transform: scale(${scale});
         opacity: ${opacity};
-        background: hsl(38, 45%, ${lightness}%);
-        box-shadow: 0 0 ${glowSize * 0.16}rem 0 rgba(176, 141, 87, 0.45);
+        background: #A6864C;
+        box-shadow: 0 0 ${glowSize * 0.16}rem 0 rgba(166, 134, 76, 0.45);
         mix-blend-mode: screen;
         z-index: ${Math.round(totalParticles - distanceFromCenter * 4)};
         transition: transform 0.06s ease-in-out;
@@ -154,7 +152,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
       }
       particlesRef.current = [];
     };
-  }, [rows, totalParticles, showParticles, shouldReduceMotion]);
+  }, [rows, totalParticles, showParticles, shouldReduceMotion, isSkipped]);
 
   // Continuous subtle animation loop
   useEffect(() => {
@@ -223,43 +221,6 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     });
   }, [cursor, rows, showParticles, shouldReduceMotion]);
 
-  // Pointer movement handler
-  const handlePointerMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (shouldReduceMotion) return;
-    const event = "touches" in e ? e.touches[0] : e;
-    if (!event) return;
-
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    const newCursor = {
-      x: (event.clientX - centerX) * 0.4,
-      y: (event.clientY - centerY) * 0.4,
-    };
-
-    setCursor(newCursor);
-    setStaticCursor(newCursor);
-    setIsAutoMode(false);
-    setIsStaticAnimation(false);
-    lastMouseMoveRef.current = performance.now();
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      setIsStaticAnimation(true);
-    }, 500);
-
-    setTimeout(() => {
-      if (performance.now() - lastMouseMoveRef.current >= 4000) {
-        setIsAutoMode(true);
-        setIsStaticAnimation(false);
-        startTimeRef.current = performance.now();
-      }
-    }, 4000);
-  };
-
   // Estimator / Quote Form Submissions
   const handleOpenEstimator = () => {
     if (primaryButton?.onClick) {
@@ -274,7 +235,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
     setIsSubmitted(true);
   };
 
-  // Text Reveal Animation Variants (Transform & Opacity Only; Instant if reduced motion or skipped)
+  // Text Reveal Animation Variants
   const containerVariants = {
     hidden: { opacity: shouldReduceMotion || isSkipped ? 1 : 0 },
     visible: {
@@ -301,7 +262,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
 
   return (
     <section
-      className={`relative w-full overflow-hidden bg-[#0F2A44] text-[#F8F4EC] select-none pt-1 sm:pt-6 pb-8 px-4 sm:px-6 ${className}`}
+      className={`relative w-full overflow-hidden bg-transparent text-[#F6F2EB] select-none pt-1 sm:pt-6 pb-8 px-4 sm:px-6 ${className}`}
     >
       {/* ─── Main Content Container (Centred, Exact Order) ─── */}
       <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-center">
@@ -317,15 +278,15 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             {/* 1. Top Small Label: Provenance Indicator */}
             <motion.div
               variants={textLineVariant}
-              className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-[#EFE8DC]/80 mb-3"
+              className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-[#A6864C] mb-3"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57] shrink-0" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C] shrink-0" aria-hidden="true" />
               <span>EST. 1984 · MADURAI PLANT  •  GRAPHIPACKS PRIVATE LIMITED</span>
             </motion.div>
 
             {/* 2. Main Headline: Word-by-word reveal */}
             <div className="mt-1 mb-2 flex flex-col items-center justify-center text-center">
-              <span className="block font-mono text-xs xs:text-sm sm:text-base font-bold uppercase tracking-[0.28em] text-[#F8F4EC]/90 text-center mb-1">
+              <span className="block font-mono text-xs xs:text-sm sm:text-base font-bold uppercase tracking-[0.28em] text-[#F6F2EB]/90 text-center mb-1">
                 {title}
               </span>
               <HeroHeadline centered />
@@ -343,7 +304,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             {/* 4. Description: Centred Clean Sans-Serif */}
             <motion.p
               variants={textLineVariant}
-              className="mt-4 sm:mt-5 max-w-xl mx-auto text-center font-sans text-xs xs:text-sm sm:text-base font-light leading-relaxed text-[#F8F4EC]/85 px-1 sm:px-2"
+              className="mt-4 sm:mt-5 max-w-xl mx-auto text-center font-sans text-xs xs:text-sm sm:text-base font-light leading-relaxed text-[#F6F2EB]/85 px-1 sm:px-2"
             >
               {description}
             </motion.p>
@@ -353,28 +314,28 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               variants={textLineVariant}
               className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xs xs:max-w-sm sm:max-w-md mx-auto"
             >
-              {/* Primary Bronze Button */}
+              {/* Primary High-Contrast Warm Alabaster Button */}
               <button
                 type="button"
                 onClick={handleOpenEstimator}
-                className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#B08D57] hover:bg-[#9A7843] text-[#091B2C] text-sm xs:text-base font-bold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#F6F2EB] hover:bg-white text-[#3D0E18] text-sm xs:text-base font-bold transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
               >
                 <span>{primaryButton?.text || "Get a Quote"}</span>
-                <ArrowRight className="h-4 w-4 text-[#091B2C]" />
+                <ArrowRight className="h-4 w-4 text-[#3D0E18]" />
               </button>
 
               {/* Secondary Outline Button */}
               {secondaryButton?.href ? (
                 <Link
                   href={secondaryButton.href}
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton.text}
                 </Link>
               ) : (
                 <Link
                   href="/products"
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#B08D57]/45 hover:border-[#B08D57] bg-transparent hover:bg-[#B08D57]/10 text-[#F8F4EC] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton?.text || "View Products"}
                 </Link>
@@ -385,11 +346,11 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             {interactiveHint && (
               <motion.div
                 variants={textLineVariant}
-                className="mt-6 flex items-center justify-center gap-4 text-[#B08D57]/50 text-[10px] uppercase tracking-[0.25em] font-mono"
+                className="mt-6 flex items-center justify-center gap-4 text-[#A6864C]/70 text-[10px] uppercase tracking-[0.25em] font-mono"
               >
-                <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#B08D57]/30" />
+                <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#A6864C]/40" />
                 <span className="animate-pulse">{interactiveHint}</span>
-                <div className="w-8 h-px bg-gradient-to-l from-transparent to-[#B08D57]/30" />
+                <div className="w-8 h-px bg-gradient-to-l from-transparent to-[#A6864C]/40" />
               </motion.div>
             )}
           </motion.div>
@@ -399,29 +360,29 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
       {/* ─── 3-Step Mini-Estimator Modal ─── */}
       {estimatorOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#091B2C]/85 backdrop-blur-md p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C1917]/80 p-4"
           onClick={() => setEstimatorOpen(false)}
         >
           <div
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#B08D57]/40 bg-[#0F2A44] shadow-2xl text-[#F8F4EC]"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#A6864C]/40 bg-[#FBF9F5] text-[#1C1917]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="bg-[#091B2C] p-5 border-b border-[#B08D57]/25">
+            <div className="bg-[#EDE6DA] p-5 border-b border-[#A6864C]/25">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#A6864C]">
                   Instant Commercial Estimator &bull; 30 Seconds
                 </span>
                 <button
                   type="button"
                   onClick={() => setEstimatorOpen(false)}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-[#F8F4EC] hover:bg-[#B08D57] hover:text-[#091B2C] transition cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-[#1C1917] hover:bg-[#3D0E18] hover:text-[#F6F2EB] transition cursor-pointer"
                   aria-label="Close estimator"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <h2 className="mt-1 font-[family-name:var(--font-display)] text-xl font-bold text-[#F8F4EC]">
+              <h2 className="mt-1 font-serif text-xl font-bold text-[#1C1917]">
                 {isSubmitted
                   ? "Inquiry Received"
                   : `Step ${step} of 3: ${
@@ -437,17 +398,17 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                 <div className="mt-3 flex items-center gap-2">
                   <div
                     className={`h-1.5 flex-1 rounded-full ${
-                      step >= 1 ? "bg-[#B08D57]" : "bg-[#1B3D5E]"
+                      step >= 1 ? "bg-[#3D0E18]" : "bg-[#EDE6DA]"
                     }`}
                   />
                   <div
                     className={`h-1.5 flex-1 rounded-full ${
-                      step >= 2 ? "bg-[#B08D57]" : "bg-[#1B3D5E]"
+                      step >= 2 ? "bg-[#3D0E18]" : "bg-[#EDE6DA]"
                     }`}
                   />
                   <div
                     className={`h-1.5 flex-1 rounded-full ${
-                      step === 3 ? "bg-[#B08D57]" : "bg-[#1B3D5E]"
+                      step === 3 ? "bg-[#3D0E18]" : "bg-[#EDE6DA]"
                     }`}
                   />
                 </div>
@@ -458,26 +419,26 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
             <div className="p-5 max-h-[75vh] overflow-y-auto">
               {isSubmitted ? (
                 <div className="py-6 text-center space-y-4">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#1B3D5E]/60 text-[#B08D57] border border-[#B08D57]/40 shadow-sm">
-                    <CheckCircle2 className="h-9 w-9" />
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#3D0E18] text-[#F6F2EB] border border-[#A6864C]/40">
+                    <CheckCircle2 className="h-9 w-9 text-[#A6864C]" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#F8F4EC]">
+                  <h3 className="text-xl font-bold text-[#1C1917] font-serif">
                     Request received — our team will call you within 1 working day.
                   </h3>
-                  <div className="rounded-xl border border-[#B08D57]/20 bg-[#091B2C]/70 p-4 text-left text-xs space-y-2 mt-4">
+                  <div className="rounded-xl border border-[#1C1917]/10 bg-[#EDE6DA] p-4 text-left text-xs space-y-2 mt-4">
                     <div>
-                      <span className="font-bold text-[#B08D57] block">Selected Product:</span>
-                      <span className="text-[#F8F4EC]">
+                      <span className="font-bold text-[#3D0E18] block">Selected Product:</span>
+                      <span className="text-[#1C1917]">
                         {PRODUCTS_LIST.find((p) => p.id === selectedProductId)?.name}
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-[#B08D57] block">Estimated Volume:</span>
-                      <span className="text-[#F8F4EC]">{customQuantity || quantity}</span>
+                      <span className="font-bold text-[#3D0E18] block">Estimated Volume:</span>
+                      <span className="text-[#1C1917]">{customQuantity || quantity}</span>
                     </div>
                     <div>
-                      <span className="font-bold text-[#B08D57] block">Contact Representative:</span>
-                      <span className="text-[#F8F4EC]">
+                      <span className="font-bold text-[#3D0E18] block">Contact Representative:</span>
+                      <span className="text-[#1C1917]">
                         {contactName} ({contactPhone || contactEmail})
                       </span>
                     </div>
@@ -486,7 +447,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                     <button
                       type="button"
                       onClick={() => setEstimatorOpen(false)}
-                      className="w-full min-h-[48px] rounded-xl bg-[#B08D57] hover:bg-[#9A7843] text-sm font-bold text-[#091B2C] transition flex items-center justify-center cursor-pointer"
+                      className="w-full min-h-[48px] rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-sm font-bold text-[#F6F2EB] transition-colors flex items-center justify-center cursor-pointer"
                     >
                       Close Window
                     </button>
@@ -497,7 +458,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   {/* Step 1: Pick Product */}
                   {step === 1 && (
                     <div className="space-y-2.5">
-                      <p className="text-xs text-[#EFE8DC]/80 mb-3">
+                      <p className="text-xs text-[#57524E] mb-3">
                         Select one of our 6 factory-direct polymer packaging lines:
                       </p>
                       <div className="grid grid-cols-1 gap-2">
@@ -510,28 +471,28 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                               onClick={() => setSelectedProductId(prod.id)}
                               className={`w-full min-h-[44px] p-3 rounded-xl border text-left flex items-center justify-between transition cursor-pointer ${
                                 isSelected
-                                  ? "bg-[#1B3D5E]/80 border-[#B08D57] shadow-sm"
-                                  : "bg-[#091B2C]/60 border-[#B08D57]/20 hover:border-[#B08D57]/50"
+                                  ? "bg-[#EDE6DA] border-[#3D0E18]"
+                                  : "bg-[#FFFFFF] border-[#1C1917]/15 hover:border-[#A6864C]"
                               }`}
                             >
                               <div className="flex items-center gap-3">
                                 <span
                                   className={`h-2.5 w-2.5 rounded-full shrink-0 ${
                                     isSelected
-                                      ? "bg-[#B08D57]"
-                                      : "bg-[#0F2A44] border border-[#B08D57]/40"
+                                      ? "bg-[#3D0E18]"
+                                      : "bg-[#EDE6DA] border border-[#1C1917]/20"
                                   }`}
                                 />
                                 <div>
-                                  <div className="text-xs font-bold text-[#F8F4EC]">
+                                  <div className="text-xs font-bold text-[#1C1917]">
                                     {prod.name}
                                   </div>
-                                  <div className="text-[10px] text-[#B08D57] font-mono">
+                                  <div className="text-[10px] text-[#A6864C] font-mono">
                                     MOQ: {prod.moq}
                                   </div>
                                 </div>
                               </div>
-                              <span className="text-[11px] font-mono text-[#EFE8DC]/60">
+                              <span className="text-[11px] font-mono text-[#57524E]">
                                 {isSelected ? "Selected ✓" : "Select"}
                               </span>
                             </button>
@@ -542,7 +503,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                         <button
                           type="button"
                           onClick={() => setStep(2)}
-                          className="w-full min-h-[48px] rounded-xl bg-[#B08D57] hover:bg-[#9A7843] text-sm font-bold text-[#091B2C] transition flex items-center justify-center gap-1 cursor-pointer"
+                          className="w-full min-h-[48px] rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-sm font-bold text-[#F6F2EB] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                         >
                           <span>Step 2: Choose Quantity</span>
                           <ChevronRight className="h-4 w-4" />
@@ -554,15 +515,15 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   {/* Step 2: Pick Quantity */}
                   {step === 2 && (
                     <div className="space-y-4">
-                      <p className="text-xs text-[#EFE8DC]/80">
+                      <p className="text-xs text-[#57524E]">
                         Selected:{" "}
-                        <span className="font-bold text-[#B08D57]">
+                        <span className="font-bold text-[#3D0E18]">
                           {PRODUCTS_LIST.find((p) => p.id === selectedProductId)?.name}
                         </span>
                       </p>
 
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#B08D57]">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-[#A6864C]">
                           Select Standard Commercial Tier:
                         </label>
                         {[
@@ -580,20 +541,20 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                             }}
                             className={`w-full min-h-[44px] px-3.5 py-2.5 rounded-lg border text-left text-xs transition cursor-pointer flex items-center justify-between ${
                               quantity === tier && !customQuantity
-                                ? "bg-[#1B3D5E]/80 border-[#B08D57] font-bold text-[#F8F4EC]"
-                                : "bg-[#091B2C]/60 border-[#B08D57]/20 text-[#EFE8DC]/80"
+                                ? "bg-[#EDE6DA] border-[#3D0E18] font-bold text-[#1C1917]"
+                                : "bg-[#FFFFFF] border-[#1C1917]/15 text-[#57524E] hover:border-[#A6864C]"
                             }`}
                           >
                             <span>{tier}</span>
                             {quantity === tier && !customQuantity && (
-                              <span className="text-[#B08D57] font-bold">✓</span>
+                              <span className="text-[#3D0E18] font-bold">✓</span>
                             )}
                           </button>
                         ))}
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#B08D57] mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-[#A6864C] mb-1">
                           Or Enter Custom Quantity (kg / pcs / MT):
                         </label>
                         <input
@@ -601,7 +562,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                           value={customQuantity}
                           onChange={(e) => setCustomQuantity(e.target.value)}
                           placeholder="e.g. 2,500 kg or 50,000 bags"
-                          className="w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/70 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/40 focus:border-[#B08D57] focus:outline-hidden"
+                          className="w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:outline-hidden"
                         />
                       </div>
 
@@ -609,14 +570,14 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                         <button
                           type="button"
                           onClick={() => setStep(1)}
-                          className="min-h-[48px] px-4 rounded-xl border border-[#B08D57]/30 bg-[#091B2C]/60 text-xs font-semibold text-[#EFE8DC] cursor-pointer"
+                          className="min-h-[48px] px-4 rounded-xl border border-[#1C1917]/15 bg-[#FBF9F5] text-xs font-semibold text-[#1C1917] hover:bg-[#EDE6DA] cursor-pointer"
                         >
                           Back
                         </button>
                         <button
                           type="button"
                           onClick={() => setStep(3)}
-                          className="flex-1 min-h-[48px] rounded-xl bg-[#B08D57] hover:bg-[#9A7843] text-sm font-bold text-[#091B2C] transition flex items-center justify-center gap-1 cursor-pointer"
+                          className="flex-1 min-h-[48px] rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-sm font-bold text-[#F6F2EB] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                         >
                           <span>Step 3: Contact Info</span>
                           <ChevronRight className="h-4 w-4" />
@@ -628,16 +589,16 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                   {/* Step 3: Enter Name + Phone/Email */}
                   {step === 3 && (
                     <div className="space-y-3.5">
-                      <div className="rounded-lg bg-[#091B2C]/60 p-3 text-xs border border-[#B08D57]/20">
-                        <span className="text-[#B08D57] font-bold">Estimating for: </span>
-                        <span className="text-[#F8F4EC]">
+                      <div className="rounded-lg bg-[#EDE6DA] p-3 text-xs border border-[#A6864C]/30">
+                        <span className="text-[#3D0E18] font-bold">Estimating for: </span>
+                        <span className="text-[#1C1917]">
                           {PRODUCTS_LIST.find((p) => p.id === selectedProductId)?.name} (
                           {customQuantity || quantity})
                         </span>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#B08D57] mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-[#1C1917] mb-1">
                           Full Name *
                         </label>
                         <input
@@ -647,12 +608,12 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
                           placeholder="e.g. Rajesh Kannan"
-                          className="w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/70 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/40 focus:border-[#B08D57] focus:outline-hidden"
+                          className="w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:outline-hidden"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#B08D57] mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-[#1C1917] mb-1">
                           Phone Number / WhatsApp *
                         </label>
                         <input
@@ -663,12 +624,12 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                           value={contactPhone}
                           onChange={(e) => setContactPhone(e.target.value)}
                           placeholder="e.g. +91 98765 43210"
-                          className="w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/70 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/40 focus:border-[#B08D57] focus:outline-hidden"
+                          className="w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:outline-hidden"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-[#B08D57] mb-1">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-[#1C1917] mb-1">
                           Work Email *
                         </label>
                         <input
@@ -681,7 +642,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                           value={contactEmail}
                           onChange={(e) => setContactEmail(e.target.value)}
                           placeholder="e.g. rajesh@company.com"
-                          className="w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/70 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/40 focus:border-[#B08D57] focus:outline-hidden"
+                          className="w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:outline-hidden"
                         />
                       </div>
 
@@ -689,13 +650,13 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
                         <button
                           type="button"
                           onClick={() => setStep(2)}
-                          className="min-h-[48px] px-4 rounded-xl border border-[#B08D57]/30 bg-[#091B2C]/60 text-xs font-semibold text-[#EFE8DC] cursor-pointer"
+                          className="min-h-[48px] px-4 rounded-xl border border-[#1C1917]/15 bg-[#FBF9F5] text-xs font-semibold text-[#1C1917] hover:bg-[#EDE6DA] cursor-pointer"
                         >
                           Back
                         </button>
                         <button
                           type="submit"
-                          className="flex-1 min-h-[48px] rounded-xl bg-[#B08D57] hover:bg-[#9A7843] text-sm font-bold text-[#091B2C] transition flex items-center justify-center gap-1 cursor-pointer"
+                          className="flex-1 min-h-[48px] rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-sm font-bold text-[#F6F2EB] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                         >
                           <span>Get Quote Now &rarr;</span>
                         </button>

@@ -20,7 +20,6 @@ export default function HeroHeadline({
   const [isStarted, setIsStarted] = useState(Boolean(shouldReduceMotion));
   const [isReturnVisit, setIsReturnVisit] = useState(false);
 
-  // Fire entrance reveal immediately after the preloader unmounts, or immediately on return visit / reduced motion
   useEffect(() => {
     let introSeen = false;
     try {
@@ -28,8 +27,10 @@ export default function HeroHeadline({
     } catch {}
 
     if (shouldReduceMotion || introSeen) {
-      setIsReturnVisit(true);
-      setIsStarted(true);
+      queueMicrotask(() => {
+        setIsReturnVisit(true);
+        setIsStarted(true);
+      });
       return;
     }
 
@@ -51,11 +52,10 @@ export default function HeroHeadline({
 
   const instant = shouldReduceMotion || isReturnVisit;
 
-  // Entrance variants: clean optical emergence (instantly visible on return visit or reduced motion)
   const containerVariants: Variants = {
     hidden: instant
       ? { opacity: 1, filter: "none", y: 0 }
-      : { opacity: 0, filter: "blur(10px)", y: 16 },
+      : { opacity: 0, filter: "none", y: 16 },
     visible: {
       opacity: 1,
       filter: "none",
@@ -71,7 +71,7 @@ export default function HeroHeadline({
   const lineVariants: Variants = {
     hidden: instant
       ? { opacity: 1, filter: "none", y: 0 }
-      : { opacity: 0, filter: "blur(10px)", y: 16 },
+      : { opacity: 0, filter: "none", y: 16 },
     visible: {
       opacity: 1,
       filter: "none",
@@ -85,7 +85,7 @@ export default function HeroHeadline({
 
   return (
     <div className={`relative inline-block select-none overflow-visible ${className}`}>
-      {/* ─── Semantic Display H1 Headline in Solid Warm Ivory ─── */}
+      {/* ─── Semantic Display H1 Headline in Warm Alabaster ─── */}
       <motion.h1
         variants={containerVariants}
         initial={instant ? "visible" : "hidden"}
@@ -97,7 +97,7 @@ export default function HeroHeadline({
         {/* Top line: Italic light serif */}
         <motion.span
           variants={lineVariants}
-          className={`block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F8F4EC] ${
+          className={`block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F6F2EB] ${
             centered ? "text-center" : ""
           }`}
         >
@@ -107,7 +107,7 @@ export default function HeroHeadline({
         {/* Bottom block: Bold uppercase architectural block */}
         <motion.span
           variants={lineVariants}
-          className={`block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F8F4EC] mt-1.5 sm:mt-3 ${
+          className={`block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F6F2EB] mt-1.5 sm:mt-3 ${
             centered ? "text-center" : ""
           }`}
         >
