@@ -9,9 +9,13 @@ import {
 
 interface HeroHeadlineProps {
   className?: string;
+  centered?: boolean;
 }
 
-export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
+export default function HeroHeadline({
+  className = "",
+  centered = false,
+}: HeroHeadlineProps) {
   const shouldReduceMotion = useReducedMotion();
   const [isStarted, setIsStarted] = useState(Boolean(shouldReduceMotion));
   const [isReturnVisit, setIsReturnVisit] = useState(false);
@@ -47,34 +51,33 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
 
   const instant = shouldReduceMotion || isReturnVisit;
 
-  // Entrance variants: clean optical emergence (instantly visible on return visit or reduced motion)
+  // Stagger 80ms between words; total duration under 1.5s
   const containerVariants: Variants = {
-    hidden: instant
-      ? { opacity: 1, filter: "none", y: 0 }
-      : { opacity: 0, filter: "blur(10px)", y: 16 },
+    hidden: {
+      opacity: 1,
+    },
     visible: {
       opacity: 1,
-      filter: "none",
-      y: 0,
       transition: {
-        duration: instant ? 0 : 1.0,
-        ease: [0.16, 1, 0.3, 1],
-        staggerChildren: instant ? 0 : 0.16,
+        staggerChildren: instant ? 0 : 0.08,
+        delayChildren: instant ? 0 : 0.04,
       },
     },
   };
 
-  const lineVariants: Variants = {
+  // Word-by-word reveal: each word fading in from slight blur (blur 4px → 0) and rising 8px (y: 8 → 0)
+  // 300ms ease-in-out per word. Stays static after reveal.
+  const wordVariants: Variants = {
     hidden: instant
-      ? { opacity: 1, filter: "none", y: 0 }
-      : { opacity: 0, filter: "blur(10px)", y: 16 },
+      ? { opacity: 1, filter: "blur(0px)", y: 0 }
+      : { opacity: 0, filter: "blur(4px)", y: 8 },
     visible: {
       opacity: 1,
-      filter: "none",
+      filter: "blur(0px)",
       y: 0,
       transition: {
-        duration: instant ? 0 : 1.0,
-        ease: [0.16, 1, 0.3, 1],
+        duration: instant ? 0 : 0.3,
+        ease: "easeInOut",
       },
     },
   };
@@ -86,23 +89,53 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
         variants={containerVariants}
         initial={instant ? "visible" : "hidden"}
         animate={isStarted || instant ? "visible" : "hidden"}
-        className="relative inline-block select-none overflow-visible m-0 p-0 font-serif font-[family-name:var(--font-display)]"
+        className={`relative inline-block select-none overflow-visible m-0 p-0 font-serif font-[family-name:var(--font-display)] ${
+          centered ? "text-center" : "text-left"
+        }`}
       >
-        {/* Top line: Italic light serif */}
-        <motion.span
-          variants={lineVariants}
-          className="block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F8F4EC]"
+        {/* Top line: Italic light serif (Flexible Packaging) */}
+        <span
+          className={`block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-normal text-[#F8F4EC] ${
+            centered ? "text-center" : ""
+          }`}
         >
-          Flexible Packaging
-        </motion.span>
+          <motion.span
+            variants={wordVariants}
+            className="hero-reveal-word inline-block mr-[0.28em]"
+          >
+            Flexible
+          </motion.span>
+          <motion.span
+            variants={wordVariants}
+            className="hero-reveal-word inline-block"
+          >
+            Packaging
+          </motion.span>
+        </span>
 
-        {/* Bottom block: Bold uppercase architectural block */}
-        <motion.span
-          variants={lineVariants}
-          className="block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F8F4EC] mt-1.5 sm:mt-3"
+        {/* Bottom block: Bold uppercase architectural block (SOLUTION PROVIDERS) */}
+        <span
+          className={`block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F8F4EC] mt-1.5 sm:mt-3 ${
+            centered ? "text-center" : ""
+          }`}
         >
-          SOLUTION<br />PROVIDERS
-        </motion.span>
+          <motion.span
+            variants={wordVariants}
+            className={`hero-reveal-word ${
+              centered ? "inline-block mr-[0.24em] sm:mr-0 sm:block" : "block"
+            }`}
+          >
+            SOLUTION
+          </motion.span>
+          <motion.span
+            variants={wordVariants}
+            className={`hero-reveal-word ${
+              centered ? "inline-block sm:block" : "block"
+            }`}
+          >
+            PROVIDERS
+          </motion.span>
+        </span>
       </motion.h1>
     </div>
   );

@@ -90,7 +90,7 @@ export default function QuoteModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl border border-[#B08D57]/35 bg-[#0F2A44] shadow-2xl"
+            className="fluted-glass-card relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -103,7 +103,7 @@ export default function QuoteModal() {
               <X className="h-5 w-5" />
             </button>
 
-            <ContactForm initialProduct={initialProduct} />
+            <ContactForm initialProduct={initialProduct} isModal />
           </motion.div>
         </div>
       )}

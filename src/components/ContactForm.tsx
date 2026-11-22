@@ -32,9 +32,10 @@ function getInitialProduct(productParam: string | null): string {
 
 interface ContactFormProps {
   initialProduct?: string;
+  isModal?: boolean;
 }
 
-function ContactFormInner({ initialProduct }: ContactFormProps) {
+function ContactFormInner({ initialProduct, isModal }: ContactFormProps) {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
 
@@ -178,7 +179,13 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl p-5 sm:p-10 shadow-xl text-[#F8F4EC]">
+    <div
+      className={`rounded-2xl ${
+        isModal
+          ? "bg-transparent border-0 shadow-none"
+          : "border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl"
+      } p-5 sm:p-10 text-[#F8F4EC]`}
+    >
       <div className="border-b border-[#B08D57]/20 pb-5">
         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#B08D57]">
           Direct Sales &amp; Technical Consultation
@@ -463,11 +470,11 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
   );
 }
 
-export default function ContactForm({ initialProduct }: ContactFormProps) {
+export default function ContactForm({ initialProduct, isModal }: ContactFormProps) {
   return (
     <Suspense
       fallback={
-        <div className="rounded-2xl border border-[#B08D57]/20 bg-[#0F2A44]/40 backdrop-blur-xl p-8 shadow-xl animate-pulse">
+        <div className={`rounded-2xl ${isModal ? "bg-transparent border-0" : "border border-[#B08D57]/20 bg-[#0F2A44]/40 backdrop-blur-xl"} p-8 shadow-xl animate-pulse`}>
           <div className="h-6 w-1/3 bg-[#1B3D5E]/30 rounded mb-4" />
           <div className="h-4 w-2/3 bg-[#1B3D5E]/20 rounded mb-8" />
           <div className="space-y-4">
@@ -478,7 +485,7 @@ export default function ContactForm({ initialProduct }: ContactFormProps) {
         </div>
       }
     >
-      <ContactFormInner initialProduct={initialProduct} />
+      <ContactFormInner initialProduct={initialProduct} isModal={isModal} />
     </Suspense>
   );
 }

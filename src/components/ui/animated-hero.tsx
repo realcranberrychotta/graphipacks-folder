@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X, CheckCircle2, ChevronRight } from "lucide-react";
 import ProductTypewriter from "@/components/ProductTypewriter";
+import HeroHeadline from "@/components/HeroHeadline";
 import { openQuoteModal } from "@/components/QuoteModal";
 
 export interface ParticleHeroProps {
@@ -322,36 +323,17 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <span>EST. 1984 · MADURAI PLANT  •  GRAPHIPACKS PRIVATE LIMITED</span>
             </motion.div>
 
-            {/* 2. Main Headline: Bold, Centred, Ivory with Text-Reveal Animation on Load */}
-            <motion.div variants={textLineVariant} className="mt-1 mb-2">
-              <h1 className="flex flex-col items-center justify-center m-0 p-0">
-                {/* Line 1: GRAPHIPACKS */}
-                <span className="block font-mono text-xs xs:text-sm sm:text-base font-bold uppercase tracking-[0.28em] text-[#F8F4EC]/90 text-center">
-                  {title}
-                </span>
+            {/* 2. Main Headline: Word-by-word reveal */}
+            <div className="mt-1 mb-2 flex flex-col items-center justify-center text-center">
+              <span className="block font-mono text-xs xs:text-sm sm:text-base font-bold uppercase tracking-[0.28em] text-[#F8F4EC]/90 text-center mb-1">
+                {title}
+              </span>
+              <HeroHeadline centered />
+            </div>
 
-                {/* Line 2 (Larger): Flexible Packaging */}
-                <span
-                  className="block font-serif font-bold italic text-3xl xs:text-4xl sm:text-5xl text-[#F8F4EC] tracking-tight leading-[1.12] my-1.5 text-center"
-                  style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
-                >
-                  {subtitle}
-                </span>
-
-                {/* Line 3: SOLUTION PROVIDERS */}
-                <span
-                  className="block font-serif font-black text-2xl xs:text-3xl sm:text-4xl uppercase tracking-[0.06em] text-[#F8F4EC] leading-[1.08] text-center"
-                  style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
-                >
-                  SOLUTION PROVIDERS
-                </span>
-              </h1>
-            </motion.div>
-
-            {/* 3. Typing Line: "WE MAKE: [Product] |" */}
+            {/* 3. Static Products List Strip */}
             <motion.div variants={textLineVariant} className="mt-3 sm:mt-4 w-full flex justify-center px-2">
               <ProductTypewriter
-                prefix="WE MAKE:"
                 items={MOBILE_TYPEWRITER_PRODUCTS}
                 className="mx-auto"
               />

@@ -121,7 +121,7 @@ export default function ProductCatalog({
               >
                 <Link
                   href={`/products/${product.slug}`}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+                  className="fluted-glass-card group relative flex flex-col justify-between overflow-hidden rounded-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
                 >
                   <div>
                     {/* High-Resolution Photographic Header with Navy/Bronze Overlay */}

@@ -93,12 +93,9 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           {headline ?? <HeroHeadline />}
         </div>
 
-        {/* Dynamic Product Typewriter Strip */}
+        {/* Static Product List Strip */}
         <motion.div variants={itemVariants} className="mt-6 sm:mt-7">
-          <ProductTypewriter
-            prefix="We make :"
-            items={products.map((p) => p.name)}
-          />
+          <ProductTypewriter />
         </motion.div>
 
         {/* Delicate Animated Horizon Rule */}

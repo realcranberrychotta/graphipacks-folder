@@ -109,6 +109,35 @@ body {
   border-top-color: rgba(248, 244, 236, 0.3);
 }
 
+/* ==========================================================================
+   FLUTED GLASS — Product Cards & Quote Modal Only
+   Vertical ribbing (repeating-linear-gradient, thin vertical lines, 7px pitch),
+   frosted blur (backdrop-blur-md), Deep Navy #0F2A44 tint at low opacity,
+   and thin Bronze #B08D57 hairline border.
+   ========================================================================== */
+.fluted-glass-card {
+  background-color: rgba(15, 42, 68, 0.62);
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      rgba(248, 244, 236, 0.035) 0px,
+      rgba(248, 244, 236, 0.035) 1px,
+      transparent 1px,
+      transparent 6px,
+      rgba(5, 17, 28, 0.28) 6px,
+      rgba(5, 17, 28, 0.28) 7px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(15, 42, 68, 0.72) 0%,
+      rgba(9, 27, 44, 0.82) 100%
+    );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(176, 141, 87, 0.25);
+  border-top-color: rgba(176, 141, 87, 0.5);
+}
+
 /* Hide scrollbar globally for Chrome, Safari and Opera */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
@@ -134,12 +163,28 @@ body {
 }
 
 /* ==========================================================================
-   HERO — Film-Grain Noise Overlay (SVG feTurbulence, data-URI)
-   Subtle noise texture across the entire hero. pointer-events:none so it
-   never captures clicks. Opacity kept ≤0.07 to preserve text readability.
+   HERO — Subtle Grainy Gradient & Paper Texture (Hero only, ≤5% opacity)
+   Replaces flat dark navy with a refined, tactile industrial paper grain.
+   Base: Deep Navy #0F2A44 with subtle atmospheric gradient.
+   Static SVG noise texture: max 3.5% opacity to preserve razor-sharp text.
    ========================================================================== */
+.hero-grainy-bg {
+  background-color: #0F2A44;
+  background-image: 
+    radial-gradient(ellipse 100% 80% at 50% 15%, rgba(27, 61, 94, 0.45) 0%, rgba(15, 42, 68, 0.85) 60%, #091B2C 100%),
+    linear-gradient(180deg, rgba(176, 141, 87, 0.05) 0%, transparent 40%);
+}
+
 .hero-grain-overlay {
-  display: none !important;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.035; /* 3.5% opacity — strictly under 5% MAXIMUM */
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
 }
 
 /* ==========================================================================
@@ -473,3 +518,65 @@ body {
 .animate-shake {
   animation: field-shake 250ms ease-in-out;
 }
+
+/* ==========================================================================
+   INFRASTRUCTURE PAGE — Stacking Scroll Cards
+   ========================================================================== */
+@media (min-width: 768px) {
+  .infrastructure-sticky-card {
+    position: sticky;
+    top: calc(var(--header-height, 72px) + 20px + var(--stack-offset, 0px));
+  }
+  .infrastructure-sticky-card:nth-child(1) { --stack-offset: 0px; z-index: 1; }
+  .infrastructure-sticky-card:nth-child(2) { --stack-offset: 32px; z-index: 2; }
+  .infrastructure-sticky-card:nth-child(3) { --stack-offset: 64px; z-index: 3; }
+  .infrastructure-sticky-card:nth-child(4) { --stack-offset: 96px; z-index: 4; }
+  .infrastructure-sticky-card:nth-child(5) { --stack-offset: 128px; z-index: 5; }
+  .infrastructure-sticky-card:nth-child(6) { --stack-offset: 160px; z-index: 6; }
+}
+
+@media (max-width: 767px) {
+  .infrastructure-sticky-card {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infrastructure-sticky-card {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   HERO HEADLINE — Word-by-Word Reveal Instant & Reduced-Motion Fallbacks
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal-word {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+html:not(.show-intro) .hero-reveal-word {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+[data-skip-animation="true"] .hero-reveal-word {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+

@@ -51,7 +51,10 @@ export default async function HomePage() {
         `}</style>
       </noscript>
       {/* Hero Section */}
-      <section id="hero" className="relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC]">
+      <section id="hero" className="hero-grainy-bg relative overflow-hidden border-b border-[#B08D57]/25 bg-[#0F2A44] text-[#F8F4EC]">
+        {/* Subtle Grain / Paper Texture Overlay (Hero only, <= 5% opacity, static) */}
+        <div className="hero-grain-overlay pointer-events-none" aria-hidden="true" />
+
         {/* Accessible Hero Skip Animation Control */}
         <HeroSkipControl />
 
@@ -73,7 +76,7 @@ export default async function HomePage() {
         </div>
 
         {/* Mobile Hero — Animated Hero Minimal / Clean Design (< 768px) */}
-        <div className="block md:hidden relative w-full pt-3 pb-8 bg-[#0F2A44]">
+        <div className="block md:hidden relative w-full pt-3 pb-8 bg-transparent">
           <MobileHero />
         </div>
       </section>
@@ -268,7 +271,7 @@ export default async function HomePage() {
                 <StaggerCard key={product.slug} index={idx}>
                   <Link
                     href={`/products/${product.slug}`}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/50 bg-[#0A1D30] transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+                    className="fluted-glass-card group relative flex flex-col justify-between overflow-hidden rounded-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
                   >
                     <div className="relative w-full h-52 overflow-hidden bg-[#071524] border-b border-[#B08D57]/20">
                       <Image

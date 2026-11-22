@@ -1,14 +1,14 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 
 export interface InfrastructureItem {
   id: string;
   title: string;
   description: string;
   image: string;
-  colSpan: string;
 }
 
 export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
@@ -18,7 +18,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "High-definition electronic cylinder engraving and multi-color precision ink registration for high-barrier flexible packaging films.",
     image: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
-    colSpan: "md:col-span-2",
   },
   {
     id: "02",
@@ -26,7 +25,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "Continuous 3-layer & ABA blown film extrusion lines with custom polymer blending and tight gauge tolerance control.",
     image: "/images/infrastructure/infra-02-film-lamination-rollers.jpg",
-    colSpan: "md:col-span-1",
   },
   {
     id: "03",
@@ -34,7 +32,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "Precision flexographic ink metering and high-speed rotary slitting systems delivering exact roll widths and tension profiles.",
     image: "/images/infrastructure/infra-01-flexo-ink-rollers.jpg",
-    colSpan: "md:col-span-1",
   },
   {
     id: "04",
@@ -42,7 +39,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "High-speed automated wicket bag machines producing pin-perforated poly bags optimized for automated bread and garment packing lines.",
     image: "/images/infrastructure/infra-05-packing-conveyor.jpg",
-    colSpan: "md:col-span-2",
   },
   {
     id: "05",
@@ -50,7 +46,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "Inline optical inspection, tensile elongation analysis, and hermetic seal-integrity testing adhering to strict B2B export standards.",
     image: "/images/infrastructure/infra-04-automated-line.jpg",
-    colSpan: "md:col-span-2",
   },
   {
     id: "06",
@@ -58,7 +53,6 @@ export const INFRASTRUCTURE_ITEMS: InfrastructureItem[] = [
     description:
       "Climate-controlled inventory storage for virgin polymer pellets, specialized masterbatches, and laminated master film rolls.",
     image: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
-    colSpan: "md:col-span-1",
   },
 ];
 
@@ -70,62 +64,153 @@ export default function InfrastructureBentoGrid({
   items = INFRASTRUCTURE_ITEMS,
 }: InfrastructureBentoGridProps) {
   const shouldReduceMotion = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Sync with desktop viewport (min-width: 768px)
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(media.matches);
+
+    const handler = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
+  }, []);
+
+  const isSticky = isDesktop && !shouldReduceMotion;
+
+  // Track active card on scroll for focus state (transform & opacity only)
+  useEffect(() => {
+    if (!isSticky || !containerRef.current) return;
+
+    let ticking = false;
+
+    const updateActiveCard = () => {
+      if (!containerRef.current) return;
+      const cards = containerRef.current.querySelectorAll<HTMLElement>("[data-stack-card]");
+      if (!cards || cards.length === 0) return;
+
+      const headerHeight = 72;
+      const baseOffset = headerHeight + 20;
+
+      let currentActive = 0;
+      cards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        const cardStickyTop = baseOffset + idx * 32;
+        // When card reaches near its sticky offset, it becomes the active/focused card
+        if (rect.top <= cardStickyTop + 36) {
+          currentActive = idx;
+        }
+      });
+
+      setActiveIndex(currentActive);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveCard);
+        ticking = true;
+      }
+    };
+
+    updateActiveCard();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [isSticky]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+    <div
+      ref={containerRef}
+      className="relative mx-auto max-w-5xl space-y-8 md:space-y-32 lg:space-y-40 pb-20 md:pb-36"
+    >
       {items.map((item, index) => {
-        const isWide = item.colSpan.includes("col-span-2");
+        const isPast = isSticky && index < activeIndex;
+        // Each card sticks to the top with offset = header height (72px) + 20px, plus 32px per card for peeking tabs
+        const topOffset = isSticky
+          ? `calc(var(--header-height, 72px) + 20px + ${index * 32}px)`
+          : undefined;
 
         return (
-          <motion.article
+          <article
             key={item.id}
-            suppressHydrationWarning
-            initial={
-              shouldReduceMotion ? false : { opacity: 0, y: 16 }
-            }
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.45,
-              delay: shouldReduceMotion ? 0 : (index % 3) * 0.08,
-              ease: [0.16, 1, 0.3, 1],
+            data-stack-card
+            data-index={index}
+            className="infrastructure-sticky-card relative w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[520px] rounded-2xl overflow-hidden border border-[#B08D57]/30 border-t-[#B08D57]/60 bg-[#091B2C] shadow-2xl shadow-[#091B2C]/90 select-none"
+            style={{
+              position: isSticky ? "sticky" : "relative",
+              top: topOffset,
+              zIndex: isSticky ? index + 1 : undefined,
+              transform: isPast ? "scale(0.985)" : "scale(1)",
+              opacity: isPast ? 0.9 : 1,
+              transition: shouldReduceMotion
+                ? "none"
+                : "transform 250ms ease-in-out, opacity 250ms ease-in-out",
             }}
-            className={`${item.colSpan} h-72 md:h-80 lg:h-[360px] rounded-xl overflow-hidden relative border border-[#B08D57]/25 bg-[#091B2C] group shadow-xl shadow-[#091B2C]/40 select-none`}
           >
-            {/* Full-Bleed Infrastructure Photo */}
-            <Image
-              src={item.image}
-              alt={`${item.title} — Graphipacks Infrastructure`}
-              fill
-              sizes={
-                isWide
-                  ? "(max-width: 768px) 100vw, (max-width: 1280px) 66vw, 850px"
-                  : "(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 450px"
-              }
-              priority={index < 2}
-              loading={index < 2 ? "eager" : "lazy"}
-              className="w-full h-full object-cover md:group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-            />
-
-            {/* Bottom Gradient Scrim for Legibility */}
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-[#091B2C]/95 via-[#091B2C]/50 to-transparent pointer-events-none"
-              aria-hidden="true"
-            />
-
-            {/* Bottom-Left Anchored Content */}
-            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-10 flex flex-col justify-end pointer-events-none">
-              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#B08D57] uppercase">
-                {item.id}
+            {/* Top Peeking Tab Bar (visible when previous cards peek out at top) */}
+            <div className="absolute top-0 inset-x-0 h-8 px-4 sm:px-6 flex items-center justify-between border-b border-[#B08D57]/30 bg-[#091B2C]/95 backdrop-blur-md z-20">
+              <div className="flex items-center gap-2.5">
+                <span className="font-mono text-xs font-bold tracking-widest text-[#B08D57]">
+                  {item.id}
+                </span>
+                <span className="text-[#B08D57]/50" aria-hidden="true">&bull;</span>
+                <span className="font-mono text-xs font-bold tracking-wider text-[#F8F4EC] uppercase truncate max-w-[200px] sm:max-w-none">
+                  {item.title}
+                </span>
+              </div>
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#B08D57] uppercase hidden xs:inline">
+                Madurai Plant
               </span>
-              <h2 className="mt-1 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
-                {item.title}
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-[#EFE8DC]/85 line-clamp-3 leading-relaxed font-sans">
-                {item.description}
-              </p>
             </div>
-          </motion.article>
+
+            {/* Full-Bleed Infrastructure Photo */}
+            <div className="relative w-full h-full pt-8">
+              <Image
+                src={item.image}
+                alt={`${item.title} — Graphipacks Infrastructure`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1024px"
+                priority={index < 2}
+                loading={index < 2 ? "eager" : "lazy"}
+                className="w-full h-full object-cover transition-transform duration-500 ease-out"
+              />
+
+              {/* Bottom Gradient Scrim for Legibility */}
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-[#091B2C] via-[#091B2C]/70 to-[#091B2C]/10 pointer-events-none"
+                aria-hidden="true"
+              />
+
+              {/* Bottom-Left Anchored Content */}
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10 z-10 flex flex-col justify-end pointer-events-none max-w-3xl">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-bold tracking-widest text-[#B08D57] uppercase">
+                    01 / MANUFACTURING INFRASTRUCTURE
+                  </span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" aria-hidden="true" />
+                  <span className="font-mono text-[10px] tracking-wider text-[#EFE8DC]/60 uppercase hidden sm:inline">
+                    Continuous Plant Operation
+                  </span>
+                </div>
+                <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
+                  {item.title}
+                </h2>
+                <p className="mt-3 text-sm sm:text-base text-[#EFE8DC]/85 leading-relaxed font-sans line-clamp-3 sm:line-clamp-none">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          </article>
         );
       })}
     </div>

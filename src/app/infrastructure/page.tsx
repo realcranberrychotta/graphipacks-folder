@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Playfair_Display } from "next/font/google";
 import InfrastructureBentoGrid from "@/components/InfrastructureBentoGrid";
 
@@ -62,6 +63,36 @@ export default function InfrastructurePage() {
         className="mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-24 sm:px-6 lg:px-8 w-full"
       >
         <InfrastructureBentoGrid />
+      </section>
+
+      {/* Bottom Conversion / Technical Discussion CTA */}
+      <section className="border-t border-[#B08D57]/25 bg-[#091B2C]/90 backdrop-blur-2xl py-20 text-[#F8F4EC]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#F8F4EC] font-[family-name:var(--font-playfair)] font-serif">
+                Discuss Your Technical Specifications
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-[#EFE8DC]/85 leading-relaxed font-sans">
+                Contact our Madurai plant leadership and production engineers to request custom machine trials, evaluate barrier test data, or discuss high-volume flexible packaging runs.
+              </p>
+            </div>
+            <div className="shrink-0 flex flex-wrap gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-lg bg-[#B08D57] hover:bg-[#9A7843] px-6 py-3.5 text-sm font-bold text-[#091B2C] shadow-lg shadow-[#B08D57]/25 transition"
+              >
+                Inquire Directly &rarr;
+              </Link>
+              <Link
+                href="/products"
+                className="inline-flex items-center justify-center rounded-lg border border-[#B08D57]/45 bg-[#0F2A44]/60 px-6 py-3.5 text-sm font-semibold text-[#F8F4EC] transition hover:bg-[#1B3D5E]/60"
+              >
+                View All 6 Product Lines
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
