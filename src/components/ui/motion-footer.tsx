@@ -108,6 +108,8 @@ const STYLES = `
   letter-spacing: -0.03em;
   color: rgba(176, 141, 87, 0.05);
   -webkit-text-stroke: 1.5px rgba(176, 141, 87, 0.12);
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
 }
 
 .footer-heading {
@@ -305,6 +307,10 @@ export function CinematicFooter() {
           <div
             ref={giantTextRef}
             className="footer-giant-bg-text absolute -bottom-[4vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase text-[#B08D57]/15"
+            style={{
+              maskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+            }}
           >
             GRAPHIPACKS
           </div>

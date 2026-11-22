@@ -554,29 +554,58 @@ body {
   }
 }
 
-/* ==========================================================================
-   HERO HEADLINE — Word-by-Word Reveal Instant & Reduced-Motion Fallbacks
-   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .hero-reveal-word {
-    opacity: 1 !important;
-    filter: none !important;
+  .hero-parallax-machine {
     transform: none !important;
-    transition: none !important;
   }
 }
 
-html:not(.show-intro) .hero-reveal-word {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
+/* ==========================================================================
+   CLIENT NETWORK — Logo Marquee (Left to Right, 30s)
+   ========================================================================== */
+@keyframes client-marquee-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
 }
 
-[data-skip-animation="true"] .hero-reveal-word {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
-  transition: none !important;
+.animate-client-marquee {
+  animation: client-marquee-rtl 30s linear infinite;
+}
+
+.animate-client-marquee:hover,
+.group\/client-marquee:hover .animate-client-marquee,
+[data-client-marquee-paused="true"] .animate-client-marquee {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-client-marquee {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   FOOTER — Giant Wordmark Bottom Fade-out Mask
+   ========================================================================== */
+.footer-giant-bg-text {
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}
+
+/* ==========================================================================
+   PAGE TRANSITION — Reduced-Motion Instant Fallback
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 

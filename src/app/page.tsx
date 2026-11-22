@@ -32,6 +32,7 @@ import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 import QuoteModal from "@/components/QuoteModal";
 import QuoteTriggerButton from "@/components/QuoteTriggerButton";
 import HomeFAQ from "@/components/HomeFAQ";
+import ClientLogoMarquee from "@/components/ClientLogoMarquee";
 
 export default async function HomePage() {
   cacheLife("days");
@@ -528,6 +529,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Client Logo Marquee */}
+      <ClientLogoMarquee />
 
       {/* Frequently Asked Questions */}
       <HomeFAQ />

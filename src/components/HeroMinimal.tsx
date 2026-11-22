@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { CompanyProfile } from "@/lib/content";
 import { products } from "@/lib/content";
-import ProductTypewriter from "@/components/ProductTypewriter";
+import ProductTypewriter, { DEFAULT_PRODUCTS } from "@/components/ProductTypewriter";
 import HeroHeadline from "@/components/HeroHeadline";
 import { openQuoteModal } from "@/components/QuoteModal";
 import { ArrowRight } from "lucide-react";
@@ -93,9 +93,12 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           {headline ?? <HeroHeadline />}
         </div>
 
-        {/* Static Product List Strip */}
+        {/* WE MAKE: Dynamic Product Typewriter Strip */}
         <motion.div variants={itemVariants} className="mt-6 sm:mt-7">
-          <ProductTypewriter />
+          <ProductTypewriter
+            prefix="WE MAKE:"
+            items={DEFAULT_PRODUCTS}
+          />
         </motion.div>
 
         {/* Delicate Animated Horizon Rule */}

@@ -3,6 +3,7 @@ import { Bodoni_Moda, Manrope, Geist_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainContent from "@/components/MainContent";
+import PageTransition from "@/components/PageTransition";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
@@ -68,7 +69,9 @@ export default function RootLayout({
         <Preloader />
         <ScrollProgressBar />
         <Header />
-        <MainContent>{children}</MainContent>
+        <MainContent>
+          <PageTransition>{children}</PageTransition>
+        </MainContent>
         <Footer />
       </body>
     </html>

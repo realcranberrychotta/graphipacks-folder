@@ -331,9 +331,10 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <HeroHeadline centered />
             </div>
 
-            {/* 3. Static Products List Strip */}
+            {/* 3. Typing Line: "WE MAKE: [Product] |" */}
             <motion.div variants={textLineVariant} className="mt-3 sm:mt-4 w-full flex justify-center px-2">
               <ProductTypewriter
+                prefix="WE MAKE:"
                 items={MOBILE_TYPEWRITER_PRODUCTS}
                 className="mx-auto"
               />
