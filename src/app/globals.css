@@ -349,6 +349,11 @@ body {
     animation: none !important;
   }
 
+  .animate-footer-scroll-marquee {
+    animation: none !important;
+    transform: none !important;
+  }
+
   [data-stagger-card],
   [data-stagger-grid] {
     opacity: 1 !important;
@@ -357,6 +362,16 @@ body {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* ==========================================================================
+   CAPABILITY MARQUEE TICKER — Hover Pause & Control
+   ========================================================================== */
+.animate-footer-scroll-marquee:hover,
+.group\/ticker:hover .animate-footer-scroll-marquee,
+.group\/marquee:hover .animate-footer-scroll-marquee,
+[data-ticker-paused="true"] .animate-footer-scroll-marquee {
+  animation-play-state: paused !important;
 }
 
 /* Instant display when user activates "Skip animation" */

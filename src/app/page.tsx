@@ -31,6 +31,7 @@ import HeroSkipControl from "@/components/HeroSkipControl";
 import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 import QuoteModal from "@/components/QuoteModal";
 import QuoteTriggerButton from "@/components/QuoteTriggerButton";
+import HomeFAQ from "@/components/HomeFAQ";
 
 export default async function HomePage() {
   cacheLife("days");
@@ -250,7 +251,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/products"
-              className="text-sm font-semibold text-[#B08D57] hover:text-[#F8F4EC] shrink-0 inline-flex items-center gap-1 transition-colors duration-200 ease-in-out"
+              className="min-h-[44px] text-sm font-semibold text-[#B08D57] hover:text-[#F8F4EC] shrink-0 inline-flex items-center gap-1 transition-colors duration-200 ease-in-out py-2.5 px-2"
             >
               View Full Product Index &rarr;
             </Link>
@@ -265,8 +266,9 @@ export default async function HomePage() {
 
               return (
                 <StaggerCard key={product.slug} index={idx}>
-                  <article
-                    className="group relative flex flex-col overflow-hidden rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/50 bg-[#0A1D30] transition-colors duration-300 ease-in-out hover:border-[#B08D57]/60 hover:bg-[#0D243B] h-full"
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#B08D57]/25 border-t-[#B08D57]/50 bg-[#0A1D30] transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
                   >
                     <div className="relative w-full h-52 overflow-hidden bg-[#071524] border-b border-[#B08D57]/20">
                       <Image
@@ -295,13 +297,7 @@ export default async function HomePage() {
                         </div>
 
                         <h3 className="mt-3 text-xl font-bold font-serif text-[#F8F4EC] group-hover:text-white transition-colors duration-200 ease-in-out">
-                          <Link
-                            href={`/products/${product.slug}`}
-                            className="hover:underline focus:outline-hidden"
-                          >
-                            <span className="absolute inset-0" aria-hidden="true" />
-                            {product.name}
-                          </Link>
+                          {product.name}
                         </h3>
 
                         <p className="mt-2 text-sm text-[#EFE8DC]/85 line-clamp-2 leading-relaxed">
@@ -355,16 +351,16 @@ export default async function HomePage() {
                         </div>
                       </div>
 
-                      <div className="mt-6 border-t border-[#B08D57]/20 pt-4 flex items-center justify-between font-mono text-xs text-[#B08D57]">
+                      <div className="mt-6 border-t border-[#B08D57]/20 pt-4 flex items-center justify-between font-mono text-xs text-[#B08D57] min-h-[44px]">
                         <span className="text-[11px] uppercase tracking-wider text-[#EFE8DC]/60 group-hover:text-[#B08D57] transition-colors duration-200">
                           RFQ / SPEC
                         </span>
-                        <span className="inline-flex items-center gap-1 font-semibold group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
+                        <span className="inline-flex min-h-[44px] items-center gap-1 font-semibold group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
                           View Specifications &rarr;
                         </span>
                       </div>
                     </div>
-                  </article>
+                  </Link>
                 </StaggerCard>
               );
             })}
@@ -415,12 +411,13 @@ export default async function HomePage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="mt-6 border-t border-[#B08D57]/25 pt-4">
+                  <div className="mt-6 border-t border-[#B08D57]/25 pt-2">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#B08D57] hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out"
+                      className="inline-flex min-h-[44px] w-full items-center justify-between sm:justify-start gap-1 text-xs font-semibold uppercase tracking-wider text-[#B08D57] hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out py-2.5"
                     >
-                      Inquire For Form &rarr;
+                      <span>Inquire For Form</span>
+                      <span>&rarr;</span>
                     </Link>
                   </div>
                 </article>
@@ -528,6 +525,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Frequently Asked Questions */}
+      <HomeFAQ />
 
       {/* Bottom Conversion CTA */}
       <section className="border-t border-[#B08D57]/25 bg-[#091B2C] py-20 text-[#F8F4EC]">

@@ -1,18 +1,62 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 export default function Preloader() {
-  const [isVisible, setIsVisible] = useState(true);
+  const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 800);
+    if (typeof window === "undefined") return;
 
-    return () => clearTimeout(timer);
-  }, []);
+    if (shouldReduceMotion) {
+      setIsVisible(false);
+      if (typeof document !== "undefined") {
+        document.documentElement.classList.remove("show-intro");
+      }
+      return;
+    }
+
+    // Show full-screen intro animation ONLY on a visitor's first visit to Home in this browser
+    const isHome = pathname === "/";
+    let hasSeenIntro = false;
+    try {
+      hasSeenIntro = localStorage.getItem("graphipacks-intro-seen") === "true";
+    } catch {
+      // ignore
+    }
+
+    if (isHome && !hasSeenIntro) {
+      setIsVisible(true);
+
+      const finishIntro = () => {
+        setIsVisible(false);
+        try {
+          localStorage.setItem("graphipacks-intro-seen", "true");
+        } catch {}
+        if (typeof document !== "undefined") {
+          document.documentElement.classList.remove("show-intro");
+        }
+      };
+
+      const timer = setTimeout(finishIntro, 800);
+
+      window.addEventListener("skip-hero-animation", finishIntro);
+
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("skip-hero-animation", finishIntro);
+      };
+    } else {
+      setIsVisible(false);
+      if (typeof document !== "undefined") {
+        document.documentElement.classList.remove("show-intro");
+      }
+    }
+  }, [pathname]);
 
   return (
     <AnimatePresence>

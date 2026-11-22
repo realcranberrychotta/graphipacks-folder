@@ -14,10 +14,17 @@ interface HeroHeadlineProps {
 export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
   const shouldReduceMotion = useReducedMotion();
   const [isStarted, setIsStarted] = useState(Boolean(shouldReduceMotion));
+  const [isReturnVisit, setIsReturnVisit] = useState(false);
 
-  // Fire entrance reveal immediately after the preloader unmounts, or skip if reduced motion
+  // Fire entrance reveal immediately after the preloader unmounts, or immediately on return visit / reduced motion
   useEffect(() => {
-    if (shouldReduceMotion) {
+    let introSeen = false;
+    try {
+      introSeen = localStorage.getItem("graphipacks-intro-seen") === "true";
+    } catch {}
+
+    if (shouldReduceMotion || introSeen) {
+      setIsReturnVisit(true);
       setIsStarted(true);
       return;
     }
@@ -38,9 +45,11 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
     };
   }, [shouldReduceMotion]);
 
-  // Entrance variants: clean optical emergence (instantly visible on reduced motion)
+  const instant = shouldReduceMotion || isReturnVisit;
+
+  // Entrance variants: clean optical emergence (instantly visible on return visit or reduced motion)
   const containerVariants: Variants = {
-    hidden: shouldReduceMotion
+    hidden: instant
       ? { opacity: 1, filter: "none", y: 0 }
       : { opacity: 0, filter: "blur(10px)", y: 16 },
     visible: {
@@ -48,15 +57,15 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
       filter: "none",
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0 : 1.0,
+        duration: instant ? 0 : 1.0,
         ease: [0.16, 1, 0.3, 1],
-        staggerChildren: shouldReduceMotion ? 0 : 0.16,
+        staggerChildren: instant ? 0 : 0.16,
       },
     },
   };
 
   const lineVariants: Variants = {
-    hidden: shouldReduceMotion
+    hidden: instant
       ? { opacity: 1, filter: "none", y: 0 }
       : { opacity: 0, filter: "blur(10px)", y: 16 },
     visible: {
@@ -64,7 +73,7 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
       filter: "none",
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0 : 1.0,
+        duration: instant ? 0 : 1.0,
         ease: [0.16, 1, 0.3, 1],
       },
     },
@@ -75,8 +84,8 @@ export default function HeroHeadline({ className = "" }: HeroHeadlineProps) {
       {/* ─── Semantic Display H1 Headline in Solid Warm Ivory ─── */}
       <motion.h1
         variants={containerVariants}
-        initial="hidden"
-        animate={isStarted ? "visible" : "hidden"}
+        initial={instant ? "visible" : "hidden"}
+        animate={isStarted || instant ? "visible" : "hidden"}
         className="relative inline-block select-none overflow-visible m-0 p-0 font-serif font-[family-name:var(--font-display)]"
       >
         {/* Top line: Italic light serif */}

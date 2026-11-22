@@ -73,32 +73,27 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const handleRfqSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const cleanFullName = rfqForm.fullName.trim();
+    const cleanEmail = rfqForm.email.trim().toLowerCase();
+    const cleanCompany = rfqForm.companyName.trim();
+    const cleanPhone = rfqForm.phone.trim();
+
     const newErrors: Record<string, string> = {};
     const newShaking: Record<string, boolean> = {};
 
-    if (!rfqForm.fullName.trim() || rfqForm.fullName.trim().length < 2) {
-      newErrors.fullName = "Please enter your full name";
+    if (!cleanFullName) {
+      newErrors.fullName = "Please add your name";
       newShaking.fullName = true;
     }
-    if (!rfqForm.companyName.trim() || rfqForm.companyName.trim().length < 2) {
-      newErrors.companyName = "Please enter your company name";
-      newShaking.companyName = true;
-    }
-    if (!rfqForm.email.trim()) {
-      newErrors.email = "Work email address is required";
+    // Company Name is optional
+    if (!cleanEmail) {
+      newErrors.email = "Please add your email";
       newShaking.email = true;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rfqForm.email.trim())) {
-      newErrors.email = "Please enter a valid work email address";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      newErrors.email = "That email doesn't look right — check for a typo?";
       newShaking.email = true;
     }
-    const cleanPhone = rfqForm.phone.replace(/\D/g, "");
-    if (!rfqForm.phone.trim()) {
-      newErrors.phone = "Phone / WhatsApp number is required";
-      newShaking.phone = true;
-    } else if (cleanPhone.length < 7) {
-      newErrors.phone = "Please enter a valid phone number (min 7 digits)";
-      newShaking.phone = true;
-    }
+    // Phone / WhatsApp is optional
 
     if (Object.keys(newErrors).length > 0) {
       setRfqErrors(newErrors);
@@ -118,6 +113,13 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
     setRfqErrors({});
     setRfqShaking({});
+    setRfqForm((prev) => ({
+      ...prev,
+      fullName: cleanFullName,
+      email: cleanEmail,
+      companyName: cleanCompany,
+      phone: cleanPhone,
+    }));
     setRfqSubmitted(true);
   };
 
@@ -696,7 +698,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       </div>
                       <div className={rfqShaking.companyName ? "animate-shake" : ""}>
                         <label htmlFor="rfq-companyName" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
-                          Company Name *
+                          Company Name
                         </label>
                         <input
                           id="rfq-companyName"
@@ -708,20 +710,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             if (rfqErrors.companyName) setRfqErrors((prev) => { const n = { ...prev }; delete n.companyName; return n; });
                           }}
                           placeholder="e.g. Apex Agri Ltd."
-                          aria-invalid={!!rfqErrors.companyName}
-                          aria-describedby={rfqErrors.companyName ? "rfq-companyName-error" : undefined}
-                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
-                            rfqErrors.companyName
-                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
-                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
-                          }`}
+                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
                         />
-                        {rfqErrors.companyName && (
-                          <p id="rfq-companyName-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
-                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
-                            <span>{rfqErrors.companyName}</span>
-                          </p>
-                        )}
                       </div>
                     </div>
 
@@ -751,16 +741,20 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                               : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
                           }`}
                         />
-                        {rfqErrors.email && (
+                        {rfqErrors.email ? (
                           <p id="rfq-email-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
                             <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
                             <span>{rfqErrors.email}</span>
+                          </p>
+                        ) : (
+                          <p className="mt-1 text-[11px] text-[#555555]">
+                            We&apos;ll reply within 1 working day.
                           </p>
                         )}
                       </div>
                       <div className={rfqShaking.phone ? "animate-shake" : ""}>
                         <label htmlFor="rfq-phone" className="block font-bold text-[#0F2A44] uppercase tracking-wider text-[11px] mb-1">
-                          Phone / WhatsApp *
+                          Phone / WhatsApp
                         </label>
                         <input
                           id="rfq-phone"
@@ -773,20 +767,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             if (rfqErrors.phone) setRfqErrors((prev) => { const n = { ...prev }; delete n.phone; return n; });
                           }}
                           placeholder="+91 98765 43210"
-                          aria-invalid={!!rfqErrors.phone}
-                          aria-describedby={rfqErrors.phone ? "rfq-phone-error" : undefined}
-                          className={`w-full min-h-[44px] rounded-lg border px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:outline-hidden transition-colors duration-200 ease-in-out ${
-                            rfqErrors.phone
-                              ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/50 bg-red-50/50"
-                              : "border-[#0F2A44]/20 bg-[#F8F4EC]/60 focus:border-[#B08D57]"
-                          }`}
+                          className="w-full min-h-[44px] rounded-lg border border-[#0F2A44]/20 bg-[#F8F4EC]/60 px-3.5 py-2.5 text-base sm:text-xs text-[#222222] focus:border-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
                         />
-                        {rfqErrors.phone && (
-                          <p id="rfq-phone-error" className="mt-1 text-[11px] font-semibold text-red-600 flex items-center gap-1" role="alert">
-                            <AlertCircle className="w-3 h-3 shrink-0 text-red-500" />
-                            <span>{rfqErrors.phone}</span>
-                          </p>
-                        )}
+                        <p className="mt-1 text-[11px] text-[#555555]">
+                          e.g. 98765 43210, +91 accepted
+                        </p>
                       </div>
                     </div>
 

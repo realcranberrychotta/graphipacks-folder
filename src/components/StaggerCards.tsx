@@ -8,6 +8,7 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
+import { useReducedMotion } from "framer-motion";
 
 interface StaggerContextValue {
   isGridVisible: boolean;
@@ -30,12 +31,13 @@ export function StaggerCardsGrid({
   threshold = 0.08,
   rootMargin = "0px 0px -40px 0px",
 }: StaggerCardsGridProps) {
-  const [isGridVisible, setIsGridVisible] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const [isGridVisible, setIsGridVisible] = useState(Boolean(shouldReduceMotion));
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // Respect user motion preference immediately
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (shouldReduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setIsGridVisible(true);
       return;
     }
@@ -89,9 +91,10 @@ export function StaggerCard({
   durationMs = 250,
   className = "",
 }: StaggerCardProps) {
+  const shouldReduceMotion = useReducedMotion();
   const { isGridVisible } = useContext(StaggerContext);
   const [isSelfVisible, setIsSelfVisible] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(Boolean(shouldReduceMotion));
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -131,7 +134,7 @@ export function StaggerCard({
     };
   }, [isSelfVisible, isGridVisible, prefersReducedMotion]);
 
-  const active = isGridVisible || isSelfVisible || prefersReducedMotion;
+  const active = isGridVisible || isSelfVisible || prefersReducedMotion || Boolean(shouldReduceMotion);
 
   return (
     <div

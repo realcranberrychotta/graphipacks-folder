@@ -14,11 +14,9 @@ export default function HomeHeroFactory() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  const [isSkipped, setIsSkipped] = useState(false);
   const [mounted, setMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  const isSkippedRef = useRef(false);
   const shouldReduceMotionRef = useRef(Boolean(shouldReduceMotion));
 
   useEffect(() => {
@@ -36,10 +34,9 @@ export default function HomeHeroFactory() {
     media.addEventListener("change", handler);
 
     const handleSkip = () => {
-      setIsSkipped(true);
-      isSkippedRef.current = true;
+      // On skip, ensure machine continues running and rotating perpetually
       if (typeof window !== "undefined") {
-        window.__machine?.pause?.();
+        window.__machine?.play?.();
       }
     };
 
@@ -51,7 +48,7 @@ export default function HomeHeroFactory() {
     };
   }, []);
 
-  // IntersectionObserver: Load 3D model when in view, and stop 3D animation when scrolled past hero
+  // IntersectionObserver: Load 3D model when in view, and pause when scrolled past hero
   useEffect(() => {
     if (!mounted || !isDesktop || !containerRef.current) return;
 
@@ -60,12 +57,12 @@ export default function HomeHeroFactory() {
         const visible = entry.isIntersecting;
         setIsInView(visible);
         if (!visible) {
-          // User scrolled past hero: stop 3D animation
+          // User scrolled past hero: pause 3D animation to save resources
           if (typeof window !== "undefined") {
             window.__machine?.pause?.();
           }
-        } else if (!isSkippedRef.current && !shouldReduceMotionRef.current) {
-          // Hero back in view: resume 3D animation if not skipped and motion not reduced
+        } else if (!shouldReduceMotionRef.current) {
+          // Hero back in view: resume 3D animation
           if (typeof window !== "undefined") {
             window.__machine?.play?.();
           }
@@ -84,7 +81,7 @@ export default function HomeHeroFactory() {
       className="relative w-full h-[720px] overflow-hidden"
       style={{ contain: "layout paint" }}
     >
-      {/* Static Flexo photo fallback — always shown on mobile (<768px), while 3D loads, or when reduced motion / skipped */}
+      {/* Static Flexo photo fallback — always shown on mobile (<768px), while 3D loads, or when reduced motion */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image
           src="/images/infrastructure/infra-01-flexo-ink-rollers.jpg"
@@ -97,8 +94,8 @@ export default function HomeHeroFactory() {
         <div className="absolute inset-0 bg-[#0F2A44]/70 backdrop-blur-[1px]" />
       </div>
 
-      {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic only when in view on desktop, and disabled if reduced motion or skipped */}
-      {isDesktop && isInView && !shouldReduceMotion && !isSkipped && (
+      {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic only when in view on desktop, and disabled if reduced motion */}
+      {isDesktop && isInView && !shouldReduceMotion && (
         <div className="relative z-10 w-full h-full hero-factory-3d-wrap">
           <style>{`
             .hero-factory-3d-wrap #scene,

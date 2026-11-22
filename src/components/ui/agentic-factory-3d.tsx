@@ -1737,12 +1737,12 @@ function initMachineScene(
     let width = frameWidth(),
       height = frameHeight(),
       mobile = width <= 900,
-      lastInteraction = performance.now(),
+      lastInteraction = -10000,
       dragging = false,
       wasDragged = false,
       downX = 0,
       downY = 0
-    let cameraAnimating = true,
+    let cameraAnimating = !embedded,
       flightTime = 0,
       lastDraw = -1,
       visible = true,
@@ -1788,12 +1788,13 @@ function initMachineScene(
       controls.maxDistance = Math.max(55, baseDistance * 1.6)
       camera.updateProjectionMatrix()
       setCameraGoal()
-      cameraAnimating = true
-      if (first) {
+      if (first || embedded) {
         camera.position.copy(desiredPosition)
         controls.target.copy(desiredTarget)
         controls.update()
         cameraAnimating = false
+      } else {
+        cameraAnimating = true
       }
     }
     function setCameraGoal() {

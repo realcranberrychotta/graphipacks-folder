@@ -57,35 +57,30 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
     const newErrors: Record<string, string> = {};
     const newShaking: Record<string, boolean> = {};
 
-    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
-      newErrors.fullName = "Please enter your full name";
+    const cleanFullName = formData.fullName.trim();
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanProduct = formData.product.trim();
+    const cleanMessage = formData.message.trim();
+
+    if (!cleanFullName) {
+      newErrors.fullName = "Please add your name";
       newShaking.fullName = true;
     }
-    if (!formData.companyName.trim() || formData.companyName.trim().length < 2) {
-      newErrors.companyName = "Please enter your company name";
-      newShaking.companyName = true;
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Email address is required";
+    // Company Name is optional — accept messy input or empty
+    if (!cleanEmail) {
+      newErrors.email = "Please add your email";
       newShaking.email = true;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address (e.g. name@company.com)";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      newErrors.email = "That email doesn't look right — check for a typo?";
       newShaking.email = true;
     }
-    const cleanPhone = formData.phone.replace(/\D/g, "");
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-      newShaking.phone = true;
-    } else if (cleanPhone.length < 7) {
-      newErrors.phone = "Please enter a valid phone number (min 7 digits)";
-      newShaking.phone = true;
-    }
-    if (!formData.product.trim()) {
+    // Phone Number is optional — accept messy input or empty
+    if (!cleanProduct) {
       newErrors.product = "Please select a product of interest";
       newShaking.product = true;
     }
-    if (!formData.message.trim() || formData.message.trim().length < 5) {
-      newErrors.message = "Please specify your requirements or questions (min 5 characters)";
+    if (!cleanMessage) {
+      newErrors.message = "Please tell us about your requirements";
       newShaking.message = true;
     }
 
@@ -131,13 +126,22 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
     setSubmitError(null);
     setIsSubmitting(true);
 
+    const cleanedPayload = {
+      fullName: formData.fullName.trim(),
+      companyName: formData.companyName.trim(),
+      email: formData.email.trim().toLowerCase(),
+      phone: formData.phone.trim(),
+      product: formData.product.trim(),
+      message: formData.message.trim(),
+    };
+
     try {
       const response = await fetch("/api/quote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(cleanedPayload),
       });
 
       const result = await response.json().catch(() => ({}));
@@ -256,7 +260,7 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
                 htmlFor="companyName"
                 className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
               >
-                Company Name <span className="text-[#B08D57]">*</span>
+                Company Name
               </label>
               <input
                 id="companyName"
@@ -266,20 +270,8 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="e.g. Apex Agri Exports Ltd."
-                aria-invalid={!!errors.companyName}
-                aria-describedby={errors.companyName ? "companyName-error" : undefined}
-                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:bg-[#091B2C]/80 focus:outline-hidden transition-colors duration-200 ease-in-out ${
-                  errors.companyName
-                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                    : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
-                }`}
+                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:border-[#B08D57] focus:bg-[#091B2C]/80 focus:ring-1 focus:ring-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
               />
-              {errors.companyName && (
-                <p id="companyName-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
-                  <span>{errors.companyName}</span>
-                </p>
-              )}
             </div>
           </div>
 
@@ -311,10 +303,14 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
                     : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
                 }`}
               />
-              {errors.email && (
+              {errors.email ? (
                 <p id="email-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
                   <span>{errors.email}</span>
+                </p>
+              ) : (
+                <p className="mt-1 text-[11px] text-[#EFE8DC]/60">
+                  We&apos;ll reply within 1 working day.
                 </p>
               )}
             </div>
@@ -325,7 +321,7 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
                 htmlFor="phone"
                 className="block text-xs font-bold uppercase tracking-wider text-[#F8F4EC]/80"
               >
-                Phone Number <span className="text-[#B08D57]">*</span>
+                Phone Number
               </label>
               <input
                 id="phone"
@@ -336,20 +332,11 @@ function ContactFormInner({ initialProduct }: ContactFormProps) {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="e.g. +91 98765 43210"
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? "phone-error" : undefined}
-                className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:bg-[#091B2C]/80 focus:outline-hidden transition-colors duration-200 ease-in-out ${
-                  errors.phone
-                    ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/50 bg-red-950/20"
-                    : "border-[#B08D57]/30 focus:border-[#B08D57] focus:ring-1 focus:ring-[#B08D57]"
-                }`}
+                className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#B08D57]/30 bg-[#091B2C]/60 px-4 py-3 text-base sm:text-sm text-[#F8F4EC] placeholder:text-[#F8F4EC]/50 focus:border-[#B08D57] focus:bg-[#091B2C]/80 focus:ring-1 focus:ring-[#B08D57] focus:outline-hidden transition-colors duration-200 ease-in-out"
               />
-              {errors.phone && (
-                <p id="phone-error" className="mt-1.5 text-xs font-semibold text-red-400 flex items-center gap-1.5" role="alert">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-400" />
-                  <span>{errors.phone}</span>
-                </p>
-              )}
+              <p className="mt-1 text-[11px] text-[#EFE8DC]/60">
+                e.g. 98765 43210, +91 accepted
+              </p>
             </div>
           </div>
 

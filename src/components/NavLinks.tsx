@@ -45,20 +45,20 @@ export default function NavLinks() {
         {navItems.map((item) => {
           const active = isActive(item.href);
           return (
-            <div key={item.href} className="relative inline-block py-1">
+            <div key={item.href} className="relative inline-flex items-center">
               <Link
                 href={item.href}
-                className={`relative block text-[14px] lg:text-[15px] font-normal font-sans tracking-[0.03em] transition-colors duration-200 ease-in-out ${
+                className={`relative inline-flex items-center justify-center min-h-[44px] px-2 py-3 text-[14px] lg:text-[15px] font-normal font-sans tracking-[0.03em] transition-colors duration-200 ease-in-out ${
                   active
                     ? "text-[#F8F4EC]"
                     : "text-[#EFE8DC]/75 hover:text-[#B08D57]"
                 }`}
               >
-                {item.label}
+                <span>{item.label}</span>
                 {active && (
                   <motion.span
                     layoutId="activeNavIndicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F8F4EC] rounded-full shadow-xs shadow-[#B08D57]/40"
+                    className="absolute bottom-1.5 left-2 right-2 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F8F4EC] rounded-full shadow-xs shadow-[#B08D57]/40"
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   />
                 )}
@@ -95,7 +95,7 @@ export default function NavLinks() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-md p-2 text-[#EFE8DC] hover:text-[#B08D57] focus:outline-hidden"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 text-[#EFE8DC] hover:text-[#B08D57] focus:outline-hidden"
           aria-expanded={mobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
@@ -150,7 +150,7 @@ export default function NavLinks() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`min-h-[44px] px-3.5 py-2.5 rounded-lg text-sm font-normal tracking-wide transition-colors duration-200 ease-in-out flex items-center justify-between ${
+                  className={`min-h-[44px] w-full px-4 py-3 rounded-lg text-sm font-normal tracking-wide transition-colors duration-200 ease-in-out flex items-center justify-between ${
                     active
                       ? "text-[#F8F4EC] font-semibold bg-[#1B3D5E]/40"
                       : "text-[#EFE8DC]/80 hover:text-[#B08D57] hover:bg-[#091B2C]/40"

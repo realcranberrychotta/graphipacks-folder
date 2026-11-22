@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { CompanyProfile } from "@/lib/content";
@@ -16,23 +17,33 @@ interface HeroMinimalProps {
 
 export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
   const shouldReduceMotion = useReducedMotion();
+  const [isReturnVisit, setIsReturnVisit] = useState(false);
 
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("graphipacks-intro-seen") === "true") {
+        setIsReturnVisit(true);
+      }
+    } catch { }
+  }, []);
+
+  const instant = shouldReduceMotion || isReturnVisit;
   const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
   const containerVariants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
+    hidden: { opacity: instant ? 1 : 0 },
     visible: {
       opacity: 1,
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.2,
-        staggerChildren: shouldReduceMotion ? 0 : 0.12,
-        delayChildren: shouldReduceMotion ? 0 : 0.05,
+        duration: instant ? 0 : 0.2,
+        staggerChildren: instant ? 0 : 0.12,
+        delayChildren: instant ? 0 : 0.05,
       },
     },
   };
 
   const itemVariants = {
-    hidden: shouldReduceMotion
+    hidden: instant
       ? { opacity: 1, y: 0, filter: "none" }
       : { opacity: 0, y: 24, filter: "blur(6px)" },
     visible: {
@@ -40,19 +51,19 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
       y: 0,
       filter: "none",
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.85,
+        duration: instant ? 0 : 0.85,
         ease: easeOutExpo,
       },
     },
   };
 
   const lineScaleVariants = {
-    hidden: shouldReduceMotion ? { opacity: 1, scaleX: 1 } : { scaleX: 0, opacity: 0 },
+    hidden: instant ? { opacity: 1, scaleX: 1 } : { scaleX: 0, opacity: 0 },
     visible: {
       scaleX: 1,
       opacity: 1,
       transition: {
-        duration: shouldReduceMotion ? 0 : 1.1,
+        duration: instant ? 0 : 1.1,
         ease: easeOutExpo,
       },
     },
@@ -62,7 +73,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <motion.div
         variants={containerVariants}
-        initial="hidden"
+        initial={instant ? "visible" : "hidden"}
         animate="visible"
         className="flex flex-col items-start max-w-4xl pointer-events-auto"
       >

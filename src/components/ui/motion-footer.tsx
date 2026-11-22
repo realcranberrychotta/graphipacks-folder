@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Package, ArrowUp } from "lucide-react";
+import { ArrowUpRight, Package, ArrowUp, Play, Pause } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { company } from "@/lib/content";
 import { openQuoteModal } from "@/components/QuoteModal";
@@ -212,10 +213,27 @@ export function CinematicFooter() {
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [isTickerPlaying, setIsTickerPlaying] = useState(!shouldReduceMotion);
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setIsTickerPlaying(false);
+    }
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!wrapperRef.current) return;
+
+    if (shouldReduceMotion) {
+      gsap.set([giantTextRef.current, headingRef.current, linksRef.current], {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+      });
+      return;
+    }
 
     // React strict mode compatible GSAP context cleanup
     const ctx = gsap.context(() => {
@@ -292,11 +310,54 @@ export function CinematicFooter() {
           </div>
 
           {/* 1. Diagonal Sleek Marquee (Top of footer) */}
-          <div className="absolute top-10 left-0 w-full overflow-hidden border-y border-[#B08D57]/30 bg-[#091B2C]/90 backdrop-blur-md py-3.5 z-10 -rotate-2 scale-110 shadow-2xl">
-            <div className="flex w-max animate-footer-scroll-marquee text-[11px] md:text-xs font-mono font-bold tracking-[0.25em] text-[#B08D57] uppercase">
+          <div
+            className="group/ticker absolute top-10 left-0 w-full overflow-hidden border-y border-[#B08D57]/30 bg-[#091B2C]/90 backdrop-blur-md py-3.5 z-10 -rotate-2 scale-110 shadow-2xl"
+            role="region"
+            aria-label="Capabilities Ticker"
+          >
+            <div
+              className={`flex w-max text-[11px] md:text-xs font-mono font-bold tracking-[0.25em] text-[#B08D57] uppercase transition-none ${
+                shouldReduceMotion
+                  ? ""
+                  : isTickerPlaying
+                  ? "animate-footer-scroll-marquee group-hover/ticker:[animation-play-state:paused]"
+                  : "[animation-play-state:paused]"
+              }`}
+              style={
+                shouldReduceMotion
+                  ? { animation: "none", transform: "none" }
+                  : { animationPlayState: isTickerPlaying ? undefined : "paused" }
+              }
+            >
               <MarqueeItem />
               <MarqueeItem />
             </div>
+
+            {/* Capability Ticker Pause / Play Control */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsTickerPlaying((prev) => !prev);
+              }}
+              aria-label={
+                isTickerPlaying && !shouldReduceMotion
+                  ? "Pause capability ticker"
+                  : "Play capability ticker"
+              }
+              title={
+                isTickerPlaying && !shouldReduceMotion
+                  ? "Pause capability ticker"
+                  : "Play capability ticker"
+              }
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-[#B08D57]/50 bg-[#091B2C] text-[#B08D57] hover:border-[#B08D57] hover:text-[#F8F4EC] shadow-md transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B08D57]"
+            >
+              {isTickerPlaying && !shouldReduceMotion ? (
+                <Pause className="h-3 w-3" aria-hidden="true" />
+              ) : (
+                <Play className="h-3 w-3 ml-0.5" aria-hidden="true" />
+              )}
+            </button>
           </div>
 
           {/* 2. Main Center Content */}

@@ -46,6 +46,19 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${bodoni.variable} ${manrope.variable} ${geistMono.variable} h-full dark`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (window.location.pathname === '/' && localStorage.getItem('graphipacks-intro-seen') !== 'true') {
+                  document.documentElement.classList.add('show-intro');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={`${bodoni.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-transparent text-[#F8F4EC] font-sans antialiased selection:bg-[#B08D57] selection:text-[#091B2C]`}

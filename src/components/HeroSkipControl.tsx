@@ -6,7 +6,18 @@ import { useReducedMotion } from "framer-motion";
 
 export default function HeroSkipControl() {
   const [isSkipped, setIsSkipped] = useState(false);
+  const [isReturnVisit, setIsReturnVisit] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    setMounted(true);
+    try {
+      if (localStorage.getItem("graphipacks-intro-seen") === "true") {
+        setIsReturnVisit(true);
+      }
+    } catch {}
+  }, []);
 
   // If user already requested reduced motion, mark as skipped
   useEffect(() => {
@@ -18,14 +29,18 @@ export default function HeroSkipControl() {
   const handleSkip = () => {
     setIsSkipped(true);
     if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("graphipacks-intro-seen", "true");
+      } catch {}
       document.documentElement.setAttribute("data-skip-animation", "true");
       window.dispatchEvent(new CustomEvent("skip-hero-animation"));
-      window.__machine?.pause?.();
+      // Ensure 3D machine continues running and rotating perpetually
+      window.__machine?.play?.();
     }
   };
 
-  // If reduced motion is natively active, no skip button needed as motion is already disabled
-  if (shouldReduceMotion) {
+  // Skip button is rendered on the first visit only. Hidden on return visits or when reduced motion is requested.
+  if (!mounted || isReturnVisit || shouldReduceMotion) {
     return null;
   }
 

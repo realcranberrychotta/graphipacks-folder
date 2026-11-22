@@ -110,91 +110,90 @@ export default function ProductCatalog({
         <motion.div layout className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product, idx) => (
-              <motion.article
+              <motion.div
                 key={product.slug}
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/50 hover:shadow-2xl"
+                className="h-full"
               >
-                <div>
-                  {/* High-Resolution Photographic Header with Navy/Bronze Overlay */}
-                  <div className="relative w-full h-48 overflow-hidden bg-[#091B2C]">
-                    <Image
-                      src={PRODUCT_GRID_COVER_IMAGES[product.slug] || product.image}
-                      alt={product.name}
-                      width={600}
-                      height={384}
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      loading="lazy"
-                      decoding="async"
-                      placeholder="blur"
-                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
-                      className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    />
-                    <div
-                      className="absolute inset-0 bg-gradient-to-t from-[#0F2A44] to-transparent opacity-85 pointer-events-none"
-                      aria-hidden="true"
-                    />
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center rounded-full bg-[#1B3D5E]/60 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#F8F4EC] border border-[#B08D57]/30">
-                        {product.category}
-                      </span>
-                      <span className="font-mono text-xs text-[#EFE8DC]/70">
-                        {product.types.length} Variants
-                      </span>
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#B08D57]/25 border-t-[#F8F4EC]/30 bg-[#0F2A44]/80 backdrop-blur-xl md:backdrop-blur-2xl shadow-xl transition-all duration-300 ease-in-out hover:border-[#B08D57]/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#B08D57]/15 h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B08D57]"
+                >
+                  <div>
+                    {/* High-Resolution Photographic Header with Navy/Bronze Overlay */}
+                    <div className="relative w-full h-48 overflow-hidden bg-[#091B2C]">
+                      <Image
+                        src={PRODUCT_GRID_COVER_IMAGES[product.slug] || product.image}
+                        alt={product.name}
+                        width={600}
+                        height={384}
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading="lazy"
+                        decoding="async"
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwZjJhNDQiLz48L3N2Zz4="
+                        className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                      />
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-[#0F2A44] to-transparent opacity-85 pointer-events-none"
+                        aria-hidden="true"
+                      />
                     </div>
 
-                    <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="hover:underline focus:outline-hidden"
-                      >
-                        <span className="absolute inset-0" aria-hidden="true" />
+                    <div className="p-6">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center rounded-full bg-[#1B3D5E]/60 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#F8F4EC] border border-[#B08D57]/30">
+                          {product.category}
+                        </span>
+                        <span className="font-mono text-xs text-[#EFE8DC]/70">
+                          {product.types.length} Variants
+                        </span>
+                      </div>
+
+                      <h3 className="mt-3 text-xl font-bold text-[#F8F4EC] group-hover:text-[#B08D57] transition-colors duration-200 ease-in-out">
                         {product.name}
-                      </Link>
-                    </h3>
+                      </h3>
 
-                    {/* Why Graphipacks value proposition callout */}
-                    <div className="mt-3 rounded-lg border border-[#B08D57]/20 bg-[#091B2C]/50 p-3">
-                      <p className="text-xs font-bold uppercase tracking-wider text-[#B08D57]">
-                        Why Graphipacks:
-                      </p>
-                      <p className="mt-1 text-xs text-[#EFE8DC] leading-relaxed font-medium">
-                        {product.whyGraphipacks}
-                      </p>
-                    </div>
+                      {/* Why Graphipacks value proposition callout */}
+                      <div className="mt-3 rounded-lg border border-[#B08D57]/20 bg-[#091B2C]/50 p-3">
+                        <p className="text-xs font-bold uppercase tracking-wider text-[#B08D57]">
+                          Why Graphipacks:
+                        </p>
+                        <p className="mt-1 text-xs text-[#EFE8DC] leading-relaxed font-medium">
+                          {product.whyGraphipacks}
+                        </p>
+                      </div>
 
-                    {/* Types Pills */}
-                    <div className="mt-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#EFE8DC]/70">
-                        Standard Types &amp; Sizes:
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-1.5">
-                        {product.types.map((type, i) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center rounded-md border border-[#B08D57]/20 bg-[#091B2C]/60 px-2 py-1 text-xs font-medium text-[#F8F4EC]"
-                          >
-                            {type}
-                          </span>
-                        ))}
+                      {/* Types Pills */}
+                      <div className="mt-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-[#EFE8DC]/70">
+                          Standard Types &amp; Sizes:
+                        </p>
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {product.types.map((type, i) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center rounded-md border border-[#B08D57]/20 bg-[#091B2C]/60 px-2 py-1 text-xs font-medium text-[#F8F4EC]"
+                            >
+                              {type}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="border-t border-[#B08D57]/20 p-6 pt-4 flex items-center justify-between text-sm font-semibold text-[#B08D57]">
-                  <span className="inline-flex items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
-                    View Specifications Sheet &rarr;
-                  </span>
-                </div>
-              </motion.article>
+                  <div className="border-t border-[#B08D57]/20 p-6 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-[#B08D57]">
+                    <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-[#F8F4EC] transition-colors duration-200 ease-in-out">
+                      View Specifications Sheet &rarr;
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
