@@ -350,7 +350,7 @@ function initMachineScene(
     scene.environmentIntensity = 0.62
     room.dispose()
     pmrem.dispose()
-    scene.add(new THREE.HemisphereLight(0xdbe5f4, 0x29211a, 2))
+    scene.add(new THREE.HemisphereLight(0xfff2df, 0x2A0A11, 2))
     const key = new THREE.DirectionalLight(0xfff1d8, 4.2)
     key.position.set(-4, 12, 7)
     key.castShadow = !isMobile
@@ -367,7 +367,7 @@ function initMachineScene(
     key.shadow.bias = -0.0002
     key.shadow.radius = 4
     scene.add(key)
-    const rim = new THREE.DirectionalLight(0xc4d4ed, 3.1)
+    const rim = new THREE.DirectionalLight(0xf5e8d8, 3.1)
     rim.position.set(3, 7, -8)
     scene.add(rim)
     const warm = new THREE.PointLight(0xffbd42, 28, 20, 2)
@@ -385,7 +385,10 @@ function initMachineScene(
     ) => new THREE.MeshStandardMaterial({ color, metalness, roughness, ...extra })
     const M = {
       body: mat(0x30363f, 0.75, 0.29),
-      base: mat(0x292f37, 0.85, 0.32),
+      base: mat(0x3D0E18, 0.85, 0.32),
+      platformDeck: mat(0x2A0A11, 0.8, 0.35),
+      platformBrass: mat(0xA6864C, 0.85, 0.25),
+      platformDark: mat(0x1B070D, 0.6, 0.4),
       edge: mat(0x707986, 0.85, 0.24),
       chrome: mat(0xc3cad0, 0.92, 0.18),
       dark: mat(0x12171d, 0.45, 0.38),
@@ -557,41 +560,41 @@ function initMachineScene(
     contact.rotation.x = -Math.PI / 2
     contact.position.y = -0.415
     scene.add(contact)
-    // A chamfered, layered platform with engraved nomenclature and captive screws.
+    // A chamfered, layered platform with engraved nomenclature and captive screws in Imperial Oxblood & Brass.
     box(machine, 12.8, 0.38, 8.25, 0, -0.09, 0, M.base, 0.17)
-    box(machine, 12.6, 0.055, 8.08, 0, 0.13, 0, M.edge, 0.11)
-    box(machine, 12.49, 0.09, 7.96, 0, 0.19, 0, M.body, 0.1)
-    box(machine, 12.55, 0.027, 8.02, 0, -0.19, 0, M.dark, 0.06)
-    box(machine, 11.9, 0.026, 0.032, 0, -0.17, 4.115, M.light, 0.01)
+    box(machine, 12.6, 0.055, 8.08, 0, 0.13, 0, M.platformBrass, 0.11)
+    box(machine, 12.49, 0.09, 7.96, 0, 0.19, 0, M.platformDeck, 0.1)
+    box(machine, 12.55, 0.027, 8.02, 0, -0.19, 0, M.platformDark, 0.06)
+    box(machine, 11.9, 0.026, 0.032, 0, -0.17, 4.115, M.platformBrass, 0.01)
     for (const x of [-5.6, 5.6])
       for (const z of [-3.35, 3.35]) {
         cyl(machine, 0.39, 0.25, x, -0.31, z, M.rubber)
-        cyl(machine, 0.29, 0.09, x, -0.4, z, M.dark)
+        cyl(machine, 0.29, 0.09, x, -0.4, z, M.platformDark)
         screw(machine, x, 0.253, z)
       }
     for (const x of [-6.02, 6.02]) for (const z of [-3.73, 3.73]) screw(machine, x, 0.255, z)
     const engraving = canvasTexture(1536, 176, (c, w, h) => {
-      c.fillStyle = '#252b32'
+      c.fillStyle = '#2A0A11'
       c.fillRect(0, 0, w, h)
-      c.strokeStyle = '#4d545c'
+      c.strokeStyle = '#A6864C'
       c.lineWidth = 2
       c.strokeRect(2, 2, w - 4, h - 4)
-      print(c, 'GRAPHIPACKS', 45, 79, 40, '#d9d8cd', 650)
-      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, '#b8bdc1', 450)
-      print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, '#737e88', 500)
+      print(c, 'GRAPHIPACKS', 45, 79, 40, '#F6F2EB', 650)
+      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, '#A6864C', 450)
+      print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, '#EDE6DA', 500)
       print(c, 'EST. 1984', 1330, 130, 23, '#A6864C')
     })
     const plate = screen(machine, 7.35, 0.84, -0.4, 0.25, 3.51, engraving)
     plate.rotation.x = -Math.PI / 2
     for (let i = 0; i < 16; i++)
-      box(machine, 0.015, 0.009, 0.11 + (i % 4) * 0.035, -5.6 + i * 0.09, 0.249, 3.5, M.edge, 0)
+      box(machine, 0.015, 0.009, 0.11 + (i % 4) * 0.035, -5.6 + i * 0.09, 0.249, 3.5, M.platformBrass, 0)
     // Faint drafting marks stay local to the machine, leaving the headline area empty.
     const drafting = new THREE.Group()
     scene.add(drafting)
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x69717a,
+      color: 0xA6864C,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.16,
     })
     const draftingPoints = []
     for (const r of [7.5, 8.1])
@@ -2391,8 +2394,8 @@ const STYLES = String.raw`
   background: radial-gradient(
     ellipse at 50% 48%,
     transparent 30%,
-    rgba(15, 42, 68, 0.12) 64%,
-    rgba(15, 42, 68, 0.75) 100%
+    rgba(61, 14, 24, 0.12) 64%,
+    rgba(61, 14, 24, 0.75) 100%
   );
 }
 .agentic-factory-3d .topbar {
