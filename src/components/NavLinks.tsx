@@ -91,7 +91,7 @@ export default function NavLinks({ isDarkHero = false }: NavLinksProps) {
                 openQuoteModal();
               }
             }}
-            className={`inline-flex min-h-[34px] h-[34px] items-center justify-center rounded-md px-3.5 py-1 text-xs font-semibold transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans ${
+            className={`btn-press inline-flex min-h-[34px] h-[34px] items-center justify-center rounded-md px-3.5 py-1 text-xs font-semibold transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans ${
               isDarkHero
                 ? "bg-[#F6F2EB] hover:bg-[#EDE6DA] text-[#3D0E18] border border-[#A6864C]/30 focus-visible:outline-[#F6F2EB]"
                 : "bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] border border-[#3D0E18] focus-visible:outline-[#3D0E18]"
@@ -190,7 +190,7 @@ export default function NavLinks({ isDarkHero = false }: NavLinksProps) {
                   openQuoteModal();
                 }
               }}
-              className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-4 py-2 text-sm font-bold text-[#F6F2EB] transition-colors duration-200 text-center"
+              className="btn-press flex min-h-[44px] w-full items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-4 py-2 text-sm font-bold text-[#F6F2EB] transition-colors duration-200 text-center"
             >
               Get a Quote &rarr;
             </Link>

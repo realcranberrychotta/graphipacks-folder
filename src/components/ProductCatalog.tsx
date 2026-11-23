@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Product, PackagingForm } from "@/lib/content";
 
 const bouncySpring = {
@@ -30,6 +30,7 @@ export default function ProductCatalog({
   products,
   packagingForms,
 }: ProductCatalogProps) {
+  const shouldReduceMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedFormIndex, setSelectedFormIndex] = useState<number>(0);
 
@@ -79,11 +80,11 @@ export default function ProductCatalog({
                 <motion.button
                   key={cat}
                   type="button"
-                  whileHover={{ scale: 1.05, y: -1 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05, y: -1 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
                   transition={bouncySpring}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2 ${
+                  className={`btn-press inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2 ${
                     isSelected
                       ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
                       : "bg-[#EDE6DA] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
@@ -105,91 +106,84 @@ export default function ProductCatalog({
           </div>
         </div>
 
-        {/* Product Cards Grid with Animated Filtering */}
-        <motion.div layout className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-2 lg:grid-cols-3">
-          <AnimatePresence mode="popLayout">
-            {filteredProducts.map((product) => (
-              <motion.div
-                key={product.slug}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="h-full"
+        {/* Product Cards Grid with Instant Filtering */}
+        <div className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-2 lg:grid-cols-3">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.slug}
+              className="h-full"
+            >
+              <Link
+                href={`/products/${product.slug}`}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-lg transition-colors duration-200 ease-in-out hover:border-[#A6864C]/70 h-full cursor-pointer bg-[#FBF9F5] border border-[#1C1917]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D0E18]"
               >
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-lg transition-colors duration-200 ease-in-out hover:border-[#A6864C]/70 h-full cursor-pointer bg-[#FBF9F5] border border-[#1C1917]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3D0E18]"
-                >
-                  <div>
-                    {/* Real Product Photo — Curated Gallery Exhibit Mat */}
-                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#EDE6DA] border-b border-[#1C1917]/[0.08]">
-                      <Image
-                        src={PRODUCT_GRID_COVER_IMAGES[product.slug] || product.image}
-                        alt={product.name}
-                        width={600}
-                        height={375}
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                      />
+                <div>
+                  {/* Real Product Photo — Curated Gallery Exhibit Mat */}
+                  <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#EDE6DA] border-b border-[#1C1917]/[0.08]">
+                    <Image
+                      src={PRODUCT_GRID_COVER_IMAGES[product.slug] || product.image}
+                      alt={product.name}
+                      width={600}
+                      height={375}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
+                    />
+                  </div>
+
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center rounded-full bg-[#EDE6DA] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#A6864C] border border-[#A6864C]/30">
+                        {product.category}
+                      </span>
+                      <span className="font-mono text-xs text-[#57524E]">
+                        {product.types.length} Variants
+                      </span>
                     </div>
 
-                    <div className="p-6 md:p-8">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center rounded-full bg-[#EDE6DA] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[#A6864C] border border-[#A6864C]/30">
-                          {product.category}
-                        </span>
-                        <span className="font-mono text-xs text-[#57524E]">
-                          {product.types.length} Variants
-                        </span>
-                      </div>
+                    <h3 className="mt-3 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-[#1C1917] group-hover:text-[#3D0E18] transition-colors duration-200 ease-in-out">
+                      {product.name}
+                    </h3>
 
-                      <h3 className="mt-3 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-[#1C1917] group-hover:text-[#3D0E18] transition-colors duration-200 ease-in-out">
-                        {product.name}
-                      </h3>
+                    {/* Why Graphipacks value proposition callout */}
+                    <div className="mt-4 rounded-lg border border-[#A6864C]/25 bg-[#EDE6DA] p-3.5">
+                      <p className="text-xs font-bold uppercase tracking-wider text-[#A6864C]">
+                        Why Graphipacks:
+                      </p>
+                      <p className="mt-1 text-xs text-[#1C1917] leading-relaxed font-medium">
+                        {product.whyGraphipacks}
+                      </p>
+                    </div>
 
-                      {/* Why Graphipacks value proposition callout */}
-                      <div className="mt-4 rounded-lg border border-[#A6864C]/25 bg-[#EDE6DA] p-3.5">
-                        <p className="text-xs font-bold uppercase tracking-wider text-[#A6864C]">
-                          Why Graphipacks:
-                        </p>
-                        <p className="mt-1 text-xs text-[#1C1917] leading-relaxed font-medium">
-                          {product.whyGraphipacks}
-                        </p>
-                      </div>
-
-                      {/* Types Pills */}
-                      <div className="mt-5">
-                        <p className="text-xs font-semibold uppercase tracking-wider text-[#57524E]">
-                          Standard Types &amp; Sizes:
-                        </p>
-                        <div className="mt-2 flex flex-wrap gap-1.5">
-                          {product.types.map((type, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center rounded-md border border-[#1C1917]/10 bg-[#EDE6DA] px-2 py-1 text-xs font-medium text-[#1C1917]"
-                            >
-                              {type}
-                            </span>
-                          ))}
-                        </div>
+                    {/* Types Pills */}
+                    <div className="mt-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-[#57524E]">
+                        Standard Types &amp; Sizes:
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {product.types.map((type, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center rounded-md border border-[#1C1917]/10 bg-[#EDE6DA] px-2 py-1 text-xs font-medium text-[#1C1917]"
+                          >
+                            {type}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="border-t border-[#1C1917]/10 p-6 md:p-8 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-[#3D0E18]">
-                    <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-[#27080F] transition-colors duration-200 ease-in-out">
-                      View Specifications Sheet &rarr;
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                <div className="border-t border-[#1C1917]/10 p-6 md:p-8 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-[#3D0E18]">
+                  <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-[#27080F] transition-colors duration-200 ease-in-out">
+                    View Specifications Sheet &rarr;
+                  </span>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Interactive Packaging by Product Form Tab Switcher */}

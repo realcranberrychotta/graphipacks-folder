@@ -15,7 +15,7 @@ export default function QuoteTriggerButton({
     <button
       type="button"
       onClick={() => openQuoteModal()}
-      className={className}
+      className={`btn-press ${className || ""}`.trim()}
     >
       {children || (
         <>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -94,21 +93,15 @@ export default function HomeFAQ() {
                     )}
                   </span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-6 pt-1 text-sm sm:text-base text-[#57524E] leading-relaxed font-sans">
-                        {item.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  data-open={isOpen ? "true" : "false"}
+                  className="faq-content"
+                  aria-hidden={!isOpen}
+                >
+                  <p className="pb-6 pt-1 text-sm sm:text-base text-[#57524E] leading-relaxed font-sans">
+                    {item.answer}
+                  </p>
+                </div>
               </div>
             );
           })}

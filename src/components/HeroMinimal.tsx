@@ -139,7 +139,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           <button
             type="button"
             onClick={() => openQuoteModal()}
-            className="group relative inline-flex items-center justify-center rounded-none bg-[#F6F2EB] hover:bg-[#EDE6DA] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#3D0E18] border border-[#A6864C]/40 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F6F2EB]"
+            className="btn-press group relative inline-flex items-center justify-center rounded-none bg-[#F6F2EB] hover:bg-[#EDE6DA] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#3D0E18] border border-[#A6864C]/40 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F6F2EB]"
           >
             <span>Get a Quote</span>
             <ArrowRight
@@ -150,7 +150,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
 
           <Link
             href="/products"
-            className="group inline-flex items-center justify-center rounded-none border border-[#A6864C] bg-[#3D0E18]/60 hover:bg-[#A6864C]/20 px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F6F2EB] transition-all hover:text-[#A6864C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A6864C]"
+            className="btn-press group inline-flex items-center justify-center rounded-none border border-[#A6864C] bg-[#3D0E18]/60 hover:bg-[#A6864C]/20 px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F6F2EB] transition-all hover:text-[#A6864C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A6864C]"
           >
             <span>View Products</span>
           </Link>

@@ -385,7 +385,7 @@ export function CinematicFooter() {
                 <MagneticButton
                   as="button"
                   onClick={() => openQuoteModal()}
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C] bg-[#A6864C] text-[#27080F] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#F6F2EB] hover:text-[#3D0E18] transition-all duration-200 ease-in-out cursor-pointer"
+                  className="btn-press footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C] bg-[#A6864C] text-[#27080F] font-bold text-sm md:text-base flex items-center gap-3 group hover:bg-[#F6F2EB] hover:text-[#3D0E18] transition-all duration-200 ease-in-out cursor-pointer"
                 >
                   <ArrowUpRight className="w-5 h-5 text-[#27080F] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ease-in-out" />
                   Request Technical Quote
@@ -394,7 +394,7 @@ export function CinematicFooter() {
                 <MagneticButton
                   as={Link}
                   href="/products"
-                  className="footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C]/40 text-[#F6F2EB] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out"
+                  className="btn-press footer-glass-pill px-8 py-4 rounded-full border border-[#A6864C]/40 text-[#F6F2EB] font-semibold text-sm md:text-base flex items-center gap-3 group hover:bg-[#A6864C] hover:text-[#27080F] transition-all duration-200 ease-in-out"
                 >
                   <Package className="w-5 h-5 text-[#A6864C] group-hover:text-[#27080F] transition-colors duration-200 ease-in-out" />
                   Explore Product Line

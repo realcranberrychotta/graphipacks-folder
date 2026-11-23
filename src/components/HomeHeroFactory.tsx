@@ -94,7 +94,7 @@ export default function HomeHeroFactory() {
         style={{
           y: parallaxY,
         }}
-        className="hero-parallax-machine relative w-full h-full will-change-transform"
+        className="hero-parallax-machine relative w-full h-full"
       >
         {/* Static Flexo photo fallback — only shown when 3D is not running, with transparent overlay so gradient is always visible */}
         {(!isDesktop || shouldReduceMotion || !isInView) && (

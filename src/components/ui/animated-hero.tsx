@@ -318,7 +318,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <button
                 type="button"
                 onClick={handleOpenEstimator}
-                className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#F6F2EB] hover:bg-white text-[#3D0E18] text-sm xs:text-base font-bold transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
+                className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg bg-[#F6F2EB] hover:bg-white text-[#3D0E18] text-sm xs:text-base font-bold transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
               >
                 <span>{primaryButton?.text || "Get a Quote"}</span>
                 <ArrowRight className="h-4 w-4 text-[#3D0E18]" />
@@ -328,14 +328,14 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               {secondaryButton?.href ? (
                 <Link
                   href={secondaryButton.href}
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton.text}
                 </Link>
               ) : (
                 <Link
                   href="/products"
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold transition-all active:scale-[0.98] cursor-pointer inline-flex items-center justify-center"
+                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-lg border border-[#A6864C] hover:border-[#A6864C] bg-transparent hover:bg-[#A6864C]/15 text-[#F6F2EB] hover:text-white text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center"
                 >
                   {secondaryButton?.text || "View Products"}
                 </Link>
