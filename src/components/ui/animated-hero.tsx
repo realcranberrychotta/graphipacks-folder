@@ -50,7 +50,7 @@ export const MOBILE_TYPEWRITER_PRODUCTS = [
 export const ParticleHero: React.FC<ParticleHeroProps> = ({
   title = "GRAPHIPACKS",
   subtitle = "Flexible Packaging",
-  description = "Flexible Packaging Solution Providers specializing in Multicolor Flexo & Gravure Photo Printed Bags, PP, LLDPE Poly Bags, and Polyesterpoly pouches.",
+  description = "Find your spec. Book your call. Done in 60 seconds. MOQ, gauge and lead time shown upfront. No waiting 24 hours for a reply.",
   primaryButton,
   secondaryButton,
   interactiveHint,
@@ -301,13 +301,29 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               />
             </motion.div>
 
-            {/* 4. Description: Centred Clean Sans-Serif */}
-            <motion.p
-              variants={textLineVariant}
-              className="mt-4 sm:mt-5 max-w-xl mx-auto text-center font-sans text-xs xs:text-sm sm:text-base font-light leading-relaxed text-[#F6F2EB]/85 px-1 sm:px-2"
-            >
-              {description}
-            </motion.p>
+            {/* 4. Value Proposition Headline & Subline */}
+            <motion.div variants={textLineVariant} className="mt-4 sm:mt-5 max-w-xl mx-auto text-center px-1 sm:px-2">
+              <h2 className="font-serif font-[family-name:var(--font-display)] text-lg xs:text-xl sm:text-2xl font-bold leading-snug tracking-tight text-[#F6F2EB]">
+                <span className="block whitespace-nowrap">Find your spec.</span>
+                <span className="block whitespace-nowrap mt-0.5">Book your call.</span>
+                <span className="block whitespace-nowrap mt-0.5">Done in 60 seconds.</span>
+              </h2>
+              <p className="mt-2 font-sans text-xs xs:text-sm sm:text-base font-light leading-relaxed text-[#F6F2EB]/80">
+                <span className="block sm:inline">MOQ, gauge and lead time shown upfront. </span>
+                <span className="block sm:inline">No waiting 24 hours for a reply.</span>
+              </p>
+              {/* Core Specializations Bullets */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#F6F2EB]/90">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[#A6864C]" aria-hidden="true">&bull;</span>
+                  <span>Multicolor Flexo &amp; Gravure Photo Printed Bags</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[#A6864C]" aria-hidden="true">&bull;</span>
+                  <span>PP, LLDPE Poly Bags, Polyester Poly pouches</span>
+                </div>
+              </div>
+            </motion.div>
 
             {/* 5. Two Buttons: Centred */}
             <motion.div

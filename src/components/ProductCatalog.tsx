@@ -84,19 +84,17 @@ export default function ProductCatalog({
                   whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
                   transition={bouncySpring}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`btn-press inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2 ${
-                    isSelected
-                      ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
-                      : "bg-[#EDE6DA] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
-                  }`}
+                  className={`btn-press inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] focus:ring-offset-2 ${isSelected
+                    ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
+                    : "bg-[#EDE6DA] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
+                    }`}
                 >
                   <span>{cat === "All" ? "All Products" : cat}</span>
                   <span
-                    className={`rounded-full px-2 py-0.5 font-mono text-[11px] ${
-                      isSelected
-                        ? "bg-[#27080F] text-[#A6864C] font-bold"
-                        : "bg-[#FBF9F5] text-[#57524E]"
-                    }`}
+                    className={`rounded-full px-2 py-0.5 font-mono text-[11px] ${isSelected
+                      ? "bg-[#27080F] text-[#A6864C] font-bold"
+                      : "bg-[#FBF9F5] text-[#57524E]"
+                      }`}
                   >
                     {count}
                   </span>
@@ -218,11 +216,10 @@ export default function ProductCatalog({
                 whileTap={{ scale: 0.95 }}
                 transition={bouncySpring}
                 onClick={() => setSelectedFormIndex(idx)}
-                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] ${
-                  isSelected
-                    ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
-                    : "bg-[#FBF9F5] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
-                }`}
+                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-[#3D0E18] ${isSelected
+                  ? "bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]"
+                  : "bg-[#FBF9F5] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
+                  }`}
               >
                 {item.form}
               </motion.button>

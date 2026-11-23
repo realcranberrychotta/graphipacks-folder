@@ -110,13 +110,18 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           aria-hidden="true"
         />
 
-        {/* Factual Editorial Statement */}
-        <motion.p
-          variants={itemVariants}
-          className="max-w-2xl text-base sm:text-lg lg:text-xl font-light leading-relaxed text-[#F6F2EB]/90"
-        >
-          {company.about}
-        </motion.p>
+        {/* Editorial Value Proposition Headline & Subline */}
+        <motion.div variants={itemVariants} className="max-w-xl">
+          <h2 className="font-serif font-[family-name:var(--font-display)] text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.12] tracking-tight text-[#F6F2EB] text-left">
+            <span className="block whitespace-nowrap">Find your spec.</span>
+            <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Book your call.</span>
+            <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Done in 60 seconds.</span>
+          </h2>
+          <p className="mt-3.5 text-sm sm:text-[15px] lg:text-base font-sans font-light leading-relaxed text-[#F6F2EB]/85 text-left max-w-xl lg:whitespace-nowrap">
+            <span className="block sm:inline">MOQ, gauge and lead time shown upfront. </span>
+            <span className="block sm:inline">No waiting 24 hours for a reply.</span>
+          </p>
+        </motion.div>
 
         {/* Minimalist Core Specializations Strip */}
         <motion.div

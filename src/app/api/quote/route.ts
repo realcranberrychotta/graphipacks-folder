@@ -12,12 +12,11 @@ export async function POST(request: Request) {
     const cleanProduct = typeof product === "string" ? product.trim() : "";
     const cleanMessage = typeof message === "string" ? message.trim() : "";
 
-    // Field presence validation: fullName, email, product, and message are required; phone and companyName are optional
+    // Field presence validation: fullName, email, and product are required; phone, companyName, and message are optional
     if (
       !cleanFullName ||
       !cleanEmail ||
-      !cleanProduct ||
-      !cleanMessage
+      !cleanProduct
     ) {
       return NextResponse.json(
         { error: "Please provide all required fields." },

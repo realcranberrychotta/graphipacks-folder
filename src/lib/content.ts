@@ -48,7 +48,7 @@ export const company: CompanyProfile = {
   executiveDirector: "C.S. Arjun",
   specializations: [
     "Multicolor Flexo & Gravure Photo Printed Bags",
-    "PP, LLDPE Poly Bags, Polyesterpoly pouches",
+    "PP, LLDPE Poly Bags, Polyester Poly pouches",
   ],
   commitments: [
     "Timely delivery of consistent quality products",
@@ -57,7 +57,7 @@ export const company: CompanyProfile = {
     "Invest in effective processes and innovative technologies",
   ],
   about:
-    "Flexible Packaging Solution Providers specializing in Multicolor Flexo & Gravure Photo Printed Bags, PP, LLDPE Poly Bags, and Polyesterpoly pouches.",
+    "Find your spec. Book your call. Done in 60 seconds. MOQ, gauge and lead time shown upfront. No waiting 24 hours for a reply.",
 };
 
 export const products: Product[] = [

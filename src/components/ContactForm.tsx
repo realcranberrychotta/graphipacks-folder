@@ -15,7 +15,12 @@ import {
   ArrowRight,
   ArrowLeft,
   Check,
+  Calendar,
+  MessageCircle,
+  Download,
 } from "lucide-react";
+import { PRODUCTS_DATA } from "@/data/products";
+import { generateProductPdf } from "@/lib/generateProductPdf";
 
 export interface ContactFormData {
   fullName: string;
@@ -245,13 +250,8 @@ function ContactFormInner({
         newErrors.email = "That email doesn't look right — check for a typo?";
         newShaking.email = true;
       }
-    } else if (step === 4) {
-      const cleanMessage = formData.message.trim();
-      if (!cleanMessage) {
-        newErrors.message = "Please tell us about your requirements";
-        newShaking.message = true;
-      }
     }
+    // Step 4 "Message & Requirements" is optional; no validation errors
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -293,9 +293,10 @@ function ContactFormInner({
       .filter(Boolean)
       .join(" | ");
 
+    const trimmedMessage = formData.message.trim();
     const formattedMessage = specDetails
-      ? `[${specDetails}]\n\n${formData.message.trim()}`
-      : formData.message.trim();
+      ? (trimmedMessage ? `[${specDetails}]\n\n${trimmedMessage}` : `[${specDetails}]`)
+      : (trimmedMessage || "Standard factory inquiry.");
 
     const cleanedPayload = {
       fullName: formData.fullName.trim(),
@@ -351,6 +352,53 @@ function ContactFormInner({
     setCurrentStep(1);
   };
 
+  // Match submitted product and variant to product datasheet if available
+  const matchedProduct = PRODUCTS_DATA.find((p) => {
+    const normForm = (formData.product || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const normName = p.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const normSlug = p.slug.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return (
+      normForm === normName ||
+      normForm === normSlug ||
+      normName.includes(normForm) ||
+      (normForm.length > 3 && normForm.includes(normSlug))
+    );
+  });
+
+  const matchedVariant = matchedProduct
+    ? matchedProduct.variants.find((v) => {
+        const normFormGauge = (formData.gauge || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        const normVarName = v.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const normVarKey = v.key.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return (
+          normFormGauge === normVarName ||
+          normFormGauge === normVarKey ||
+          normVarName.includes(normFormGauge) ||
+          normFormGauge.includes(normVarName)
+        );
+      }) || matchedProduct.variants[0]
+    : undefined;
+
+  const [isPdfGenerating, setIsPdfGenerating] = useState(false);
+
+  const handleDownloadSpecSheet = () => {
+    if (!matchedProduct || !matchedVariant) return;
+    setIsPdfGenerating(true);
+    try {
+      generateProductPdf(matchedProduct, matchedVariant);
+    } catch (err) {
+      console.error("Failed to generate PDF:", err);
+    } finally {
+      setTimeout(() => setIsPdfGenerating(false), 800);
+    }
+  };
+
+  const productSummary = `${formData.product || "packaging solutions"}${formData.gauge ? ` (${formData.gauge})` : ""}`;
+  const whatsappText = `Hi Graphipacks, I just submitted an inquiry for ${productSummary}.`;
+  // TODO: replace with the real WhatsApp number
+  const whatsappUrl = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(whatsappText)}`;
+  const bookingUrl = "https://calendar.app.google/q5BNs2SnLmeR4kNH7";
+
   return (
     <div
       className={`rounded-2xl ${isModal
@@ -398,42 +446,137 @@ function ContactFormInner({
 
       {/* Success State */}
       {isSubmitted ? (
-        <div className="mt-8 rounded-2xl border border-[#A6864C] bg-[#EDE6DA] p-8 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 border border-emerald-300 text-emerald-600 shadow-sm">
-            <CheckCircle2 className="h-8 w-8 text-emerald-600" />
-          </div>
-          <div>
-            <h3 className="mt-4 text-2xl font-bold text-[#1C1917] font-serif">
-              Request received
-            </h3>
-            <p className="mt-2 text-base font-semibold text-[#3D0E18]">
-              Our team will call you within 1 working day.
-            </p>
-            <p className="mt-2 text-xs text-[#57524E] max-w-md mx-auto leading-relaxed font-sans">
-              We have registered your inquiry for{" "}
-              <span className="font-semibold text-[#1C1917]">
-                {formData.product || "our flexible packaging solutions"}
-              </span>
-              {formData.gauge ? ` (${formData.gauge})` : ""}. One of our factory sales engineers in Madurai will review your specifications and contact you directly within 24 hours.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <button
-                type="button"
-                onClick={handleReset}
-                className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
-              >
-                Submit Another Inquiry
-              </button>
-              {onClose && (
+        <div className="mt-8 space-y-6">
+          {/* Keep existing success card exactly as it is */}
+          <div className="rounded-2xl border border-[#A6864C] bg-[#EDE6DA] p-8 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 border border-emerald-300 text-emerald-600 shadow-sm">
+              <CheckCircle2 className="h-8 w-8 text-emerald-600" />
+            </div>
+            <div>
+              <h3 className="mt-4 text-2xl font-bold text-[#1C1917] font-serif">
+                Request received
+              </h3>
+              <p className="mt-2 text-base font-semibold text-[#3D0E18]">
+                Our team will call you within 1 working day.
+              </p>
+              <p className="mt-2 text-xs text-[#57524E] max-w-md mx-auto leading-relaxed font-sans">
+                We have registered your inquiry for{" "}
+                <span className="font-semibold text-[#1C1917]">
+                  {formData.product || "our flexible packaging solutions"}
+                </span>
+                {formData.gauge ? ` (${formData.gauge})` : ""}. One of our factory sales engineers in Madurai will review your specifications and contact you directly within 24 hours.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <button
                   type="button"
-                  onClick={onClose}
-                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-[#1C1917]/20 bg-transparent hover:bg-[#1C1917]/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 ease-in-out cursor-pointer"
+                  onClick={handleReset}
+                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
                 >
-                  Close Window
+                  Submit Another Inquiry
                 </button>
-              )}
+                {onClose && (
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-[#1C1917]/20 bg-transparent hover:bg-[#1C1917]/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 ease-in-out cursor-pointer"
+                  >
+                    Close Window
+                  </button>
+                )}
+              </div>
             </div>
+          </div>
+
+          {/* 1. Timeline: a 3-step horizontal timeline */}
+          <div className="rounded-xl border border-[#D5C7B5] bg-[#F6F2EB] p-5 sm:p-6 text-left">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#57524E] mb-4">
+              Inquiry Progression
+            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-2">
+              {/* Step 1: Received ✓ (completed, brass check) */}
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A6864C]/15 border border-[#A6864C] text-[#A6864C]">
+                  <Check className="h-4 w-4 text-[#A6864C]" strokeWidth={2.5} />
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-bold text-[#1C1917]">
+                    Received ✓
+                  </div>
+                  <div className="text-[11px] text-[#A6864C] font-medium">Completed</div>
+                </div>
+              </div>
+
+              {/* Connecting line */}
+              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-[#A6864C]/40 mx-2" />
+
+              {/* Step 2: Reviewing specs (today) (in progress) */}
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]">
+                  <span className="text-xs font-bold font-mono">2</span>
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-bold text-[#3D0E18]">
+                    Reviewing specs (today)
+                  </div>
+                  <div className="text-[11px] text-[#A6864C] font-semibold">In progress</div>
+                </div>
+              </div>
+
+              {/* Connecting line */}
+              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-[#1C1917]/20 mx-2" />
+
+              {/* Step 3: Quote sent (within 24h) (upcoming) */}
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/70 border border-[#1C1917]/20 text-[#57524E]">
+                  <span className="text-xs font-bold font-mono text-[#57524E]">3</span>
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-bold text-[#57524E]">
+                    Quote sent (within 24h)
+                  </div>
+                  <div className="text-[11px] text-[#78716C]">Upcoming</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons: Spec Sheet PDF, Call Booking, WhatsApp */}
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3">
+            {/* 2. Download Spec Sheet (PDF) button (hidden if no PDF exists) */}
+            {matchedProduct && matchedVariant && (
+              <button
+                type="button"
+                onClick={handleDownloadSpecSheet}
+                disabled={isPdfGenerating}
+                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-[#A6864C] bg-[#EDE6DA] hover:bg-[#E3D9C9] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 cursor-pointer shadow-sm"
+              >
+                <Download className="h-4 w-4 text-[#A6864C]" />
+                <span>{isPdfGenerating ? "Generating..." : "Download Spec Sheet (PDF)"}</span>
+              </button>
+            )}
+
+            {/* 3. Book your call button */}
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-[#1C1917]/20 bg-white hover:bg-[#F6F2EB] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 cursor-pointer shadow-sm"
+            >
+              <Calendar className="h-4 w-4 text-[#3D0E18]" />
+              <span>Book your call — pick a time that suits you</span>
+            </a>
+
+            {/* 4. WhatsApp button */}
+            {/* TODO: replace with the real WhatsApp number */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] hover:bg-[#1EBE5D] px-4 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors duration-200 cursor-pointer shadow-sm"
+            >
+              <MessageCircle className="h-4 w-4 text-white" />
+              <span>Chat on WhatsApp now</span>
+            </a>
           </div>
         </div>
       ) : (
@@ -751,7 +894,8 @@ function ContactFormInner({
                     htmlFor="message"
                     className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
                   >
-                    Message &amp; Requirements <span className="text-[#3D0E18]">*</span>
+                    Message &amp; Requirements{" "}
+                    <span className="text-[11px] font-normal normal-case text-[#57524E]">(Optional)</span>
                   </label>
                   <textarea
                     id="message"
