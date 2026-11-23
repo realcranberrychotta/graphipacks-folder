@@ -278,12 +278,11 @@ function ContactFormInner({
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!validateStep(4)) return;
-
+  const executeSubmit = async (overrideMessage?: string) => {
     setSubmitError(null);
     setIsSubmitting(true);
+
+    const messageToUse = typeof overrideMessage === "string" ? overrideMessage : formData.message;
 
     // Format specifications cleanly into requirements payload
     const specDetails = [
@@ -293,7 +292,7 @@ function ContactFormInner({
       .filter(Boolean)
       .join(" | ");
 
-    const trimmedMessage = formData.message.trim();
+    const trimmedMessage = messageToUse.trim();
     const formattedMessage = specDetails
       ? (trimmedMessage ? `[${specDetails}]\n\n${trimmedMessage}` : `[${specDetails}]`)
       : (trimmedMessage || "Standard factory inquiry.");
@@ -332,6 +331,15 @@ function ContactFormInner({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (currentStep < 4) {
+      handleNext();
+      return;
+    }
+    executeSubmit();
   };
 
   const handleReset = () => {
@@ -957,26 +965,35 @@ function ContactFormInner({
                 <ArrowRight className="h-4 w-4" />
               </button>
             ) : (
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-press min-h-[48px] px-7 py-3 rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed ml-auto"
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg className="h-4 w-4 animate-spin text-[#F6F2EB]" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                    </svg>
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Submit Inquiry</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </button>
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 ml-auto">
+                <button
+                  type="button"
+                  onClick={() => executeSubmit("")}
+                  disabled={isSubmitting}
+                  className="btn-press min-h-[48px] px-4 sm:px-5 py-2.5 rounded-lg border border-[#1C1917]/20 bg-[#FFFFFF] hover:bg-[#EDE6DA] text-[#57524E] hover:text-[#1C1917] text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span>Skip this step &rarr;</span>
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-press min-h-[48px] px-6 sm:px-7 py-3 rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="h-4 w-4 animate-spin text-[#F6F2EB]" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                      </svg>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Submit Inquiry &rarr;</span>
+                    </>
+                  )}
+                </button>
+              </div>
             )}
           </div>
         </form>

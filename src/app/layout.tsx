@@ -36,6 +36,11 @@ export const metadata: Metadata = {
   title: "Graphipacks Private Limited | Flexible Packaging Solution Providers",
   description:
     "Graphipacks Private Limited specializes in high-quality flexible packaging solutions: Agriculture Mulch Film, Grow Bags, Coir Pith Bags, Laminated Rolls & Pouches, and Poly Bags.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
