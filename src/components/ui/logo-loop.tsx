@@ -634,8 +634,8 @@ const createEngine = (
           Math.abs(lift) < 0.05
             ? ''
             : cfg.vertical
-              ? `translateX(${lift.toFixed(2)}px)`
-              : `translateY(${lift.toFixed(2)}px)`,
+              ? `translate3d(${lift.toFixed(2)}px, 0px, 0px)`
+              : `translate3d(0px, ${lift.toFixed(2)}px, 0px)`,
           it.tip
         );
       }
@@ -676,6 +676,13 @@ const createEngine = (
     const paused = st.focused || (st.hovered && cfg.hoverValue !== undefined);
     const pausedSpeed = st.focused ? 0 : (cfg.hoverValue ?? 0);
     let target = st.reduced ? 0 : paused ? pausedSpeed * travel * cfg.dirSign : cfg.speed * cfg.dirSign;
+    if (st.reduced) {
+      st.velocity = 0;
+      st.scrollVel = 0;
+      st.glide = false;
+      st.move = null;
+      st.seek = null;
+    }
     if (cfg.scrollBoost > 0 && !st.reduced) {
       st.scrollVel *= Math.exp(-dt / 0.18);
       if (Math.abs(st.scrollVel) > 1) busy = true;
@@ -917,6 +924,19 @@ const createEngine = (
 
   const onMotion = () => {
     st.reduced = !!query?.matches;
+    if (st.reduced) {
+      st.velocity = 0;
+      st.scrollVel = 0;
+      st.glide = false;
+      st.move = null;
+      st.seek = null;
+      if (st.raf) {
+        cancelAnimationFrame(st.raf);
+        st.raf = 0;
+      }
+      if (st.geo && st.period > 0) render(performance.now());
+      return;
+    }
     wake();
   };
 
@@ -1130,7 +1150,7 @@ export const LogoLoop = memo(
                   />
                 ) : item.title ? (
                   <div className="flex items-center gap-6 sm:gap-8 group/partner cursor-default select-none">
-                    <span className="font-serif text-lg sm:text-xl md:text-2xl font-normal tracking-[-0.01em] text-[#1D3557]/75 group-hover/partner:text-[#1D3557] group-hover/partner:scale-[1.02] transition-all duration-200 whitespace-nowrap">
+                    <span className="font-sans text-lg sm:text-xl md:text-2xl font-semibold tracking-[-0.01em] text-[#1D3557]/75 group-hover/partner:text-[#1D3557] group-hover/partner:scale-[1.02] transition-[transform,color] duration-200 whitespace-nowrap">
                       {item.title}
                     </span>
                     <span className="text-[#457B9D] text-[10px] sm:text-xs select-none" aria-hidden="true">

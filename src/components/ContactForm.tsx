@@ -403,8 +403,10 @@ function ContactFormInner({
 
   const productSummary = `${formData.product || "packaging solutions"}${formData.gauge ? ` (${formData.gauge})` : ""}`;
   const whatsappText = `Hi Graphipacks, I just submitted an inquiry for ${productSummary}.`;
-  // TODO: replace with the real WhatsApp number
-  const whatsappUrl = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(whatsappText)}`;
+  const whatsappDigits = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/\D/g, "");
+  const whatsappUrl = whatsappDigits
+    ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent(whatsappText)}`
+    : "";
   const bookingUrl = "https://calendar.app.google/q5BNs2SnLmeR4kNH7";
 
   return (
@@ -429,15 +431,15 @@ function ContactFormInner({
             </span>
           </div>
 
-          {/* Thin Steel Fill Progress Bar */}
+          {/* Thin Steel Fill Progress Bar (GPU scaleX only) */}
           <div className="mt-2.5 h-1.5 w-full bg-ink/10 rounded-full overflow-hidden">
             <div
-              className="h-full bg-steel transition-all duration-300 ease-out"
-              style={{ width: `${(currentStep / 4) * 100}%` }}
+              className="h-full w-full origin-left bg-steel transition-transform duration-300 ease-out"
+              style={{ transform: `scaleX(${currentStep / 4})` }}
             />
           </div>
 
-          <h2 className="mt-4 text-xl sm:text-2xl font-bold tracking-tight text-ink font-serif">
+          <h2 className="mt-4 text-xl sm:text-2xl font-bold tracking-[-0.01em] text-ink font-display">
             {currentStep === 1 && "Select Product of Interest"}
             {currentStep === 2 && "Choose Quantity & Gauge / Size"}
             {currentStep === 3 && "Your Contact Details"}
@@ -461,7 +463,7 @@ function ContactFormInner({
               <CheckCircle2 className="h-8 w-8 text-emerald-600" />
             </div>
             <div>
-              <h3 className="mt-4 text-2xl font-bold text-ink font-serif">
+              <h3 className="mt-4 text-2xl font-bold text-ink font-display">
                 Request received
               </h3>
               <p className="mt-2 text-base font-semibold text-navy">
@@ -478,7 +480,7 @@ function ContactFormInner({
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-navy hover:bg-navy/90 px-6 py-2.5 text-xs sm:text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
+                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-md bg-navy hover:bg-navy/90 px-6 py-2.5 text-xs sm:text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
                 >
                   Submit Another Inquiry
                 </button>
@@ -486,7 +488,7 @@ function ContactFormInner({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-ink/20 bg-transparent hover:bg-ink/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-md border border-ink/20 bg-transparent hover:bg-ink/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 ease-in-out cursor-pointer"
                   >
                     Close Window
                   </button>
@@ -556,7 +558,7 @@ function ContactFormInner({
                 type="button"
                 onClick={handleDownloadSpecSheet}
                 disabled={isPdfGenerating}
-                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-steel bg-surface hover:bg-surface px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
+                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-md border border-steel bg-surface hover:bg-surface px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
               >
                 <Download className="h-4 w-4 text-steel" />
                 <span>{isPdfGenerating ? "Generating..." : "Download Spec Sheet (PDF)"}</span>
@@ -568,23 +570,24 @@ function ContactFormInner({
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-ink/20 bg-white hover:bg-background px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
+              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-md border border-ink/20 bg-white hover:bg-background px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
             >
               <Calendar className="h-4 w-4 text-steel" />
               <span>Book your call — pick a time that suits you</span>
             </a>
 
-            {/* 4. WhatsApp button */}
-            {/* TODO: replace with the real WhatsApp number */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] hover:bg-[#1EBE5D] px-4 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors duration-200 cursor-pointer shadow-sm"
-            >
-              <MessageCircle className="h-4 w-4 text-white" />
-              <span>Chat on WhatsApp now</span>
-            </a>
+            {/* 4. WhatsApp button (only rendered when valid WhatsApp number is configured) */}
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-md bg-[#25D366] hover:bg-[#1EBE5D] px-4 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors duration-200 cursor-pointer shadow-sm"
+              >
+                <MessageCircle className="h-4 w-4 text-white" />
+                <span>Chat on WhatsApp now</span>
+              </a>
+            )}
           </div>
         </div>
       ) : (
@@ -612,7 +615,7 @@ function ContactFormInner({
                         key={choice.slug}
                         type="button"
                         onClick={() => handleProductSelect(choice)}
-                        className={`btn-press group relative flex flex-col text-left overflow-hidden rounded-xl border-2 transition-all duration-200 cursor-pointer ${isSelected
+                        className={`btn-press group relative flex flex-col text-left overflow-hidden rounded-xl border-2 transition-colors duration-200 cursor-pointer ${isSelected
                           ? "border-steel bg-surface shadow-sm ring-1 ring-steel"
                           : "border-ink/10 bg-background hover:border-steel/70 hover:bg-background"
                           }`}
@@ -622,6 +625,8 @@ function ContactFormInner({
                             src={choice.image}
                             alt={choice.name}
                             fill
+                            loading="lazy"
+                            decoding="async"
                             sizes="(max-width: 640px) 50vw, 33vw"
                             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                           />
@@ -675,7 +680,7 @@ function ContactFormInner({
                           key={v.name}
                           type="button"
                           onClick={() => setFormData((prev) => ({ ...prev, gauge: v.name }))}
-                          className={`btn-press group relative inline-flex min-h-[44px] items-center gap-2 rounded-lg px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${isSelected
+                          className={`btn-press group relative inline-flex min-h-[44px] items-center gap-2 rounded-lg px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${isSelected
                             ? "bg-navy text-background border-2 border-steel"
                             : "bg-background text-ink border border-ink/15 hover:border-steel hover:text-steel"
                             }`}
@@ -946,7 +951,7 @@ function ContactFormInner({
               <button
                 type="button"
                 onClick={handleBack}
-                className="btn-press min-h-[48px] px-5 py-2.5 rounded-lg border border-ink/20 bg-background hover:bg-surface text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
+                className="btn-press min-h-[48px] px-5 py-2.5 rounded-md border border-ink/20 bg-background hover:bg-surface text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back</span>
@@ -959,7 +964,7 @@ function ContactFormInner({
               <button
                 type="button"
                 onClick={handleNext}
-                className="btn-press min-h-[48px] px-6 py-2.5 rounded-lg bg-navy hover:bg-navy/90 text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 ml-auto"
+                className="btn-press min-h-[48px] px-6 py-2.5 rounded-md bg-navy hover:bg-navy/90 text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 ml-auto"
               >
                 <span>Next Step</span>
                 <ArrowRight className="h-4 w-4" />
@@ -970,14 +975,14 @@ function ContactFormInner({
                   type="button"
                   onClick={() => executeSubmit("")}
                   disabled={isSubmitting}
-                  className="btn-press min-h-[48px] px-4 sm:px-5 py-2.5 rounded-lg border border-ink/20 bg-background hover:bg-surface text-ink/75 hover:text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-press min-h-[48px] px-4 sm:px-5 py-2.5 rounded-md border border-ink/20 bg-background hover:bg-surface text-ink/75 hover:text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>Skip this step &rarr;</span>
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-press min-h-[48px] px-6 sm:px-7 py-3 rounded-xl bg-red hover:bg-[#d62839] text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
+                  className="btn-press min-h-[48px] px-6 sm:px-7 py-3 rounded-md bg-red hover:bg-[#d62839] text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
                 >
                   {isSubmitting ? (
                     <>

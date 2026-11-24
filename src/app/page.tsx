@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 import {
   company,
   products,
-  printingTechnology,
+  printingCapabilities,
 } from "@/lib/content";
 import { PRODUCTS_DATA } from "@/data/products";
 import HomeHeroFactory from "@/components/HomeHeroFactory";
@@ -28,13 +28,14 @@ import MobileHero from "@/components/MobileHero";
 import HeroSkipControl from "@/components/HeroSkipControl";
 import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 import QuoteModal from "@/components/QuoteModal";
-import QuoteTriggerButton from "@/components/QuoteTriggerButton";
 import HomeFAQ from "@/components/HomeFAQ";
 import { Stats } from "@/components/ui/stats-section";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { HorizontalSequence } from "@/components/ui/horizontal-sequence";
 import FlowingMenu, { FlowingMenuItem } from "@/components/ui/flowing-menu";
 import EnterpriseClientMarquee from "@/components/ui/enterprise-client-marquee";
+import { ArrowUpRight } from "lucide-react";
+import MaskedHeading from "@/components/ui/masked-heading";
 
 const PACKAGING_FLOWING_ITEMS: FlowingMenuItem[] = [
   {
@@ -121,14 +122,20 @@ export default async function HomePage() {
         {/* Accessible Hero Skip Animation Control */}
         <HeroSkipControl />
 
-        {/* Desktop Hero — Monumental Typography over 3D Manufacturing Line (>= 768px) */}
-        <div className="hidden md:block relative z-10 min-h-[720px] w-full">
-          {/* 3D Manufacturing Plant Tour */}
-          <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
+        {/* Unified Hero Container — Single 3D Line Mount across Desktop & Mobile */}
+        <div className="relative z-10 w-full md:min-h-[720px] pt-3 pb-8 md:pt-0 md:pb-0">
+          {/* Mobile Hero Copy & CTAs (< 768px) */}
+          <div className="block md:hidden">
+            <MobileHero />
+          </div>
+
+          {/* Interactive 3D Manufacturing Line (Single Mount: Flow below Hero on mobile, backdrop layer on desktop) */}
+          <div className="mt-2 px-4 md:mt-0 md:px-0 md:absolute md:inset-0 md:w-full md:h-full md:z-0 md:overflow-hidden pointer-events-auto">
             <HomeHeroFactory />
           </div>
 
-          <div className="relative z-10 pointer-events-none pt-36 pb-28 lg:pt-40 lg:pb-32 min-h-[720px] flex items-center">
+          {/* Desktop Monumental Typography Overlay (>= 768px) */}
+          <div className="hidden md:flex relative z-10 pointer-events-none pt-36 pb-28 lg:pt-40 lg:pb-32 min-h-[720px] items-center">
             <div className="w-full">
               <HeroMinimal
                 company={company}
@@ -136,11 +143,6 @@ export default async function HomePage() {
               />
             </div>
           </div>
-        </div>
-
-        {/* Mobile Hero — Animated Hero Minimal / Clean Design (< 768px) */}
-        <div className="block md:hidden relative z-10 w-full pt-3 pb-8 bg-transparent">
-          <MobileHero />
         </div>
       </section>
 
@@ -150,13 +152,16 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-2 sm:mb-3">
               <span className="w-2 h-2 rounded-full bg-[#E63946] inline-block shrink-0" aria-hidden="true" />
-              <span className="text-[11px] uppercase tracking-[0.22em] font-mono font-semibold text-[#457B9D]">
+              <span className="text-[11px] uppercase tracking-[0.22em] font-mono font-medium text-[#457B9D]">
                 01 / MANUFACTURING SEQUENCE
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.5rem] lg:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1D3557]">
+            <MaskedHeading
+              as="h2"
+              className="text-3xl sm:text-4xl md:text-[2.5rem] lg:text-[2.75rem] font-display font-bold leading-[1.16] tracking-[-0.015em] text-[#1D3557]"
+            >
               From Pellet to Pouch
-            </h2>
+            </MaskedHeading>
             <ScrollReveal
               as="p"
               mode="scrub"
@@ -181,21 +186,25 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-ink/10 pb-8">
             <div className="max-w-3xl">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                 02 / CORE PRODUCTS
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+              <MaskedHeading
+                as="h2"
+                className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.16] tracking-[-0.015em] text-ink"
+              >
                 Engineered Flexible Packaging Line
-              </h2>
+              </MaskedHeading>
               <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
                 Directly manufactured with multi-layer extrusion, UV stabilization, and high-barrier lamination to match global export and industrial requirements.
               </p>
             </div>
             <Link
               href="/products"
-              className="min-h-[44px] text-sm font-semibold text-navy hover:text-steel shrink-0 inline-flex items-center gap-1 transition-colors duration-200 ease-in-out py-2.5 px-2"
+              className="btn-tactile group min-h-[44px] text-sm font-semibold text-navy hover:text-steel shrink-0 inline-flex items-center gap-1.5 transition-colors duration-200 ease-in-out py-2.5 px-3 rounded-md"
             >
-              View Full Product Index &rarr;
+              <span>View Full Product Index</span>
+              <span className="tactile-arrow" aria-hidden="true">&rarr;</span>
             </Link>
           </div>
 
@@ -230,19 +239,19 @@ export default async function HomePage() {
                     <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
                       <div>
                         <div className="flex items-center justify-between gap-2 border-b border-powder/40 pb-3">
-                          <span className="inline-flex items-center rounded-sm bg-powder/20 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-navy border border-powder">
+                          <span className="inline-flex items-center rounded-sm bg-powder/20 px-2 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wider text-navy border border-powder">
                             {product.category}
                           </span>
-                          <span className="font-mono text-[11px] tracking-wider text-steel uppercase">
+                          <span className="font-mono text-[11px] font-medium tracking-wider text-steel uppercase">
                             SPEC 0{idx + 1}
                           </span>
                         </div>
 
-                        <h3 className="mt-4 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink group-hover:text-navy transition-colors duration-200 ease-in-out">
+                        <h3 className="mt-4 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink group-hover:text-navy transition-colors duration-200 ease-in-out">
                           {product.name}
                         </h3>
 
-                        <p className="mt-3 text-sm text-ink/75 line-clamp-2 leading-relaxed">
+                        <p className="mt-3 text-sm text-ink/75 line-clamp-2 leading-relaxed font-sans">
                           {product.whyGraphipacks}
                         </p>
 
@@ -254,24 +263,24 @@ export default async function HomePage() {
                           <dl className="space-y-1.5 text-xs">
                             {materialSpec && (
                               <div className="flex items-baseline justify-between gap-3 border-b border-ink/5 pb-1.5">
-                                <dt className="text-ink/75 uppercase tracking-wider text-[11px] shrink-0">Substrate</dt>
-                                <dd className="font-sans font-medium text-ink text-right truncate text-xs" title={materialSpec}>
+                                <dt className="text-ink/75 font-medium uppercase tracking-wider text-[11px] shrink-0">Substrate</dt>
+                                <dd className="font-mono font-normal text-ink text-right truncate text-xs" title={materialSpec}>
                                   {materialSpec}
                                 </dd>
                               </div>
                             )}
                             {thicknessSpec && (
                               <div className="flex items-baseline justify-between gap-3 border-b border-ink/5 pb-1.5">
-                                <dt className="text-ink/75 uppercase tracking-wider text-[11px] shrink-0">Gauge / GSM</dt>
-                                <dd className="font-sans font-medium text-ink text-right text-xs">
+                                <dt className="text-ink/75 font-medium uppercase tracking-wider text-[11px] shrink-0">Gauge / GSM</dt>
+                                <dd className="font-mono font-normal text-ink text-right text-xs">
                                   {thicknessSpec.replace(/ — Standard:.*$/, "")}
                                 </dd>
                               </div>
                             )}
                             {moqSpec && (
                               <div className="flex items-baseline justify-between gap-3">
-                                <dt className="text-ink/75 uppercase tracking-wider text-[11px] shrink-0">Min. Order (MOQ)</dt>
-                                <dd className="font-sans font-bold text-navy text-right text-xs">
+                                <dt className="text-ink/75 font-medium uppercase tracking-wider text-[11px] shrink-0">Min. Order (MOQ)</dt>
+                                <dd className="font-mono font-bold text-navy text-right text-xs">
                                   {moqSpec}
                                 </dd>
                               </div>
@@ -297,8 +306,9 @@ export default async function HomePage() {
                         <span className="text-[11px] uppercase tracking-wider text-ink/75 group-hover:text-navy transition-colors duration-200">
                           RFQ / SPEC
                         </span>
-                        <span className="inline-flex min-h-[44px] items-center gap-1 font-semibold group-hover:text-steel transition-colors duration-200 ease-in-out">
-                          View Specifications &rarr;
+                        <span className="inline-flex min-h-[44px] items-center gap-1.5 font-semibold group-hover:text-steel transition-colors duration-200 ease-in-out">
+                          <span>View Specifications</span>
+                          <span className="tactile-arrow inline-block" aria-hidden="true">&rarr;</span>
                         </span>
                       </div>
                     </div>
@@ -313,87 +323,121 @@ export default async function HomePage() {
       {/* Packaging Applications Showcase — Full-Width Architectural Flowing Menu */}
       <section id="packaging-forms" className="relative overflow-x-clip bg-light-atmosphere-alt border-y border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="max-w-3xl mb-10 md:mb-14">
-            <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
+          <div className="max-w-3xl">
+            <span className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E63946]" aria-hidden="true" />
               03 / APPLICATIONS &amp; FORMS
             </span>
-            <h2 className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight font-serif font-normal text-[#1D3557]">
+            <MaskedHeading
+              as="h2"
+              className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.12] tracking-[-0.015em] font-display font-bold text-[#1D3557]"
+            >
               Packaging Applications Showcase
-            </h2>
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#1D3557]/80">
+            </MaskedHeading>
+            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#1D3557]/80 font-sans">
               Custom-tailored flexible films, multi-barrier configurations, and pre-formed containment engineered across diverse physical product states.
             </p>
           </div>
+        </div>
 
-          <div className="w-full h-auto min-h-[360px] md:h-[460px] border border-[#A8DADC] rounded-xl overflow-hidden bg-[#F1FAEE] shadow-[0_4px_24px_rgba(29,53,87,0.04)]">
-            <FlowingMenu
-              items={PACKAGING_FLOWING_ITEMS}
-              speed={55}
-              direction="left"
-              duration={0.5}
-              stretch={0.5}
-              magnet={0.2}
-              textColor="#1D3557"
-              bgColor="#F1FAEE"
-              marqueeBgColor="#1D3557"
-              marqueeTextColor="#F1FAEE"
-              borderColor="#A8DADC"
-              dividers={true}
-              dimInactive={true}
-              align="left"
-              showIndex={true}
-              showArrow={true}
-              imageShape="rounded"
-              intro={false}
-              ariaLabel="Packaging Applications Showcase"
-            />
-          </div>
+        {/* Mobile View (< 768px): Clean Document-Flow Hairline List */}
+        <div className="flex flex-col w-full h-auto border-t border-[#A8DADC] md:hidden">
+          {PACKAGING_FLOWING_ITEMS.map((item, idx) => (
+            <Link
+              key={item.text}
+              href={item.link || "/contact"}
+              className="relative block w-full py-5 px-6 sm:px-10 border-b border-[#A8DADC] active:bg-[#A8DADC]/20 transition-colors"
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="font-mono text-xs tracking-[0.2em] text-[#457B9D] font-bold">
+                  0{idx + 1}
+                </span>
+                <ArrowUpRight className="w-4 h-4 text-[#457B9D] shrink-0" aria-hidden="true" />
+              </div>
+              <h3 className="font-display font-bold text-xl leading-[1.25] text-[#1D3557]">
+                {item.text}
+              </h3>
+              {item.meta && (
+                <p className="mt-1.5 font-mono text-xs leading-relaxed text-[#1D3557]/75">
+                  {item.meta}
+                </p>
+              )}
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop View (>= 768px): Interactive Full-Width Flowing Menu */}
+        <div className="hidden md:block relative z-10 w-full h-[460px] border-y border-[#A8DADC] bg-[#F1FAEE]">
+          <FlowingMenu
+            items={PACKAGING_FLOWING_ITEMS}
+            speed={55}
+            direction="left"
+            duration={0.5}
+            stretch={0.5}
+            magnet={0.2}
+            textColor="#1D3557"
+            bgColor="#F1FAEE"
+            marqueeBgColor="#1D3557"
+            marqueeTextColor="#F1FAEE"
+            borderColor="#A8DADC"
+            dividers={true}
+            dimInactive={true}
+            align="left"
+            showIndex={true}
+            showArrow={true}
+            imageShape="rounded"
+            intro={false}
+            ariaLabel="Packaging Applications Showcase"
+          />
         </div>
       </section>
 
-      {/* Technology Snapshot — Honeydew Canvas with Subtle Drift */}
-      <section className="relative overflow-hidden bg-light-atmosphere py-16 md:py-24 text-ink border-b border-powder">
+      {/* Technology Snapshot — Architectural Dark Navy Contrast Band */}
+      <section id="printing-technology" className="relative overflow-x-clip bg-[#1D3557] py-16 lg:py-24 text-[#F1FAEE] border-b border-[#A8DADC]/25">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+            <span className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-[#A8DADC] inline-flex items-center gap-2 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E63946]" aria-hidden="true" />
               04 / MANUFACTURING CAPABILITIES
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <MaskedHeading
+              as="h2"
+              className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.16] tracking-[-0.015em] text-[#F1FAEE]"
+            >
               High-Precision Printing Technology
-            </h2>
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
+            </MaskedHeading>
+            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#F1FAEE]/80 font-sans">
               State-of-the-art prepress, gravure cylinders, and high-speed flexographic converting lines ensuring micro-dot clarity and vivid shelf presence.
             </p>
           </div>
 
           <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-3">
-            {printingTechnology.map((tech, idx) => (
-              <StaggerCard key={tech} index={idx}>
+            {printingCapabilities.map((cap, idx) => (
+              <StaggerCard key={cap.title} index={idx}>
                 <div
-                  className="flex flex-col justify-between rounded-lg border border-powder/50 border-t-steel/35 bg-background p-6 md:p-8 transition-colors duration-200 ease-in-out hover:border-steel shadow-[0_1px_3px_rgba(29,53,87,0.04)] h-full"
+                  className="flex flex-col justify-between rounded-lg border border-[#A8DADC]/25 bg-[#F1FAEE]/[0.04] p-6 md:p-8 transition-colors duration-300 ease-in-out hover:border-[#A8DADC] hover:bg-[#F1FAEE]/[0.06] shadow-[0_4px_24px_rgba(0,0,0,0.18)] h-full"
                 >
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-steel">
+                      <span className="font-mono text-xs font-bold text-[#A8DADC] tracking-wider">
                         PROCESS 0{idx + 1}
                       </span>
-                      <span className="inline-flex items-center rounded-full border border-powder bg-powder/20 px-2.5 py-0.5 text-xs font-medium text-navy">
+                      <span className="inline-flex items-center rounded-full border border-[#A8DADC]/35 bg-[#A8DADC]/10 px-2.5 py-0.5 text-xs font-mono font-medium text-[#A8DADC]">
                         Certified Process
                       </span>
                     </div>
-                    <h3 className="mt-4 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
-                      {tech}
+                    <h3 className="mt-4 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-[#F1FAEE]">
+                      {cap.title}
                     </h3>
-                    <p className="mt-2 text-sm text-ink/75 leading-relaxed">
-                      Industrial converting line calibrated for continuous web tension control, registered photo-printing, and solvent/water-based polymer inks.
+                    <p className="mt-3 text-sm text-[#F1FAEE]/80 leading-relaxed font-sans">
+                      {cap.description}
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-powder/40 pt-4 flex items-center gap-2 text-xs text-ink/75">
-                    <span className="h-1.5 w-1.5 rounded-full bg-steel" />
-                    <span>Calibrated for multi-substrate flexibility</span>
+                  <div className="mt-6 border-t border-[#A8DADC]/20 pt-4 flex items-center gap-2 font-mono text-xs text-[#A8DADC]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#A8DADC]" />
+                    <span>{cap.specTag}</span>
                   </div>
                 </div>
               </StaggerCard>
@@ -408,30 +452,33 @@ export default async function HomePage() {
       {/* Enterprise Client Network — Dual-Row Logo Loop Marquee */}
       <section id="client-network" className="relative overflow-x-clip bg-light-atmosphere border-t border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-powder/40 pb-8 mb-10 md:mb-14">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-powder/40 pb-8">
             <div>
-              <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
+              <span className="font-mono text-xs font-medium tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E63946]" aria-hidden="true" />
                 06 / CLIENT NETWORK • VERIFIED PARTNERS
               </span>
-              <h2 className="text-[clamp(2rem,4vw,3.25rem)] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1D3557]">
+              <MaskedHeading
+                as="h2"
+                className="text-[clamp(2rem,4vw,3.25rem)] font-display font-bold leading-[1.15] tracking-[-0.015em] text-[#1D3557]"
+              >
                 Enterprise Client Network
-              </h2>
+              </MaskedHeading>
             </div>
             <div className="sm:text-right">
-              <span className="font-mono text-xs text-[#457B9D] uppercase tracking-wider block font-semibold">
-                17 VERIFIED PARTNERS • DOMESTIC &amp; EXPORT
+              <span className="font-mono text-xs text-[#457B9D] uppercase tracking-wider block font-bold">
+                16 VERIFIED PARTNERS • DOMESTIC &amp; EXPORT
               </span>
               <p className="max-w-[44ch] text-xs sm:text-sm text-[#1D3557]/70 mt-1">
                 Supplying verified packaging to domestic corporations and international export growers.
               </p>
             </div>
           </div>
-
-          {/* Dual-Row Counter-Scrolling Logo Loop */}
-          <EnterpriseClientMarquee />
         </div>
+
+        {/* Dual-Row Counter-Scrolling Logo Loop — Full-Bleed Between Hairlines */}
+        <EnterpriseClientMarquee />
       </section>
 
       {/* Frequently Asked Questions */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
@@ -22,6 +22,7 @@ export function closeQuoteModal() {
 export default function QuoteModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [initialProduct, setInitialProduct] = useState("");
+  const shouldReduceMotion = useReducedMotion();
 
   const handleOpen = useCallback((e: Event) => {
     const customEvent = e as CustomEvent<{ product?: string }>;
@@ -86,10 +87,10 @@ export default function QuoteModal() {
           aria-label="Request a Production Quote"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 16 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 16 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
             className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-background border border-powder"
             onClick={(e) => e.stopPropagation()}
           >

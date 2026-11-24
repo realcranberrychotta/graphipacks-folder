@@ -1,4 +1,5 @@
 import { Factory, Layers, PackageCheck, ShieldCheck } from "lucide-react";
+import MaskedHeading from "./masked-heading";
 
 interface StatItem {
   value: string;
@@ -31,7 +32,7 @@ const STATS_DATA: StatItem[] = [
     icon: PackageCheck,
   },
   {
-    value: "17+",
+    value: "16",
     unit: "Verified Partners",
     label: "Enterprise Trust",
     description: "Active corporate & agricultural export clients",
@@ -59,21 +60,24 @@ export function Stats({ className = "" }: StatsProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Eyebrow + Heading + Paragraph */}
           <div className="lg:col-span-5 flex flex-col items-start gap-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-powder/50 bg-powder/15 px-3.5 py-1 text-[11px] font-mono font-semibold tracking-wider text-steel uppercase">
+            <div className="inline-flex items-center gap-2 rounded-full border border-powder/50 bg-powder/15 px-3.5 py-1 text-[11px] font-mono font-medium tracking-wider text-steel uppercase">
               <span
-                className="w-1.5 h-1.5 rounded-full bg-red animate-pulse"
+                className="w-1.5 h-1.5 rounded-full bg-red"
                 aria-hidden="true"
               />
               <span>MANUFACTURING SCALE • EST. 1984</span>
             </div>
 
             <div className="flex flex-col gap-3">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
                 05 / MANUFACTURING SCALE
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-serif font-normal leading-[1.14] tracking-[-0.02em] text-navy text-left">
+              <MaskedHeading
+                as="h2"
+                className="text-3xl sm:text-4xl lg:text-[2.65rem] font-display font-bold leading-[1.16] tracking-[-0.015em] text-navy text-left"
+              >
                 Four decades of consistent, high-volume converting.
-              </h2>
+              </MaskedHeading>
               <p className="mt-2 text-base leading-[1.7] text-ink/80 text-left max-w-xl font-sans">
                 From blown film extrusion to 8-colour rotogravure printing and automated bag conversion, our Madurai plant delivers verified specs and dependable dispatch schedules for domestic and export buyers.
               </p>
@@ -96,10 +100,10 @@ export function Stats({ className = "" }: StatsProps) {
                     />
                     <div>
                       <div className="flex items-baseline gap-2.5">
-                        <span className="text-3xl sm:text-4xl font-serif font-bold text-navy tracking-tight">
+                        <span className="text-3xl sm:text-4xl font-display font-bold text-navy tracking-tight">
                           {stat.value}
                         </span>
-                        <span className="font-mono text-xs font-semibold text-steel">
+                        <span className="font-mono text-xs font-medium text-steel">
                           {stat.unit}
                         </span>
                       </div>

@@ -1,18 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { Playfair_Display } from "next/font/google";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { PRODUCTS_DATA, getProductBySlug, getRelatedProducts } from "@/data/products";
 import ProductDetailClient from "@/components/ProductDetailClient";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -26,7 +18,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const canonicalSlug = slug === "wicked-poly-bags" ? "wicketted-poly-bags" : slug;
+  const product = getProductBySlug(canonicalSlug);
 
   if (!product) {
     return {
@@ -56,6 +49,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  if (slug === "wicked-poly-bags") {
+    permanentRedirect("/products/wicketted-poly-bags");
+  }
   const product = getProductBySlug(slug);
 
   if (!product) {
@@ -66,7 +62,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   return (
     <div
-      className={`${playfair.variable} min-h-screen relative overflow-hidden bg-light-atmosphere text-ink font-sans pt-32 pb-20 md:pt-40 md:pb-28 selection:bg-heritage selection:text-background`}
+      className="min-h-screen relative overflow-x-clip bg-light-atmosphere text-ink font-sans pt-32 pb-28 md:pt-40 md:pb-28 selection:bg-heritage selection:text-background"
     >
       <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
@@ -130,10 +126,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <section className="mb-24 md:mb-32 scroll-mt-32" id="applications">
           <div className="border-t border-powder/40 pt-16">
             <div className="max-w-3xl mb-12 md:mb-16">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                 03 / TARGET APPLICATIONS
               </span>
-              <h2 className="mt-1 font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+              <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                 Field Deployments &amp; Industry Use Cases
               </h2>
               <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
@@ -158,7 +154,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                       </span>
                     </div>
 
-                    <h3 className="mt-4 font-serif text-xl md:text-2xl font-normal leading-[1.2] tracking-[-0.015em] text-ink">
+                    <h3 className="mt-4 font-display text-xl md:text-2xl font-bold leading-[1.2] tracking-[-0.01em] text-ink">
                       {app.title}
                     </h3>
 
@@ -184,10 +180,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="border-t border-powder/40 pt-16">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 md:mb-16">
               <div>
-                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                   04 / RELATED PRODUCTS
                 </span>
-                <h2 className="mt-1 font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+                <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                   Complementary Manufacturing Lines
                 </h2>
                 <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
@@ -243,7 +239,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                       <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-steel block">
                         Line 0{idx + 1}
                       </span>
-                      <h3 className="mt-2 font-serif text-xl md:text-2xl font-normal leading-[1.2] tracking-[-0.015em] text-ink group-hover:text-navy transition-colors duration-200 ease-in-out">
+                      <h3 className="mt-2 font-display text-xl md:text-2xl font-bold leading-[1.2] tracking-[-0.01em] text-ink group-hover:text-navy transition-colors duration-200 ease-in-out">
                         <Link href={`/products/${rel.slug}`}>
                           <span className="absolute inset-0" aria-hidden="true" />
                           {rel.name}

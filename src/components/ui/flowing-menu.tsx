@@ -546,7 +546,33 @@ export function FlowingMenu({
 
   useEffect(() => {
     const loop = engine.current;
-    return () => cancelAnimationFrame(loop.raf);
+    const mq = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : null;
+
+    const handleMotionChange = () => {
+      if (mq?.matches) {
+        stopIntro();
+        if (loop.raf) {
+          cancelAnimationFrame(loop.raf);
+          loop.raf = 0;
+        }
+        const b = band.current;
+        b.top = b.toTop;
+        b.bottom = b.toBottom;
+        b.vTop = b.vBottom = 0;
+        marquees.current.forEach(state => {
+          if (state) state.x = 0;
+        });
+        paint();
+      }
+    };
+
+    mq?.addEventListener?.('change', handleMotionChange);
+    return () => {
+      mq?.removeEventListener?.('change', handleMotionChange);
+      cancelAnimationFrame(loop.raf);
+    };
   }, []);
 
   const onPointerMove = (event: React.PointerEvent) => {

@@ -66,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
-      url: `${baseUrl}/products/wicked-poly-bags`,
+      url: `${baseUrl}/products/wicketted-poly-bags`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.85,

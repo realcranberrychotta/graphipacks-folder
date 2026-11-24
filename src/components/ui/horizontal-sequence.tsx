@@ -175,9 +175,9 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
 
     window.scrollTo({
       top: targetScrollY,
-      behavior: "smooth",
+      behavior: isReducedMotion ? "auto" : "smooth",
     });
-  }, [stages.length]);
+  }, [stages.length, isReducedMotion]);
 
   // Mobile / Reduced-motion manual arrows
   const scrollMobileByCard = useCallback((direction: "prev" | "next") => {
@@ -188,9 +188,9 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
       : 320;
     el.scrollBy({
       left: direction === "next" ? cardWidth : -cardWidth,
-      behavior: "smooth",
+      behavior: isReducedMotion ? "auto" : "smooth",
     });
-  }, []);
+  }, [isReducedMotion]);
 
   // Mobile scroll handler to update indicator dots
   const handleMobileScroll = useCallback(() => {
@@ -212,12 +212,12 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
     const card = el.children[targetIndex] as HTMLElement | undefined;
     if (card) {
       card.scrollIntoView({
-        behavior: "smooth",
+        behavior: isReducedMotion ? "auto" : "smooth",
         inline: "center",
         block: "nearest",
       });
     }
-  }, []);
+  }, [isReducedMotion]);
 
   return (
     <section
@@ -280,7 +280,7 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                         </div>
                       </div>
 
-                      <h3 className="text-2xl sm:text-3xl font-serif font-semibold text-[#1D3557] tracking-tight">
+                      <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#1D3557] leading-[1.2] tracking-[-0.01em]">
                         {stage.title}
                       </h3>
                       <p className="mt-2 text-sm sm:text-base text-[#1D3557]/80 leading-relaxed font-sans">
@@ -316,10 +316,12 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                         src={stage.image}
                         alt={stage.alt}
                         fill
+                        loading="lazy"
+                        decoding="async"
                         sizes="(max-width: 1024px) 100vw, 60vw"
                         className="object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
                       />
-                      <div className="absolute bottom-3 left-3 px-3 py-1 bg-[#1D3557]/90 backdrop-blur-sm rounded border border-[#A8DADC]/40 text-[10px] font-mono text-[#F1FAEE] tracking-widest uppercase">
+                      <div className="absolute bottom-3 left-3 px-3 py-1 bg-[#1D3557]/95 rounded border border-[#A8DADC]/40 text-[10px] font-mono text-[#F1FAEE] tracking-widest uppercase">
                         STAGE {stage.numeral} • {stage.category}
                       </div>
                     </div>
@@ -332,11 +334,11 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
 
         {/* Bottom Pinned Progress Rail Row */}
         <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 shrink-0 pb-2">
-          {/* 2px Powder Blue rail filled smoothly in Dark Navy */}
+          {/* 2px Powder Blue rail filled smoothly in Dark Navy (GPU scaleX only) */}
           <div className="relative w-full h-[2px] bg-[#A8DADC]/40 rounded-full overflow-hidden">
             <div
-              className="absolute top-0 left-0 bottom-0 bg-[#1D3557] rounded-full transition-all duration-75 ease-out"
-              style={{ width: `${Math.min(100, Math.max(0, progress * 100))}%` }}
+              className="absolute inset-0 origin-left bg-[#1D3557] rounded-full transition-transform duration-75 ease-out"
+              style={{ transform: `scaleX(${Math.min(1, Math.max(0, progress))})` }}
             />
           </div>
 
@@ -355,7 +357,7 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                   aria-label={`Jump to stage ${stage.numeral}: ${stage.title}`}
                 >
                   <span
-                    className={`w-2 h-2 rounded-full transition-all duration-300 shrink-0 ${
+                    className={`w-2 h-2 rounded-full transition-[transform,background-color] duration-300 shrink-0 ${
                       isActive
                         ? "bg-[#E63946] ring-4 ring-[#E63946]/25 scale-125"
                         : isPast
@@ -444,10 +446,12 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                   src={stage.image}
                   alt={stage.alt}
                   fill
+                  loading="lazy"
+                  decoding="async"
                   sizes="90vw"
                   className="object-cover"
                 />
-                <div className="absolute bottom-3 left-3 px-2.5 py-1 bg-[#1D3557]/90 backdrop-blur-sm rounded border border-[#A8DADC]/40 text-[10px] font-mono text-[#F1FAEE] tracking-widest uppercase">
+                <div className="absolute bottom-3 left-3 px-2.5 py-1 bg-[#1D3557]/95 rounded border border-[#A8DADC]/40 text-[10px] font-mono text-[#F1FAEE] tracking-widest uppercase">
                   STAGE {stage.numeral} • {stage.category}
                 </div>
               </div>
@@ -467,7 +471,7 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-serif font-semibold text-[#1D3557]">
+                  <h3 className="text-xl font-display font-bold text-[#1D3557] leading-[1.2] tracking-[-0.01em]">
                     {stage.title}
                   </h3>
                   <p className="mt-1.5 text-xs sm:text-sm text-[#1D3557]/80 leading-relaxed font-sans">
@@ -508,7 +512,7 @@ export const HorizontalSequence: React.FC<HorizontalSequenceProps> = ({
                 key={stage.id}
                 type="button"
                 onClick={() => scrollToMobileStage(idx)}
-                className={`transition-all duration-300 rounded-full focus:outline-none ${
+                className={`transition-colors duration-300 rounded-full focus:outline-none ${
                   isActive
                     ? "w-6 h-2 bg-[#E63946]"
                     : "w-2 h-2 bg-[#A8DADC] hover:bg-[#457B9D]"

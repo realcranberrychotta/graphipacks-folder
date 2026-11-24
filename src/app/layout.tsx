@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Manrope, Geist_Mono } from "next/font/google";
+import { Manrope } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainContent from "@/components/MainContent";
@@ -10,24 +10,10 @@ import Preloader from "@/components/Preloader";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
-  display: "swap",
-});
-
 const manrope = Manrope({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
   display: "swap",
 });
 
@@ -52,14 +38,19 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} h-full`}
+      className={`${manrope.variable} h-full`}
     >
       <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=boska@700,900&display=swap"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (window.location.pathname === '/') {
+                var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (window.location.pathname === '/' && !reduced) {
                   document.documentElement.classList.add('preloader-active');
                 }
               } catch (e) {}
@@ -69,7 +60,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-background text-ink font-sans antialiased selection:bg-heritage selection:text-background`}
+        className={`${manrope.variable} flex min-h-full flex-col bg-background text-ink font-sans antialiased selection:bg-heritage selection:text-background`}
       >
         <SmoothScroll />
         <Preloader />

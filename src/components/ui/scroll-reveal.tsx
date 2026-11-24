@@ -45,8 +45,8 @@ const paintPiece = (piece: HTMLElement, t: number, look: LookOptions) => {
     fadeIn = clamp01(reveal * 1.25);
     if (reveal < 1) {
       motion = look.masked
-        ? `translateY(${((1 - reveal) * 100).toFixed(2)}%) translateY(${((1 - reveal) * 0.2).toFixed(3)}em)`
-        : `translateY(${((1 - reveal) * 0.8).toFixed(3)}em)`;
+        ? `translate3d(0, ${((1 - reveal) * 100).toFixed(2)}%, 0) translate3d(0, ${((1 - reveal) * 0.2).toFixed(3)}em, 0)`
+        : `translate3d(0, ${((1 - reveal) * 0.8).toFixed(3)}em, 0)`;
     }
   } else if (look.effect === 'flip') {
     reveal = easeBack(t, 1.2);
@@ -61,7 +61,7 @@ const paintPiece = (piece: HTMLElement, t: number, look: LookOptions) => {
   const settle = clamp01(reveal);
   const lift = look.offset * (1 - settle);
   piece.style.opacity = t >= 1 ? '' : (look.baseOpacity + (1 - look.baseOpacity) * fadeIn).toFixed(3);
-  piece.style.transform = [lift ? `translateY(${lift.toFixed(2)}px)` : '', motion].filter(Boolean).join(' ');
+  piece.style.transform = [lift ? `translate3d(0, ${lift.toFixed(2)}px, 0)` : '', motion].filter(Boolean).join(' ');
   piece.style.filter = look.blur && settle < 1 ? `blur(${(look.blur * (1 - settle)).toFixed(2)}px)` : '';
   if (look.highlightColor) {
     const glow = glowAt(t);
@@ -143,8 +143,16 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   }, [text, splitBy]);
 
   const [mounted, setMounted] = useState(false);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setIsReducedMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const el = containerRef.current;
@@ -155,6 +163,25 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     const scroller = scrollContainerRef?.current || window;
     const wrappers = Array.from(el.querySelectorAll<HTMLElement>('.scroll-reveal-word'));
     const pieces = wrappers.length ? Array.from(el.querySelectorAll<HTMLElement>('.scroll-reveal-piece')) : [textEl];
+
+    const prefersReduced =
+      isReducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      el.style.transform = '';
+      textEl.style.color = '#1D3557';
+      textEl.style.opacity = '1';
+      pieces.forEach(piece => {
+        piece.style.opacity = '1';
+        piece.style.transform = '';
+        piece.style.filter = '';
+        piece.style.color = '#1D3557';
+        piece.style.willChange = '';
+      });
+      wrappers.forEach(wrapper => {
+        wrapper.style.clipPath = '';
+      });
+      return;
+    }
     const viewportHeight = () => (scroller instanceof HTMLElement ? scroller.clientHeight : window.innerHeight);
     const scrub = smoothing > 0 ? smoothing : true;
     const span = mode === 'enter' ? Math.max(0.05, duration) : SCRUB_SPAN;
@@ -305,6 +332,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     return () => mm.revert();
   }, [
     mounted,
+    isReducedMotion,
     scrollContainerRef,
     text,
     splitBy,

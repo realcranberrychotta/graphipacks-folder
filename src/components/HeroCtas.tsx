@@ -8,7 +8,7 @@ export default function HeroCtas() {
       {/* Primary Action — High-contrast Honeydew & Dark Navy */}
       <Link
         href="/contact"
-        className="group relative inline-flex items-center justify-center rounded-none bg-red hover:bg-[#d62839] px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.16em] text-background border border-red transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+        className="btn-press group relative inline-flex items-center justify-center rounded-md bg-red hover:bg-[#d62839] px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.16em] text-background border border-red transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
       >
         <span>Request Production Quote</span>
         <span
@@ -22,7 +22,7 @@ export default function HeroCtas() {
       {/* Secondary Action — Steel Blue Framed Control */}
       <Link
         href="/products"
-        className="group relative inline-flex items-center justify-center rounded-none border border-steel bg-transparent px-6 py-3.5 text-xs font-mono font-semibold uppercase tracking-[0.16em] text-ink transition-all hover:bg-powder/20 hover:border-navy hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+        className="btn-press group relative inline-flex items-center justify-center rounded-md border border-steel bg-transparent px-6 py-3.5 text-xs font-mono font-semibold uppercase tracking-[0.16em] text-ink transition-colors hover:bg-powder/20 hover:border-navy hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
       >
         <span
           className="absolute -top-[1px] -left-[1px] h-1.5 w-1.5 border-t border-l border-steel transition-colors group-hover:border-navy"

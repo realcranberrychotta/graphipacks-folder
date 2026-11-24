@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { PALETTE, PALETTE_HEX } from '@/lib/palette'
+import { MACHINE_STATIONS, type MachineStationConfig } from '@/lib/machine-stations'
 
 /**
  * Graphipacks Factory — Interactive 3D Machine
@@ -35,30 +36,55 @@ export type AgenticFactory3DProps = {
   className?: string
   /** Clean hero mode: no panels, the machine on the right of a wide frame. */
   embed?: boolean
-  /** A station was clicked: 'engine' | 'admin' | 'storefront' | 'cabinet' | 'cashdesk'. */
+  /** Active station hotspot ID ('extrusion' | 'rotogravure' | 'packing' | 'inspection' | null for Overview). */
+  activeStationId?: string | null
+  /** Callback when a user clicks a 3D hotspot pin or resets station. */
+  onSelectStation?: (id: string | null) => void
+  /** A station was clicked: legacy callback. */
   onStation?: (id: StationId) => void
+  /** Called if WebGL is unsupported, fails to initialize, or loses context. */
+  onFallback?: () => void
   /** The first real frame is drawn. */
   onReady?: () => void
+}
+
+export function isWebGLSupported(): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    const canvas = document.createElement('canvas')
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext('webgl2') || canvas.getContext('webgl'))
+    )
+  } catch {
+    return false
+  }
 }
 
 export default function AgenticFactory3D({
   height = '100vh',
   className,
   embed = false,
+  activeStationId = null,
+  onSelectStation,
   onStation,
+  onFallback,
   onReady,
 }: AgenticFactory3DProps) {
   const rootRef = useRef< HTMLDivElement>(null)
-  const handlers = useRef({ onStation, onReady })
+  const hotspotRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const [sceneReady, setSceneReady] = useState(false)
+  const handlers = useRef({ onStation, onSelectStation, onFallback, onReady })
   useEffect(() => {
-    handlers.current = { onStation, onReady }
-  }, [onStation, onReady])
+    handlers.current = { onStation, onSelectStation, onFallback, onReady }
+  }, [onStation, onSelectStation, onFallback, onReady])
 
   useEffect(() => {
     const root = rootRef.current
     if (!root) return
-    // Guard: Do NOT load or initialize 3D scene on screens under 768px (zero WebGL context allocated)
-    if (window.innerWidth < 768) {
+    if (!isWebGLSupported()) {
+      handlers.current.onFallback?.()
+      handlers.current.onReady?.()
       return
     }
     let dispose: (() => void) | undefined
@@ -68,8 +94,14 @@ export default function AgenticFactory3D({
       if (cancelled) return
       dispose = initMachineScene(root, getComputedStyle(root).fontFamily, {
         embedded: embed,
+        hotspotRefs,
         onStation: (id) => handlers.current.onStation?.(id),
-        onReady: () => handlers.current.onReady?.(),
+        onSelectStation: (id) => handlers.current.onSelectStation?.(id),
+        onFallback: () => handlers.current.onFallback?.(),
+        onReady: () => {
+          setSceneReady(true)
+          handlers.current.onReady?.()
+        },
       })
     })
     return () => {
@@ -77,6 +109,12 @@ export default function AgenticFactory3D({
       dispose?.()
     }
   }, [embed])
+
+  // Sync activeStationId prop -> smooth 3D camera orbit (or Overview reset)
+  useEffect(() => {
+    if (!sceneReady) return
+    window.__machine?.focusHotspot?.(activeStationId ?? null)
+  }, [activeStationId, sceneReady])
 
   return (
     <div
@@ -134,50 +172,33 @@ export default function AgenticFactory3D({
         </div>
       </div>
       <div id="labels" />
-      <div id="tooltip" role="tooltip">
-        <strong />
-        <p />
+      <div id="hotspots" aria-label="Interactive machine station hotspots">
+        {MACHINE_STATIONS.map((station, idx) => {
+          const isActive = activeStationId === station.id
+          return (
+            <button
+              key={station.id}
+              ref={(el) => {
+                hotspotRefs.current[idx] = el
+              }}
+              type="button"
+              data-hotspot-id={station.id}
+              aria-label={`Inspect station ${station.numeral}: ${station.title}`}
+              aria-pressed={isActive}
+              onClick={(e) => {
+                e.stopPropagation()
+                handlers.current.onSelectStation?.(station.id)
+              }}
+              className={`hotspot-pin${isActive ? ' active' : ''}`}
+            >
+              <span className="hotspot-ring" aria-hidden="true" />
+              <span className="hotspot-num">{station.numeral}</span>
+              {isActive && <span className="hotspot-dot" aria-hidden="true" />}
+            </button>
+          )
+        })}
       </div>
       <div className="controls debug-ui">
-        <nav className="mode-bar" aria-label="Machine mode">
-          <button data-mode="assembled" aria-pressed="true">
-            <svg viewBox="0 0 16 16" fill="none">
-              <path
-                d="M8 1.5l6 3.3v6.4l-6 3.3-6-3.3V4.8L8 1.5zM2 4.8l6 3.4 6-3.4M8 8.2v6.3"
-                stroke="currentColor"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Assembled
-          </button>
-          <button data-mode="cutaway" aria-pressed="false">
-            <svg viewBox="0 0 16 16" fill="none">
-              <path
-                d="M3 2h10v12H3zM8 2v12M10.5 4l2.5 2.5m-2.5 0L13 9m-2.5 0 2.5 2.5"
-                stroke="currentColor"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Cutaway
-          </button>
-          <button data-mode="stations" aria-pressed="false">
-            <svg viewBox="0 0 16 16" fill="none">
-              <path
-                d="M8 1.5l6 3-6 3-6-3 6-3zM2 8l6 3 6-3M2 11.5l6 3 6-3"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Stations
-          </button>
-          <button data-mode="order" aria-pressed="false">
-            <svg viewBox="0 0 16 16" fill="none">
-              <path d="M5 2.5l8 5.5-8 5.5v-11z" stroke="currentColor" strokeLinejoin="round" />
-            </svg>
-            One order
-          </button>
-        </nav>
         <nav className="camera-row" aria-label="Camera">
           <span className="caption">VIEW</span>
           <button data-camera="overview" aria-pressed="true">
@@ -217,11 +238,6 @@ export default function AgenticFactory3D({
         <i />
         <span>Assembling the manufacturing line</span>
       </div>
-      <div id="error" role="alert">
-        <strong>Could not start the 3D scene</strong>
-        <p>Check that WebGL is turned on in your browser.</p>
-        <button onClick={() => location.reload()}>Try again</button>
-      </div>
     </div>
   )
 }
@@ -245,6 +261,7 @@ export type StationId = 'flexo' | 'rotogravure' | 'lamination' | 'inspection' | 
 export type MachineApi = {
   setMode: (name: string) => boolean
   focusStation: (id: string) => boolean
+  focusHotspot: (id: string | null) => boolean
   setCamera: (name: string) => boolean
   play: () => boolean
   pause: () => boolean
@@ -260,7 +277,10 @@ declare global {
 export type MachineSceneOptions = {
   /** Clean hero: panels hidden, wheel and touch scroll the page. */
   embedded: boolean
+  hotspotRefs?: React.MutableRefObject<Array<HTMLButtonElement | null>>
   onStation?: (id: StationId) => void
+  onSelectStation?: (id: string | null) => void
+  onFallback?: () => void
   onReady?: () => void
 }
 
@@ -284,10 +304,10 @@ function initMachineScene(
     if (!el) throw new Error(`Scene markup is missing #${id}`)
     return el
   }
-  function showError(message?: string) {
+  function triggerFallback() {
     $('loading').classList.add('done')
-    $('error').style.display = 'block'
-    if (message) $('error').querySelector('p')!.textContent = message
+    options.onFallback?.()
+    options.onReady?.()
   }
   const dispose = () => {
     for (const fn of cleanups.reverse()) fn()
@@ -296,7 +316,8 @@ function initMachineScene(
   try {
     const TAU = Math.PI * 2
     const embedded = options.embedded
-    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
+    const motionQuery = typeof window.matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null
+    let reduceMotion = Boolean(motionQuery?.matches)
     const palette = {
       steel: PALETTE_HEX.steelBlue,
       powder: PALETTE_HEX.powderBlue,
@@ -306,11 +327,8 @@ function initMachineScene(
       amber: PALETTE_HEX.steelBlue,
     }
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(33, frameWidth() / frameHeight(), 0.1, 150)
-    const isMobile = frameWidth() < 900 || matchMedia('(pointer:coarse)').matches
-    if (frameWidth() < 768 || window.innerWidth < 768) {
-      return () => {}
-    }
+    const camera = new THREE.PerspectiveCamera(33, Math.max(1, frameWidth()) / Math.max(1, frameHeight()), 0.1, 150)
+    const isMobile = frameWidth() < 768 || matchMedia('(pointer:coarse)').matches
     let renderer: THREE.WebGLRenderer
     try {
       renderer = new THREE.WebGLRenderer({
@@ -318,14 +336,13 @@ function initMachineScene(
         alpha: true,
         powerPreference: 'high-performance',
       })
-    } catch (e) {
-      showError(
-        'WebGL is not available. Turn on hardware acceleration in your browser settings and reload the page.'
-      )
-      throw e
+    } catch {
+      triggerFallback()
+      return dispose
     }
     renderer.setClearColor(PALETTE_HEX.darkNavy, 0)
-    renderer.setPixelRatio(isMobile ? 1 : Math.min(devicePixelRatio, 1.25))
+    // Cap Canvas DPR strictly to [1, 1.5] to prevent 3x mobile GPU overload
+    renderer.setPixelRatio(Math.min(Math.max(window.devicePixelRatio || 1, 1), 1.5))
     renderer.setSize(frameWidth(), frameHeight())
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -340,16 +357,16 @@ function initMachineScene(
     controls.enableDamping = true
     controls.dampingFactor = 0.065
     controls.enablePan = false
-    controls.minDistance = 7
-    controls.maxDistance = 55
+    controls.minDistance = 4.5
+    controls.maxDistance = 60
     controls.minPolarAngle = 0.09
     controls.maxPolarAngle = Math.PI * 0.475
     controls.rotateSpeed = 0.48
     controls.zoomSpeed = 0.7
-    // Embedded in a landing page: the wheel and the finger scroll the page, not the scene.
+    // Embedded in a landing page: wheel scrolls the page, while drag/touch rotates the scene cleanly.
     if (embedded) {
       controls.enableZoom = false
-      if (matchMedia('(pointer:coarse)').matches) controls.enableRotate = false
+      controls.enableRotate = true
     }
     const pmrem = new THREE.PMREMGenerator(renderer),
       room = new RoomEnvironment()
@@ -1743,11 +1760,12 @@ function initMachineScene(
       simTime = 0,
       spread = 0,
       selected: string = 'engine',
-      hovered: string | null = null
+      hovered: string | null = null,
+      activeHotspot: MachineStationConfig | null = null
 
     let width = frameWidth(),
       height = frameHeight(),
-      mobile = width <= 900,
+      mobile = width < 768,
       lastInteraction = -10000,
       dragging = false,
       wasDragged = false,
@@ -1761,9 +1779,30 @@ function initMachineScene(
     const desiredPosition = new THREE.Vector3(),
       desiredTarget = new THREE.Vector3(0, 1, 0)
     const viewDirection = new THREE.Vector3(10.5, 10.8, 17).normalize()
+    const hotspotAnchor = new THREE.Vector3()
     let baseDistance = 25,
       sized = false,
       readySent = false
+    function updateHotspots() {
+      const refs = options.hotspotRefs?.current
+      if (!refs || !width || !height) return
+      MACHINE_STATIONS.forEach((st, idx) => {
+        const btn = refs[idx]
+        if (!btn) return
+        hotspotAnchor.set(st.anchor[0], st.anchor[1], st.anchor[2])
+        hotspotAnchor.project(camera)
+        if (hotspotAnchor.z > 1) {
+          btn.style.opacity = '0'
+          btn.style.pointerEvents = 'none'
+          return
+        }
+        const x = (hotspotAnchor.x * 0.5 + 0.5) * width
+        const y = (-hotspotAnchor.y * 0.5 + 0.5) * height
+        btn.style.opacity = '1'
+        btn.style.pointerEvents = 'auto'
+        btn.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate3d(-50%, -50%, 0)`
+      })
+    }
     // A zero-size embed (an iframe inside a collapsed panel) used to send the camera to infinity: aspect 0
     // put NaN into the uniforms and left the scene black for good. Wait for a real size; the first real
     // size places the camera at once, without a fly-in.
@@ -1773,37 +1812,42 @@ function initMachineScene(
       sized = true
       width = frameWidth()
       height = frameHeight()
-      mobile = width <= 900
+      mobile = width < 768
       renderer.setSize(width, height)
       camera.aspect = width / height
-      // Embedded in a wide landing hero, a shifted frustum centers the object in the right 58%
-      // (the host page's headline goes on the left), without moving the orbit target. The full
-      // page and narrow frames keep the machine in the middle.
+      // Embedded in a wide landing hero, a shifted frustum centers the machine in the right 56%
+      // (leaving the left side clear for the hero headline) without clipping the right edge.
       camera.setViewOffset(
         width,
         height,
-        mobile || !embedded ? 0 : -width * 0.18,
-        mobile || embedded ? 0 : height * 0.02,
+        mobile || !embedded ? 0 : -width * 0.17,
+        mobile || !embedded ? 0 : height * 0.02,
         width,
         height
       )
       const aspect = width / height
-      const availableWidth = mobile ? 0.91 : Math.min(0.55, aspect > 2 ? 0.54 : 0.57)
+      const availableWidth = mobile ? 0.88 : Math.min(0.50, aspect > 2 ? 0.48 : 0.50)
       const horizontalFit =
         17.3 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * aspect * availableWidth)
       const verticalFit =
-        11.5 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (embedded ? 0.85 : 0.62))
+        11.5 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (embedded ? 0.82 : 0.62))
       baseDistance =
-        (Math.max(horizontalFit, verticalFit) * (mobile ? 0.97 : 1.08)) /
-        (embedded ? (mobile ? 1.15 : 1.45) : 1)
-      controls.maxDistance = Math.max(55, baseDistance * 1.6)
+        Math.max(horizontalFit, verticalFit) * (mobile ? 1.06 : 1.08)
+      controls.maxDistance = Math.max(60, baseDistance * 1.6)
       camera.updateProjectionMatrix()
       setCameraGoal()
-      if (first || embedded) {
+      if (first || (embedded && !activeHotspot)) {
         camera.position.copy(desiredPosition)
         controls.target.copy(desiredTarget)
         controls.update()
         cameraAnimating = false
+        updateHotspots()
+      } else if (reduceMotion) {
+        camera.position.copy(desiredPosition)
+        controls.target.copy(desiredTarget)
+        controls.update()
+        cameraAnimating = false
+        renderSingleFrame()
       } else {
         cameraAnimating = true
       }
@@ -1811,9 +1855,14 @@ function initMachineScene(
     function setCameraGoal() {
       const expand = mode === 'stations' ? 1.2 : 1
       if (cameraMode === 'station') {
-        const s = stations.find((s) => s.id === selected)!
-        desiredTarget.copy(s.group.position).add(new THREE.Vector3(0, 1.25, 0))
-        desiredPosition.copy(desiredTarget).addScaledVector(viewDirection, mobile ? 9 : 12)
+        if (activeHotspot) {
+          desiredTarget.set(...activeHotspot.cameraTarget)
+          desiredPosition.set(...activeHotspot.cameraPosition)
+        } else {
+          const s = stations.find((s) => s.id === selected)!
+          desiredTarget.copy(s.group.position).add(new THREE.Vector3(0, 1.25, 0))
+          desiredPosition.copy(desiredTarget).addScaledVector(viewDirection, mobile ? 9 : 12)
+        }
       } else {
         desiredTarget.set(0, 1, 0)
         const distance = baseDistance * expand
@@ -1873,12 +1922,62 @@ function initMachineScene(
     function focusStation(id: string) {
       const s = stations.find((s) => s.id === id)
       if (!s) return false
+      activeHotspot = null
       selected = id
       if (mode === 'order') mode = 'assembled'
       cameraMode = 'station'
       lastInteraction = performance.now()
       setCameraGoal()
-      cameraAnimating = true
+      if (reduceMotion || motionQuery?.matches) {
+        camera.position.copy(desiredPosition)
+        controls.target.copy(desiredTarget)
+        controls.update()
+        cameraAnimating = false
+        renderSingleFrame()
+      } else {
+        cameraAnimating = true
+        if (!isAnimating && visible && !contextLost) startLoop()
+      }
+      syncButtons()
+      return true
+    }
+    function focusHotspot(id: string | null) {
+      lastInteraction = performance.now()
+      const isReduced = reduceMotion || Boolean(motionQuery?.matches)
+      if (!id) {
+        activeHotspot = null
+        cameraMode = 'overview'
+        setCameraGoal()
+        if (isReduced) {
+          camera.position.copy(desiredPosition)
+          controls.target.copy(desiredTarget)
+          controls.update()
+          cameraAnimating = false
+          renderSingleFrame()
+        } else {
+          cameraAnimating = true
+          if (!isAnimating && visible && !contextLost) startLoop()
+        }
+        syncButtons()
+        return true
+      }
+      const match = MACHINE_STATIONS.find((st) => st.id === id)
+      if (!match) return false
+      activeHotspot = match
+      selected = match.id
+      if (mode === 'order') mode = 'assembled'
+      cameraMode = 'station'
+      setCameraGoal()
+      if (isReduced) {
+        camera.position.copy(desiredPosition)
+        controls.target.copy(desiredTarget)
+        controls.update()
+        cameraAnimating = false
+        renderSingleFrame()
+      } else {
+        cameraAnimating = true
+        if (!isAnimating && visible && !contextLost) startLoop()
+      }
       syncButtons()
       return true
     }
@@ -1914,7 +2013,7 @@ function initMachineScene(
       syncPlayback()
       return true
     }
-    const api: MachineApi = { setMode, focusStation, setCamera, play, pause }
+    const api: MachineApi = { setMode, focusStation, focusHotspot, setCamera, play, pause }
     window.__machine = api
     cleanups.push(() => {
       if (window.__machine === api) delete window.__machine
@@ -1949,51 +2048,71 @@ function initMachineScene(
       if (dragging) lastInteraction = performance.now()
     })
     const raycaster = new THREE.Raycaster(),
-      pointer = new THREE.Vector2(),
-      tooltip = $('tooltip')
+      pointer = new THREE.Vector2()
     function hitStation(x: number, y: number) {
       pointer.set((x / width) * 2 - 1, (-y / height) * 2 + 1)
       raycaster.setFromCamera(pointer, camera)
       const hits = raycaster.intersectObjects(pickables, true)
       return hits.length ? stations.find((s) => s.id === hits[0].object.userData.station) : null
     }
+    const sceneIdToHotspot: Record<string, MachineStationConfig['id']> = {
+      flexo: 'extrusion',
+      rotogravure: 'rotogravure',
+      packing: 'packing',
+      inspection: 'inspection',
+    }
     listen(renderer.domElement, 'pointermove', (e: PointerEvent) => {
-      if (Math.hypot((e.clientX - root.getBoundingClientRect().left) - downX, (e.clientY - root.getBoundingClientRect().top) - downY) > 5) wasDragged = true
+      const rect = root.getBoundingClientRect()
+      if (Math.hypot((e.clientX - rect.left) - downX, (e.clientY - rect.top) - downY) > 5) wasDragged = true
       if (dragging) return
-      const s = hitStation((e.clientX - root.getBoundingClientRect().left), (e.clientY - root.getBoundingClientRect().top))
+      const s = hitStation(e.clientX - rect.left, e.clientY - rect.top)
       hovered = s ? s.id : null
       renderer.domElement.style.cursor = s ? 'pointer' : 'grab'
-      tooltip.classList.toggle('visible', !!s)
-      if (s) {
-        tooltip.querySelector('strong')!.innerHTML =
-          `<span>${String(s.index + 1).padStart(2, '0')}</span>${s.name}`
-        tooltip.querySelector('p')!.textContent = s.desc
-        tooltip.style.left = Math.min(width - 255, Math.max(10, (e.clientX - root.getBoundingClientRect().left) + 16)) + 'px'
-        tooltip.style.top = Math.max(10, Math.min(height - 95, (e.clientY - root.getBoundingClientRect().top) - 65)) + 'px'
-      }
     })
     listen(renderer.domElement, 'pointerleave', () => {
       hovered = null
-      tooltip.classList.remove('visible')
     })
     listen(renderer.domElement, 'pointerdown', (e: PointerEvent) => {
-      downX = (e.clientX - root.getBoundingClientRect().left)
-      downY = (e.clientY - root.getBoundingClientRect().top)
+      const rect = root.getBoundingClientRect()
+      downX = e.clientX - rect.left
+      downY = e.clientY - rect.top
       wasDragged = false
-      tooltip.classList.remove('visible')
     })
     listen(renderer.domElement, 'pointerup', (e: PointerEvent) => {
       if (wasDragged) return
-      const s = hitStation((e.clientX - root.getBoundingClientRect().left), (e.clientY - root.getBoundingClientRect().top))
+      const rect = root.getBoundingClientRect()
+      const s = hitStation(e.clientX - rect.left, e.clientY - rect.top)
       if (!s) return
-      focusStation(s.id)
+      const mapped = sceneIdToHotspot[s.id]
+      if (mapped) {
+        focusHotspot(mapped)
+        options.onSelectStation?.(mapped)
+      } else {
+        focusStation(s.id)
+      }
       options.onStation?.(s.id as StationId)
     })
     let rafId = 0
     let isAnimating = false
     let isIntersecting = true
 
+    function renderSingleFrame() {
+      if (contextLost || !sized) return
+      controls.autoRotate = false
+      controls.update(0)
+      updateHotspots()
+      renderer.render(scene, camera)
+      if (!readySent) {
+        readySent = true
+        options.onReady?.()
+      }
+    }
+
     function startLoop() {
+      if (reduceMotion) {
+        renderSingleFrame()
+        return
+      }
       if (isAnimating || !visible || contextLost) return
       isAnimating = true
       lastFrame = performance.now()
@@ -2009,6 +2128,31 @@ function initMachineScene(
       }
       controls.autoRotate = false
     }
+
+    if (motionQuery) {
+      const onMotionChange = (e: MediaQueryListEvent) => {
+        reduceMotion = e.matches
+        if (reduceMotion) {
+          playing = false
+          syncPlayback()
+          stopLoop()
+          renderSingleFrame()
+        } else {
+          playing = true
+          syncPlayback()
+          if (visible) startLoop()
+        }
+      }
+      motionQuery.addEventListener('change', onMotionChange)
+      cleanups.push(() => motionQuery.removeEventListener('change', onMotionChange))
+    }
+
+    controls.addEventListener('change', () => {
+      updateHotspots()
+      if (reduceMotion && visible && !isAnimating) {
+        renderer.render(scene, camera)
+      }
+    })
 
     listen(document, 'visibilitychange', () => {
       visible = !document.hidden && isIntersecting
@@ -2038,13 +2182,11 @@ function initMachineScene(
     listen(renderer.domElement, 'webglcontextlost', (e: Event) => {
       e.preventDefault()
       contextLost = true
-      showError(
-        'The graphics context was interrupted. The scene comes back on its own once WebGL is available again.'
-      )
+      stopLoop()
+      triggerFallback()
     })
     listen(renderer.domElement, 'webglcontextrestored', () => {
       contextLost = false
-      $('error').style.display = 'none'
       lastFrame = performance.now()
     })
 
@@ -2166,7 +2308,7 @@ function initMachineScene(
           $('journey-detail').textContent = journeySteps[step][1]
           prevJourney = step
         }
-        $('journey-progress').style.width = packet.phase * 100 + '%'
+        $('journey-progress').style.transform = `scaleX(${packet.phase})`
         if (!dragging && playing) {
           desiredTarget.copy(packet.group.position)
           desiredPosition.copy(desiredTarget).addScaledVector(viewDirection, mobile ? 10 : 15)
@@ -2186,7 +2328,7 @@ function initMachineScene(
         cameraAnimating = true
       } else if (cameraMode === 'station' && cameraAnimating) setCameraGoal()
       if (cameraAnimating && !dragging) {
-        const speed = 1 - Math.exp(-dt * (mode === 'order' ? 2.2 : 3))
+        const speed = 1 - Math.exp(-dt * (mode === 'order' ? 2.2 : 6.5))
         camera.position.lerp(desiredPosition, speed)
         controls.target.lerp(desiredTarget, speed)
         if (
@@ -2202,11 +2344,13 @@ function initMachineScene(
         !reduceMotion &&
         !dragging &&
         !cameraAnimating &&
+        !activeHotspot &&
         mode !== 'order' &&
         cameraMode === 'overview' &&
         now - lastInteraction > 6500
       controls.autoRotateSpeed = 0.24
       controls.update(dt)
+      updateHotspots()
       // Project station callouts after the camera update, clamping them inside the iframe.
       stations.forEach((s, i) => {
         const show = mode === 'stations'
@@ -2290,7 +2434,6 @@ function initMachineScene(
     renderer.compile(scene, camera)
 
     $('loading').classList.add('done')
-    $('error').style.display = 'none'
     // Lightweight inspection for integration and automated browser checks; no production UI.
     Object.defineProperty(window, '__machineDebug', {
       value: {
@@ -2298,6 +2441,8 @@ function initMachineScene(
           mode,
           camera: cameraMode,
           playing,
+          activeHotspot: activeHotspot?.id ?? null,
+          cameraAnimating,
           time: simTime,
           spread,
           cutHeight: cutPlane.constant,
@@ -2322,8 +2467,8 @@ function initMachineScene(
       delete window.__machineDebug
     })
   } catch (error) {
-    console.error('Machine: failed to start', error)
-    showError()
+    console.warn('Machine: switching to static fallback', error)
+    triggerFallback()
   }
   return dispose
 }
@@ -2500,10 +2645,10 @@ const STYLES = String.raw`
   color: #52575f;
   writing-mode: vertical-rl;
   font:
-    9px ui-monospace,
-    Menlo,
-    SFMono-Regular,
+    9px var(--font-mono),
+    ui-monospace,
     monospace;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 1.5px;
   pointer-events: none;
 }
@@ -2518,51 +2663,9 @@ const STYLES = String.raw`
   gap: 16px;
   z-index: 5;
 }
-.agentic-factory-3d .mode-bar {
-  display: flex;
-  gap: 3px;
-  align-items: center;
-  padding: 5px;
-  border: 1px solid #ffffff13;
-  border-radius: 12px;
-  background: rgba(25, 28, 32, 0.87);
-  box-shadow:
-    0 8px 30px #0003,
-    inset 0 1px 0 #ffffff03;
-  backdrop-filter: blur(16px);
-}
-.agentic-factory-3d .mode-bar button {
-  border: 0;
-  background: none;
-  color: #a2a4a8;
-  white-space: nowrap;
-  padding: 11px 15px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 500;
-  border-radius: 8px;
-  transition:
-    background 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-}
-.agentic-factory-3d .mode-bar button:hover {
-  background: #ffffff08;
-  color: var(--white);
-}
-.agentic-factory-3d .mode-bar button[aria-pressed='true'] {
-  background: var(--amber);
-  color: #F1FAEE;
-  box-shadow: 0 2px 12px #457B9D12;
-}
 .agentic-factory-3d svg {
   flex-shrink: 0;
   display: block;
-}
-.agentic-factory-3d .mode-bar svg {
-  width: 14px;
-  height: 14px;
 }
 .agentic-factory-3d .camera-row {
   display: flex;
@@ -2646,10 +2749,10 @@ const STYLES = String.raw`
   left: 50%;
   transform: translateX(-50%);
   font:
-    9px ui-monospace,
-    Menlo,
-    SFMono-Regular,
+    9px var(--font-mono),
+    ui-monospace,
     monospace;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 1.5px;
   color: #3f454d;
 }
@@ -2658,6 +2761,91 @@ const STYLES = String.raw`
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+}
+.agentic-factory-3d #hotspots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 6;
+}
+.agentic-factory-3d .hotspot-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 9999px;
+  background: #1D3557;
+  border: 1px solid #A8DADC;
+  color: #F1FAEE;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(29, 53, 87, 0.35);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.agentic-factory-3d .hotspot-pin::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+}
+.agentic-factory-3d .hotspot-pin:hover {
+  border-color: #F1FAEE;
+  box-shadow: 0 0 0 3px rgba(168, 218, 220, 0.35), 0 6px 18px rgba(29, 53, 87, 0.45);
+}
+.agentic-factory-3d .hotspot-pin.active {
+  border-color: #E63946;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.35), 0 6px 18px rgba(29, 53, 87, 0.45);
+}
+.agentic-factory-3d .hotspot-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 1px solid rgba(230, 57, 70, 0.65);
+  opacity: 0;
+  pointer-events: none;
+}
+.agentic-factory-3d .hotspot-pin.active .hotspot-ring {
+  opacity: 1;
+  animation: hotspot-pulse 1.8s ease-out infinite;
+}
+.agentic-factory-3d .hotspot-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #E63946;
+  border: 1px solid #F1FAEE;
+}
+@keyframes hotspot-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.38);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.38);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agentic-factory-3d .hotspot-pin.active .hotspot-ring {
+    animation: none !important;
+  }
 }
 .agentic-factory-3d .station-label {
   position: absolute;
@@ -2679,8 +2867,7 @@ const STYLES = String.raw`
   margin: 0 0 0 10px;
 }
 .agentic-factory-3d .station-label .label-card {
-  background: #1D3557f0;
-  backdrop-filter: blur(12px);
+  background: #1D3557f5;
   border: 1px solid #A8DADC;
   border-radius: 6px;
   padding: 10px 13px;
@@ -2700,9 +2887,10 @@ const STYLES = String.raw`
   color: #A8DADC;
   font-weight: 700;
   font:
-    9px ui-monospace,
-    Menlo,
+    9px var(--font-mono),
+    ui-monospace,
     monospace;
+  font-variant-numeric: tabular-nums;
 }
 .agentic-factory-3d .station-label .label-meta {
   font-size: 9px;
@@ -2791,9 +2979,11 @@ const STYLES = String.raw`
 }
 .agentic-factory-3d #journey .track i {
   display: block;
+  width: 100%;
   height: 100%;
   background: var(--amber);
-  width: 0;
+  transform-origin: left;
+  transform: scaleX(0);
 }
 .agentic-factory-3d #loading {
   position: absolute;
@@ -2901,10 +3091,6 @@ const STYLES = String.raw`
     bottom: 100px;
     gap: 20px;
   }
-.agentic-factory-3d .mode-bar button {
-    padding: 13px 20px;
-    font-size: 12px;
-  }
 .agentic-factory-3d .camera-row button {
     font-size: 11px;
     padding: 5px 12px;
@@ -2954,20 +3140,6 @@ const STYLES = String.raw`
     right: 12px;
     bottom: 84px;
     gap: 18px;
-  }
-.agentic-factory-3d .mode-bar {
-    gap: 1px;
-    padding: 4px;
-    border-radius: 10px;
-  }
-.agentic-factory-3d .mode-bar button {
-    padding: 11px 10px;
-    font-size: 10px;
-    gap: 6px;
-  }
-.agentic-factory-3d .mode-bar svg {
-    width: 12px;
-    height: 12px;
   }
 .agentic-factory-3d .camera-row {
     gap: 0;
@@ -3035,12 +3207,6 @@ const STYLES = String.raw`
   }
 }
 @media (max-width: 360px) {
-.agentic-factory-3d .mode-bar button {
-    padding: 10px 7px;
-  }
-.agentic-factory-3d .mode-bar svg {
-    display: none;
-  }
 .agentic-factory-3d .camera-row .caption {
     display: none;
   }
@@ -3064,10 +3230,6 @@ const STYLES = String.raw`
   }
 .agentic-factory-3d #journey {
     top: 96px;
-  }
-.agentic-factory-3d .mode-bar button {
-    padding-top: 8px;
-    padding-bottom: 8px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

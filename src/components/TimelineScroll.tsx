@@ -50,10 +50,10 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
           <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16 pt-12 pb-6">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div className="max-w-2xl">
-                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                   02 / FOUR DECADES OF GROWTH
                 </span>
-                <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+                <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                   Heritage Timeline (1984 &ndash; 2016)
                 </h2>
                 <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
@@ -64,7 +64,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
               {/* Interactive Scroll Indicator */}
               <div className="flex flex-col items-start md:items-end gap-1.5 shrink-0">
                 <div className="flex items-center gap-2 font-mono text-xs font-semibold text-steel">
-                  <span className="h-2 w-2 rounded-full bg-red animate-pulse" />
+                  <span className="h-2 w-2 rounded-full bg-red" />
                   <span>Scroll to explore milestone journey</span>
                 </div>
                 <div className="h-1.5 w-48 overflow-hidden rounded-full bg-surface">
@@ -118,7 +118,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                       </div>
 
                       {/* Milestone Title */}
-                      <h3 className="mt-6 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
+                      <h3 className="mt-6 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink">
                         {event.title}
                       </h3>
 
@@ -150,10 +150,10 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
       {/* ========================================================= */}
       <div className="block md:hidden py-20 px-6 sm:px-10">
         <div className="max-w-2xl mx-auto">
-          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
             02 / FOUR DECADES OF GROWTH
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+          <h2 className="text-3xl sm:text-4xl font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
             Heritage Timeline (1984 &ndash; 2016)
           </h2>
           <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
@@ -185,7 +185,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                         Milestone 0{idx + 1}
                       </span>
                     </div>
-                    <h3 className="mt-4 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
+                    <h3 className="mt-4 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink">
                       {event.title}
                     </h3>
                     <p className="mt-2 text-sm leading-[1.7] text-ink/75 font-sans">

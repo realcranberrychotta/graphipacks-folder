@@ -74,14 +74,9 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Agricultural plastic mulch film laid across commercial crop rows",
       },
       {
-        src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
-        label: "Extrusion Gauge & Texture",
-        alt: "Silver-black dual-tone extruded polyethylene film surface close-up",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
-        label: "Commercial Farm Operation",
-        alt: "Commercial farmland drip irrigation with mulch film rows",
+        src: "/images/infrastructure/infra-02-film-lamination-rollers.jpg",
+        label: "Multi-Layer Blown Film Line",
+        alt: "Multi-layer blown film extrusion rollers at Graphipacks Madurai plant",
       },
     ],
     variants: [
@@ -203,14 +198,9 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Commercial polyhouse nursery plant containers and grow bags array",
       },
       {
-        src: "https://images.unsplash.com/photo-1592417817098-8f3d6eb22509?auto=format&fit=crop&w=1200&q=80",
-        label: "Woven Structure & Drainage Detail",
-        alt: "PP woven laminated fabric structure with pre-punched base drainage holes",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=1200&q=80",
-        label: "Commercial Polyhouse Operation",
-        alt: "Commercial greenhouse hydroponic and coir substrate cultivation",
+        src: "/images/infrastructure/infra-01-flexo-ink-rollers.jpg",
+        label: "Flexographic Branding & Conversion",
+        alt: "Flexographic ink rollers for UV-stabilized grow bag branding at Madurai works",
       },
     ],
     variants: [
@@ -329,14 +319,9 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Palletised woven export bags in industrial logistics warehouse",
       },
       {
-        src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-        label: "Lamination & Weave Detail",
-        alt: "Heavy-duty HDPE woven weave with internal PE lamination layer close-up",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80",
-        label: "Container Freight Dispatch",
-        alt: "Overseas freight container loading and maritime export pallets",
+        src: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
+        label: "Laminated Roll Stock Inventory",
+        alt: "Heavy-duty laminated film rolls staged inside Graphipacks Madurai warehouse",
       },
     ],
     variants: [
@@ -431,14 +416,14 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Multi-layer printed flexible packaging barrier rolls and pouches",
       },
       {
-        src: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=1200&q=80",
-        label: "Rotogravure Print Registration",
-        alt: "High-speed 8-color rotogravure press printing cylinder and foil substrate",
+        src: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
+        label: "8-Colour Rotogravure Cylinders",
+        alt: "Engraved rotogravure printing cylinders calibrated in Graphipacks Madurai plant",
       },
       {
-        src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-        label: "Automated Converting Line",
-        alt: "High-throughput industrial pouch converting and hermetic sealing lines",
+        src: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
+        label: "Converted Master Film Rolls",
+        alt: "Finished multi-layer laminated barrier film rolls ready for FFS dispatch",
       },
     ],
     variants: [
@@ -564,14 +549,14 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Stacked industrial PP woven sacks and bags in bulk storage warehouse",
       },
       {
-        src: "https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=1200&q=80",
-        label: "Polymer Testing & Seam Inspection",
-        alt: "Tensile strength and polymer micron gauge verification in laboratory",
+        src: "/images/infrastructure/infra-02-film-lamination-rollers.jpg",
+        label: "Extruded Liner & Lamination Rollers",
+        alt: "Extrusion and lamination rollers producing high-clarity polyethylene liners",
       },
       {
-        src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-        label: "Automated Industrial Bagging",
-        alt: "High-throughput industrial bagging and palletizing machinery line",
+        src: "/images/infrastructure/infra-04-automated-line.jpg",
+        label: "Quality Control & Line Inspection",
+        alt: "Automated bag converting and quality inspection line at Graphipacks Madurai",
       },
     ],
     variants: [
@@ -671,13 +656,13 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
   },
   {
     slug: "wicketted-poly-bags",
-    name: "Wicked Poly Bags",
+    name: "Wicketted Poly Bags",
     category: "Automated Packaging Solutions",
     tagline: "Precision Metal-Wicketed Poly Bags for Automated High-Speed Packing Lines",
     summary:
-      "Engineered for high-throughput automatic bagging machinery, our wicketed poly bags feature precision pin holes, clean perforation tear-lines, and anti-static additives for flawless machine feeding.",
+      "Engineered for high-throughput automatic bagging machinery, our wicketted poly bags feature precision pin holes, clean perforation tear-lines, and anti-static additives for flawless machine feeding.",
     metaDescription:
-      "Precision wicketed poly bags with anti-static formulation and high optical clarity for automated high-speed bakery packaging, poultry, and textile bagging. MOQ 25,000 pcs.",
+      "Precision wicketted poly bags with anti-static formulation and high optical clarity for automated high-speed bakery packaging, poultry, and textile bagging. MOQ 25,000 pcs.",
     moq: "25,000 pcs",
     leadTime: "7-10 days",
     packing: "500 pcs / bundle, 10 bundles / carton",
@@ -688,14 +673,14 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
         alt: "Commercial bakery bread packaging and automated bagging machinery",
       },
       {
-        src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80",
-        label: "Wicket Header & Perforation Detail",
-        alt: "Precision metal wicket bar, pin registration, and micro-lip tear line close-up",
+        src: "/images/infrastructure/infra-05-packing-conveyor.jpg",
+        label: "Automated Wicketing & Conveyor",
+        alt: "High-speed automated wicketing and packing conveyor line in Madurai",
       },
       {
-        src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
-        label: "Automated Production Line",
-        alt: "Continuous automated high-speed wicket bagging production line in operation",
+        src: "/images/infrastructure/infra-04-automated-line.jpg",
+        label: "Inline Quality Verification",
+        alt: "Automated poly bag manufacturing and weld inspection station",
       },
     ],
     variants: [

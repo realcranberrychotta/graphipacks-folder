@@ -68,14 +68,14 @@ export default function GoldFoilHeading({ className = "" }: GoldFoilHeadingProps
       className={`relative inline-block cursor-pointer ${className}`}
     >
       {/* Layer 1: Base Matte Sheen Layer — Always Visible */}
-      <span className="block font-serif font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight select-none bg-gradient-to-b from-[#F1FAEE] via-[#A8DADC] to-[#457B9D] bg-clip-text text-transparent">
+      <span className="block font-display font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.12em] leading-tight select-none bg-gradient-to-b from-[#F1FAEE] via-[#A8DADC] to-[#457B9D] bg-clip-text text-transparent">
         GRAPHIPACKS PRIVATE LIMITED
       </span>
 
       {/* Layer 2: Interactive Specular Steel Foil Overlay */}
       <motion.span
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none select-none font-serif font-extrabold text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.14em] leading-tight"
+        className="absolute inset-0 pointer-events-none select-none font-display font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.12em] leading-tight"
         style={{
           backgroundImage: foilGradient,
           WebkitBackgroundClip: "text",

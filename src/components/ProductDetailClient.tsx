@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Download,
   Mail,
@@ -23,6 +23,7 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
+  const shouldReduceMotion = useReducedMotion();
   const [selectedVariantKey, setSelectedVariantKey] = useState<string>(
     product.variants[0]?.key || ""
   );
@@ -86,10 +87,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImage.src}
-                  initial={{ opacity: 0 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: "easeInOut" }}
                   className="absolute inset-0 h-full w-full"
                 >
                   <Image
@@ -123,15 +124,24 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Thumbnail Strip */}
-            <div className="grid grid-cols-4 gap-3">
-              {product.images.map((img, idx) => {
+            {product.images.length > 1 && (
+              <div
+                className={`grid gap-3 ${
+                  product.images.length === 2
+                    ? "grid-cols-2"
+                    : product.images.length === 3
+                    ? "grid-cols-3"
+                    : "grid-cols-4"
+                }`}
+              >
+                {product.images.map((img, idx) => {
                 const isSelected = idx === activeImageIndex;
                 return (
                   <button
                     key={img.src}
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative aspect-[4/3] w-full overflow-hidden rounded-md border transition-all duration-200 cursor-pointer ${isSelected
+                    className={`relative aspect-[4/3] w-full overflow-hidden rounded-md border transition-colors duration-200 cursor-pointer ${isSelected
                       ? "border-steel ring-2 ring-steel/20"
                       : "border-ink/10 hover:border-steel"
                       }`}
@@ -141,13 +151,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       src={img.src}
                       alt={img.alt}
                       fill
+                      loading="lazy"
+                      decoding="async"
                       sizes="(max-width: 1024px) 25vw, 12vw"
                       className="object-cover"
                     />
                   </button>
                 );
               })}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* ------------------------------------------------------------- */}
@@ -157,7 +170,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div>
               {/* Eyebrow Label */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
                   01 / PRODUCT OVERVIEW &bull; <span className="text-red">EST. 1984</span>
                 </span>
                 <span className="h-1 w-1 rounded-full bg-red" />
@@ -166,18 +179,18 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </span>
               </div>
 
-              {/* Product Title in Playfair Display */}
-              <h1 id="product-title" className="mt-3 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-normal leading-[1.08] tracking-[-0.025em] text-ink">
+              {/* Product Title in Boska */}
+              <h1 id="product-title" className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] tracking-[-0.015em] text-ink">
                 {product.name}
               </h1>
 
               {/* Tagline / Subtitle */}
-              <p className="mt-2 text-sm sm:text-base font-semibold text-steel tracking-wide">
+              <p className="mt-2 text-sm sm:text-base font-semibold text-steel tracking-wide font-sans">
                 {product.tagline}
               </p>
 
               {/* Concise Formal Summary */}
-              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink">
+              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink font-sans">
                 {product.summary}
               </p>
 
@@ -187,7 +200,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-ink/75">
                     Commercial Pricing
                   </span>
-                  <span className="mt-0.5 block font-serif text-xl sm:text-2xl font-bold text-ink">
+                  <span className="mt-0.5 block font-display text-xl sm:text-2xl font-bold text-ink">
                     Price on Request
                   </span>
                 </div>
@@ -266,7 +279,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={openModal}
-                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
                   >
                     <Mail className="h-4 w-4 text-background" />
                     <span>Request Quotation</span>
@@ -278,9 +291,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     type="button"
                     onClick={handleDownloadPdf}
                     disabled={isPdfGenerating}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-steel bg-transparent hover:bg-powder/20 hover:border-navy hover:text-navy text-ink px-6 py-3.5 text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-steel bg-transparent hover:bg-powder/20 hover:border-navy hover:text-navy text-ink px-6 py-3.5 text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <Download className={`h-4 w-4 ${isPdfGenerating ? "animate-bounce text-steel" : ""}`} />
+                    <Download className={`h-4 w-4 ${isPdfGenerating && !shouldReduceMotion ? "animate-bounce text-steel" : ""}`} />
                     <span>
                       {isPdfGenerating ? "Generating Datasheet..." : "Download Spec Sheet (PDF)"}
                     </span>
@@ -292,7 +305,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={openModal}
-                    className="btn-press inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-steel bg-transparent hover:bg-steel text-ink hover:text-background px-4 py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer group"
+                    className="btn-press inline-flex min-h-[44px] items-center gap-2 rounded-md border border-steel bg-transparent hover:bg-steel text-ink hover:text-background px-4 py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer group"
                   >
                     <Package className="h-4 w-4 text-steel group-hover:text-background" />
                     <span>Request Material Samples &amp; Swatches</span>
@@ -347,10 +360,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <div className="border-t border-powder/40 pt-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-10">
             <div>
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                 02 / TECHNICAL SPECIFICATIONS
               </span>
-              <h2 className="mt-1 font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+              <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                 Engineering Tolerances &amp; Material Standards
               </h2>
               <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
@@ -396,7 +409,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       }`}
                   >
                     <div className="sm:col-span-4 flex items-center gap-2">
-                      <span className="text-xs sm:text-sm font-bold text-ink">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-ink">
                         {row.label}
                       </span>
                       {row.isOverridden && (
@@ -406,7 +419,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                       )}
                     </div>
                     <div className="sm:col-span-8 mt-1 sm:mt-0 flex items-center justify-between">
-                      <span className={`text-xs sm:text-sm tabular-nums leading-relaxed ${row.isOverridden ? "font-bold text-steel" : "font-medium text-ink"
+                      <span className={`font-mono font-normal text-xs sm:text-sm tabular-nums leading-relaxed ${row.isOverridden ? "text-steel font-medium" : "text-ink"
                         }`}>
                         {row.value}
                       </span>
@@ -458,10 +471,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeInOut" }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4 sm:p-8"
             onClick={() => setLightboxOpen(false)}
           >
@@ -524,10 +537,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             aria-label={`Request a Quote for ${product.name}`}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 16 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
               className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-background border border-powder/40"
               onClick={(e) => e.stopPropagation()}
             >
@@ -551,6 +564,36 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
         )}
       </AnimatePresence>
+
+      {/* ========================================================================= */}
+      {/* MOBILE STICKY BOTTOM BAR: 1-TAP MOQ + GET A QUOTE                         */}
+      {/* ========================================================================= */}
+      {!rfqModalOpen && !lightboxOpen && (
+        <div
+          className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-powder bg-background/95 px-4 py-2.5 shadow-[0_-4px_20px_rgba(29,53,87,0.1)]"
+          role="region"
+          aria-label="Quick quote bar"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <span className="block truncate font-mono text-[10px] font-bold uppercase tracking-wider text-steel">
+                {activeVariant.name}
+              </span>
+              <span className="block font-mono text-xs font-bold text-navy">
+                MOQ: {product.moq}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={openModal}
+              className="btn-press shrink-0 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md bg-red hover:bg-[#d62839] px-4 py-2.5 text-xs font-bold text-background transition-colors duration-200 cursor-pointer shadow-xs"
+            >
+              <span>Get a Quote</span>
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -27,12 +27,7 @@ export function SpecComparisonSheet({
   onOpenQuoteModal,
   className = "",
 }: SpecComparisonSheetProps) {
-  const variants = product?.variants || [];
-
-  // Do not render if fewer than 2 variants exist
-  if (variants.length < 2) {
-    return null;
-  }
+  const variants = useMemo(() => product.variants || [], [product.variants]);
 
   // Active compared variant keys (up to 3)
   const [comparedKeys, setComparedKeys] = useState<string[]>(() => {
@@ -138,6 +133,11 @@ export function SpecComparisonSheet({
     return allRows.filter((r) => r.differs);
   }, [allRows, differencesOnly]);
 
+  // Do not render if fewer than 2 variants exist
+  if (variants.length < 2) {
+    return null;
+  }
+
   const activeVariantName =
     variants.find((v) => v.key === activeVariantKey)?.name ||
     comparedVariants[0]?.name;
@@ -153,7 +153,7 @@ export function SpecComparisonSheet({
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 md:mb-10">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
                 02B / VARIANT SPEC COMPARISON &bull; <span className="text-red">EST. 1984</span>
               </span>
               <span className="h-1 w-1 rounded-full bg-red" aria-hidden="true" />
@@ -162,7 +162,7 @@ export function SpecComparisonSheet({
               </span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
               Compare Specifications Side-by-Side
             </h2>
 
@@ -191,7 +191,7 @@ export function SpecComparisonSheet({
               >
                 <span
                   className={cn(
-                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow-xs ring-0 transition duration-200 ease-in-out",
+                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow-xs ring-0 transition-transform duration-200 ease-in-out",
                     differencesOnly ? "translate-x-5" : "translate-x-0"
                   )}
                 />
@@ -283,7 +283,7 @@ export function SpecComparisonSheet({
                             {isActive ? (
                               <span className="inline-flex items-center gap-1.5 rounded-sm bg-steel px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-background">
                                 <span
-                                  className="h-1.5 w-1.5 rounded-full bg-red animate-pulse"
+                                  className="h-1.5 w-1.5 rounded-full bg-red"
                                   aria-hidden="true"
                                 />
                                 ACTIVE SPEC
@@ -299,7 +299,7 @@ export function SpecComparisonSheet({
                             )}
                           </div>
 
-                          <span className="font-serif text-base sm:text-lg font-bold text-background truncate block">
+                          <span className="font-display text-base sm:text-lg font-bold text-background truncate block">
                             {v.name}
                           </span>
                         </div>
@@ -318,7 +318,7 @@ export function SpecComparisonSheet({
                       className="px-6 py-12 text-center bg-surface"
                     >
                       <Check className="mx-auto h-6 w-6 text-steel mb-2" aria-hidden="true" />
-                      <span className="block font-serif text-base font-bold text-navy">
+                      <span className="block font-display text-base font-bold text-navy">
                         All compared specs are identical
                       </span>
                       <span className="mt-1 block text-xs text-ink/75">
@@ -362,7 +362,7 @@ export function SpecComparisonSheet({
                           <div className="flex items-start justify-between gap-2">
                             <span
                               className={cn(
-                                "text-xs sm:text-sm font-semibold",
+                                "font-mono text-xs sm:text-sm font-bold",
                                 row.differs ? "text-navy" : "text-ink"
                               )}
                             >
@@ -390,9 +390,9 @@ export function SpecComparisonSheet({
                             <td
                               key={v.key}
                               className={cn(
-                                "px-5 py-3.5 align-top text-xs sm:text-sm tabular-nums border-r border-powder/30 border-b border-powder/40 last:border-r-0",
+                                "px-5 py-3.5 align-top font-mono font-normal text-xs sm:text-sm tabular-nums border-r border-powder/30 border-b border-powder/40 last:border-r-0",
                                 isActive && "bg-surface/30",
-                                row.differs && "font-semibold text-navy"
+                                row.differs && "font-medium text-navy"
                               )}
                             >
                               <span className="leading-relaxed text-ink break-words block">
@@ -501,7 +501,7 @@ export function SpecComparisonSheet({
                     )}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className="font-serif font-bold text-xs truncate">
+                      <span className="font-display font-bold text-xs truncate">
                         {v.name}
                       </span>
                       {isActive && (
@@ -527,7 +527,7 @@ export function SpecComparisonSheet({
           {visibleRows.length === 0 ? (
             <div className="rounded-xl border border-powder/60 bg-surface p-6 text-center">
               <Check className="mx-auto h-6 w-6 text-steel mb-2" aria-hidden="true" />
-              <span className="block font-serif text-base font-bold text-navy">
+              <span className="block font-display text-base font-bold text-navy">
                 All compared specs are identical
               </span>
               <span className="mt-1 block text-xs text-ink/75">
@@ -599,7 +599,7 @@ export function SpecComparisonSheet({
                             </span>
                           )}
                         </div>
-                        <div className="font-medium text-ink text-xs leading-relaxed break-words">
+                        <div className="font-mono font-normal text-ink text-xs leading-relaxed break-words">
                           {val}
                         </div>
                       </div>
@@ -621,7 +621,7 @@ export function SpecComparisonSheet({
                   onSelectVariant(activeVariantKey);
                 }
               }}
-              className="w-full py-3 px-4 rounded-lg bg-red hover:bg-red/90 text-xs font-bold text-background transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs min-h-[44px]"
+              className="btn-press w-full py-3 px-4 rounded-md bg-red hover:bg-red/90 text-xs font-bold text-background transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs min-h-[44px]"
             >
               <span>Quote Active Spec ({activeVariantName})</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

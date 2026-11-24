@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/InstrumentSerif-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* Coolors Palette Base Hexes (Exact Hex Values) */
   --color-imperial-red: #E63946;
@@ -22,6 +54,9 @@
   --accent-cta: var(--color-imperial-red);     /* ~2-3% CTA Accent - Imperial Red */
 
   /* Typography */
+  --font-display: 'Boska', Georgia, serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-accent: 'Instrument Serif', Georgia, serif;
   --text-primary: var(--color-dark-navy);
   --ink: var(--color-dark-navy);
   --text-body: color-mix(in srgb, #1D3557 82%, transparent);
@@ -108,8 +143,20 @@ body {
   --font-sans: var(--font-sans);
   --font-serif: var(--font-display);
   --font-display: var(--font-display);
-  --font-playfair: var(--font-display);
-  --font-mono: var(--font-geist-mono);
+  --font-accent: var(--font-accent);
+  --font-mono: var(--font-mono);
+}
+
+.font-mono,
+[class*="font-mono"],
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* ==========================================================================
@@ -322,9 +369,10 @@ body {
   left: 18px;
   z-index: 5;
   pointer-events: none;
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 1.5px;
   color: rgba(29, 53, 87, 0.6);
   text-transform: uppercase;
@@ -387,7 +435,8 @@ body {
 
 .hero-layer-explorer__card-name {
   margin: 0;
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   font-weight: 700;
   color: #F1FAEE;
@@ -396,7 +445,7 @@ body {
 
 .hero-layer-explorer__card-spec {
   color: #A8DADC;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .hero-layer-explorer__card-desc {
@@ -411,7 +460,8 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   color: rgba(168, 218, 220, 0.85);
   letter-spacing: 0.5px;
@@ -456,9 +506,30 @@ body {
     animation: none !important;
   }
 
-  .animate-footer-scroll-marquee {
+  .animate-footer-scroll-marquee,
+  .animate-client-marquee,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce,
+  .animate-shake,
+  .preloader-progress-bar {
     animation: none !important;
     transform: none !important;
+  }
+
+  .logoloop__track,
+  .flowing-menu__track {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  #site-preloader {
+    display: none !important;
+  }
+
+  html.preloader-active,
+  html.preloader-active body {
+    overflow: visible !important;
   }
 
   [data-stagger-card],
@@ -634,7 +705,7 @@ body {
 .btn-press,
 .btn-press-scale {
   transform: scale(1);
-  transition: transform 0ms;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-press:active,
@@ -656,18 +727,85 @@ body {
 }
 
 /* ==========================================================================
-   FAQ ACCORDION: INTERPOLATE-SIZE SMOOTH AUTO HEIGHT
+   TACTILE BUTTON HOVER: DIRECTIONAL BACKGROUND WIPE & SLIDING ARROW
+   ========================================================================== */
+.btn-tactile {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smooth directional background wipe */
+.btn-tactile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--btn-wipe-color, #1D3557);
+  transform: translateY(102%);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn-tactile:hover::before {
+  transform: translateY(0%);
+}
+
+.btn-tactile > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tactile sliding arrow */
+.tactile-arrow {
+  display: inline-block;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-tactile:hover .tactile-arrow,
+.group:hover .tactile-arrow {
+  transform: translate3d(4px, 0, 0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-tactile::before {
+    display: none;
+  }
+  .tactile-arrow {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   FAQ ACCORDION: GPU-ONLY OPACITY & TRANSFORM REVEAL
    ========================================================================== */
 .faq-content {
-  height: 0;
-  overflow: hidden;
+  display: none;
   opacity: 0;
-  transition: height 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+  transform: translate3d(0, -4px, 0);
 }
 
 .faq-content[data-open="true"] {
-  height: auto;
+  display: block;
   opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@starting-style {
+  .faq-content[data-open="true"] {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0);
+  }
 }
 
 details {
@@ -678,7 +816,7 @@ details::details-content {
   opacity: 0;
   height: 0;
   overflow: clip;
-  transition: content-visibility 280ms allow-discrete, height 280ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+  transition: content-visibility 280ms allow-discrete, opacity 220ms ease;
 }
 
 details[open]::details-content {
@@ -690,6 +828,7 @@ details[open]::details-content {
   .faq-content,
   details::details-content {
     transition: none !important;
+    transform: none !important;
   }
 }
 

@@ -222,7 +222,7 @@ export default function HeroLayerExplorer({}: {
                 key={sample.id}
                 type="button"
                 onClick={() => setActiveSampleIdx(idx)}
-                className={`group relative flex flex-col items-start p-2 rounded-lg border text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#457B9D] ${
+                className={`group relative flex flex-col items-start p-2 rounded-lg border text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#457B9D] ${
                   isSelected
                     ? "bg-[#1D3557] border-[#457B9D]/60"
                     : "bg-[#152740]/80 border-[#457B9D]/15 hover:bg-[#1D3557] hover:border-[#457B9D]/35 text-[#F1FAEE]/70"
@@ -271,7 +271,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("surface")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-colors duration-200 ease-in-out ${
                 lightMode === "surface"
                   ? "bg-gradient-to-r from-[#457B9D] to-[#457B9D] text-[#F1FAEE] font-extrabold"
                   : "bg-transparent text-[#F1FAEE]/65 hover:text-[#F1FAEE] hover:bg-[#1D3557]"
@@ -285,7 +285,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("backlight")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-colors duration-200 ease-in-out ${
                 lightMode === "backlight"
                   ? "bg-gradient-to-r from-[#A8DADC] to-[#457B9D] text-[#1D3557] font-extrabold"
                   : "bg-transparent text-[#F1FAEE]/65 hover:text-[#F1FAEE] hover:bg-[#1D3557]"
@@ -299,7 +299,7 @@ export default function HeroLayerExplorer({}: {
             <button
               type="button"
               onClick={() => setLightMode("uv")}
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-all duration-200 ease-in-out ${
+              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[10px] font-mono font-bold tracking-wider transition-colors duration-200 ease-in-out ${
                 lightMode === "uv"
                   ? "bg-gradient-to-r from-[#a855f7] to-[#38bdf8] text-[#152740] font-extrabold"
                   : "bg-transparent text-[#F1FAEE]/65 hover:text-[#F1FAEE] hover:bg-[#1D3557]"
@@ -353,7 +353,7 @@ export default function HeroLayerExplorer({}: {
           >
             {/* Physical Pouch Body */}
             <div
-              className={`relative h-full w-full rounded-md overflow-hidden border transition-all duration-300 ${
+              className={`relative h-full w-full rounded-md overflow-hidden border transition-colors duration-300 ${
                 currentSample.foilSheen
                   ? "border-[#457B9D]/40 bg-gradient-to-br from-[#1D3557] via-[#1D3557] to-[#152740]"
                   : currentSample.clearPoly
@@ -373,7 +373,7 @@ export default function HeroLayerExplorer({}: {
 
               {/* Dynamic Backlight Transmission Glow */}
               {lightMode === "backlight" && (
-                <div className="absolute inset-0 pointer-events-none bg-radial from-[#F1FAEE]/35 via-[#457B9D]/15 to-transparent mix-blend-screen animate-pulse duration-1000" />
+                <div className="absolute inset-0 pointer-events-none bg-radial from-[#F1FAEE]/35 via-[#457B9D]/15 to-transparent mix-blend-screen" />
               )}
 
               {/* Dynamic 365nm UV Fluoroscopy Glow (Seal Integrity Inspection) */}
@@ -475,7 +475,7 @@ export default function HeroLayerExplorer({}: {
                     </div>
                   </div>
 
-                  <h3 className="mt-3 font-serif text-base sm:text-lg font-extrabold tracking-tight text-[#F1FAEE]">
+                  <h3 className="mt-3 font-display text-base sm:text-lg font-bold tracking-tight text-[#F1FAEE]">
                     {currentSample.name}
                   </h3>
 
@@ -563,7 +563,7 @@ export default function HeroLayerExplorer({}: {
 
           {/* Interactive Hint Overlay */}
           <div className="absolute bottom-2 right-3 pointer-events-none flex items-center gap-1.5 font-mono text-[9px] text-[#457B9D]/80 uppercase tracking-widest bg-[#152740]/75 px-2 py-0.5 rounded border border-[#457B9D]/20">
-            <Crosshair className="h-3 w-3 text-[#457B9D] animate-pulse" />
+            <Crosshair className="h-3 w-3 text-[#457B9D]" />
             <span>Hover to steer inspection lamp</span>
           </div>
         </div>

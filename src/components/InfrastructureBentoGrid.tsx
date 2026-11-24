@@ -194,7 +194,7 @@ export default function InfrastructureBentoGrid({
               {/* Bottom-Left Anchored Content */}
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10 z-10 flex flex-col justify-end pointer-events-none max-w-3xl">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[11px] uppercase tracking-[0.22em] font-medium text-powder">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-powder">
                     01 / MANUFACTURING INFRASTRUCTURE
                   </span>
                   <span className="h-1.5 w-1.5 rounded-full bg-red" aria-hidden="true" />
@@ -202,7 +202,7 @@ export default function InfrastructureBentoGrid({
                     Continuous Plant Operation
                   </span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal leading-[1.12] tracking-[-0.02em] text-background font-[family-name:var(--font-playfair)]">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-[1.15] tracking-[-0.015em] text-background">
                   {item.title}
                 </h2>
                 <p className="mt-3 max-w-[60ch] text-[15px] md:text-base leading-[1.7] text-background/85 font-sans line-clamp-3 sm:line-clamp-none">

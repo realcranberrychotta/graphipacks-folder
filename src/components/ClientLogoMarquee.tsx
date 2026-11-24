@@ -29,7 +29,7 @@ export default function ClientLogoMarquee() {
           <div className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3 text-center">
             {CLIENT_LOGOS.map((client, idx) => (
               <React.Fragment key={client}>
-                <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink select-none">
+                <span className="font-sans text-base sm:text-lg md:text-xl font-semibold tracking-wide text-ink select-none">
                   {client}
                 </span>
                 {idx < CLIENT_LOGOS.length - 1 && (
@@ -82,7 +82,7 @@ export default function ClientLogoMarquee() {
         <div className="flex shrink-0 items-center">
           {loopedLogos.map((client, idx) => (
             <span key={`group1-${client}-${idx}`} className="inline-flex items-center">
-              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
+              <span className="font-sans text-base sm:text-lg md:text-xl font-semibold tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
                 {client}
               </span>
               <span
@@ -99,7 +99,7 @@ export default function ClientLogoMarquee() {
         <div className="flex shrink-0 items-center" aria-hidden="true">
           {loopedLogos.map((client, idx) => (
             <span key={`group2-${client}-${idx}`} className="inline-flex items-center">
-              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
+              <span className="font-sans text-base sm:text-lg md:text-xl font-semibold tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
                 {client}
               </span>
               <span

@@ -11,7 +11,7 @@ export const DEFAULT_PRODUCTS = [
   "Coir Pith 50L & 5kg Block Bags",
   "Laminated Rolls & Pouches",
   "PP & LLDPE Bags",
-  "Wicked Poly Bags",
+  "Wicketted Poly Bags",
 ];
 
 interface ProductTypewriterProps {
@@ -177,7 +177,7 @@ export default function ProductTypewriter({
             ? "Pause product showcase"
             : "Play product showcase"
         }
-        className="ml-1 inline-flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded border border-powder/40 bg-navy text-powder hover:border-powder hover:text-background transition-all duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-powder"
+        className="relative ml-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded border border-powder/40 bg-navy text-powder hover:border-powder hover:text-background transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-powder after:content-[''] after:absolute after:-inset-2.5 sm:after:-inset-2"
       >
         {isPlaying ? (
           <Pause className="h-2.5 w-2.5 sm:h-3 sm:w-3" aria-hidden="true" />

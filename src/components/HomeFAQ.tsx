@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
+import MaskedHeading from "@/components/ui/masked-heading";
 
 interface FAQItem {
   question: string;
@@ -12,12 +13,12 @@ const FAQ_DATA: FAQItem[] = [
   {
     question: "What is the minimum order quantity (MOQ)?",
     answer:
-      "Mulch Film: 500 kg. Grow Bags: 5,000 pcs. Coir Pith Bags: 10,000 pcs. Laminated Rolls & Pouches: 500 kg film / 10,000 pouches. PP & LLDPE Bags: 10,000 pcs. Wicked Poly Bags: 25,000 pcs. MOQ varies by product, size, and print — ask for a quote for your exact requirement.",
+      "Mulch Film: 500 kg. Grow Bags: 5,000 pcs. Coir Pith Bags: 10,000 pcs. Laminated Rolls & Pouches: 500 kg film / 10,000 pouches. PP & LLDPE Bags: 10,000 pcs. Wicketted Poly Bags: 25,000 pcs. MOQ varies by product, size, and print — ask for a quote for your exact requirement.",
   },
   {
     question: "How long does an order take?",
     answer:
-      "Mulch Film: 10–12 days. Grow Bags: 12–15 days. Coir Pith: 10–14 days. Laminated Rolls & Pouches: 15–18 days. PP & LLDPE Bags: 10–12 days. Wicked Poly Bags: 7–10 days. Lead time starts after artwork approval and advance payment.",
+      "Mulch Film: 10–12 days. Grow Bags: 12–15 days. Coir Pith: 10–14 days. Laminated Rolls & Pouches: 15–18 days. PP & LLDPE Bags: 10–12 days. Wicketted Poly Bags: 7–10 days. Lead time starts after artwork approval and advance payment.",
   },
   {
     question: "Can you print our brand / artwork on the bags?",
@@ -65,12 +66,15 @@ export default function HomeFAQ() {
     >
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="max-w-3xl">
-          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
             07 / FREQUENTLY ASKED QUESTIONS
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+          <MaskedHeading
+            as="h2"
+            className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink"
+          >
             Questions, answered.
-          </h2>
+          </MaskedHeading>
         </div>
 
         <div className="mt-12 md:mt-16 divide-y divide-powder/40 border-y border-powder/40">
@@ -84,7 +88,7 @@ export default function HomeFAQ() {
                   aria-expanded={isOpen}
                   className="flex w-full min-h-[56px] items-center justify-between py-5 text-left text-base sm:text-lg font-medium text-ink hover:text-navy transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-navy"
                 >
-                  <span className="pr-6 font-serif">{item.question}</span>
+                  <span className="pr-6 font-sans font-semibold">{item.question}</span>
                   <span className="shrink-0 flex items-center justify-center h-7 w-7 rounded-full border border-powder bg-background text-navy transition-colors duration-200">
                     {isOpen ? (
                       <Minus className="h-4 w-4" aria-hidden="true" />

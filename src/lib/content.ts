@@ -42,6 +42,12 @@ export type ProductItem = Product;
 export type TimelineItem = TimelineEvent;
 export type ClientGroup = ClientCategory;
 
+export interface PrintingCapability {
+  title: string;
+  specTag: string;
+  description: string;
+}
+
 export const company: CompanyProfile = {
   name: "Graphipacks Private Limited",
   tagline: "Flexible Packaging Solution Providers",
@@ -57,7 +63,7 @@ export const company: CompanyProfile = {
     "Invest in effective processes and innovative technologies",
   ],
   about:
-    "Find your spec. Book your call. Done in 60 seconds. MOQ, gauge and lead time shown upfront. No waiting 24 hours for a reply.",
+    "Founded in Madurai in 1984 as Polygraphs with a single flexographic press, Graphipacks Private Limited brings over four decades of flexible packaging expertise. Under Executive Director C.S. Arjun, our facility integrates 3-layer and ABA blown film extrusion, 8-colour rotogravure printing, lamination, and automated wicketted bag lines for domestic and export buyers.",
 };
 
 export const products: Product[] = [
@@ -86,7 +92,7 @@ export const products: Product[] = [
     shortDescription:
       "UV-Stabilised PP Woven Planters for High-Yield Commercial Horticulture.",
     description:
-      "Manufactured by Senior Operators with 25 years of experience, built to match exact customer lifespan specs.",
+      "Manufactured by senior operators with 25+ years of converting floor experience within our 40+ year (Est. 1984) Madurai facility, built to match exact UV and drainage specs.",
     features: ["Pre-punched drainage holes", "UV-stabilized PP woven", "Air-pruning structure"],
     applications: ["Nurseries", "Polyhouse cultivation", "Coir export", "Home gardening", "Hydroponics"],
     image: "/images/products/grow-bags.jpg",
@@ -120,7 +126,7 @@ export const products: Product[] = [
     shortDescription:
       "Multi-Layer High-Barrier Substrates with Up to 8-Colour Precision Rotogravure Printing.",
     description:
-      "25 years of experience manufacturing laminated rolls and pouches, offering marketable design advice and technical packing support.",
+      "Backed by 40+ years of converting heritage (Est. 1984) and over 25 years in multi-layer rotogravure lamination, offering structural film advice and technical packing support.",
     features: ["Oxygen & moisture proof barrier", "Up to 8-colour Rotogravure", "Custom pouch formats"],
     applications: ["Spices", "Tea & Coffee", "Snacks", "Rice", "Fertiliser", "Pharma"],
     image: "/images/products/laminated-rolls-and-pouches.jpg",
@@ -180,6 +186,27 @@ export const printingTechnology: string[] = [
   "Roto Gravure Printing",
   "Normal Flexo Printing",
   "Hi-Speed Flexo Printing",
+];
+
+export const printingCapabilities: PrintingCapability[] = [
+  {
+    title: "Roto Gravure Printing",
+    specTag: "Up to 8-Colour Electronic Register",
+    description:
+      "Electronically engraved copper cylinders up to 8 colours with fine halftone vignettes, high-bond ink anchorage, and micro-registration for laminated food, spice, and FMCG barrier pouches.",
+  },
+  {
+    title: "Normal Flexo Printing",
+    specTag: "Cost-Effective Plate Conversion",
+    description:
+      "Versatile photopolymer plate flexographic printing calibrated for medium-volume agricultural mulch rolls, nursery grow bags, and multi-colour woven coir export sacks.",
+  },
+  {
+    title: "Hi-Speed Flexo Printing",
+    specTag: "Continuous Web Tension Control",
+    description:
+      "High-throughput inline flexo presses with automated web tensioning and fast solvent/water-based drying for uniform branding across high-volume wicketted bags and LLDPE liners.",
+  },
 ];
 
 export const timeline: TimelineEvent[] = [
@@ -244,7 +271,7 @@ export const clients: ClientCategory[] = [
   },
   {
     category: "Wicketted Poly Bags",
-    clients: ["Modern", "Elite"],
+    clients: ["Modern"],
   },
 ];
 

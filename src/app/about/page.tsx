@@ -3,10 +3,11 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   company,
   timeline,
-  printingTechnology,
+  printingCapabilities,
   clients,
 } from "@/lib/content";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -33,15 +34,15 @@ export default async function AboutPage() {
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-4xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
               ESTABLISHED 1984 &bull; FOUR DECADES OF HERITAGE
             </span>
 
-            <h1 className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-normal leading-[1.06] tracking-[-0.025em] text-ink font-serif">
+            <h1 className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-display font-bold leading-[1.1] tracking-[-0.015em] text-ink">
               About {company.name}
             </h1>
 
-            <p className="mt-4 max-w-[58ch] text-xl sm:text-2xl font-serif italic text-heritage">
+            <p className="mt-4 max-w-[58ch] text-xl sm:text-2xl font-sans font-medium text-heritage">
               {company.tagline}
             </p>
 
@@ -97,17 +98,58 @@ export default async function AboutPage() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-lg bg-navy hover:bg-navy/90 px-6 py-3.5 text-sm font-bold text-background transition"
+                className="btn-press inline-flex items-center justify-center rounded-md bg-navy hover:bg-navy/90 px-6 py-3.5 text-sm font-bold text-background transition-colors"
               >
                 Contact Leadership Team &rarr;
               </Link>
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center rounded-lg border border-ink/20 bg-background px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-surface"
+                className="btn-press inline-flex items-center justify-center rounded-md border border-ink/20 bg-background px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-surface"
               >
                 Explore Product Specs
               </Link>
             </div>
+          </div>
+
+          {/* Madurai Plant Visual Proof Strip */}
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {[
+              {
+                src: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
+                alt: "8-colour rotogravure printing cylinders inside Graphipacks Madurai facility",
+                label: "8-Colour Rotogravure Press",
+              },
+              {
+                src: "/images/infrastructure/infra-02-film-lamination-rollers.jpg",
+                alt: "Multi-layer blown film and lamination rollers in Madurai plant",
+                label: "Multi-Layer Film Extrusion",
+              },
+              {
+                src: "/images/infrastructure/infra-05-packing-conveyor.jpg",
+                alt: "Automated wicketting and packing conveyor line at Graphipacks",
+                label: "Automated Converting & Dispatch",
+              },
+            ].map((photo) => (
+              <figure
+                key={photo.src}
+                className="overflow-hidden rounded-lg border border-powder/60 bg-background"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="px-4 py-2.5 font-mono text-[11px] font-medium uppercase tracking-wider text-steel border-t border-powder/40">
+                  {photo.label}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </header>
@@ -117,10 +159,10 @@ export default async function AboutPage() {
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
               01 / OPERATIONAL VALUES
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
               Our Corporate Commitments
             </h2>
             <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
@@ -138,7 +180,7 @@ export default async function AboutPage() {
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-powder bg-surface font-mono text-sm font-bold text-navy">
                       0{idx + 1}
                     </div>
-                    <h3 className="mt-4 text-lg md:text-xl font-serif font-normal leading-[1.2] text-ink">
+                    <h3 className="mt-4 text-lg md:text-xl font-display font-bold leading-[1.2] text-ink">
                       {commitment}
                     </h3>
                   </div>
@@ -162,10 +204,10 @@ export default async function AboutPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           {/* Capabilities subsection */}
           <div className="max-w-3xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
               03 / MANUFACTURING CAPABILITIES
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
               Printing &amp; Extrusion Infrastructure
             </h2>
             <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
@@ -174,8 +216,8 @@ export default async function AboutPage() {
           </div>
 
           <div className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-3">
-            {printingTechnology.map((tech, idx) => (
-              <ScrollReveal key={tech} delay={idx * 0.08}>
+            {printingCapabilities.map((cap, idx) => (
+              <ScrollReveal key={cap.title} delay={idx * 0.08}>
                 <div
                   className="flex flex-col justify-between rounded-lg border border-powder/50 bg-background p-6 md:p-8 h-full hover:border-steel transition-colors duration-200"
                 >
@@ -184,19 +226,19 @@ export default async function AboutPage() {
                       <span className="font-mono text-xs font-bold text-steel">
                         SYSTEM 0{idx + 1}
                       </span>
-                      <span className="rounded-full border border-powder bg-surface px-2.5 py-0.5 text-xs font-semibold text-ink">
+                      <span className="rounded-full border border-powder bg-surface px-2.5 py-0.5 text-xs font-mono font-medium text-ink">
                         Online Capacity
                       </span>
                     </div>
-                    <h3 className="mt-4 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
-                      {tech}
+                    <h3 className="mt-4 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink">
+                      {cap.title}
                     </h3>
                     <p className="mt-2 text-sm text-ink/75 leading-relaxed font-sans">
-                      Engineered for continuous tension control, precision solvent and water ink transfer, and substrate versatility across PE, PP, and multi-layer laminates.
+                      {cap.description}
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-ink/10 pt-3 text-xs text-ink/75 font-medium">
-                    Controlled cylinder &amp; plate registration
+                  <div className="mt-6 border-t border-ink/10 pt-3 font-mono text-xs text-steel font-medium">
+                    {cap.specTag}
                   </div>
                 </div>
               </ScrollReveal>
@@ -207,10 +249,10 @@ export default async function AboutPage() {
           <div className="mt-24 md:mt-32 border-t border-powder/40 pt-16 md:pt-20">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                   04 / CLIENT NETWORK
                 </span>
-                <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+                <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                   Client Ecosystem &amp; B2B Trust
                 </h2>
               </div>
@@ -261,10 +303,10 @@ export default async function AboutPage() {
         <ScrollReveal className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-2xl">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-powder mb-4">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-powder mb-4">
                 PLANT TECHNICAL CONSULTATION &bull; EST. 1984
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-background">
+              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-background">
                 Discuss Your Technical Specifications
               </h2>
               <p className="mt-4 max-w-[60ch] text-[15px] md:text-base leading-[1.7] text-background/80 font-sans">
@@ -274,13 +316,13 @@ export default async function AboutPage() {
             <div className="shrink-0 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-lg bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200"
+                className="btn-press inline-flex items-center justify-center rounded-md bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200"
               >
                 Inquire Directly &rarr;
               </Link>
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center rounded-lg border border-powder/50 bg-transparent px-6 py-3.5 text-sm font-semibold text-background transition hover:bg-powder/15"
+                className="btn-press inline-flex items-center justify-center rounded-md border border-powder/50 bg-transparent px-6 py-3.5 text-sm font-semibold text-background transition-colors hover:bg-powder/15"
               >
                 View All 6 Product Lines
               </Link>

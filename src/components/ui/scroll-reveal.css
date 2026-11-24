@@ -10,3 +10,15 @@
 .scroll-reveal-piece {
   display: inline-block;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-text,
+  .scroll-reveal-word,
+  .scroll-reveal-piece {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    color: #1D3557 !important;
+  }
+}

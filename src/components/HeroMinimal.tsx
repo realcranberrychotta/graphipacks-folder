@@ -76,15 +76,15 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         variants={containerVariants}
         initial={instant ? "visible" : "hidden"}
         animate="visible"
-        className="flex flex-col items-start max-w-4xl pointer-events-auto"
+        className="flex flex-col items-start max-w-xl pointer-events-auto"
       >
         {/* Provenance Indicator */}
         <motion.div
           variants={itemVariants}
           className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/80"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-red shrink-0 animate-pulse" aria-hidden="true" />
-          <span className="text-steel font-semibold">EST. 1984 · MADURAI PLANT</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-red shrink-0" aria-hidden="true" />
+          <span className="text-steel font-medium">EST. 1984 · MADURAI PLANT</span>
           <span className="text-ink/40" aria-hidden="true">&bull;</span>
           <span className="text-ink/90">{company.name}</span>
         </motion.div>
@@ -112,7 +112,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
 
         {/* Editorial Value Proposition Headline & Subline */}
         <motion.div variants={itemVariants} className="max-w-xl">
-          <h2 className="font-serif font-[family-name:var(--font-display)] text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.12] tracking-tight text-ink text-left">
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.18] tracking-[-0.015em] text-ink text-left">
             <span className="block whitespace-nowrap">Find your spec.</span>
             <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Book your call.</span>
             <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Done in 60 seconds.</span>
@@ -144,18 +144,20 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           <button
             type="button"
             onClick={() => openQuoteModal()}
-            className="btn-press group relative inline-flex items-center justify-center rounded-none bg-red hover:bg-[#d62839] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#d62839] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+            className="btn-press btn-tactile group relative inline-flex items-center justify-center rounded-md bg-red px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#1D3557] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+            style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>Get a Quote</span>
             <ArrowRight
-              className="ml-3 h-4 w-4 text-background transition-transform duration-200 group-hover:translate-x-1"
+              className="tactile-arrow ml-3 h-4 w-4 text-background"
               aria-hidden="true"
             />
           </button>
 
           <Link
             href="/products"
-            className="btn-press group inline-flex items-center justify-center rounded-none border border-steel bg-transparent hover:bg-powder/20 hover:border-navy hover:text-navy px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-ink transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            className="btn-press btn-tactile group inline-flex items-center justify-center rounded-md border border-steel bg-transparent px-8 py-4 text-xs font-mono font-medium uppercase tracking-[0.18em] text-ink hover:text-background hover:border-[#1D3557] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>View Products</span>
           </Link>

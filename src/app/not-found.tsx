@@ -8,7 +8,7 @@ export default function NotFound() {
         <span className="font-mono text-xs font-bold uppercase tracking-widest text-steel">
           404 — Specification Not Located
         </span>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-5xl font-serif">
+        <h1 className="mt-3 text-3xl font-bold tracking-[-0.015em] text-ink sm:text-5xl font-display leading-[1.1]">
           Page Not Found
         </h1>
         <p className="mt-4 max-w-md text-base text-ink/75 font-sans">
@@ -17,13 +17,13 @@ export default function NotFound() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-xl bg-red hover:bg-[#d62839] px-6 py-3 text-sm font-bold text-background transition-colors duration-200"
+            className="btn-press inline-flex items-center justify-center rounded-md bg-red hover:bg-[#d62839] px-6 py-3 text-sm font-bold text-background transition-colors duration-200"
           >
             Return to Home &rarr;
           </Link>
           <Link
             href="/products"
-            className="inline-flex items-center justify-center rounded-xl border border-ink/20 bg-surface px-6 py-3 text-sm font-semibold text-ink hover:bg-background transition-colors duration-200"
+            className="btn-press inline-flex items-center justify-center rounded-md border border-ink/20 bg-surface px-6 py-3 text-sm font-semibold text-ink hover:bg-background transition-colors duration-200"
           >
             Browse Product Catalog
           </Link>

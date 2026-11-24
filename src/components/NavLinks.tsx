@@ -83,19 +83,37 @@ export default function NavLinks() {
                 openQuoteModal();
               }
             }}
-            className="btn-press inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md px-4 py-1.5 text-xs font-bold transition-all duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans bg-red text-background hover:brightness-110 focus-visible:outline-red shadow-sm cursor-pointer"
+            className="btn-press btn-tactile inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md px-4 py-1.5 text-xs font-bold transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans bg-red text-background hover:border-[#1D3557] focus-visible:outline-red shadow-sm cursor-pointer"
+            style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
-            Get a Quote &rarr;
+            <span>Get a Quote</span>
+            <span className="tactile-arrow ml-1" aria-hidden="true">&rarr;</span>
           </Link>
         </motion.div>
       </div>
 
-      {/* Mobile Menu Button */}
-      <div className="flex md:hidden items-center">
+      {/* Mobile 1-Tap Quote CTA + Menu Button */}
+      <div className="flex md:hidden items-center gap-1.5">
+        <Link
+          href="/contact"
+          onClick={(e) => {
+            setMobileMenuOpen(false);
+            if (pathname === "/") {
+              e.preventDefault();
+              openQuoteModal();
+            }
+          }}
+          className="btn-press inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md bg-red hover:bg-[#d62839] px-2.5 xs:px-3 py-1.5 text-[11px] xs:text-xs font-bold text-background transition-colors duration-200 whitespace-nowrap shadow-sm cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
+          aria-label="Get a Quote"
+        >
+          <span>Get a Quote</span>
+          <span className="ml-1" aria-hidden="true">&rarr;</span>
+        </Link>
+
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 focus:outline-hidden text-background hover:text-powder"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 focus:outline-hidden text-background hover:text-powder transition-colors"
           aria-expanded={mobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
@@ -174,9 +192,11 @@ export default function NavLinks() {
                   openQuoteModal();
                 }
               }}
-              className="btn-press flex min-h-[44px] w-full items-center justify-center rounded-lg bg-red hover:brightness-110 text-background px-4 py-2.5 text-sm font-bold transition-all duration-200 text-center shadow-sm"
+              className="btn-press btn-tactile flex min-h-[44px] w-full items-center justify-center rounded-lg bg-red text-background px-4 py-2.5 text-sm font-bold transition-colors duration-200 text-center shadow-sm"
+              style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
             >
-              Get a Quote &rarr;
+              <span>Get a Quote</span>
+              <span className="tactile-arrow ml-1.5" aria-hidden="true">&rarr;</span>
             </Link>
           </div>
         </motion.div>

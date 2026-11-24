@@ -57,12 +57,12 @@ export default function ProductCatalog({
       <section aria-labelledby="catalog-heading">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-ink/10 pb-8">
           <div>
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
               01 / PRODUCT CATALOG &bull; EST. 1984
             </span>
             <h2
               id="catalog-heading"
-              className="mt-1 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink"
+              className="mt-1 text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink"
             >
               Manufacturing Product Index
             </h2>
@@ -84,7 +84,7 @@ export default function ProductCatalog({
                   whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
                   transition={bouncySpring}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`btn-press inline-flex min-h-[44px] items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-steel focus:ring-offset-2 ${isSelected
+                  className={`btn-press inline-flex min-h-[44px] items-center gap-2 rounded-md px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-steel focus:ring-offset-2 ${isSelected
                     ? "bg-heritage text-background border border-heritage"
                     : "bg-surface text-ink border border-ink/10 hover:border-steel hover:text-navy"
                     }`}
@@ -142,7 +142,7 @@ export default function ProductCatalog({
                       </span>
                     </div>
 
-                    <h3 className="mt-3 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink group-hover:text-heritage transition-colors duration-200 ease-in-out">
+                    <h3 className="mt-3 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink group-hover:text-heritage transition-colors duration-200 ease-in-out">
                       {product.name}
                     </h3>
 
@@ -176,8 +176,9 @@ export default function ProductCatalog({
                 </div>
 
                 <div className="border-t border-ink/10 p-6 md:p-8 pt-4 min-h-[44px] flex items-center justify-between text-sm font-semibold text-heritage">
-                  <span className="inline-flex min-h-[44px] items-center gap-1 group-hover:text-steel transition-colors duration-200 ease-in-out">
-                    View Specifications Sheet &rarr;
+                  <span className="inline-flex min-h-[44px] items-center gap-1.5 group-hover:text-steel transition-colors duration-200 ease-in-out">
+                    <span>View Specifications Sheet</span>
+                    <span className="tactile-arrow inline-block" aria-hidden="true">&rarr;</span>
                   </span>
                 </div>
               </Link>
@@ -192,12 +193,12 @@ export default function ProductCatalog({
         className="rounded-3xl border border-ink/10 bg-surface p-8 md:p-12 text-ink"
       >
         <div className="max-w-3xl">
-          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+          <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
             INTERACTIVE SPECIFICATION TOOL
           </span>
           <h2
             id="packaging-forms-heading"
-            className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink"
+            className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink"
           >
             Packaging by Product Form
           </h2>
@@ -214,11 +215,11 @@ export default function ProductCatalog({
               <motion.button
                 key={item.form}
                 type="button"
-                whileHover={{ scale: 1.05, y: -1 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.05, y: -1 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 transition={bouncySpring}
                 onClick={() => setSelectedFormIndex(idx)}
-                className={`min-h-[44px] rounded-xl px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-steel ${isSelected
+                className={`btn-press min-h-[44px] rounded-md px-4 py-2.5 text-sm font-bold transition-colors duration-200 ease-in-out focus:outline-hidden focus:ring-2 focus:ring-steel ${isSelected
                   ? "bg-heritage text-background border border-heritage"
                   : "bg-background text-ink border border-ink/10 hover:border-steel hover:text-navy"
                   }`}
@@ -233,9 +234,9 @@ export default function ProductCatalog({
         {activeForm && (
           <motion.div
             key={activeForm.form}
-            initial={{ opacity: 0, y: 8 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeInOut" }}
             className="mt-8 rounded-2xl border border-powder bg-background p-6 md:p-8"
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -244,7 +245,7 @@ export default function ProductCatalog({
                   <span className="h-1.5 w-1.5 rounded-full bg-red" />
                   <span>Physical State Compatibility</span>
                 </div>
-                <h3 className="mt-3 text-2xl md:text-3xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
+                <h3 className="mt-3 text-2xl md:text-3xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink">
                   {activeForm.form}
                 </h3>
                 <p className="mt-2 text-[15px] leading-[1.7] text-ink/75">

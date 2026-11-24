@@ -19,12 +19,14 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out text-background ${
-        isScrolled ? "h-[56px] md:h-[60px]" : "h-[56px] md:h-[72px]"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 w-full h-[56px] md:h-[72px] text-background"
     >
       {/* Background with Dark Navy depth, fine grain texture & powder blue hairlines */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#152740] via-[#1D3557] to-[#152740] backdrop-blur-md transition-opacity duration-300 pointer-events-none">
+      <div
+        className={`absolute inset-0 z-0 bg-gradient-to-b from-[#152740] via-[#1D3557] to-[#152740] origin-top transition-transform duration-300 ease-in-out pointer-events-none ${
+          isScrolled ? "md:scale-y-[0.833333]" : "md:scale-y-100"
+        }`}
+      >
         {/* Tactile micro-grain & woven film texture */}
         <div
           aria-hidden="true"
@@ -42,7 +44,11 @@ export default function Header() {
         <div className="absolute -bottom-[1px] inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-powder/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div
+        className={`relative z-10 mx-auto flex h-full max-w-7xl items-center justify-between px-3 xs:px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-in-out ${
+          isScrolled ? "md:-translate-y-1.5" : "md:translate-y-0"
+        }`}
+      >
         {/* Left: Premium Heritage Logo */}
         <div className="relative z-10 flex items-center shrink-0">
           <Link
@@ -51,7 +57,7 @@ export default function Header() {
           >
             <span
               className="font-serif font-bold tracking-[0.08em] text-base xs:text-lg sm:text-xl leading-none transition-colors duration-200 ease-in-out text-background group-hover:text-powder"
-              style={{ fontFamily: 'var(--font-display), "Playfair Display", Georgia, serif' }}
+              style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
             >
               GRAPHIPACKS
             </span>

@@ -7,7 +7,7 @@ export const CLIENT_ROW_1: LogoItem[] = [
   { title: "The Spice Club" },
   { title: "Elite Foods" },
   { title: "Maagrita Foods" },
-  { title: "Palemix" },
+  { title: "Pelemix" },
   { title: "Dutch Plantin" },
   { title: "Remmy" },
   { title: "Eco Green Coir" },
@@ -23,12 +23,11 @@ export const CLIENT_ROW_2: LogoItem[] = [
   { title: "Meet & Eat" },
   { title: "OrgFarm" },
   { title: "Modern" },
-  { title: "Elite" },
 ];
 
 export const renderPartnerLogo = (item: LogoItem, key: React.Key) => (
   <div key={key} className="flex items-center gap-6 sm:gap-8 group/partner cursor-default select-none">
-    <span className="font-serif text-lg sm:text-xl md:text-2xl font-normal tracking-[-0.01em] text-[#1D3557]/75 group-hover/partner:text-[#1D3557] group-hover/partner:scale-[1.02] transition-all duration-200 whitespace-nowrap">
+    <span className="font-sans text-lg sm:text-xl md:text-2xl font-semibold tracking-[-0.01em] text-[#1D3557]/75 group-hover/partner:text-[#1D3557] group-hover/partner:scale-[1.02] transition-[transform,color] duration-200 whitespace-nowrap">
       {item.title}
     </span>
     <span className="text-[#457B9D] text-[10px] sm:text-xs select-none" aria-hidden="true">
@@ -39,7 +38,7 @@ export const renderPartnerLogo = (item: LogoItem, key: React.Key) => (
 
 export function EnterpriseClientMarquee() {
   return (
-    <div className="relative w-full border-y border-[#A8DADC] bg-[#F1FAEE]/60 py-6 md:py-8 space-y-6 md:space-y-8 rounded-lg overflow-hidden">
+    <div className="relative z-10 w-full border-y border-[#A8DADC] bg-[#F1FAEE] py-6 md:py-8 space-y-6 md:space-y-8 overflow-hidden">
       {/* Row 1: Leftward */}
       <LogoLoop
         logos={CLIENT_ROW_1}
