@@ -1858,6 +1858,9 @@ function initMachineScene(
         if (activeHotspot) {
           desiredTarget.set(...activeHotspot.cameraTarget)
           desiredPosition.set(...activeHotspot.cameraPosition)
+          if (mobile) {
+            desiredPosition.sub(desiredTarget).multiplyScalar(1.15).add(desiredTarget)
+          }
         } else {
           const s = stations.find((s) => s.id === selected)!
           desiredTarget.copy(s.group.position).add(new THREE.Vector3(0, 1.25, 0))

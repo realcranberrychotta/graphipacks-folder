@@ -3,7 +3,7 @@
 import React, { Component, useEffect, useState, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { MACHINE_STATIONS, type MachineStationConfig } from "@/lib/machine-stations";
 
@@ -224,36 +224,45 @@ export default function HomeHeroFactory() {
     />
   );
 
-  const specOverlayCard = activeStation && (
-    <div
-      role="region"
-      aria-label={`Station ${activeStation.numeral} specifications`}
-      data-station-card={activeStation.id}
-      className="pointer-events-auto absolute top-2.5 right-2.5 left-2.5 sm:left-auto sm:w-[280px] md:top-24 md:right-6 md:w-[300px] lg:right-10 z-20 rounded-xl border border-[#A8DADC] bg-[#1D3557]/[0.94] p-3.5 md:p-4 text-[#F1FAEE] shadow-[0_12px_32px_rgba(29,53,87,0.28)]"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
-          <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#A8DADC]">
-            STATION {activeStation.numeral}
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={() => setActiveStationId(null)}
-          aria-label="Close station details and reset to overview"
-          className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#A8DADC]/35 text-[#F1FAEE]/85 hover:bg-[#457B9D]/40 hover:text-[#F1FAEE] transition-colors cursor-pointer"
+  const specOverlayCard = (
+    <AnimatePresence mode="wait">
+      {activeStation && (
+        <motion.div
+          key={activeStation.id}
+          role="region"
+          aria-label={`Station ${activeStation.numeral} specifications`}
+          data-station-card={activeStation.id}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-3 p-4 rounded-lg bg-[#1D3557] border border-[#A8DADC]/40 text-[#F1FAEE] shadow-[0_12px_32px_rgba(29,53,87,0.28)] md:mt-0 md:pointer-events-auto md:absolute md:top-24 md:right-6 lg:right-10 md:w-[300px] md:z-20 md:rounded-xl md:border-[#A8DADC] md:bg-[#1D3557]/[0.94]"
         >
-          <X className="h-3.5 w-3.5" aria-hidden="true" />
-        </button>
-      </div>
-      <h3 className="mt-1.5 font-display text-base font-bold leading-snug text-[#F1FAEE]">
-        {activeStation.title}
-      </h3>
-      <p className="mt-1 text-xs leading-relaxed text-[#F1FAEE]/85 font-sans">
-        {activeStation.spec}
-      </p>
-    </div>
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#A8DADC]">
+                STATION {activeStation.numeral}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveStationId(null)}
+              aria-label="Close station details and reset to overview"
+              className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-[#A8DADC]/35 text-[#F1FAEE]/85 hover:bg-[#457B9D]/40 hover:text-[#F1FAEE] transition-colors cursor-pointer"
+            >
+              <X className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          </div>
+          <h3 className="mt-1.5 font-display text-base font-bold leading-snug text-[#F1FAEE]">
+            {activeStation.title}
+          </h3>
+          <p className="mt-1 text-xs leading-relaxed text-[#F1FAEE]/85 font-sans">
+            {activeStation.spec}
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 
   const stationPillBar = (
@@ -335,9 +344,10 @@ export default function HomeHeroFactory() {
           )}
         </motion.div>
 
-        {/* High-Contrast Dark Navy Spec Overlay Card */}
-        {specOverlayCard}
       </div>
+
+      {/* Station Spec Card: normal flow below canvas on mobile, corner overlay on desktop */}
+      {specOverlayCard}
 
       {/* Compact Station Selector Pill Row */}
       {stationPillBar}
