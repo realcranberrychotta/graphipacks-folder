@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
@@ -13,7 +12,7 @@ const AgenticFactory3D = dynamic(() => import("@/components/ui/agentic-factory-3
 export default function HomeHeroFactory() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(true);
   const [mounted, setMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -96,21 +95,7 @@ export default function HomeHeroFactory() {
         }}
         className="hero-parallax-machine relative w-full h-full"
       >
-        {/* Static Flexo photo fallback — only shown when 3D is not running, with transparent overlay so gradient is always visible */}
-        {(!isDesktop || shouldReduceMotion || !isInView) && (
-          <div className="absolute -top-12 -bottom-12 inset-x-0 w-full z-0 opacity-20 pointer-events-none mix-blend-luminosity">
-            <Image
-              src="/images/infrastructure/infra-01-flexo-ink-rollers.jpg"
-              alt="Graphipacks Flexographic Printing Production Line"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 100vw"
-              className="object-cover object-center"
-            />
-          </div>
-        )}
-
-        {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic only when in view on desktop, and disabled if reduced motion */}
+        {/* 3D Manufacturing Plant Tour: Loaded on demand with next/dynamic when on desktop and not reduced motion */}
         {isDesktop && isInView && !shouldReduceMotion && (
           <div className="relative z-10 w-full h-full hero-factory-3d-wrap">
             <style>{`
@@ -132,7 +117,16 @@ export default function HomeHeroFactory() {
                 }
               }
             `}</style>
-            <AgenticFactory3D embed height={720} />
+            <AgenticFactory3D
+              embed
+              height={720}
+              onReady={() => {
+                if (typeof window !== "undefined") {
+                  (window as unknown as { __graphipacks3DReady?: boolean }).__graphipacks3DReady = true;
+                  window.dispatchEvent(new CustomEvent("graphipacks-3d-ready"));
+                }
+              }}
+            />
           </div>
         )}
       </motion.div>

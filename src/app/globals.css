@@ -692,3 +692,34 @@ details[open]::details-content {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   PRELOADER / SPLASH SCREEN
+   ========================================================================== */
+html.preloader-active,
+html.preloader-active body {
+  overflow: hidden !important;
+}
+
+@keyframes preloaderProgress {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  35% {
+    transform: scaleX(0.52);
+    transform-origin: left;
+  }
+  75% {
+    transform: scaleX(0.86);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.preloader-progress-bar {
+  animation: preloaderProgress 2s ease-out forwards;
+}

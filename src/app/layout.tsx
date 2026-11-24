@@ -59,8 +59,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (window.location.pathname === '/' && localStorage.getItem('graphipacks-intro-seen') !== 'true') {
-                  document.documentElement.classList.add('show-intro');
+                if (window.location.pathname === '/') {
+                  document.documentElement.classList.add('preloader-active');
                 }
               } catch (e) {}
             `,
