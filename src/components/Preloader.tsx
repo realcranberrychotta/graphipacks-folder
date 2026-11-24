@@ -66,14 +66,14 @@ export default function Preloader() {
           initial={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: "-100%" }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#3D0E18] bg-gradient-to-b from-[#3D0E18] to-[#27080F]"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-navy"
         >
           <div className="flex flex-col items-center justify-center gap-6">
-            {/* Top Accent: Fading line with central Antique Brass diamond */}
+            {/* Top Accent: Fading line with central diamond */}
             <div className="flex items-center gap-3">
-              <div className="w-16 h-px bg-gradient-to-r from-transparent to-[#A6864C]/50" />
-              <div className="w-1.5 h-1.5 rotate-45 bg-[#A6864C]" />
-              <div className="w-16 h-px bg-gradient-to-l from-transparent to-[#A6864C]/50" />
+              <div className="w-16 h-px bg-gradient-to-r from-transparent to-steel/50" />
+              <div className="w-1.5 h-1.5 rotate-45 bg-red" />
+              <div className="w-16 h-px bg-gradient-to-l from-transparent to-steel/50" />
             </div>
 
             {/* Main Title: Heritage Luxury Serif */}
@@ -81,7 +81,7 @@ export default function Preloader() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="font-serif text-4xl sm:text-6xl md:text-7xl tracking-[0.3em] sm:tracking-[0.5em] text-[#F6F2EB] font-light ml-[0.3em] sm:ml-[0.5em]"
+              className="font-serif text-4xl sm:text-6xl md:text-7xl tracking-[0.3em] sm:tracking-[0.5em] text-background font-light ml-[0.3em] sm:ml-[0.5em]"
             >
               GRAPHIPACKS
             </motion.h1>
@@ -91,13 +91,13 @@ export default function Preloader() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut", delay: 0.05 }}
-              className="uppercase text-[0.65rem] sm:text-xs tracking-[0.4em] text-[#A6864C] font-medium ml-[0.4em]"
+              className="uppercase text-[0.65rem] sm:text-xs tracking-[0.4em] text-steel font-medium ml-[0.4em]"
             >
               FLEXIBLE PACKAGING • EST. 1984
             </motion.p>
 
             {/* Bottom Accent: Subtle centered gradient rule */}
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-[#A6864C]/70 to-transparent mt-4" />
+            <div className="w-32 h-px bg-gradient-to-r from-transparent via-steel/70 to-transparent mt-4" />
           </div>
         </motion.div>
       )}

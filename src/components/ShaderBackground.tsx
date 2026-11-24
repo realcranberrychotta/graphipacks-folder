@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { PALETTE_GL } from "@/lib/palette";
 
 const VERTEX_SHADER_SOURCE = `
 attribute vec2 position;
@@ -356,12 +357,12 @@ export default function ShaderBackground() {
     const uSpaceLocation = gl.getUniformLocation(program, "u_space");
     const uCursorLocation = gl.getUniformLocation(program, "u_cursor");
 
-    // Colors: #3D0E18, #27080F, #A6864C, #F6F2EB (padded with zeros to 8 colors)
+    // Coolors Palette: Dark Navy, Steel Blue, Powder Blue, Honeydew (padded to 8 colors)
     const colorsData = new Float32Array([
-      0.239, 0.055, 0.094, // color 0 (#3D0E18 - Imperial Oxblood)
-      0.153, 0.031, 0.059, // color 1 (#27080F - Deep Oxblood)
-      0.651, 0.525, 0.298, // color 2 (#A6864C - Antique Brass)
-      0.965, 0.949, 0.922, // color 3 (#F6F2EB - Warm Alabaster)
+      ...PALETTE_GL.darkNavy,   // color 0 (#1D3557 - Dark Navy)
+      ...PALETTE_GL.steelBlue,  // color 1 (#457B9D - Steel Blue)
+      ...PALETTE_GL.powderBlue, // color 2 (#A8DADC - Powder Blue)
+      ...PALETTE_GL.honeydew,   // color 3 (#F1FAEE - Honeydew)
       0.000, 0.000, 0.000, // color 4 (padded)
       0.000, 0.000, 0.000, // color 5 (padded)
       0.000, 0.000, 0.000, // color 6 (padded)

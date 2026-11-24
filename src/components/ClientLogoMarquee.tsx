@@ -21,7 +21,7 @@ export default function ClientLogoMarquee() {
   if (shouldReduceMotion) {
     return (
       <div
-        className="w-full border-y border-[#A6864C]/25 bg-[#F6F2EB] py-6 sm:py-8"
+        className="w-full border-y border-powder bg-background py-6 sm:py-8"
         role="region"
         aria-label="Client Network Partners"
       >
@@ -29,12 +29,12 @@ export default function ClientLogoMarquee() {
           <div className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3 text-center">
             {CLIENT_LOGOS.map((client, idx) => (
               <React.Fragment key={client}>
-                <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-[#1C1917] select-none">
+                <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink select-none">
                   {client}
                 </span>
                 {idx < CLIENT_LOGOS.length - 1 && (
                   <span
-                    className="text-[#A6864C] select-none text-xs sm:text-sm"
+                    className="text-steel select-none text-xs sm:text-sm"
                     aria-hidden="true"
                   >
                     ✦
@@ -52,18 +52,18 @@ export default function ClientLogoMarquee() {
 
   return (
     <div
-      className="group/client-marquee relative w-full overflow-hidden border-y border-[#A6864C]/25 bg-[#F6F2EB] py-5 sm:py-6 select-none"
+      className="group/client-marquee relative w-full overflow-hidden border-y border-powder bg-background py-5 sm:py-6 select-none"
       role="region"
       aria-label="Enterprise Client Marquee"
       data-client-marquee-paused={!isPlaying}
     >
       {/* Left & Right gradient masks for smooth luxury edge fade */}
       <div
-        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 sm:w-28 md:w-36 bg-gradient-to-r from-[#F6F2EB] via-[#F6F2EB]/80 to-transparent"
+        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 sm:w-28 md:w-36 bg-gradient-to-r from-background via-background/80 to-transparent"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 sm:w-28 md:w-36 bg-gradient-to-l from-[#F6F2EB] via-[#F6F2EB]/80 to-transparent"
+        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 sm:w-28 md:w-36 bg-gradient-to-l from-background via-background/80 to-transparent"
         aria-hidden="true"
       />
 
@@ -82,11 +82,11 @@ export default function ClientLogoMarquee() {
         <div className="flex shrink-0 items-center">
           {loopedLogos.map((client, idx) => (
             <span key={`group1-${client}-${idx}`} className="inline-flex items-center">
-              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-[#1C1917] hover:text-[#3D0E18] transition-colors duration-200 whitespace-nowrap">
+              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
                 {client}
               </span>
               <span
-                className="text-[#A6864C] text-xs sm:text-sm mx-6 sm:mx-8 md:mx-10 select-none"
+                className="text-steel text-xs sm:text-sm mx-6 sm:mx-8 md:mx-10 select-none"
                 aria-hidden="true"
               >
                 ✦
@@ -99,11 +99,11 @@ export default function ClientLogoMarquee() {
         <div className="flex shrink-0 items-center" aria-hidden="true">
           {loopedLogos.map((client, idx) => (
             <span key={`group2-${client}-${idx}`} className="inline-flex items-center">
-              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-[#1C1917] hover:text-[#3D0E18] transition-colors duration-200 whitespace-nowrap">
+              <span className="font-serif text-base sm:text-lg md:text-xl font-medium tracking-wide text-ink hover:text-heritage transition-colors duration-200 whitespace-nowrap">
                 {client}
               </span>
               <span
-                className="text-[#A6864C] text-xs sm:text-sm mx-6 sm:mx-8 md:mx-10 select-none"
+                className="text-steel text-xs sm:text-sm mx-6 sm:mx-8 md:mx-10 select-none"
                 aria-hidden="true"
               >
                 ✦
@@ -118,7 +118,7 @@ export default function ClientLogoMarquee() {
         type="button"
         onClick={() => setIsPlaying((prev) => !prev)}
         aria-label={isPlaying ? "Pause client marquee" : "Play client marquee"}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-[#A6864C]/40 bg-[#EDE6DA] text-[#3D0E18] hover:bg-[#A6864C] hover:text-[#F6F2EB] transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#3D0E18]"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-powder bg-surface text-navy hover:bg-steel hover:text-background transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-navy"
       >
         {isPlaying ? (
           <Pause className="h-3 w-3" aria-hidden="true" />

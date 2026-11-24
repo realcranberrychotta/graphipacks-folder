@@ -138,25 +138,25 @@ export default function ProductTypewriter({
   return (
     <div
       ref={containerRef}
-      className={`inline-flex items-center gap-2 sm:gap-3 py-1.5 px-3 sm:px-4 rounded-full border border-[#A6864C]/30 bg-[#27080F] ${className}`}
+      className={`inline-flex items-center gap-2 sm:gap-3 py-1.5 px-3 sm:px-4 rounded-full border border-powder/40 bg-navy ${className}`}
     >
       <div className="flex items-center gap-1.5 xs:gap-2 shrink-0 select-none">
         <span
-          className="h-1.5 w-1.5 rounded-full bg-[#A6864C]"
+          className="h-1.5 w-1.5 rounded-full bg-red"
           aria-hidden="true"
         />
-        <span className="font-mono text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.22em] text-[#A6864C] uppercase whitespace-nowrap">
+        <span className="font-mono text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-[0.16em] sm:tracking-[0.22em] text-powder uppercase whitespace-nowrap">
           {prefix}
         </span>
       </div>
 
-      <div className="flex items-center shrink min-w-0 font-sans text-xs xs:text-[13px] sm:text-base md:text-lg font-semibold text-[#F6F2EB] tracking-tight break-words whitespace-normal sm:whitespace-nowrap">
-        <span className="text-[#F6F2EB] select-none">
+      <div className="flex items-center shrink min-w-0 font-sans text-xs xs:text-[13px] sm:text-base md:text-lg font-semibold text-background tracking-tight break-words whitespace-normal sm:whitespace-nowrap">
+        <span className="text-background select-none">
           {displayText}
         </span>
         {!shouldReduceMotion && !isSkipped && isPlaying && (
           <span
-            className="text-[#A6864C] ml-0.5 sm:ml-1 font-mono font-bold animate-pulse select-none inline-block shrink-0"
+            className="text-red ml-0.5 sm:ml-1 font-mono font-bold animate-pulse select-none inline-block shrink-0"
             aria-hidden="true"
           >
             |
@@ -177,7 +177,7 @@ export default function ProductTypewriter({
             ? "Pause product showcase"
             : "Play product showcase"
         }
-        className="ml-1 inline-flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded border border-[#A6864C]/40 bg-[#27080F] text-[#A6864C] hover:border-[#A6864C] hover:text-[#F6F2EB] transition-all duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#A6864C]"
+        className="ml-1 inline-flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded border border-powder/40 bg-navy text-powder hover:border-powder hover:text-background transition-all duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-powder"
       >
         {isPlaying ? (
           <Pause className="h-2.5 w-2.5 sm:h-3 sm:w-3" aria-hidden="true" />

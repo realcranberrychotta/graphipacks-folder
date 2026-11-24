@@ -81,7 +81,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* ------------------------------------------------------------- */}
           <div className="lg:col-span-6 space-y-4">
             {/* Primary Photographic Exhibit Mat */}
-            <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-[#1C1917]/[0.08] bg-[#FBF9F5]">
+            <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-ink/10 bg-background">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImage.src}
@@ -104,8 +104,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
               {/* Provenance Badge */}
               <div className="absolute top-4 left-4 z-10">
-                <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#EDE6DA] px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#A6864C] border border-[#A6864C]/30">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C]" />
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-surface px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-steel border border-powder/40">
+                  <span className="h-1.5 w-1.5 rounded-full bg-red" />
                   <span>{activeImage.label}</span>
                 </span>
               </div>
@@ -114,7 +114,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={() => setLightboxOpen(true)}
-                className="absolute bottom-4 right-4 z-10 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#A6864C]/40 bg-[#FBF9F5]/90 p-2.5 text-[#1C1917] hover:bg-[#3D0E18] hover:text-[#F6F2EB] transition-colors duration-200 cursor-pointer"
+                className="absolute bottom-4 right-4 z-10 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-powder/40 bg-background/90 p-2.5 text-ink hover:bg-navy hover:text-background transition-colors duration-200 cursor-pointer"
                 aria-label="Inspect high-resolution image"
               >
                 <Maximize2 className="h-4 w-4" />
@@ -131,8 +131,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
                     className={`relative aspect-[4/3] w-full overflow-hidden rounded-md border transition-all duration-200 cursor-pointer ${isSelected
-                      ? "border-[#A6864C]"
-                      : "border-[#1C1917]/[0.08] hover:border-[#A6864C]/60"
+                      ? "border-steel ring-2 ring-steel/20"
+                      : "border-ink/10 hover:border-steel"
                       }`}
                     aria-label={`View ${img.label}`}
                   >
@@ -156,46 +156,46 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div>
               {/* Eyebrow Label */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C]">
-                  01 / PRODUCT OVERVIEW &bull; EST. 1984
+                <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel">
+                  01 / PRODUCT OVERVIEW &bull; <span className="text-red">EST. 1984</span>
                 </span>
-                <span className="h-1 w-1 rounded-full bg-[#A6864C]" />
-                <span className="text-[11px] font-mono font-medium uppercase tracking-wider text-[#57524E]">
+                <span className="h-1 w-1 rounded-full bg-red" />
+                <span className="text-[11px] font-mono font-medium uppercase tracking-wider text-ink/75">
                   {product.category}
                 </span>
               </div>
 
               {/* Product Title in Playfair Display */}
-              <h1 id="product-title" className="mt-3 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-normal leading-[1.08] tracking-[-0.025em] text-[#1C1917]">
+              <h1 id="product-title" className="mt-3 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-normal leading-[1.08] tracking-[-0.025em] text-ink">
                 {product.name}
               </h1>
 
               {/* Tagline / Subtitle */}
-              <p className="mt-2 text-sm sm:text-base font-semibold text-[#A6864C] tracking-wide">
+              <p className="mt-2 text-sm sm:text-base font-semibold text-steel tracking-wide">
                 {product.tagline}
               </p>
 
               {/* Concise Formal Summary */}
-              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#1C1917]">
+              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink">
                 {product.summary}
               </p>
 
               {/* Commercial Strip: Price on Request + MOQ Badge */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-[#A6864C]/30 bg-[#EDE6DA]">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-powder/40 bg-surface">
                 <div>
-                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-[#57524E]">
+                  <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-ink/75">
                     Commercial Pricing
                   </span>
-                  <span className="mt-0.5 block font-serif text-xl sm:text-2xl font-bold text-[#1C1917]">
+                  <span className="mt-0.5 block font-serif text-xl sm:text-2xl font-bold text-ink">
                     Price on Request
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="text-right">
-                    <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-[#57524E]">
+                    <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-ink/75">
                       Minimum Order
                     </span>
-                    <span className="inline-block rounded-sm bg-[#3D0E18] px-3 py-1 font-mono text-xs font-bold text-[#F6F2EB]">
+                    <span className="inline-block rounded-sm bg-navy px-3 py-1 font-mono text-xs font-bold text-background">
                       MOQ: {product.moq}
                     </span>
                   </div>
@@ -204,11 +204,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
               {/* Interactive Variant Selector */}
               <div className="mt-7">
-                <div className="flex items-center justify-between border-b border-[#A6864C]/25 pb-2">
-                  <label className="block font-mono text-xs font-bold uppercase tracking-wider text-[#1C1917]">
+                <div className="flex items-center justify-between border-b border-powder/30 pb-2">
+                  <label className="block font-mono text-xs font-bold uppercase tracking-wider text-ink">
                     Select Specification Variant:
                   </label>
-                  <span className="font-mono text-[11px] text-[#57524E]">
+                  <span className="font-mono text-[11px] text-ink/75">
                     {product.variants.length} factory configurations
                   </span>
                 </div>
@@ -222,20 +222,20 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         type="button"
                         onClick={() => setSelectedVariantKey(v.key)}
                         className={`btn-press group relative inline-flex min-h-[44px] items-center gap-2.5 rounded-lg px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors duration-200 ease-in-out cursor-pointer ${isSelected
-                          ? "bg-[#3D0E18] text-[#F6F2EB] border-2 border-[#A6864C]"
-                          : "bg-[#EDE6DA] text-[#1C1917] border border-[#1C1917]/10 hover:border-[#A6864C]"
+                          ? "bg-navy text-background border-2 border-steel"
+                          : "bg-surface text-ink border border-ink/10 hover:border-steel hover:text-steel"
                           }`}
                       >
                         <span
-                          className={`h-1.5 w-1.5 rounded-xs transition-colors duration-200 ease-in-out ${isSelected ? "bg-[#A6864C]" : "bg-[#1C1917]/30 group-hover:bg-[#A6864C]"
+                          className={`h-1.5 w-1.5 rounded-xs transition-colors duration-200 ease-in-out ${isSelected ? "bg-red" : "bg-ink/30 group-hover:bg-steel"
                             }`}
                         />
                         <span>{v.name}</span>
                         {v.badge && (
                           <span
                             className={`rounded-sm px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${isSelected
-                              ? "bg-[#27080F] text-[#A6864C]"
-                              : "bg-[#FBF9F5] text-[#57524E]"
+                              ? "bg-navy text-powder"
+                              : "bg-background text-ink/75"
                               }`}
                           >
                             {v.badge}
@@ -247,12 +247,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </div>
 
                 {/* Active Configuration Summary Box */}
-                <div className="mt-3.5 flex items-start gap-2.5 text-xs text-[#1C1917] bg-[#EDE6DA] p-3.5 rounded-xl border border-[#A6864C]/30">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#A6864C] shrink-0 mt-0.5">
+                <div className="mt-3.5 flex items-start gap-2.5 text-xs text-ink bg-surface p-3.5 rounded-xl border border-powder/40">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-steel shrink-0 mt-0.5">
                     CONFIG:
                   </span>
                   <p className="leading-relaxed">
-                    <span className="font-bold text-[#1C1917]">{activeVariant.name} Formulation — </span>
+                    <span className="font-bold text-ink">{activeVariant.name} Formulation — </span>
                     {activeVariant.summary}
                   </p>
                 </div>
@@ -261,75 +261,75 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               {/* Three B2B Action Buttons */}
               <div className="mt-8 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {/* Primary CTA: Request Quote (Imperial Oxblood Fill) */}
+                  {/* Primary CTA: Request Quote (Imperial Red Fill) */}
                   <button
                     type="button"
                     onClick={openModal}
-                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-3.5 text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
                   >
-                    <Mail className="h-4 w-4 text-[#F6F2EB]" />
+                    <Mail className="h-4 w-4 text-background" />
                     <span>Request Quotation</span>
                     <span aria-hidden="true">&rarr;</span>
                   </button>
 
-                  {/* Secondary CTA: Download Spec Sheet (PDF) (Outlined in Deep Espresso Ink) */}
+                  {/* Secondary CTA: Download Spec Sheet (PDF) */}
                   <button
                     type="button"
                     onClick={handleDownloadPdf}
                     disabled={isPdfGenerating}
-                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border-2 border-[#1C1917] bg-transparent hover:bg-[#1C1917] text-[#1C1917] hover:text-[#F6F2EB] px-6 py-3.5 text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-steel bg-transparent hover:bg-powder/20 hover:border-navy hover:text-navy text-ink px-6 py-3.5 text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <Download className={`h-4 w-4 ${isPdfGenerating ? "animate-bounce text-[#A6864C]" : ""}`} />
+                    <Download className={`h-4 w-4 ${isPdfGenerating ? "animate-bounce text-steel" : ""}`} />
                     <span>
                       {isPdfGenerating ? "Generating Datasheet..." : "Download Spec Sheet (PDF)"}
                     </span>
                   </button>
                 </div>
 
-                {/* Tertiary CTA: Request Sample (Bordered in Antique Brass) */}
+                {/* Tertiary CTA: Request Sample */}
                 <div className="flex items-center justify-between pt-1">
                   <button
                     type="button"
                     onClick={openModal}
-                    className="btn-press inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[#A6864C] bg-transparent hover:bg-[#A6864C] text-[#1C1917] hover:text-[#F6F2EB] px-4 py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-steel bg-transparent hover:bg-steel text-ink hover:text-background px-4 py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ease-in-out cursor-pointer group"
                   >
-                    <Package className="h-4 w-4 text-[#A6864C] group-hover:text-[#F6F2EB]" />
+                    <Package className="h-4 w-4 text-steel group-hover:text-background" />
                     <span>Request Material Samples &amp; Swatches</span>
                   </button>
-                  <span className="font-mono text-[11px] text-[#57524E]">
+                  <span className="font-mono text-[11px] text-ink/75">
                     Free sample on request • courier extra
                   </span>
                 </div>
               </div>
 
               {/* Compact Commercial Terms Box */}
-              <div className="mt-8 rounded-xl border border-[#A6864C]/30 bg-[#EDE6DA] p-4">
+              <div className="mt-8 rounded-xl border border-powder/40 bg-surface p-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   <div className="flex items-start gap-2">
-                    <ShieldCheck className="h-4 w-4 text-[#A6864C] shrink-0 mt-0.5" />
+                    <ShieldCheck className="h-4 w-4 text-steel shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1C1917] block">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-ink block">
                         Sample Policy
                       </span>
-                      <span className="text-[#57524E]">{product.commercialTerms.sample}</span>
+                      <span className="text-ink/75">{product.commercialTerms.sample}</span>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-[#1C1917]/10 pt-2 sm:pt-0 sm:pl-3">
-                    <CreditCard className="h-4 w-4 text-[#A6864C] shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-ink/10 pt-2 sm:pt-0 sm:pl-3">
+                    <CreditCard className="h-4 w-4 text-steel shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1C1917] block">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-ink block">
                         Payment Terms
                       </span>
-                      <span className="text-[#57524E]">{product.commercialTerms.payment}</span>
+                      <span className="text-ink/75">{product.commercialTerms.payment}</span>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-[#1C1917]/10 pt-2 sm:pt-0 sm:pl-3">
-                    <Truck className="h-4 w-4 text-[#A6864C] shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 border-t sm:border-t-0 sm:border-l border-ink/10 pt-2 sm:pt-0 sm:pl-3">
+                    <Truck className="h-4 w-4 text-steel shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1C1917] block">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-ink block">
                         Delivery Basis
                       </span>
-                      <span className="text-[#57524E]">{product.commercialTerms.delivery}</span>
+                      <span className="text-ink/75">{product.commercialTerms.delivery}</span>
                     </div>
                   </div>
                 </div>
@@ -343,74 +343,74 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* SECTION B: FULL TECHNICAL SPECIFICATION TABLE                             */}
       {/* ========================================================================= */}
       <section className="mb-24 scroll-mt-32" id="specifications">
-        <div className="border-t border-[#A6864C]/30 pt-12">
+        <div className="border-t border-powder/40 pt-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-10">
             <div>
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C] mb-4">
+              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
                 02 / TECHNICAL SPECIFICATIONS
               </span>
-              <h2 className="mt-1 font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-[#1C1917]">
+              <h2 className="mt-1 font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
                 Engineering Tolerances &amp; Material Standards
               </h2>
-              <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#57524E]">
+              <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
                 Specifications reflect factory quality standards. Rows marked with an accent border indicate active values configured for variant{" "}
-                <span className="font-bold text-[#1C1917]">{activeVariant.name}</span>.
+                <span className="font-bold text-ink">{activeVariant.name}</span>.
               </p>
             </div>
 
             <button
               type="button"
               onClick={handleDownloadPdf}
-              className="inline-flex items-center gap-2 self-start md:self-auto rounded-lg border border-[#1C1917]/20 bg-[#FBF9F5] hover:bg-[#EDE6DA] px-4 py-2 text-xs font-bold text-[#1C1917] transition-colors duration-200 ease-in-out cursor-pointer"
+              className="inline-flex items-center gap-2 self-start md:self-auto rounded-lg border border-ink/20 bg-background hover:bg-surface px-4 py-2 text-xs font-bold text-ink transition-colors duration-200 ease-in-out cursor-pointer"
             >
-              <Download className="h-3.5 w-3.5 text-[#A6864C]" />
+              <Download className="h-3.5 w-3.5 text-steel" />
               <span>Export Table as PDF</span>
             </button>
           </div>
 
           {/* Specification Table */}
-          <div className="overflow-hidden rounded-xl border border-[#A6864C]/35 bg-[#FBF9F5]">
-            {/* Table Header Bar in Imperial Oxblood */}
-            <div className="bg-[#3D0E18] px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b-2 border-[#A6864C]">
-              <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#F6F2EB]">
+          <div className="overflow-hidden rounded-xl border border-powder/40 bg-background">
+            {/* Table Header Bar in Dark Navy */}
+            <div className="bg-navy px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b-2 border-steel">
+              <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-background">
                 Technical Parameter
               </span>
-              <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#A6864C] sm:text-[#F6F2EB]">
+              <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-powder sm:text-background">
                 Factory Specification / Tolerance
               </span>
             </div>
 
             {/* Table Rows */}
-            <div className="divide-y divide-[#1C1917]/10">
+            <div className="divide-y divide-ink/10">
               {currentSpecs.map((row, idx) => {
                 const isAlt = idx % 2 === 1;
                 return (
                   <div
                     key={row.label}
                     className={`grid grid-cols-1 sm:grid-cols-12 px-4 sm:px-6 py-4 transition-colors duration-200 ease-in-out ${row.isOverridden
-                      ? "bg-[#EDE6DA] border-l-4 border-l-[#A6864C]"
+                      ? "bg-surface border-l-4 border-l-steel"
                       : isAlt
-                        ? "bg-[#FBF9F5]"
-                        : "bg-[#F6F2EB]"
+                        ? "bg-background"
+                        : "bg-background"
                       }`}
                   >
                     <div className="sm:col-span-4 flex items-center gap-2">
-                      <span className="text-xs sm:text-sm font-bold text-[#1C1917]">
+                      <span className="text-xs sm:text-sm font-bold text-ink">
                         {row.label}
                       </span>
                       {row.isOverridden && (
-                        <span className="rounded-sm bg-[#3D0E18] px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#F6F2EB]">
-                          Active
+                        <span className="rounded-sm bg-steel px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-background">
+                          Active Variant
                         </span>
                       )}
                     </div>
                     <div className="sm:col-span-8 mt-1 sm:mt-0 flex items-center justify-between">
-                      <span className={`text-xs sm:text-sm tabular-nums leading-relaxed ${row.isOverridden ? "font-bold text-[#3D0E18]" : "font-medium text-[#1C1917]"
+                      <span className={`text-xs sm:text-sm tabular-nums leading-relaxed ${row.isOverridden ? "font-bold text-steel" : "font-medium text-ink"
                         }`}>
                         {row.value}
                       </span>
                       {row.isOverridden && (
-                        <span className="hidden sm:inline font-mono text-[10px] text-[#57524E]">
+                        <span className="hidden sm:inline font-mono text-[10px] text-ink/75">
                           (Configured for {activeVariant.name})
                         </span>
                       )}
@@ -421,11 +421,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Table Footer */}
-            <div className="bg-[#EDE6DA] border-t border-[#A6864C]/25 px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#57524E]">
+            <div className="bg-surface border-t border-powder/30 px-6 py-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-ink/75">
               <span className="font-mono text-[11px]">
                 Standard: Virgin polymers, ISO quality testing, batch traceability.
               </span>
-              <span className="font-mono text-[11px] text-[#A6864C] font-semibold">
+              <span className="font-mono text-[11px] text-steel font-semibold">
                 Custom gauges and flexo/rotogravure printing available on request.
               </span>
             </div>
@@ -443,31 +443,31 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C1917]/80 p-4 sm:p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4 sm:p-8"
             onClick={() => setLightboxOpen(false)}
           >
             <div
-              className="relative max-w-5xl w-full max-h-[90vh] overflow-hidden rounded-2xl border border-[#A6864C]/40 bg-[#FBF9F5]"
+              className="relative max-w-5xl w-full max-h-[90vh] overflow-hidden rounded-2xl border border-powder/40 bg-background"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between p-4 border-b border-[#A6864C]/25 bg-[#EDE6DA] text-[#1C1917]">
+              <div className="flex items-center justify-between p-4 border-b border-powder/30 bg-surface text-ink">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-[#A6864C]">
+                  <span className="font-mono text-xs font-bold text-steel">
                     GRAPHIPACKS INSPECTION VIEW
                   </span>
-                  <span className="text-xs text-[#57524E]">• {activeImage.label}</span>
+                  <span className="text-xs text-ink/75">• {activeImage.label}</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setLightboxOpen(false)}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-[#1C1917] hover:bg-[#3D0E18] hover:text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg p-2 text-ink hover:bg-navy hover:text-background transition-colors duration-200 ease-in-out cursor-pointer"
                   aria-label="Close image preview"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="p-2 sm:p-4 bg-[#F6F2EB] flex items-center justify-center max-h-[75vh] overflow-hidden">
+              <div className="p-2 sm:p-4 bg-background flex items-center justify-center max-h-[75vh] overflow-hidden">
                 <Image
                   src={activeImage.src}
                   alt={activeImage.alt}
@@ -480,9 +480,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 />
               </div>
 
-              <div className="p-4 bg-[#EDE6DA] border-t border-[#A6864C]/25 flex items-center justify-between text-xs text-[#57524E]">
+              <div className="p-4 bg-surface border-t border-powder/30 flex items-center justify-between text-xs text-ink/75">
                 <span>{activeImage.alt}</span>
-                <span className="font-mono text-[#A6864C] font-semibold">
+                <span className="font-mono text-steel font-semibold">
                   View {activeImageIndex + 1} of {product.images.length}
                 </span>
               </div>
@@ -498,7 +498,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         {rfqModalOpen && (
           <div
             id="rfq-modal-overlay"
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-[#1C1917]/80"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-ink/80"
             onClick={() => setRfqModalOpen(false)}
             role="dialog"
             aria-modal="true"
@@ -509,14 +509,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 16 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#FBF9F5] border border-[#A6864C]/35"
+              className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-background border border-powder/40"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setRfqModalOpen(false)}
-                className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-[#1C1917]/15 bg-[#EDE6DA] text-[#1C1917] hover:bg-[#3D0E18] hover:text-[#F6F2EB] transition-colors duration-200 cursor-pointer"
+                className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 bg-surface text-ink hover:bg-navy hover:text-background transition-colors duration-200 cursor-pointer"
                 aria-label="Close request modal"
               >
                 <X className="h-5 w-5" />

@@ -48,18 +48,18 @@ export default function HeroSkipControl() {
   return (
     <div className="absolute top-16 md:top-20 right-4 sm:right-6 lg:right-8 z-30 pointer-events-auto">
       {isSkipped ? (
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A6864C]/30 bg-[#27080F] px-3 py-1 text-xs font-mono tracking-wider text-[#F6F2EB]/70 select-none">
-          <Check className="h-3 w-3 text-[#A6864C]" aria-hidden="true" />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-powder/40 bg-navy px-3 py-1 text-xs font-mono tracking-wider text-background/70 select-none">
+          <Check className="h-3 w-3 text-powder" aria-hidden="true" />
           <span>Animation skipped</span>
         </span>
       ) : (
         <button
           type="button"
           onClick={handleSkip}
-          className="inline-flex items-center gap-1.5 rounded-full border border-[#A6864C]/40 bg-[#27080F] px-3 py-1 text-xs font-mono tracking-wider text-[#F6F2EB]/90 hover:text-[#A6864C] hover:border-[#A6864C] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[#A6864C] cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-full border border-powder/40 bg-navy px-3 py-1 text-xs font-mono tracking-wider text-background/90 hover:text-powder hover:border-powder transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-powder cursor-pointer"
           aria-label="Skip animation"
         >
-          <SkipForward className="h-3 w-3 text-[#A6864C]" aria-hidden="true" />
+          <SkipForward className="h-3 w-3 text-powder" aria-hidden="true" />
           <span>Skip Animation</span>
         </button>
       )}

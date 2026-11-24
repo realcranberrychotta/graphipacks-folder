@@ -22,19 +22,19 @@ export default function HeroSpecializations({
         return (
           <div
             key={idx}
-            className="relative rounded-xl pl-4 pr-4 py-3.5 bg-[#FBF9F5] border border-[#1C1917]/10 border-l-2 border-l-[#A6864C] flex flex-col justify-between group transition-colors hover:border-[#A6864C]"
+            className="relative rounded-xl pl-4 pr-4 py-3.5 bg-background border border-ink/10 border-l-2 border-l-steel flex flex-col justify-between group transition-colors hover:border-steel"
           >
             {/* Spec Index Tag */}
-            <div className="inline-flex items-center gap-2 self-start rounded-md bg-[#EDE6DA] px-2.5 py-1 border border-[#A6864C]/25">
+            <div className="inline-flex items-center gap-2 self-start rounded-md bg-surface px-2.5 py-1 border border-powder">
               <span
-                className="h-1.5 w-1.5 rounded-full bg-[#3D0E18]"
+                className="h-1.5 w-1.5 rounded-full bg-steel"
                 aria-hidden="true"
               />
-              <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[#1C1917] uppercase">
+              <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-ink uppercase">
                 SPEC {meta.id} &bull; {meta.category}
               </span>
             </div>
-            <p className="mt-2.5 text-sm font-medium leading-relaxed text-[#1C1917] tracking-normal font-sans">
+            <p className="mt-2.5 text-sm font-medium leading-relaxed text-ink tracking-normal font-sans">
               {spec}
             </p>
           </div>

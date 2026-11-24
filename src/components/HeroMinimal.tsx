@@ -81,12 +81,12 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         {/* Provenance Indicator */}
         <motion.div
           variants={itemVariants}
-          className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-[#F6F2EB]/80"
+          className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/80"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C] shrink-0" aria-hidden="true" />
-          <span className="text-[#A6864C] font-semibold">EST. 1984 · MADURAI PLANT</span>
-          <span className="text-[#F6F2EB]/40" aria-hidden="true">&bull;</span>
-          <span className="text-[#F6F2EB]/90">{company.name}</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-red shrink-0 animate-pulse" aria-hidden="true" />
+          <span className="text-steel font-semibold">EST. 1984 · MADURAI PLANT</span>
+          <span className="text-ink/40" aria-hidden="true">&bull;</span>
+          <span className="text-ink/90">{company.name}</span>
         </motion.div>
 
         {/* Display Headline */}
@@ -106,18 +106,18 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         <motion.div
           variants={lineScaleVariants}
           style={{ originX: 0 }}
-          className="my-8 h-px w-full max-w-xl bg-gradient-to-r from-[#A6864C]/80 via-[#F6F2EB]/40 to-transparent"
+          className="my-8 h-px w-full max-w-xl bg-gradient-to-r from-steel/80 via-steel/30 to-transparent"
           aria-hidden="true"
         />
 
         {/* Editorial Value Proposition Headline & Subline */}
         <motion.div variants={itemVariants} className="max-w-xl">
-          <h2 className="font-serif font-[family-name:var(--font-display)] text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.12] tracking-tight text-[#F6F2EB] text-left">
+          <h2 className="font-serif font-[family-name:var(--font-display)] text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.12] tracking-tight text-ink text-left">
             <span className="block whitespace-nowrap">Find your spec.</span>
             <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Book your call.</span>
             <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Done in 60 seconds.</span>
           </h2>
-          <p className="mt-3.5 text-sm sm:text-[15px] lg:text-base font-sans font-light leading-relaxed text-[#F6F2EB]/85 text-left max-w-xl lg:whitespace-nowrap">
+          <p className="mt-3.5 text-sm sm:text-[15px] lg:text-base font-sans font-light leading-relaxed text-ink/85 text-left max-w-xl lg:whitespace-nowrap">
             <span className="block sm:inline">MOQ, gauge and lead time shown upfront. </span>
             <span className="block sm:inline">No waiting 24 hours for a reply.</span>
           </p>
@@ -126,11 +126,11 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         {/* Minimalist Core Specializations Strip */}
         <motion.div
           variants={itemVariants}
-          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono uppercase tracking-widest text-[#F6F2EB]/90"
+          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono uppercase tracking-widest text-ink/90"
         >
           {company.specializations.map((spec, idx) => (
             <div key={idx} className="flex items-center gap-2">
-              <span className="text-[#A6864C]" aria-hidden="true">&bull;</span>
+              <span className="text-steel" aria-hidden="true">&bull;</span>
               <span>{spec}</span>
             </div>
           ))}
@@ -144,18 +144,18 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           <button
             type="button"
             onClick={() => openQuoteModal()}
-            className="btn-press group relative inline-flex items-center justify-center rounded-none bg-[#F6F2EB] hover:bg-[#EDE6DA] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#3D0E18] border border-[#A6864C]/40 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F6F2EB]"
+            className="btn-press group relative inline-flex items-center justify-center rounded-none bg-red hover:bg-[#d62839] px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#d62839] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
           >
             <span>Get a Quote</span>
             <ArrowRight
-              className="ml-3 h-4 w-4 text-[#3D0E18] transition-transform duration-200 group-hover:translate-x-1"
+              className="ml-3 h-4 w-4 text-background transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden="true"
             />
           </button>
 
           <Link
             href="/products"
-            className="btn-press group inline-flex items-center justify-center rounded-none border border-[#A6864C] bg-[#3D0E18]/60 hover:bg-[#A6864C]/20 px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-[#F6F2EB] transition-all hover:text-[#A6864C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A6864C]"
+            className="btn-press group inline-flex items-center justify-center rounded-none border border-steel bg-transparent hover:bg-powder/20 hover:border-navy hover:text-navy px-8 py-4 text-xs font-mono font-semibold uppercase tracking-[0.18em] text-ink transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
           >
             <span>View Products</span>
           </Link>
@@ -164,10 +164,10 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         {/* Minimalist Scroll Indicator */}
         <motion.div
           variants={itemVariants}
-          className="mt-16 sm:mt-20 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-[#F6F2EB]/60 uppercase"
+          className="mt-16 sm:mt-20 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-ink/60 uppercase"
         >
           <span
-            className="inline-block h-3.5 w-px bg-[#A6864C]/60"
+            className="inline-block h-3.5 w-px bg-steel/60"
             aria-hidden="true"
           />
           <span>Scroll to explore</span>

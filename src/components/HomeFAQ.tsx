@@ -61,19 +61,19 @@ export default function HomeFAQ() {
   return (
     <section
       id="faq"
-      className="border-t border-[#A6864C]/25 bg-[#EDE6DA] py-24 md:py-32 text-[#1C1917]"
+      className="border-t border-powder bg-surface py-24 md:py-32 text-ink"
     >
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="max-w-3xl">
-          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C] mb-4">
+          <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
             06 / FREQUENTLY ASKED QUESTIONS
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1C1917]">
+          <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
             Questions, answered.
           </h2>
         </div>
 
-        <div className="mt-12 md:mt-16 divide-y divide-[#A6864C]/20 border-y border-[#A6864C]/20">
+        <div className="mt-12 md:mt-16 divide-y divide-powder/40 border-y border-powder/40">
           {FAQ_DATA.map((item, index) => {
             const isOpen = openIndex === index;
             return (
@@ -82,10 +82,10 @@ export default function HomeFAQ() {
                   type="button"
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  className="flex w-full min-h-[56px] items-center justify-between py-5 text-left text-base sm:text-lg font-medium text-[#1C1917] hover:text-[#3D0E18] transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-[#3D0E18]"
+                  className="flex w-full min-h-[56px] items-center justify-between py-5 text-left text-base sm:text-lg font-medium text-ink hover:text-navy transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-navy"
                 >
                   <span className="pr-6 font-serif">{item.question}</span>
-                  <span className="shrink-0 flex items-center justify-center h-7 w-7 rounded-full border border-[#A6864C]/40 bg-[#FBF9F5] text-[#3D0E18] transition-colors duration-200">
+                  <span className="shrink-0 flex items-center justify-center h-7 w-7 rounded-full border border-powder bg-background text-navy transition-colors duration-200">
                     {isOpen ? (
                       <Minus className="h-4 w-4" aria-hidden="true" />
                     ) : (
@@ -98,7 +98,7 @@ export default function HomeFAQ() {
                   className="faq-content"
                   aria-hidden={!isOpen}
                 >
-                  <p className="pb-6 pt-1 text-sm sm:text-base text-[#57524E] leading-relaxed font-sans">
+                  <p className="pb-6 pt-1 text-sm sm:text-base text-ink/75 leading-relaxed font-sans">
                     {item.answer}
                   </p>
                 </div>

@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { PALETTE, PALETTE_HEX } from '@/lib/palette'
 
 /**
  * Graphipacks Factory — Interactive 3D Machine
@@ -296,7 +297,14 @@ function initMachineScene(
     const TAU = Math.PI * 2
     const embedded = options.embedded
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
-    const palette = { amber: 0xA6864C, white: 0xf4f1ea, dark: 0x3D0E18, steel: 0x59616b }
+    const palette = {
+      steel: PALETTE_HEX.steelBlue,
+      powder: PALETTE_HEX.powderBlue,
+      red: PALETTE_HEX.imperialRed,
+      white: PALETTE_HEX.honeydew,
+      dark: PALETTE_HEX.darkNavy,
+      amber: PALETTE_HEX.steelBlue,
+    }
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(33, frameWidth() / frameHeight(), 0.1, 150)
     const isMobile = frameWidth() < 900 || matchMedia('(pointer:coarse)').matches
@@ -316,7 +324,7 @@ function initMachineScene(
       )
       throw e
     }
-    renderer.setClearColor(0x3D0E18, 0)
+    renderer.setClearColor(PALETTE_HEX.darkNavy, 0)
     renderer.setPixelRatio(isMobile ? 1 : Math.min(devicePixelRatio, 1.25))
     renderer.setSize(frameWidth(), frameHeight())
     renderer.outputColorSpace = THREE.SRGBColorSpace
@@ -350,7 +358,7 @@ function initMachineScene(
     scene.environmentIntensity = 0.62
     room.dispose()
     pmrem.dispose()
-    scene.add(new THREE.HemisphereLight(0xfff2df, 0x2A0A11, 2))
+    scene.add(new THREE.HemisphereLight(0xfff2df, 0x172D4A, 2))
     const key = new THREE.DirectionalLight(0xfff1d8, 4.2)
     key.position.set(-4, 12, 7)
     key.castShadow = !isMobile
@@ -385,24 +393,24 @@ function initMachineScene(
     ) => new THREE.MeshStandardMaterial({ color, metalness, roughness, ...extra })
     const M = {
       body: mat(0x30363f, 0.75, 0.29),
-      base: mat(0x3D0E18, 0.85, 0.32),
-      platformDeck: mat(0x2A0A11, 0.8, 0.35),
-      platformBrass: mat(0xA6864C, 0.85, 0.25),
-      platformDark: mat(0x1B070D, 0.6, 0.4),
+      base: mat(PALETTE_HEX.darkNavy, 0.85, 0.32),
+      platformDeck: mat(0x152740, 0.8, 0.35),
+      platformSteel: mat(PALETTE_HEX.steelBlue, 0.85, 0.25),
+      platformDark: mat(0x0e1b2d, 0.6, 0.4),
       edge: mat(0x707986, 0.85, 0.24),
       chrome: mat(0xc3cad0, 0.92, 0.18),
       dark: mat(0x12171d, 0.45, 0.38),
       rubber: mat(0x0b1015, 0.1, 0.6),
       amber: mat(palette.amber, 0.52, 0.28),
-      ivory: mat(0xe0ded4, 0.48, 0.26),
-      copper: mat(0xc57e45, 0.85, 0.3),
-      red: mat(0xb82626, 0.45, 0.32),
+      ivory: mat(PALETTE_HEX.honeydew, 0.48, 0.26),
+      copper: mat(PALETTE_HEX.steelBlue, 0.85, 0.3),
+      red: mat(PALETTE_HEX.imperialRed, 0.45, 0.32),
       black: mat(0x050909, 0, 0.6),
-      light: mat(0xA6864C, 0.2, 0.25, { emissive: 0xA6864C, emissiveIntensity: 1.5 }),
-      whiteLight: mat(0xfff3d7, 0.1, 0.3, { emissive: 0xfff0d0, emissiveIntensity: 1.8 }),
-      green: mat(0xc6d9a1, 0.1, 0.3, { emissive: 0x91b364, emissiveIntensity: 0.7 }),
+      light: mat(PALETTE_HEX.steelBlue, 0.2, 0.25, { emissive: PALETTE_HEX.steelBlue, emissiveIntensity: 1.5 }),
+      whiteLight: mat(0xf1faee, 0.1, 0.3, { emissive: 0xf1faee, emissiveIntensity: 1.8 }),
+      green: mat(0xa8dadc, 0.1, 0.3, { emissive: 0x457b9d, emissiveIntensity: 0.7 }),
       glass: mat(0x81949e, 0.45, 0.16, { transparent: true, opacity: 0.19, depthWrite: false }),
-      paper: mat(0xf4f1ea, 0, 0.85),
+      paper: mat(PALETTE_HEX.honeydew, 0, 0.85),
     }
     type Vec3 = [number, number, number]
     type Material = THREE.Material
@@ -560,12 +568,12 @@ function initMachineScene(
     contact.rotation.x = -Math.PI / 2
     contact.position.y = -0.415
     scene.add(contact)
-    // A chamfered, layered platform with engraved nomenclature and captive screws in Imperial Oxblood & Brass.
+    // A chamfered, layered platform with engraved nomenclature and captive screws in Dark Navy & Steel Blue.
     box(machine, 12.8, 0.38, 8.25, 0, -0.09, 0, M.base, 0.17)
-    box(machine, 12.6, 0.055, 8.08, 0, 0.13, 0, M.platformBrass, 0.11)
+    box(machine, 12.6, 0.055, 8.08, 0, 0.13, 0, M.platformSteel, 0.11)
     box(machine, 12.49, 0.09, 7.96, 0, 0.19, 0, M.platformDeck, 0.1)
     box(machine, 12.55, 0.027, 8.02, 0, -0.19, 0, M.platformDark, 0.06)
-    box(machine, 11.9, 0.026, 0.032, 0, -0.17, 4.115, M.platformBrass, 0.01)
+    box(machine, 11.9, 0.026, 0.032, 0, -0.17, 4.115, M.platformSteel, 0.01)
     for (const x of [-5.6, 5.6])
       for (const z of [-3.35, 3.35]) {
         cyl(machine, 0.39, 0.25, x, -0.31, z, M.rubber)
@@ -574,25 +582,25 @@ function initMachineScene(
       }
     for (const x of [-6.02, 6.02]) for (const z of [-3.73, 3.73]) screw(machine, x, 0.255, z)
     const engraving = canvasTexture(1536, 176, (c, w, h) => {
-      c.fillStyle = '#2A0A11'
+      c.fillStyle = PALETTE.darkNavy
       c.fillRect(0, 0, w, h)
-      c.strokeStyle = '#A6864C'
+      c.strokeStyle = PALETTE.steelBlue
       c.lineWidth = 2
       c.strokeRect(2, 2, w - 4, h - 4)
-      print(c, 'GRAPHIPACKS', 45, 79, 40, '#F6F2EB', 650)
-      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, '#A6864C', 450)
-      print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, '#EDE6DA', 500)
-      print(c, 'EST. 1984', 1330, 130, 23, '#A6864C')
+      print(c, 'GRAPHIPACKS', 45, 79, 40, PALETTE.honeydew, 650)
+      print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, PALETTE.powderBlue, 450)
+      print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, PALETTE.honeydew, 500)
+      print(c, 'EST. 1984', 1330, 130, 23, PALETTE.imperialRed)
     })
     const plate = screen(machine, 7.35, 0.84, -0.4, 0.25, 3.51, engraving)
     plate.rotation.x = -Math.PI / 2
     for (let i = 0; i < 16; i++)
-      box(machine, 0.015, 0.009, 0.11 + (i % 4) * 0.035, -5.6 + i * 0.09, 0.249, 3.5, M.platformBrass, 0)
+      box(machine, 0.015, 0.009, 0.11 + (i % 4) * 0.035, -5.6 + i * 0.09, 0.249, 3.5, M.platformSteel, 0)
     // Faint drafting marks stay local to the machine, leaving the headline area empty.
     const drafting = new THREE.Group()
     scene.add(drafting)
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0xA6864C,
+      color: PALETTE_HEX.steelBlue,
       transparent: true,
       opacity: 0.16,
     })
@@ -759,7 +767,7 @@ function initMachineScene(
       const plaque = canvasTexture(512, 116, (c, w, h) => {
         c.fillStyle = '#151a20'
         c.fillRect(0, 0, w, h)
-        print(c, String(i + 1).padStart(2, '0'), 24, 76, 42, '#A6864C', 550)
+        print(c, String(i + 1).padStart(2, '0'), 24, 76, 42, PALETTE.steelBlue, 550)
         print(c, d.name.toUpperCase(), 111, 73, 35, '#d7d9d7', 550)
       })
       screen(group, 1.54, 0.345, 0, 0.27, 0.891, plaque)
@@ -940,24 +948,24 @@ function initMachineScene(
 
       for (let r = 0; r < 2; r++) {
         const rx = r * 512
-        // Navy header band
-        c.fillStyle = '#3D0E18'
+        // Dark Navy header band
+        c.fillStyle = PALETTE.darkNavy
         c.fillRect(rx, 0, 512, 68)
 
-        // Bronze rules
-        c.fillStyle = '#A6864C'
+        // Steel rules
+        c.fillStyle = PALETTE.steelBlue
         c.fillRect(rx, 68, 512, 8)
         c.fillRect(rx, 436, 512, 8)
 
         print(c, 'GRAPHIPACKS', rx + 24, 46, 36, '#ffffff', 700)
-        print(c, 'FLEXO PRINTED FILM', rx + 300, 46, 16, '#A6864C', 600)
+        print(c, 'FLEXO PRINTED FILM', rx + 300, 46, 16, PALETTE.powderBlue, 600)
 
         // Printed pouch layouts on roll surface
         for (let row = 0; row < 2; row++) {
           const ry = 88 + row * 168
           c.fillStyle = '#ffffff'
           c.fillRect(rx + 20, ry, 472, 150)
-          c.strokeStyle = '#A6864C'
+          c.strokeStyle = PALETTE.powderBlue
           c.lineWidth = 2.5
           c.strokeRect(rx + 20, ry, 472, 150)
 
@@ -965,24 +973,24 @@ function initMachineScene(
           c.fillRect(rx + 20, ry, 18, 150)
           c.fillRect(rx + 474, ry, 18, 150)
 
-          print(c, 'STAND-UP BARRIER POUCH', rx + 52, ry + 36, 20, '#3D0E18', 700)
-          print(c, 'HIGH-BARRIER LAMINATE · 100µm', rx + 52, ry + 60, 13, '#A6864C', 600)
+          print(c, 'STAND-UP BARRIER POUCH', rx + 52, ry + 36, 20, PALETTE.darkNavy, 700)
+          print(c, 'HIGH-BARRIER LAMINATE · 100µm', rx + 52, ry + 60, 13, PALETTE.steelBlue, 600)
           print(c, 'PET / MET-PET / LLDPE', rx + 52, ry + 82, 12, '#505a64', 500)
 
-          c.fillStyle = '#A6864C'
+          c.fillStyle = PALETTE.steelBlue
           c.beginPath()
           c.roundRect(rx + 52, ry + 94, 150, 26, 4)
           c.fill()
           print(c, 'GRAPHIPACKS QC OK', rx + 62, ry + 112, 12, '#ffffff', 700)
 
-          c.fillStyle = '#3D0E18'
+          c.fillStyle = PALETTE.darkNavy
           for (let b = 0; b < 24; b++) {
             const bw = b % 3 === 0 ? 3.5 : b % 5 === 0 ? 4.5 : 2
             c.fillRect(rx + 235 + b * 7, ry + 94, bw, 32)
           }
         }
 
-        const regColors = ['#3D0E18', '#A6864C', '#59616b', '#A6864C', '#3D0E18']
+        const regColors = [PALETTE.darkNavy, PALETTE.steelBlue, PALETTE.powderBlue, PALETTE.steelBlue, PALETTE.darkNavy]
         regColors.forEach((col, idx) => {
           c.fillStyle = col
           c.fillRect(rx + 28 + idx * 36, 460, 24, 24)
@@ -1073,48 +1081,48 @@ function initMachineScene(
         c.stroke()
       }
 
-      // Deep Navy header banner with Bronze accent lines
-      c.fillStyle = '#3D0E18'
+      // Deep Navy header banner with Steel Blue accent lines
+      c.fillStyle = PALETTE.darkNavy
       c.fillRect(0, 48, w, 116)
-      c.fillStyle = '#A6864C'
+      c.fillStyle = PALETTE.steelBlue
       c.fillRect(0, 46, w, 3)
       c.fillRect(0, 164, w, 4)
 
       // Brand typography in header
       print(c, 'GRAPHIPACKS', 32, 98, 30, '#ffffff', 700)
-      print(c, 'PREMIUM BARRIER PACKAGING', 32, 134, 13, '#A6864C', 600)
+      print(c, 'PREMIUM BARRIER PACKAGING', 32, 134, 13, PALETTE.powderBlue, 600)
 
       // Main product title
-      print(c, 'STAND-UP BARRIER POUCH', 32, 206, 21, '#3D0E18', 700)
-      print(c, 'SOLVENTLESS LAMINATION · 3-PLY', 32, 234, 13, '#A6864C', 600)
+      print(c, 'STAND-UP BARRIER POUCH', 32, 206, 21, PALETTE.darkNavy, 700)
+      print(c, 'SOLVENTLESS LAMINATION · 3-PLY', 32, 234, 13, PALETTE.steelBlue, 600)
 
-      // Center printed label panel with bronze border
-      c.strokeStyle = '#A6864C'
+      // Center printed label panel with steel border
+      c.strokeStyle = PALETTE.powderBlue
       c.lineWidth = 2
       c.strokeRect(28, 256, 384, 210)
       c.fillStyle = '#f6f3eb'
       c.fillRect(30, 258, 380, 206)
 
-      // Bronze highlight badge inside panel
-      c.fillStyle = '#A6864C'
+      // Steel highlight badge inside panel
+      c.fillStyle = PALETTE.steelBlue
       c.beginPath()
       c.roundRect(46, 276, 175, 26, 4)
       c.fill()
       print(c, '100% BARRIER INTEGRITY', 56, 294, 11, '#ffffff', 700)
 
       // Pouch features
-      print(c, '• MOISTURE & OXYGEN BARRIER', 46, 332, 14, '#3D0E18', 600)
-      print(c, '• HERMETIC HEAT-SEAL WITH ZIPPER', 46, 364, 14, '#3D0E18', 600)
-      print(c, '• FOOD GRADE COMPLIANT (ISO 9001)', 46, 396, 14, '#3D0E18', 600)
-      print(c, '• SOLVENTLESS ADHESIVE BONDING', 46, 428, 13, '#A6864C', 600)
+      print(c, '• MOISTURE & OXYGEN BARRIER', 46, 332, 14, PALETTE.darkNavy, 600)
+      print(c, '• HERMETIC HEAT-SEAL WITH ZIPPER', 46, 364, 14, PALETTE.darkNavy, 600)
+      print(c, '• FOOD GRADE COMPLIANT (ISO 9001)', 46, 396, 14, PALETTE.darkNavy, 600)
+      print(c, '• SOLVENTLESS ADHESIVE BONDING', 46, 428, 13, PALETTE.steelBlue, 600)
 
       // Technical specs
-      print(c, 'MATERIAL: PET 12µ / MET-PET 12µ / PE 80µ', 32, 492, 13, '#3D0E18', 600)
+      print(c, 'MATERIAL: PET 12µ / MET-PET 12µ / PE 80µ', 32, 492, 13, PALETTE.darkNavy, 600)
       print(c, 'SPEC: 1000g STAND-UP POUCH · 110 MICRON', 32, 518, 13, '#5e6871', 500)
       print(c, 'BATCH: GP-MADURAI-2026-FLEXO', 32, 544, 13, '#5e6871', 500)
 
       // Barcode block
-      c.fillStyle = '#3D0E18'
+      c.fillStyle = PALETTE.darkNavy
       for (let i = 0; i < 48; i++) {
         const bx = 32 + i * 7.8
         const bw = i % 3 === 0 ? 3.5 : i % 5 === 0 ? 4.5 : 2
@@ -1123,7 +1131,7 @@ function initMachineScene(
       print(c, '8 901234 567890', 140, 638, 13, '#5e6871', 500)
 
       // Footer
-      print(c, 'MADURAI PACKAGING PLANT · SINCE 1984', 32, 698, 12, '#A6864C', 600)
+      print(c, 'MADURAI PACKAGING PLANT · SINCE 1984', 32, 698, 12, PALETTE.steelBlue, 600)
 
       videoTexture.texture.needsUpdate = true
     }
@@ -1172,14 +1180,14 @@ function initMachineScene(
       c.fillStyle = '#111b20'
       c.fillRect(0, 0, 640, 340)
       print(c, 'ROTOGRAVURE UNITS', 25, 45, 21, '#acb9b8', 550)
-      print(c, '08 UNITS ACTIVE', 450, 45, 18, '#A6864C', 500)
+      print(c, '08 UNITS ACTIVE', 450, 45, 18, PALETTE.steelBlue, 500)
       for (let i = 0; i < 3; i++) {
         const y = 74 + i * 76
         c.fillStyle = '#202c30'
         c.beginPath()
         c.roundRect(21, y, 598, 61, 6)
         c.fill()
-        c.fillStyle = i === 0 ? '#c57e45' : '#626f69'
+        c.fillStyle = i === 0 ? PALETTE.steelBlue : '#626f69'
         c.fillRect(34, y + 10, 27, 41)
         print(
           c,
@@ -1189,10 +1197,10 @@ function initMachineScene(
           19,
           '#d4d8cc'
         )
-        print(c, i === 0 ? 'PRINTING' : 'CALIBRATED', 77, y + 49, 11, i === 0 ? '#A6864C' : '#81948f')
+        print(c, i === 0 ? 'PRINTING' : 'CALIBRATED', 77, y + 49, 11, i === 0 ? PALETTE.steelBlue : '#81948f')
         c.fillStyle = '#334348'
         c.fillRect(377, y + 26, 214, 7)
-        c.fillStyle = i === 0 ? '#A6864C' : '#607475'
+        c.fillStyle = i === 0 ? PALETTE.steelBlue : '#607475'
         c.fillRect(377, y + 26, i === 0 ? ((t * 0.15) % 1) * 214 : 41 + i * 27, 7)
       }
     }
@@ -1232,7 +1240,7 @@ function initMachineScene(
       }
       print(c, 'GRAPHIPACKS', 33, 100, 22, '#22282b', 650)
       print(c, 'Mulch Film   Grow Bags   Pouches', 450, 98, 14, '#6a7271')
-      c.fillStyle = '#A6864C'
+      c.fillStyle = PALETTE.steelBlue
       c.beginPath()
       c.roundRect(32, 131, 287, 401, 10)
       c.fill()
@@ -1271,23 +1279,23 @@ function initMachineScene(
     const postTex = canvasTexture(220, 290, (c, w, h) => {
       c.fillStyle = '#f4f1ea'
       c.fillRect(0, 0, w, h)
-      c.fillStyle = '#3D0E18'
+      c.fillStyle = PALETTE.darkNavy
       c.fillRect(15, 16, 190, 168)
       // 3-Layer high-barrier laminate schematic
       c.fillStyle = '#1c3d5a'
       c.fillRect(30, 40, 160, 24)
       print(c, 'PET 12µ', 75, 57, 13, '#ffffff', 600)
 
-      c.fillStyle = '#A6864C'
+      c.fillStyle = PALETTE.steelBlue
       c.fillRect(30, 72, 160, 24)
-      print(c, 'MET-PET 12µ', 58, 89, 13, '#3D0E18', 700)
+      print(c, 'MET-PET 12µ', 58, 89, 13, PALETTE.darkNavy, 700)
 
       c.fillStyle = '#d8d3c5'
       c.fillRect(30, 104, 160, 24)
-      print(c, 'LLDPE 80µ', 68, 121, 13, '#3D0E18', 600)
+      print(c, 'LLDPE 80µ', 68, 121, 13, PALETTE.darkNavy, 600)
 
-      print(c, 'BARRIER FILM', 17, 218, 20, '#3D0E18', 700)
-      print(c, '3-Ply Solventless Bonding', 17, 242, 12, '#A6864C', 600)
+      print(c, 'BARRIER FILM', 17, 218, 20, PALETTE.darkNavy, 700)
+      print(c, '3-Ply Solventless Bonding', 17, 242, 12, PALETTE.steelBlue, 600)
       print(c, 'Zero Odour · High Barrier', 17, 264, 11, '#566059', 500)
     })
     screen(flyPost, 0.55, 0.72, 0.94, 0.81, 0.575, postTex)
@@ -1307,7 +1315,7 @@ function initMachineScene(
         c.beginPath()
         c.roundRect(22, y, 436, 83, 8)
         c.fill()
-        c.fillStyle = ['#A6864C', '#bdbf9c', '#7d938e'][i]
+        c.fillStyle = [PALETTE.steelBlue, PALETTE.powderBlue, PALETTE.darkNavy][i]
         c.beginPath()
         c.arc(58, y + 40, 19, 0, TAU)
         c.fill()
@@ -1337,13 +1345,13 @@ function initMachineScene(
     cabinet.add(incoming)
     box(incoming, 0.86, 0.42, 0.043, 0, 0, 0, M.light, 0.035)
     const nameTex = canvasTexture(432, 204, (c, w, h) => {
-      c.fillStyle = '#A6864C'
+      c.fillStyle = PALETTE.steelBlue
       c.fillRect(0, 0, w, h)
       c.fillStyle = '#2a2e26'
       c.beginPath()
       c.arc(58, 98, 32, 0, TAU)
       c.fill()
-      print(c, 'QC', 34, 112, 32, '#A6864C', 550)
+      print(c, 'QC', 34, 112, 32, PALETTE.steelBlue, 550)
       print(c, 'QA PASS', 108, 91, 32, '#222822', 600)
       print(c, 'Tolerance OK ✓', 108, 138, 20, '#5b4c22', 500)
     })
@@ -1448,9 +1456,9 @@ function initMachineScene(
     r3.rotation.z = Math.PI / 2
     // Screen display for inventory
     const stockScreenTex = canvasTexture(512, 176, (c, w, h) => {
-      c.fillStyle = '#3D0E18'
+      c.fillStyle = PALETTE.darkNavy
       c.fillRect(0, 0, w, h)
-      print(c, 'WAREHOUSE STOCK & STAGING', 22, 44, 22, '#A6864C', 600)
+      print(c, 'WAREHOUSE STOCK & STAGING', 22, 44, 22, PALETTE.steelBlue, 600)
       print(c, 'PALLETIZED INVENTORY READY', 22, 95, 26, '#f4f1ea', 600)
       print(c, 'Lot GP-2026 · Madurai Plant', 22, 142, 18, '#81848b', 500)
     })
@@ -1552,13 +1560,13 @@ function initMachineScene(
     const scriptTex = canvasTexture(256, 352, (c, w, h) => {
       c.fillStyle = '#eeeae0'
       c.fillRect(0, 0, w, h)
-      print(c, 'JOB TICKET', 24, 47, 21, '#3D0E18', 650)
-      print(c, 'LOT GP-1984', 24, 85, 14, '#A6864C')
+      print(c, 'JOB TICKET', 24, 47, 21, PALETTE.darkNavy, 650)
+      print(c, 'LOT GP-1984', 24, 85, 14, PALETTE.steelBlue)
       for (let i = 0; i < 9; i++) {
-        c.fillStyle = i === 4 ? '#A6864C' : '#9ca3af'
+        c.fillStyle = i === 4 ? PALETTE.steelBlue : '#9ca3af'
         c.fillRect(24, 111 + i * 21, 190 - (i % 3) * 24, 6)
       }
-      print(c, 'PASSED  ✓', 24, 327, 16, '#3D0E18', 600)
+      print(c, 'PASSED  ✓', 24, 327, 16, PALETTE.darkNavy, 600)
     })
     const orderCardTex = canvasTexture(256, 352, (c, w, h) => {
       c.fillStyle = '#c57e45'
@@ -1636,11 +1644,11 @@ function initMachineScene(
         })
       }
 
-      // Golden tracking halo ring lying flat on the conveyor bed around cargo
+      // Steel tracking halo ring lying flat on the conveyor bed around cargo
       const halo = new THREE.Mesh(
         new THREE.RingGeometry(0.56, 0.585, 40),
         new THREE.MeshBasicMaterial({
-          color: 0xA6864C,
+          color: PALETTE_HEX.steelBlue,
           transparent: true,
           opacity: 0.85,
           side: THREE.DoubleSide,
@@ -2331,11 +2339,11 @@ const STYLES = String.raw`
 }
 .agentic-factory-3d {
   color-scheme: dark;
-  --bg: #3D0E18;
-  --white: #f4f1ea;
-  --amber: #A6864C;
+  --bg: #1D3557;
+  --white: #F1FAEE;
+  --amber: #457B9D;
   --muted: #81848b;
-  --line: rgba(244, 241, 234, 0.11);
+  --line: rgba(241, 250, 238, 0.11);
 }
 .agentic-factory-3d, .agentic-factory-3d * {
   box-sizing: border-box;
@@ -2448,7 +2456,7 @@ const STYLES = String.raw`
   height: 5px;
   border-radius: 50%;
   background: var(--amber);
-  box-shadow: 0 0 10px #A6864C60;
+  box-shadow: 0 0 10px #457B9D60;
 }
 .agentic-factory-3d .status.paused i {
   background: #777;
@@ -2545,8 +2553,8 @@ const STYLES = String.raw`
 }
 .agentic-factory-3d .mode-bar button[aria-pressed='true'] {
   background: var(--amber);
-  color: #211c0d;
-  box-shadow: 0 2px 12px #A6864C12;
+  color: #F1FAEE;
+  box-shadow: 0 2px 12px #457B9D12;
 }
 .agentic-factory-3d svg {
   flex-shrink: 0;
@@ -2667,13 +2675,13 @@ const STYLES = String.raw`
 .agentic-factory-3d .station-label .stem {
   height: 26px;
   width: 1px;
-  background: linear-gradient(#A6864C00, #A6864C70);
+  background: linear-gradient(#457B9D00, #457B9D70);
   margin: 0 0 0 10px;
 }
 .agentic-factory-3d .station-label .label-card {
   background: #14171bee;
   backdrop-filter: blur(10px);
-  border: 1px solid #A6864C40;
+  border: 1px solid #457B9D40;
   border-radius: 6px;
   padding: 10px 13px;
   box-shadow: 0 4px 20px #0003;
@@ -2751,7 +2759,7 @@ const STYLES = String.raw`
 .agentic-factory-3d .journey-icon {
   width: 28px;
   height: 28px;
-  border: 1px solid #A6864C40;
+  border: 1px solid #457B9D40;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -2796,7 +2804,7 @@ const STYLES = String.raw`
   height: 18px;
   width: 18px;
   border-radius: 50%;
-  border: 1px solid #A6864C22;
+  border: 1px solid #457B9D22;
   border-top-color: var(--amber);
   animation: agentic-factory-3d-spin 0.8s ease-in-out infinite;
 }
@@ -2814,7 +2822,7 @@ const STYLES = String.raw`
   left: 27.5%;
   right: 27.5%;
   top: 40%;
-  border: 1px solid #A6864C30;
+  border: 1px solid #457B9D30;
   background: #191b1f;
   padding: 24px;
   border-radius: 12px;
@@ -2969,7 +2977,7 @@ const STYLES = String.raw`
     display: none;
   }
 .agentic-factory-3d .vignette {
-    background: radial-gradient(ellipse at 50% 47%, transparent 20%, #3D0E1880 100%);
+    background: radial-gradient(ellipse at 50% 47%, transparent 20%, #1D355780 100%);
   }
 .agentic-factory-3d #loading {
     left: 50%;
@@ -3002,7 +3010,7 @@ const STYLES = String.raw`
     height: 17px;
   }
 .agentic-factory-3d.embed .vignette {
-    background: radial-gradient(ellipse at center, transparent 30%, #3D0E1860 100%);
+    background: radial-gradient(ellipse at center, transparent 30%, #1D355760 100%);
   }
 }
 @media (max-width: 360px) {

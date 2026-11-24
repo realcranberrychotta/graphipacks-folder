@@ -145,7 +145,7 @@ export default function InfrastructureBentoGrid({
             key={item.id}
             data-stack-card
             data-index={index}
-            className="infrastructure-sticky-card group relative w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden border border-[#1C1917]/12 bg-[#1C1917] select-none"
+            className="infrastructure-sticky-card group relative w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[520px] rounded-lg overflow-hidden border border-ink/15 bg-ink select-none"
             style={{
               position: isSticky ? "sticky" : "relative",
               top: topOffset,
@@ -158,17 +158,17 @@ export default function InfrastructureBentoGrid({
             }}
           >
             {/* Top Peeking Tab Bar (visible when previous cards peek out at top) */}
-            <div className="absolute top-0 inset-x-0 h-8 px-4 sm:px-6 flex items-center justify-between border-b border-[#A6864C]/30 bg-[#1C1917] z-20">
+            <div className="absolute top-0 inset-x-0 h-8 px-4 sm:px-6 flex items-center justify-between border-b border-powder/40 bg-ink z-20">
               <div className="flex items-center gap-2.5">
-                <span className="font-mono text-xs font-bold tracking-widest text-[#A6864C]">
+                <span className="font-mono text-xs font-bold tracking-widest text-powder">
                   {item.id}
                 </span>
-                <span className="text-[#A6864C]/50" aria-hidden="true">&bull;</span>
-                <span className="font-mono text-xs font-bold tracking-wider text-[#F6F2EB] uppercase truncate max-w-[200px] sm:max-w-none">
+                <span className="text-powder/50" aria-hidden="true">&bull;</span>
+                <span className="font-mono text-xs font-bold tracking-wider text-background uppercase truncate max-w-[200px] sm:max-w-none">
                   {item.title}
                 </span>
               </div>
-              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-[#A6864C] uppercase hidden xs:inline">
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-powder uppercase hidden xs:inline">
                 Madurai Plant
               </span>
             </div>
@@ -187,25 +187,25 @@ export default function InfrastructureBentoGrid({
 
               {/* Bottom Gradient Scrim strictly over the bottom ~35% behind text; top 65-70% remains clear and unobstructed */}
               <div
-                className="absolute inset-x-0 bottom-0 h-[40%] sm:h-[35%] bg-gradient-to-t from-[#1C1917]/88 via-[#1C1917]/35 to-transparent pointer-events-none"
+                className="absolute inset-x-0 bottom-0 h-[40%] sm:h-[35%] bg-gradient-to-t from-ink/90 via-ink/35 to-transparent pointer-events-none"
                 aria-hidden="true"
               />
 
               {/* Bottom-Left Anchored Content */}
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 md:p-10 z-10 flex flex-col justify-end pointer-events-none max-w-3xl">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[11px] uppercase tracking-[0.22em] font-medium text-[#A6864C]">
+                  <span className="text-[11px] uppercase tracking-[0.22em] font-medium text-powder">
                     01 / MANUFACTURING INFRASTRUCTURE
                   </span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#A6864C]" aria-hidden="true" />
-                  <span className="font-mono text-[10px] tracking-wider text-[#F6F2EB]/70 uppercase hidden sm:inline">
+                  <span className="h-1.5 w-1.5 rounded-full bg-red" aria-hidden="true" />
+                  <span className="font-mono text-[10px] tracking-wider text-background/70 uppercase hidden sm:inline">
                     Continuous Plant Operation
                   </span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#F6F2EB] font-[family-name:var(--font-playfair)]">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal leading-[1.12] tracking-[-0.02em] text-background font-[family-name:var(--font-playfair)]">
                   {item.title}
                 </h2>
-                <p className="mt-3 max-w-[60ch] text-[15px] md:text-base leading-[1.7] text-[#F6F2EB]/85 font-sans line-clamp-3 sm:line-clamp-none">
+                <p className="mt-3 max-w-[60ch] text-[15px] md:text-base leading-[1.7] text-background/85 font-sans line-clamp-3 sm:line-clamp-none">
                   {item.description}
                 </p>
               </div>

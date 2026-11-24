@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { PALETTE } from "@/lib/palette";
 
 export async function POST(request: Request) {
   try {
@@ -52,35 +53,35 @@ export async function POST(request: Request) {
             reply_to: cleanEmail,
             subject: `New Technical Quote Request: ${cleanProduct}${cleanCompany ? ` - ${cleanCompany}` : ""}`,
             html: `
-              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #A6864C; border-radius: 8px; background-color: #3D0E18; color: #F6F2EB;">
-                <h2 style="color: #A6864C; border-bottom: 1px solid rgba(166,134,76,0.3); padding-bottom: 10px;">New B2B Quote Request</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: #F6F2EB;">
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid ${PALETTE.steelBlue}; border-radius: 8px; background-color: ${PALETTE.darkNavy}; color: ${PALETTE.honeydew};">
+                <h2 style="color: ${PALETTE.powderBlue}; border-bottom: 1px solid rgba(168,218,220,0.3); padding-bottom: 10px;">New B2B Quote Request</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: ${PALETTE.honeydew};">
                   <tr>
-                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold; width: 140px;">Client Name:</td>
+                    <td style="padding: 8px 0; color: ${PALETTE.powderBlue}; font-weight: bold; width: 140px;">Client Name:</td>
                     <td style="padding: 8px 0;">${cleanFullName}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Company Name:</td>
+                    <td style="padding: 8px 0; color: ${PALETTE.powderBlue}; font-weight: bold;">Company Name:</td>
                     <td style="padding: 8px 0;">${cleanCompany || "Not specified"}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Email:</td>
-                    <td style="padding: 8px 0;"><a href="mailto:${cleanEmail}" style="color: #F6F2EB;">${cleanEmail}</a></td>
+                    <td style="padding: 8px 0; color: ${PALETTE.powderBlue}; font-weight: bold;">Email:</td>
+                    <td style="padding: 8px 0;"><a href="mailto:${cleanEmail}" style="color: ${PALETTE.honeydew};">${cleanEmail}</a></td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Phone:</td>
-                    <td style="padding: 8px 0;">${cleanPhone ? `<a href="tel:${cleanPhone}" style="color: #F6F2EB;">${cleanPhone}</a>` : "Not specified"}</td>
+                    <td style="padding: 8px 0; color: ${PALETTE.powderBlue}; font-weight: bold;">Phone:</td>
+                    <td style="padding: 8px 0;">${cleanPhone ? `<a href="tel:${cleanPhone}" style="color: ${PALETTE.honeydew};">${cleanPhone}</a>` : "Not specified"}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; color: #A6864C; font-weight: bold;">Product:</td>
-                    <td style="padding: 8px 0; font-weight: bold; color: #A6864C;">${cleanProduct}</td>
+                    <td style="padding: 8px 0; color: ${PALETTE.powderBlue}; font-weight: bold;">Product:</td>
+                    <td style="padding: 8px 0; font-weight: bold; color: ${PALETTE.powderBlue};">${cleanProduct}</td>
                   </tr>
                 </table>
-                <div style="margin-top: 20px; padding: 15px; background-color: #27080F; border-radius: 6px; border: 1px solid rgba(166,134,76,0.2);">
-                  <strong style="color: #A6864C; display: block; margin-bottom: 8px;">Specifications & Requirements:</strong>
+                <div style="margin-top: 20px; padding: 15px; background-color: #152740; border-radius: 6px; border: 1px solid rgba(168,218,220,0.2);">
+                  <strong style="color: ${PALETTE.powderBlue}; display: block; margin-bottom: 8px;">Specifications & Requirements:</strong>
                   <p style="white-space: pre-wrap; margin: 0; line-height: 1.5;">${cleanMessage}</p>
                 </div>
-                <p style="margin-top: 25px; font-size: 11px; color: rgba(246,242,235,0.7); text-align: center;">
+                <p style="margin-top: 25px; font-size: 11px; color: rgba(241,250,238,0.7); text-align: center;">
                   Graphipacks Private Limited · Automated Quote Dispatch System
                 </p>
               </div>

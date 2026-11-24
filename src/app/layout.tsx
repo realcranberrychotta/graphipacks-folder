@@ -69,7 +69,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-[#F6F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#3D0E18] selection:text-[#F6F2EB]`}
+        className={`${playfair.variable} ${manrope.variable} ${geistMono.variable} flex min-h-full flex-col bg-background text-ink font-sans antialiased selection:bg-heritage selection:text-background`}
       >
         <SmoothScroll />
         <Preloader />

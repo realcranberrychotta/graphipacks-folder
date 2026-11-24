@@ -1,12 +1,33 @@
 {
   "version": 2,
   "skills": {
+    "color-palette-design": {
+      "source": "shangliny10-lab/visual-communication-design-skills",
+      "commit": "374bde2388fe106d71566905fefc8aa7819c4e75",
+      "sourceType": "github",
+      "skillPath": "color-palette-design/SKILL.md",
+      "computedHash": "dfddd57fdb0a6d5fb288a72090e526e5501ca74638af38c054bc857518c7758c"
+    },
+    "design-it": {
+      "source": "sickn33/agentic-awesome-skills",
+      "commit": "85d3a54b73ebf23683955bda67bf906aca527e57",
+      "sourceType": "github",
+      "skillPath": "skills/design-it/SKILL.md",
+      "computedHash": "4c65b404811a76006627c95963a5724ec16292bea2ddfa5bd4b843f5196d208c"
+    },
     "gravitas": {
       "source": "udaysharmadev/Gravitas",
       "commit": "e0d22cd4f7639b1af3899bc3e70d314b2ae6339a",
       "sourceType": "github",
       "skillPath": "skills/gravitas/SKILL.md",
       "computedHash": "5e25a663f10ba342216cbc68044f5b74aada957d5fb0755cc46978ccfa62a292"
+    },
+    "redesign-existing-projects": {
+      "source": "sickn33/agentic-awesome-skills",
+      "commit": "4fc722d0d9ce48f6b3bea6f0c1255ffdda564446",
+      "sourceType": "github",
+      "skillPath": "skills/redesign-existing-projects/SKILL.md",
+      "computedHash": "534db3748bfddd19264402099daaebcbc8a63e7df159f955130230f5ee940aae"
     }
   }
 }

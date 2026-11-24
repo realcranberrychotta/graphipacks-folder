@@ -411,17 +411,17 @@ function ContactFormInner({
     <div
       className={`rounded-2xl ${isModal
         ? "bg-transparent border-0"
-        : "border border-[#1C1917]/10 bg-[#FBF9F5]"
-        } p-5 sm:p-8 md:p-10 text-[#1C1917]`}
+        : "border border-ink/10 bg-background"
+        } p-5 sm:p-8 md:p-10 text-ink`}
     >
       {/* Header with Progress Bar */}
       {!isSubmitted && (
-        <div className="border-b border-[#1C1917]/10 pb-5">
+        <div className="border-b border-ink/10 pb-5">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#A6864C]">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-steel">
               Step {currentStep} of 4
             </span>
-            <span className="font-mono text-[11px] text-[#57524E] uppercase tracking-wider">
+            <span className="font-mono text-[11px] text-ink/75 uppercase tracking-wider">
               {currentStep === 1 && "1. Product Selection"}
               {currentStep === 2 && "2. Quantity & Gauge"}
               {currentStep === 3 && "3. Contact Details"}
@@ -429,21 +429,21 @@ function ContactFormInner({
             </span>
           </div>
 
-          {/* Thin Brass Fill Progress Bar */}
-          <div className="mt-2.5 h-1.5 w-full bg-[#1C1917]/10 rounded-full overflow-hidden">
+          {/* Thin Steel Fill Progress Bar */}
+          <div className="mt-2.5 h-1.5 w-full bg-ink/10 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#A6864C] transition-all duration-300 ease-out"
+              className="h-full bg-steel transition-all duration-300 ease-out"
               style={{ width: `${(currentStep / 4) * 100}%` }}
             />
           </div>
 
-          <h2 className="mt-4 text-xl sm:text-2xl font-bold tracking-tight text-[#1C1917] font-serif">
+          <h2 className="mt-4 text-xl sm:text-2xl font-bold tracking-tight text-ink font-serif">
             {currentStep === 1 && "Select Product of Interest"}
             {currentStep === 2 && "Choose Quantity & Gauge / Size"}
             {currentStep === 3 && "Your Contact Details"}
             {currentStep === 4 && "Message & Requirements"}
           </h2>
-          <p className="mt-1 text-xs sm:text-sm text-[#57524E] font-sans">
+          <p className="mt-1 text-xs sm:text-sm text-ink/75 font-sans">
             {currentStep === 1 && "Tap one of the 6 manufactured product lines below."}
             {currentStep === 2 && `Configure gauge thickness and order volume for ${formData.product || "your order"}.`}
             {currentStep === 3 && "Provide your contact information. Phone and Company are optional."}
@@ -456,20 +456,20 @@ function ContactFormInner({
       {isSubmitted ? (
         <div className="mt-8 space-y-6">
           {/* Keep existing success card exactly as it is */}
-          <div className="rounded-2xl border border-[#A6864C] bg-[#EDE6DA] p-8 text-center">
+          <div className="rounded-2xl border border-powder/40 bg-surface p-8 text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 border border-emerald-300 text-emerald-600 shadow-sm">
               <CheckCircle2 className="h-8 w-8 text-emerald-600" />
             </div>
             <div>
-              <h3 className="mt-4 text-2xl font-bold text-[#1C1917] font-serif">
+              <h3 className="mt-4 text-2xl font-bold text-ink font-serif">
                 Request received
               </h3>
-              <p className="mt-2 text-base font-semibold text-[#3D0E18]">
+              <p className="mt-2 text-base font-semibold text-navy">
                 Our team will call you within 1 working day.
               </p>
-              <p className="mt-2 text-xs text-[#57524E] max-w-md mx-auto leading-relaxed font-sans">
+              <p className="mt-2 text-xs text-ink/75 max-w-md mx-auto leading-relaxed font-sans">
                 We have registered your inquiry for{" "}
-                <span className="font-semibold text-[#1C1917]">
+                <span className="font-semibold text-ink">
                   {formData.product || "our flexible packaging solutions"}
                 </span>
                 {formData.gauge ? ` (${formData.gauge})` : ""}. One of our factory sales engineers in Madurai will review your specifications and contact you directly within 24 hours.
@@ -478,7 +478,7 @@ function ContactFormInner({
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-[#3D0E18] hover:bg-[#27080F] px-6 py-2.5 text-xs sm:text-sm font-bold text-[#F6F2EB] transition-colors duration-200 ease-in-out cursor-pointer"
+                  className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg bg-navy hover:bg-navy/90 px-6 py-2.5 text-xs sm:text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
                 >
                   Submit Another Inquiry
                 </button>
@@ -486,7 +486,7 @@ function ContactFormInner({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-[#1C1917]/20 bg-transparent hover:bg-[#1C1917]/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center rounded-lg border border-ink/20 bg-transparent hover:bg-ink/10 px-6 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 ease-in-out cursor-pointer"
                   >
                     Close Window
                   </button>
@@ -496,53 +496,53 @@ function ContactFormInner({
           </div>
 
           {/* 1. Timeline: a 3-step horizontal timeline */}
-          <div className="rounded-xl border border-[#D5C7B5] bg-[#F6F2EB] p-5 sm:p-6 text-left">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#57524E] mb-4">
+          <div className="rounded-xl border border-powder/40 bg-background p-5 sm:p-6 text-left">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink/75 mb-4">
               Inquiry Progression
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-2">
-              {/* Step 1: Received ✓ (completed, brass check) */}
+              {/* Step 1: Received ✓ (completed, steel check) */}
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#A6864C]/15 border border-[#A6864C] text-[#A6864C]">
-                  <Check className="h-4 w-4 text-[#A6864C]" strokeWidth={2.5} />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-powder/20 border border-steel text-steel">
+                  <Check className="h-4 w-4 text-steel" strokeWidth={2.5} />
                 </div>
                 <div>
-                  <div className="text-xs sm:text-sm font-bold text-[#1C1917]">
+                  <div className="text-xs sm:text-sm font-bold text-ink">
                     Received ✓
                   </div>
-                  <div className="text-[11px] text-[#A6864C] font-medium">Completed</div>
+                  <div className="text-[11px] text-steel font-medium">Completed</div>
                 </div>
               </div>
 
               {/* Connecting line */}
-              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-[#A6864C]/40 mx-2" />
+              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-powder/40 mx-2" />
 
               {/* Step 2: Reviewing specs (today) (in progress) */}
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3D0E18] text-[#F6F2EB] border border-[#3D0E18]">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-navy text-background border border-navy">
                   <span className="text-xs font-bold font-mono">2</span>
                 </div>
                 <div>
-                  <div className="text-xs sm:text-sm font-bold text-[#3D0E18]">
+                  <div className="text-xs sm:text-sm font-bold text-navy">
                     Reviewing specs (today)
                   </div>
-                  <div className="text-[11px] text-[#A6864C] font-semibold">In progress</div>
+                  <div className="text-[11px] text-steel font-semibold">In progress</div>
                 </div>
               </div>
 
               {/* Connecting line */}
-              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-[#1C1917]/20 mx-2" />
+              <div className="hidden sm:block h-[1px] flex-1 max-w-[60px] bg-ink/20 mx-2" />
 
               {/* Step 3: Quote sent (within 24h) (upcoming) */}
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/70 border border-[#1C1917]/20 text-[#57524E]">
-                  <span className="text-xs font-bold font-mono text-[#57524E]">3</span>
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/70 border border-ink/20 text-ink/75">
+                  <span className="text-xs font-bold font-mono text-ink/75">3</span>
                 </div>
                 <div>
-                  <div className="text-xs sm:text-sm font-bold text-[#57524E]">
+                  <div className="text-xs sm:text-sm font-bold text-ink/75">
                     Quote sent (within 24h)
                   </div>
-                  <div className="text-[11px] text-[#78716C]">Upcoming</div>
+                  <div className="text-[11px] text-ink/60">Upcoming</div>
                 </div>
               </div>
             </div>
@@ -556,9 +556,9 @@ function ContactFormInner({
                 type="button"
                 onClick={handleDownloadSpecSheet}
                 disabled={isPdfGenerating}
-                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-[#A6864C] bg-[#EDE6DA] hover:bg-[#E3D9C9] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 cursor-pointer shadow-sm"
+                className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-steel bg-surface hover:bg-surface px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
               >
-                <Download className="h-4 w-4 text-[#A6864C]" />
+                <Download className="h-4 w-4 text-steel" />
                 <span>{isPdfGenerating ? "Generating..." : "Download Spec Sheet (PDF)"}</span>
               </button>
             )}
@@ -568,9 +568,9 @@ function ContactFormInner({
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-[#1C1917]/20 bg-white hover:bg-[#F6F2EB] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#1C1917] transition-colors duration-200 cursor-pointer shadow-sm"
+              className="btn-press min-h-[44px] inline-flex items-center justify-center gap-2 rounded-lg border border-ink/20 bg-white hover:bg-background px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors duration-200 cursor-pointer shadow-sm"
             >
-              <Calendar className="h-4 w-4 text-[#3D0E18]" />
+              <Calendar className="h-4 w-4 text-steel" />
               <span>Book your call — pick a time that suits you</span>
             </a>
 
@@ -594,11 +594,11 @@ function ContactFormInner({
             {currentStep === 1 && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]">
-                    Product of Interest <span className="text-[#3D0E18]">*</span>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink">
+                    Product of Interest <span className="text-red">*</span>
                   </label>
                   {formData.product && (
-                    <span className="font-mono text-[11px] font-semibold text-[#A6864C]">
+                    <span className="font-mono text-[11px] font-semibold text-steel">
                       Selected: {formData.product}
                     </span>
                   )}
@@ -613,11 +613,11 @@ function ContactFormInner({
                         type="button"
                         onClick={() => handleProductSelect(choice)}
                         className={`btn-press group relative flex flex-col text-left overflow-hidden rounded-xl border-2 transition-all duration-200 cursor-pointer ${isSelected
-                          ? "border-[#3D0E18] bg-[#EDE6DA] shadow-sm ring-1 ring-[#3D0E18]"
-                          : "border-[#1C1917]/10 bg-[#FFFFFF] hover:border-[#A6864C]/70 hover:bg-[#FBF9F5]"
+                          ? "border-steel bg-surface shadow-sm ring-1 ring-steel"
+                          : "border-ink/10 bg-background hover:border-steel/70 hover:bg-background"
                           }`}
                       >
-                        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EDE6DA]">
+                        <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface">
                           <Image
                             src={choice.image}
                             alt={choice.name}
@@ -626,16 +626,16 @@ function ContactFormInner({
                             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                           />
                           {isSelected && (
-                            <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#3D0E18] text-[#F6F2EB]">
+                            <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-navy text-background">
                               <Check className="h-3 w-3 stroke-[3]" />
                             </div>
                           )}
                         </div>
                         <div className="p-2.5 sm:p-3 flex flex-col justify-between flex-1">
-                          <span className="text-xs sm:text-sm font-bold text-[#1C1917] leading-tight">
+                          <span className="text-xs sm:text-sm font-bold text-ink leading-tight">
                             {choice.name}
                           </span>
-                          <span className="mt-1 text-[10px] text-[#57524E] font-mono">
+                          <span className="mt-1 text-[10px] text-ink/75 font-mono">
                             {choice.specs}
                           </span>
                         </div>
@@ -658,11 +658,11 @@ function ContactFormInner({
               <div className="space-y-6">
                 {/* Gauge / Size Options from Product Page */}
                 <div>
-                  <div className="flex items-center justify-between border-b border-[#1C1917]/10 pb-2">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]">
+                  <div className="flex items-center justify-between border-b border-ink/10 pb-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink">
                       Specification Gauge / Size:
                     </label>
-                    <span className="font-mono text-[11px] text-[#A6864C] font-semibold">
+                    <span className="font-mono text-[11px] text-steel font-semibold">
                       {selectedProductChoice.variants.length} configurations available
                     </span>
                   </div>
@@ -676,20 +676,20 @@ function ContactFormInner({
                           type="button"
                           onClick={() => setFormData((prev) => ({ ...prev, gauge: v.name }))}
                           className={`btn-press group relative inline-flex min-h-[44px] items-center gap-2 rounded-lg px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${isSelected
-                            ? "bg-[#3D0E18] text-[#F6F2EB] border-2 border-[#A6864C]"
-                            : "bg-[#FFFFFF] text-[#1C1917] border border-[#1C1917]/15 hover:border-[#A6864C]"
+                            ? "bg-navy text-background border-2 border-steel"
+                            : "bg-background text-ink border border-ink/15 hover:border-steel hover:text-steel"
                             }`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-xs transition-colors ${isSelected ? "bg-[#A6864C]" : "bg-[#1C1917]/30 group-hover:bg-[#A6864C]"
+                            className={`h-1.5 w-1.5 rounded-xs transition-colors ${isSelected ? "bg-red" : "bg-ink/30 group-hover:bg-steel"
                               }`}
                           />
                           <span>{v.name}</span>
                           {v.badge && (
                             <span
                               className={`rounded-sm px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${isSelected
-                                ? "bg-[#27080F] text-[#A6864C]"
-                                : "bg-[#EDE6DA] text-[#57524E]"
+                                ? "bg-navy text-powder"
+                                : "bg-surface text-ink/75"
                                 }`}
                             >
                               {v.badge}
@@ -703,12 +703,12 @@ function ContactFormInner({
 
                 {/* Quantity / Volume Selection */}
                 <div>
-                  <div className="flex items-center justify-between border-b border-[#1C1917]/10 pb-2">
-                    <label htmlFor="quantity" className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]">
+                  <div className="flex items-center justify-between border-b border-ink/10 pb-2">
+                    <label htmlFor="quantity" className="block text-xs font-bold uppercase tracking-wider text-ink">
                       Target Order Quantity / Volume:
                     </label>
-                    <span className="font-mono text-[11px] text-[#57524E]">
-                      MOQ: <strong className="text-[#3D0E18]">{selectedProductChoice.moq}</strong>
+                    <span className="font-mono text-[11px] text-ink/75">
+                      MOQ: <strong className="text-navy">{selectedProductChoice.moq}</strong>
                     </span>
                   </div>
 
@@ -720,21 +720,21 @@ function ContactFormInner({
                       value={formData.quantity}
                       onChange={handleChange}
                       placeholder={`e.g. ${selectedProductChoice.quantities[0]} or custom monthly volume`}
-                      className="block w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18] focus:outline-hidden transition-colors duration-200"
+                      className="block w-full min-h-[48px] rounded-lg border border-ink/15 bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:border-steel focus:ring-1 focus:ring-steel focus:outline-hidden transition-colors duration-200"
                     />
                   </div>
 
                   {/* Quick selection presets */}
                   <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <span className="text-[11px] font-mono text-[#57524E]">Quick Presets:</span>
+                    <span className="text-[11px] font-mono text-ink/75">Quick Presets:</span>
                     {selectedProductChoice.quantities.map((q) => (
                       <button
                         key={q}
                         type="button"
                         onClick={() => setFormData((prev) => ({ ...prev, quantity: q }))}
                         className={`btn-press rounded-md px-2.5 py-1 text-xs font-mono transition-colors cursor-pointer border ${formData.quantity === q
-                          ? "bg-[#3D0E18] text-[#F6F2EB] border-[#3D0E18]"
-                          : "bg-[#EDE6DA] text-[#1C1917] border-[#1C1917]/10 hover:border-[#A6864C]"
+                          ? "bg-navy text-background border-navy"
+                          : "bg-surface text-ink border-ink/10 hover:border-steel hover:text-steel"
                           }`}
                       >
                         {q}
@@ -753,9 +753,9 @@ function ContactFormInner({
                   <div className={shakingFields.fullName ? "animate-shake" : ""}>
                     <label
                       htmlFor="fullName"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
+                      className="block text-xs font-bold uppercase tracking-wider text-ink"
                     >
-                      Full Name <span className="text-[#3D0E18]">*</span>
+                      Full Name <span className="text-red">*</span>
                     </label>
                     <input
                       id="fullName"
@@ -767,9 +767,9 @@ function ContactFormInner({
                       placeholder="e.g. Ramesh Kumar"
                       aria-invalid={!!errors.fullName}
                       aria-describedby={errors.fullName ? "fullName-error" : undefined}
-                      className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden transition-colors duration-200 ${errors.fullName
+                      className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:outline-hidden transition-colors duration-200 ${errors.fullName
                         ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
-                        : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
+                        : "border-ink/15 focus:border-steel focus:ring-1 focus:ring-steel"
                         }`}
                     />
                     {errors.fullName && (
@@ -784,9 +784,9 @@ function ContactFormInner({
                   <div className={shakingFields.email ? "animate-shake" : ""}>
                     <label
                       htmlFor="email"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
+                      className="block text-xs font-bold uppercase tracking-wider text-ink"
                     >
-                      Email Address <span className="text-[#3D0E18]">*</span>
+                      Email Address <span className="text-red">*</span>
                     </label>
                     <input
                       id="email"
@@ -801,9 +801,9 @@ function ContactFormInner({
                       placeholder="e.g. ramesh@apexagri.com"
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? "email-error" : undefined}
-                      className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden transition-colors duration-200 ${errors.email
+                      className={`mt-1.5 block w-full min-h-[48px] rounded-lg border bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:outline-hidden transition-colors duration-200 ${errors.email
                         ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
-                        : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
+                        : "border-ink/15 focus:border-steel focus:ring-1 focus:ring-steel"
                         }`}
                     />
                     {errors.email ? (
@@ -812,7 +812,7 @@ function ContactFormInner({
                         <span>{errors.email}</span>
                       </p>
                     ) : (
-                      <p className="mt-1 text-[11px] text-[#57524E]">
+                      <p className="mt-1 text-[11px] text-ink/75">
                         We&apos;ll reply within 1 working day.
                       </p>
                     )}
@@ -824,9 +824,9 @@ function ContactFormInner({
                   <div>
                     <label
                       htmlFor="phone"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
+                      className="block text-xs font-bold uppercase tracking-wider text-ink"
                     >
-                      Phone Number <span className="text-[11px] font-normal lowercase text-[#57524E]">(optional)</span>
+                      Phone Number <span className="text-[11px] font-normal lowercase text-ink/75">(optional)</span>
                     </label>
                     <input
                       id="phone"
@@ -837,9 +837,9 @@ function ContactFormInner({
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="e.g. +91 98765 43210"
-                      className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18] focus:outline-hidden transition-colors duration-200"
+                      className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-ink/15 bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:border-steel focus:ring-1 focus:ring-steel focus:outline-hidden transition-colors duration-200"
                     />
-                    <p className="mt-1 text-[11px] text-[#57524E]">
+                    <p className="mt-1 text-[11px] text-ink/75">
                       e.g. 98765 43210, +91 accepted
                     </p>
                   </div>
@@ -848,9 +848,9 @@ function ContactFormInner({
                   <div>
                     <label
                       htmlFor="companyName"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
+                      className="block text-xs font-bold uppercase tracking-wider text-ink"
                     >
-                      Company Name <span className="text-[11px] font-normal lowercase text-[#57524E]">(optional)</span>
+                      Company Name <span className="text-[11px] font-normal lowercase text-ink/75">(optional)</span>
                     </label>
                     <input
                       id="companyName"
@@ -860,7 +860,7 @@ function ContactFormInner({
                       value={formData.companyName}
                       onChange={handleChange}
                       placeholder="e.g. Apex Agri Exports Ltd."
-                      className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-[#1C1917]/15 bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18] focus:outline-hidden transition-colors duration-200"
+                      className="mt-1.5 block w-full min-h-[48px] rounded-lg border border-ink/15 bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:border-steel focus:ring-1 focus:ring-steel focus:outline-hidden transition-colors duration-200"
                     />
                   </div>
                 </div>
@@ -871,27 +871,27 @@ function ContactFormInner({
             {currentStep === 4 && (
               <div className="space-y-4">
                 {/* Summary Recap Bar */}
-                <div className="rounded-lg border border-[#A6864C]/35 bg-[#EDE6DA] p-3 text-xs flex flex-wrap items-center gap-x-4 gap-y-1">
+                <div className="rounded-lg border border-powder/40 bg-surface p-3 text-xs flex flex-wrap items-center gap-x-4 gap-y-1">
                   <div>
-                    <span className="text-[#57524E]">Product:</span>{" "}
-                    <strong className="text-[#3D0E18]">{formData.product}</strong>
+                    <span className="text-ink/75">Product:</span>{" "}
+                    <strong className="text-navy">{formData.product}</strong>
                   </div>
                   {formData.gauge && (
                     <div>
-                      <span className="text-[#57524E]">Gauge:</span>{" "}
-                      <strong className="text-[#1C1917]">{formData.gauge}</strong>
+                      <span className="text-ink/75">Gauge:</span>{" "}
+                      <strong className="text-ink">{formData.gauge}</strong>
                     </div>
                   )}
                   {formData.quantity && (
                     <div>
-                      <span className="text-[#57524E]">Volume:</span>{" "}
-                      <strong className="text-[#1C1917]">{formData.quantity}</strong>
+                      <span className="text-ink/75">Volume:</span>{" "}
+                      <strong className="text-ink">{formData.quantity}</strong>
                     </div>
                   )}
                   {formData.fullName && (
                     <div>
-                      <span className="text-[#57524E]">Contact:</span>{" "}
-                      <strong className="text-[#1C1917]">{formData.fullName}</strong>
+                      <span className="text-ink/75">Contact:</span>{" "}
+                      <strong className="text-ink">{formData.fullName}</strong>
                     </div>
                   )}
                 </div>
@@ -900,10 +900,10 @@ function ContactFormInner({
                 <div className={shakingFields.message ? "animate-shake" : ""}>
                   <label
                     htmlFor="message"
-                    className="block text-xs font-bold uppercase tracking-wider text-[#1C1917]"
+                    className="block text-xs font-bold uppercase tracking-wider text-ink"
                   >
                     Message &amp; Requirements{" "}
-                    <span className="text-[11px] font-normal normal-case text-[#57524E]">(Optional)</span>
+                    <span className="text-[11px] font-normal normal-case text-ink/75">(Optional)</span>
                   </label>
                   <textarea
                     id="message"
@@ -914,9 +914,9 @@ function ContactFormInner({
                     placeholder="Specify gauge thickness (microns), dimensions, order quantities, print colors, or sample delivery requests..."
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? "message-error" : undefined}
-                    className={`mt-1.5 block w-full min-h-[120px] rounded-lg border bg-[#FFFFFF] px-4 py-3 text-base sm:text-sm text-[#1C1917] placeholder:text-[#57524E]/50 focus:outline-hidden resize-y transition-colors duration-200 ${errors.message
+                    className={`mt-1.5 block w-full min-h-[120px] rounded-lg border bg-background px-4 py-3 text-base sm:text-sm text-ink placeholder:text-ink/75/50 focus:outline-hidden resize-y transition-colors duration-200 ${errors.message
                       ? "border-red-600 focus:border-red-600 focus:ring-1 focus:ring-red-600 bg-red-50/40"
-                      : "border-[#1C1917]/15 focus:border-[#3D0E18] focus:ring-1 focus:ring-[#3D0E18]"
+                      : "border-ink/15 focus:border-steel focus:ring-1 focus:ring-steel"
                       }`}
                   />
                   {errors.message && (
@@ -941,12 +941,12 @@ function ContactFormInner({
           </div>
 
           {/* Stepped Navigation Buttons (Back / Next / Submit) */}
-          <div className="mt-6 pt-4 flex items-center justify-between border-t border-[#1C1917]/10 gap-3">
+          <div className="mt-6 pt-4 flex items-center justify-between border-t border-ink/10 gap-3">
             {currentStep > 1 ? (
               <button
                 type="button"
                 onClick={handleBack}
-                className="btn-press min-h-[48px] px-5 py-2.5 rounded-lg border border-[#1C1917]/20 bg-[#FFFFFF] hover:bg-[#EDE6DA] text-[#1C1917] text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
+                className="btn-press min-h-[48px] px-5 py-2.5 rounded-lg border border-ink/20 bg-background hover:bg-surface text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back</span>
@@ -959,7 +959,7 @@ function ContactFormInner({
               <button
                 type="button"
                 onClick={handleNext}
-                className="btn-press min-h-[48px] px-6 py-2.5 rounded-lg bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 ml-auto"
+                className="btn-press min-h-[48px] px-6 py-2.5 rounded-lg bg-navy hover:bg-navy/90 text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 ml-auto"
               >
                 <span>Next Step</span>
                 <ArrowRight className="h-4 w-4" />
@@ -970,18 +970,18 @@ function ContactFormInner({
                   type="button"
                   onClick={() => executeSubmit("")}
                   disabled={isSubmitting}
-                  className="btn-press min-h-[48px] px-4 sm:px-5 py-2.5 rounded-lg border border-[#1C1917]/20 bg-[#FFFFFF] hover:bg-[#EDE6DA] text-[#57524E] hover:text-[#1C1917] text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-press min-h-[48px] px-4 sm:px-5 py-2.5 rounded-lg border border-ink/20 bg-background hover:bg-surface text-ink/75 hover:text-ink text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>Skip this step &rarr;</span>
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-press min-h-[48px] px-6 sm:px-7 py-3 rounded-xl bg-[#3D0E18] hover:bg-[#27080F] text-[#F6F2EB] text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
+                  className="btn-press min-h-[48px] px-6 sm:px-7 py-3 rounded-xl bg-red hover:bg-[#d62839] text-background text-xs sm:text-sm font-bold transition-colors duration-200 cursor-pointer inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="h-4 w-4 animate-spin text-[#F6F2EB]" viewBox="0 0 24 24" fill="none">
+                      <svg className="h-4 w-4 animate-spin text-background" viewBox="0 0 24 24" fill="none">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                       </svg>
@@ -1011,13 +1011,13 @@ export default function ContactForm({
   return (
     <Suspense
       fallback={
-        <div className={`rounded-2xl ${isModal ? "bg-transparent border-0" : "border border-[#1C1917]/10 bg-[#EDE6DA]"} p-8 animate-pulse`}>
-          <div className="h-6 w-1/3 bg-[#FBF9F5] rounded mb-4" />
-          <div className="h-4 w-2/3 bg-[#FBF9F5] rounded mb-8" />
+        <div className={`rounded-2xl ${isModal ? "bg-transparent border-0" : "border border-ink/10 bg-surface"} p-8 animate-pulse`}>
+          <div className="h-6 w-1/3 bg-background rounded mb-4" />
+          <div className="h-4 w-2/3 bg-background rounded mb-8" />
           <div className="space-y-4">
-            <div className="h-10 bg-[#FBF9F5] rounded" />
-            <div className="h-10 bg-[#FBF9F5] rounded" />
-            <div className="h-10 bg-[#FBF9F5] rounded" />
+            <div className="h-10 bg-background rounded" />
+            <div className="h-10 bg-background rounded" />
+            <div className="h-10 bg-background rounded" />
           </div>
         </div>
       }

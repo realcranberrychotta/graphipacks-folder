@@ -85,7 +85,7 @@ export default function HeroHeadline({
 
   return (
     <div className={`relative inline-block select-none overflow-visible ${className}`}>
-      {/* ─── Semantic Display H1 Headline in Warm Alabaster ─── */}
+      {/* ─── Semantic Display H1 Headline in Honeydew ─── */}
       <motion.h1
         variants={containerVariants}
         initial={instant ? "visible" : "hidden"}
@@ -94,25 +94,55 @@ export default function HeroHeadline({
           centered ? "text-center" : "text-left"
         }`}
       >
-        {/* Top line: Italic light serif */}
+        {/* Subtle Lithographic Registration Crosshair framing the headline */}
+        <span 
+          aria-hidden="true" 
+          className="absolute -top-4 -left-4 font-mono text-xs text-steel/50 select-none hidden sm:inline-block pointer-events-none"
+        >
+          ┌ ⊕
+        </span>
+        <span 
+          aria-hidden="true" 
+          className="absolute -top-4 -right-4 font-mono text-xs text-steel/50 select-none hidden sm:inline-block pointer-events-none"
+        >
+          ⊕ ┐
+        </span>
+
+        {/* Top line: Italic light serif with letterpress ink tone */}
         <motion.span
           variants={lineVariants}
-          className={`block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-[#F6F2EB] ${
+          style={{ textShadow: "0 1px 0 rgba(241, 250, 238, 0.9)" }}
+          className={`block font-serif font-[family-name:var(--font-display)] italic font-light tracking-tight text-[22px] xs:text-[25px] sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] 2xl:text-[50px] leading-tight sm:leading-none whitespace-nowrap sm:whitespace-normal text-ink ${
             centered ? "text-center" : ""
           }`}
         >
           Flexible Packaging
         </motion.span>
 
-        {/* Bottom block: Bold uppercase architectural block */}
+        {/* Bottom block: Bold uppercase architectural block with tactile ink weight */}
         <motion.span
           variants={lineVariants}
-          className={`block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-[#F6F2EB] mt-1.5 sm:mt-3 ${
+          style={{ textShadow: "0 1px 0 rgba(241, 250, 238, 0.85)" }}
+          className={`block font-serif font-[family-name:var(--font-display)] font-black uppercase tracking-[0.04em] text-[28px] xs:text-[34px] sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[60px] 2xl:text-[62px] leading-[1.08] sm:leading-[0.92] text-ink mt-1.5 sm:mt-3 ${
             centered ? "text-center" : ""
           }`}
         >
           SOLUTION<br />PROVIDERS
         </motion.span>
+
+        {/* Die-line corner bottom marks */}
+        <span 
+          aria-hidden="true" 
+          className="absolute -bottom-3 -left-4 font-mono text-xs text-steel/50 select-none hidden sm:inline-block pointer-events-none"
+        >
+          └
+        </span>
+        <span 
+          aria-hidden="true" 
+          className="absolute -bottom-3 -right-4 font-mono text-xs text-steel/50 select-none hidden sm:inline-block pointer-events-none"
+        >
+          ┘
+        </span>
       </motion.h1>
     </div>
   );
