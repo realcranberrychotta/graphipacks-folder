@@ -116,19 +116,19 @@ export default function HomeHeroFactory() {
             <style>{`
               .hero-factory-3d-wrap #scene,
               .hero-factory-3d-wrap #labels {
-                transform-origin: 85% 50%;
-                transform: scale(0.78) translate(3.5%, 4%);
+                transform-origin: 80% 48%;
+                transform: scale(0.72) translate(-1%, -1%);
               }
               @media (min-width: 1440px) {
                 .hero-factory-3d-wrap #scene,
                 .hero-factory-3d-wrap #labels {
-                  transform: scale(0.78) translate(4.5%, 4%);
+                  transform: scale(0.72) translate(0%, -1%);
                 }
               }
               @media (min-width: 1600px) {
                 .hero-factory-3d-wrap #scene,
                 .hero-factory-3d-wrap #labels {
-                  transform: scale(0.78) translate(5.5%, 4%);
+                  transform: scale(0.72) translate(1%, -1%);
                 }
               }
             `}</style>

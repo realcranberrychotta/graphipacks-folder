@@ -16,6 +16,7 @@ import {
 import type { ProductDetailData, ProductVariant } from "@/data/products";
 import { generateProductPdf } from "@/lib/generateProductPdf";
 import ContactForm from "@/components/ContactForm";
+import SpecComparisonSheet from "@/components/ui/spec-comparison-sheet";
 
 interface ProductDetailClientProps {
   product: ProductDetailData;
@@ -432,6 +433,24 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
         </div>
       </section>
+
+      {/* ========================================================================= */}
+      {/* SECTION B.2: SIDE-BY-SIDE VARIANT SPECIFICATION COMPARISON SHEET          */}
+      {/* ========================================================================= */}
+      <SpecComparisonSheet
+        product={product}
+        activeVariantKey={selectedVariantKey}
+        onSelectVariant={(key) => setSelectedVariantKey(key)}
+        onOpenQuoteModal={(variantName) => {
+          if (variantName) {
+            const match = product.variants.find(
+              (v) => v.name === variantName || v.key === variantName
+            );
+            if (match) setSelectedVariantKey(match.key);
+          }
+          setRfqModalOpen(true);
+        }}
+      />
 
       {/* ========================================================================= */}
       {/* IMAGE LIGHTBOX MODAL                                                      */}

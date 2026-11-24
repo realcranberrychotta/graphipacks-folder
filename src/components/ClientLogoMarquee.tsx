@@ -10,8 +10,8 @@ export const CLIENT_LOGOS = [
   "Pelemix",
   "Dutch Plantin",
   "Fibredust",
-  "FLUBBERS",
-  "MAHESH VALUE GROUP",
+  "Flubbers",
+  "Mahesh Value Group",
 ];
 
 export default function ClientLogoMarquee() {

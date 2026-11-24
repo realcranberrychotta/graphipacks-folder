@@ -33,6 +33,7 @@ import QuoteModal from "@/components/QuoteModal";
 import QuoteTriggerButton from "@/components/QuoteTriggerButton";
 import HomeFAQ from "@/components/HomeFAQ";
 import ClientLogoMarquee from "@/components/ClientLogoMarquee";
+import { Stats } from "@/components/ui/stats-section";
 
 export default async function HomePage() {
   cacheLife("days");
@@ -112,7 +113,7 @@ export default async function HomePage() {
       </section>
 
       {/* From Pellet to Pouch — 4-Stage Manufacturing Sequence (Soft Linen Surface) */}
-      <section id="pellet-to-pouch" className="relative overflow-hidden bg-light-atmosphere-alt border-b border-powder py-24 md:py-32 text-ink">
+      <section id="pellet-to-pouch" className="relative overflow-hidden bg-light-atmosphere-alt border-b border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
@@ -127,7 +128,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <StaggerCardsGrid className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 md:grid-cols-4">
+          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 md:grid-cols-4">
             {/* Stage 1: Pellets */}
             <StaggerCard index={0}>
               <div className="group flex flex-col h-full overflow-hidden rounded-lg border border-powder/50 border-t-steel/35 bg-background hover:border-steel transition-colors duration-200 shadow-[0_1px_3px_rgba(29,53,87,0.04)]">
@@ -269,7 +270,7 @@ export default async function HomePage() {
       </section>
 
       {/* Core Products Grid — Honeydew Canvas with Subtle Drift */}
-      <section id="products" className="relative overflow-hidden bg-light-atmosphere py-24 md:py-32 text-ink border-b border-powder">
+      <section id="products" className="relative overflow-hidden bg-light-atmosphere py-16 md:py-24 text-ink border-b border-powder">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-ink/10 pb-8">
@@ -292,7 +293,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <StaggerCardsGrid className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product, idx) => {
               const detail = productDetailMap.get(product.slug);
               const materialSpec = detail?.baseSpecs.find((s) => s.label === "Material")?.value;
@@ -305,17 +306,19 @@ export default async function HomePage() {
                     href={`/products/${product.slug}`}
                     className="group relative flex flex-col justify-between overflow-hidden rounded-lg transition-colors duration-200 ease-in-out hover:border-steel h-full cursor-pointer bg-background border border-powder/50 border-t-steel/35 shadow-[0_1px_3px_rgba(29,53,87,0.04)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
                   >
-                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-surface border-b border-powder/40">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        width={600}
-                        height={375}
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                      />
+                    <div className="p-3 pb-0 bg-background">
+                      <div className="relative w-full aspect-[16/10] overflow-hidden rounded-md border border-powder/60 bg-surface shadow-xs">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          width={600}
+                          height={375}
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
+                        />
+                      </div>
                     </div>
 
                     <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
@@ -402,7 +405,7 @@ export default async function HomePage() {
       </section>
 
       {/* Packaging Applications Showcase — Honeydew Surface with Subtle Horizon Drift */}
-      <section className="relative overflow-hidden bg-light-atmosphere-alt border-y border-powder py-24 md:py-32 text-ink">
+      <section className="relative overflow-hidden bg-light-atmosphere-alt border-y border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
@@ -417,7 +420,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <StaggerCardsGrid className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 lg:grid-cols-4">
             {packagingForms.map((item, idx) => (
               <StaggerCard key={item.form} index={idx}>
                 <article
@@ -462,7 +465,7 @@ export default async function HomePage() {
       </section>
 
       {/* Technology Snapshot — Honeydew Canvas with Subtle Drift */}
-      <section className="relative overflow-hidden bg-light-atmosphere py-24 md:py-32 text-ink border-b border-powder">
+      <section className="relative overflow-hidden bg-light-atmosphere py-16 md:py-24 text-ink border-b border-powder">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-3xl">
@@ -477,7 +480,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <StaggerCardsGrid className="mt-12 md:mt-16 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-3">
+          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 md:grid-cols-3">
             {printingTechnology.map((tech, idx) => (
               <StaggerCard key={tech} index={idx}>
                 <div
@@ -510,14 +513,17 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Manufacturing Scale Stats */}
+      <Stats />
+
       {/* Trust Wall — Honeydew Band */}
-      <section className="relative overflow-hidden bg-light-atmosphere-alt border-t border-powder py-24 md:py-32 text-ink">
+      <section id="client-network" className="relative overflow-hidden bg-light-atmosphere border-t border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-powder/40 pb-8">
             <div>
               <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-                05 / CLIENT NETWORK
+                06 / CLIENT NETWORK
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
                 Enterprise Client Network
@@ -528,7 +534,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mt-12 md:mt-16 space-y-8">
+          <div className="mt-8 md:mt-12 space-y-8">
             {clients.map((categoryGroup) => (
               <div
                 key={categoryGroup.category}
@@ -567,48 +573,6 @@ export default async function HomePage() {
 
       {/* Frequently Asked Questions */}
       <HomeFAQ />
-
-      {/* Closing CTA Banner — Multi-Tone Royal Statement Band */}
-      <section className="relative overflow-hidden bg-royal-band border-t border-powder/30 py-24 md:py-32 text-background">
-        {/* Tactile Archival Grain Layer */}
-        <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div className="max-w-2xl">
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-powder mb-4">
-                COMMERCIAL INQUIRIES &bull; EST. 1984
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-background">
-                Require Custom Sizing or Printing Specs?
-              </h2>
-              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-background/85">
-                From specialized film formulations to multi-color photo printing and automated wicket bag lines, our operators deliver certified packaging to your exact machinery requirements.
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-sm text-powder">
-                <span className="font-semibold">Executive Leadership:</span>
-                <span className="text-background font-medium">
-                  {company.executiveDirector}
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-              <QuoteTriggerButton
-                className="inline-flex items-center justify-center rounded-lg bg-red hover:bg-[#d62839] text-background px-6 py-3.5 text-sm font-bold border border-red transition-colors duration-200 ease-in-out cursor-pointer shadow-sm"
-              >
-                <span>Get a Quote</span>
-                <span className="ml-1.5" aria-hidden="true">&rarr;</span>
-              </QuoteTriggerButton>
-              <Link
-                href="/about"
-                className="inline-flex items-center justify-center rounded-lg border border-powder/50 bg-transparent hover:bg-powder/15 px-6 py-3.5 text-sm font-semibold text-background transition-all duration-200 ease-in-out"
-              >
-                Our Journey &amp; Infrastructure
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Interactive Production Quote Modal */}
       <QuoteModal />

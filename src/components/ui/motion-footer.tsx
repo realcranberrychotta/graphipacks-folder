@@ -375,7 +375,7 @@ export function CinematicFooter() {
             </h2>
 
             <p className="text-sm md:text-base text-background/85 font-normal text-center max-w-2xl mb-8 leading-relaxed">
-              Partner with Graphipacks for precision blown film extrusion, 8-color rotogravure printing, and automated wicketted poly bags tailored to your machinery.
+              From specialized barrier film formulations to 8-color rotogravure printing and automated wicket bag lines, our Madurai facility delivers certified packaging tailored to your exact machinery requirements.
             </p>
 
             {/* Interactive Magnetic Pills Layout */}

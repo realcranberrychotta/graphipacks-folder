@@ -61,12 +61,12 @@ export default function HomeFAQ() {
   return (
     <section
       id="faq"
-      className="border-t border-powder bg-surface py-24 md:py-32 text-ink"
+      className="border-t border-powder bg-surface py-16 md:py-24 text-ink"
     >
       <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16">
         <div className="max-w-3xl">
           <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-            06 / FREQUENTLY ASKED QUESTIONS
+            07 / FREQUENTLY ASKED QUESTIONS
           </span>
           <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
             Questions, answered.

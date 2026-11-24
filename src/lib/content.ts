@@ -218,33 +218,33 @@ export const timeline: TimelineEvent[] = [
 export const clients: ClientCategory[] = [
   {
     category: "Corporate",
-    clients: ["The Spice Club", "Elite foods", "Maagrita Foods"],
+    clients: ["The Spice Club", "Elite Foods", "Maagrita Foods"],
   },
   {
     category: "Grow Bags",
     clients: [
       "Pelemix",
       "Dutch Plantin",
-      "REMMY",
-      "ECO GREEN COIR",
+      "Remmy",
+      "Eco Green Coir",
       "Fibredust",
     ],
   },
   {
     category: "Laminated Rolls & Pouches",
     clients: [
-      "FLUBBERS",
-      "MAHESH VALUE GROUP",
+      "Flubbers",
+      "Mahesh Value Group",
       "Surya",
       "Vasu",
-      "Me fresh",
-      "meat and eat",
+      "Me Fresh",
+      "Meet & Eat",
       "OrgFarm",
     ],
   },
   {
     category: "Wicketted Poly Bags",
-    clients: ["modern", "Elite"],
+    clients: ["Modern", "Elite"],
   },
 ];
 

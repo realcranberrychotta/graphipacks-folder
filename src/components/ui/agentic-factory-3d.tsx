@@ -1322,7 +1322,7 @@ function initMachineScene(
         print(c, n[0], 49, y + 47, 20, '#1b2828', 600)
         print(c, n, 93, y + 33, 23, '#e6e8dc', 550)
         print(c, ['Defect Scan: 0', 'Gauge: 25µm ±0.5', 'Seal Strength: OK'][i], 93, y + 58, 15, '#94a59b')
-        print(c, '↗', 410, y + 49, 25, '#c57e45')
+        print(c, '↗', 410, y + 49, 25, PALETTE.steelBlue)
       })
     })
     screen(cabinet, 1.31, 1.255, 0, 1.37, 0.44, orderTex)
@@ -1353,7 +1353,7 @@ function initMachineScene(
       c.fill()
       print(c, 'QC', 34, 112, 32, PALETTE.steelBlue, 550)
       print(c, 'QA PASS', 108, 91, 32, '#222822', 600)
-      print(c, 'Tolerance OK ✓', 108, 138, 20, '#5b4c22', 500)
+      print(c, 'Tolerance OK ✓', 108, 138, 20, PALETTE.darkNavy, 500)
     })
     screen(incoming, 0.82, 0.39, 0, 0, 0.026, nameTex)
 
@@ -1383,10 +1383,10 @@ function initMachineScene(
     const cashTex = canvasTexture(512, 176, () => {})
     function drawCash() {
       const c = cashTex.ctx
-      c.fillStyle = '#12231e'
+      c.fillStyle = PALETTE.darkNavy
       c.fillRect(0, 0, 512, 176)
-      print(c, 'PACKING & WICKET LINE', 22, 44, 23, '#9cae91', 500)
-      print(c, '2,500 BAGS / HR', 26, 125, 48, '#ecedc7', 500)
+      print(c, 'PACKING & WICKET LINE', 22, 44, 23, PALETTE.powderBlue, 500)
+      print(c, '2,500 BAGS / HR', 26, 125, 48, PALETTE.powderBlue, 500)
     }
     drawCash()
     screen(cashdesk, 1.015, 0.349, -0.35, 1.98, -0.459, cashTex)
@@ -1429,7 +1429,7 @@ function initMachineScene(
     const rubleTex = canvasTexture(128, 128, (c, w, h) => {
       c.clearRect(0, 0, w, h)
       c.textAlign = 'center'
-      print(c, '$', 64, 95, 91, '#80561c', 650)
+      print(c, '$', 64, 95, 91, PALETTE.darkNavy, 650)
     })
     const ruble = screen(coin, 0.28, 0.28, 0, 0, 0.04, rubleTex)
     ruble.material.transparent = true
@@ -1569,15 +1569,15 @@ function initMachineScene(
       print(c, 'PASSED  ✓', 24, 327, 16, PALETTE.darkNavy, 600)
     })
     const orderCardTex = canvasTexture(256, 352, (c, w, h) => {
-      c.fillStyle = '#c57e45'
+      c.fillStyle = PALETTE.steelBlue
       c.fillRect(0, 0, w, h)
       print(c, 'NEW', 21, 48, 24, '#30362d', 650)
       print(c, 'ORDER', 21, 79, 24, '#30362d', 650)
-      c.strokeStyle = '#716431'
+      c.strokeStyle = PALETTE.powderBlue
       c.lineWidth = 2
       c.strokeRect(23, 112, 210, 139)
       print(c, 'BATCH', 36, 190, 34, '#30362d', 550)
-      print(c, 'POUCH / 01', 23, 320, 17, '#635728')
+      print(c, 'POUCH / 01', 23, 320, 17, PALETTE.darkNavy)
     })
     const packetTextures = [orderCardTex, scriptTex, videoTexture, postTex, receiptTex, receiptTex]
     const packets: Array<{
@@ -1782,8 +1782,8 @@ function initMachineScene(
       camera.setViewOffset(
         width,
         height,
-        mobile || !embedded ? 0 : -width * 0.21,
-        mobile || embedded ? 0 : height * 0.025,
+        mobile || !embedded ? 0 : -width * 0.18,
+        mobile || embedded ? 0 : height * 0.02,
         width,
         height
       )
@@ -1794,7 +1794,7 @@ function initMachineScene(
       const verticalFit =
         11.5 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (embedded ? 0.85 : 0.62))
       baseDistance =
-        (Math.max(horizontalFit, verticalFit) * (mobile ? 0.97 : 1)) /
+        (Math.max(horizontalFit, verticalFit) * (mobile ? 0.97 : 1.08)) /
         (embedded ? (mobile ? 1.15 : 1.45) : 1)
       controls.maxDistance = Math.max(55, baseDistance * 1.6)
       camera.updateProjectionMatrix()
@@ -2675,27 +2675,30 @@ const STYLES = String.raw`
 .agentic-factory-3d .station-label .stem {
   height: 26px;
   width: 1px;
-  background: linear-gradient(#457B9D00, #457B9D70);
+  background: linear-gradient(rgba(168, 218, 220, 0), #A8DADC);
   margin: 0 0 0 10px;
 }
 .agentic-factory-3d .station-label .label-card {
-  background: #14171bee;
-  backdrop-filter: blur(10px);
-  border: 1px solid #457B9D40;
+  background: #1D3557f0;
+  backdrop-filter: blur(12px);
+  border: 1px solid #A8DADC;
   border-radius: 6px;
   padding: 10px 13px;
-  box-shadow: 0 4px 20px #0003;
+  box-shadow: 0 8px 24px rgba(29, 53, 87, 0.28);
+  color: #F1FAEE;
 }
 .agentic-factory-3d .station-label .label-title {
-  font-weight: 550;
+  font-weight: 600;
   font-size: 12px;
   display: flex;
   gap: 10px;
   align-items: center;
   white-space: nowrap;
+  color: #F1FAEE;
 }
 .agentic-factory-3d .station-label .label-title span {
-  color: var(--amber);
+  color: #A8DADC;
+  font-weight: 700;
   font:
     9px ui-monospace,
     Menlo,
@@ -2703,7 +2706,8 @@ const STYLES = String.raw`
 }
 .agentic-factory-3d .station-label .label-meta {
   font-size: 9px;
-  color: #8e939c;
+  color: #F1FAEE;
+  opacity: 0.85;
   margin: 6px 0 0 24px;
   white-space: nowrap;
 }
@@ -2714,28 +2718,32 @@ const STYLES = String.raw`
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
   padding: 11px 14px;
-  border: 1px solid #ffffff1a;
-  background: #171a20ed;
+  border: 1px solid #A8DADC;
+  background: #1D3557f0;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px #0005;
+  box-shadow: 0 8px 32px rgba(29, 53, 87, 0.3);
   border-radius: 7px;
   max-width: 240px;
+  color: #F1FAEE;
 }
 .agentic-factory-3d #tooltip.visible {
   opacity: 1;
 }
 .agentic-factory-3d #tooltip strong {
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 600;
+  color: #F1FAEE;
 }
 .agentic-factory-3d #tooltip strong span {
   font-size: 10px;
-  color: var(--amber);
+  color: #A8DADC;
   margin-right: 8px;
+  font-weight: 700;
 }
 .agentic-factory-3d #tooltip p {
   font-size: 10px;
-  color: #9b9fa7;
+  color: #F1FAEE;
+  opacity: 0.85;
   margin: 6px 0 0;
   line-height: 1.5;
 }
@@ -2822,28 +2830,41 @@ const STYLES = String.raw`
   left: 27.5%;
   right: 27.5%;
   top: 40%;
-  border: 1px solid #457B9D30;
-  background: #191b1f;
+  border: 1px solid #A8DADC;
+  background: #1D3557;
   padding: 24px;
   border-radius: 12px;
   display: none;
   font-size: 13px;
   line-height: 1.7;
+  box-shadow: 0 12px 36px rgba(29, 53, 87, 0.35);
+  color: #F1FAEE;
 }
 .agentic-factory-3d #error strong {
-  color: var(--amber);
-  font-weight: 500;
+  color: #F1FAEE;
+  font-weight: 600;
+  display: block;
+  font-size: 15px;
 }
 .agentic-factory-3d #error p {
-  color: #9da1a8;
+  color: #F1FAEE;
+  opacity: 0.85;
   margin: 8px 0 0;
 }
 .agentic-factory-3d #error button {
-  border: 1px solid #ffffff22;
-  background: #25292e;
-  padding: 8px 14px;
-  border-radius: 5px;
+  border: 1px solid #A8DADC;
+  background: #457B9D;
+  color: #F1FAEE;
+  padding: 8px 16px;
+  border-radius: 6px;
   margin-top: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.agentic-factory-3d #error button:hover {
+  background: #1D3557;
+  border-color: #F1FAEE;
 }
 .agentic-factory-3d.embed {
   background: transparent !important;
