@@ -18,9 +18,7 @@ export const metadata: Metadata = {
 import {
   company,
   products,
-  packagingForms,
   printingTechnology,
-  clients,
 } from "@/lib/content";
 import { PRODUCTS_DATA } from "@/data/products";
 import HomeHeroFactory from "@/components/HomeHeroFactory";
@@ -32,8 +30,42 @@ import { StaggerCardsGrid, StaggerCard } from "@/components/StaggerCards";
 import QuoteModal from "@/components/QuoteModal";
 import QuoteTriggerButton from "@/components/QuoteTriggerButton";
 import HomeFAQ from "@/components/HomeFAQ";
-import ClientLogoMarquee from "@/components/ClientLogoMarquee";
 import { Stats } from "@/components/ui/stats-section";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { HorizontalSequence } from "@/components/ui/horizontal-sequence";
+import FlowingMenu, { FlowingMenuItem } from "@/components/ui/flowing-menu";
+import EnterpriseClientMarquee from "@/components/ui/enterprise-client-marquee";
+
+const PACKAGING_FLOWING_ITEMS: FlowingMenuItem[] = [
+  {
+    text: "Powder Form Products",
+    marquee: "Flour • Spicy Powder • Jaggery",
+    meta: "Flour • Spicy Powder • Jaggery",
+    image: "/images/products/laminated-rolls-and-pouches.jpg",
+    link: "/contact?inquiry=powder-form-products",
+  },
+  {
+    text: "Solid Shape Products",
+    marquee: "Bread • Cake • Jelly",
+    meta: "Bread • Cake • Jelly",
+    image: "/images/products/wicked-poly-bags.jpg",
+    link: "/contact?inquiry=solid-shape-products",
+  },
+  {
+    text: "Solid Irregular Shape Products",
+    marquee: "Snacks • Chicken Bags • Grated Coconut",
+    meta: "Snacks • Chicken Bags • Grated Coconut",
+    image: "/images/products/pp-and-lldpe-bags.jpg",
+    link: "/contact?inquiry=solid-irregular-shape-products",
+  },
+  {
+    text: "Liquid Products",
+    marquee: "Milk • Sip-up",
+    meta: "Milk • Sip-up",
+    image: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
+    link: "/contact?inquiry=liquid-products",
+  },
+];
 
 export default async function HomePage() {
   cacheLife("days");
@@ -41,7 +73,7 @@ export default async function HomePage() {
   const productDetailMap = new Map(PRODUCTS_DATA.map((p) => [p.slug, p]));
 
   return (
-    <div className="flex flex-col bg-background text-ink">
+    <div className="flex flex-col bg-background text-ink overflow-x-clip">
       <noscript>
         <style>{`
           [data-stagger-card] {
@@ -112,162 +144,36 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* From Pellet to Pouch — 4-Stage Manufacturing Sequence (Soft Linen Surface) */}
-      <section id="pellet-to-pouch" className="relative overflow-hidden bg-light-atmosphere-alt border-b border-powder py-16 md:py-24 text-ink">
-        <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+      {/* From Pellet to Pouch — 4-Stage Manufacturing Sequence (Horizontal Conveyor Sequence) */}
+      <HorizontalSequence
+        header={
           <div className="max-w-3xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-              01 / MANUFACTURING SEQUENCE
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <div className="flex items-center gap-2 mb-2 sm:mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#E63946] inline-block shrink-0" aria-hidden="true" />
+              <span className="text-[11px] uppercase tracking-[0.22em] font-mono font-semibold text-[#457B9D]">
+                01 / MANUFACTURING SEQUENCE
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-[2.5rem] lg:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1D3557]">
               From Pellet to Pouch
             </h2>
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
+            <ScrollReveal
+              as="p"
+              mode="scrub"
+              splitBy="words"
+              effect="fade"
+              highlightColor="#457B9D"
+              baseOpacity={0.2}
+              baseRotation={0}
+              enableBlur={false}
+              containerClassName="mt-2.5 sm:mt-3 max-w-[62ch]"
+              textClassName="text-[14px] md:text-[15px] lg:text-base leading-[1.6] text-[#1D3557]/80 font-sans"
+            >
               Our continuous converting process: taking raw polymer pellets through blown film extrusion, 8-colour rotogravure printing, and final pouch conversion.
-            </p>
+            </ScrollReveal>
           </div>
-
-          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 md:grid-cols-4">
-            {/* Stage 1: Pellets */}
-            <StaggerCard index={0}>
-              <div className="group flex flex-col h-full overflow-hidden rounded-lg border border-powder/50 border-t-steel/35 bg-background hover:border-steel transition-colors duration-200 shadow-[0_1px_3px_rgba(29,53,87,0.04)]">
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-surface border-b border-powder/40">
-                  <Image
-                    src="/images/products/pp-and-lldpe-bags.jpg"
-                    alt="Feed hopper and white polymer pellets"
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-5 border-t border-powder/40">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-powder/40 pb-2">
-                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-steel">
-                        01
-                      </span>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink/75">
-                        Raw Material
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-bold font-serif text-ink">
-                      Pellets
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-ink/75 leading-relaxed">
-                      Feed hopper loaded with white polymer pellets for extrusion.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </StaggerCard>
-
-            {/* Stage 2: Blown Film */}
-            <StaggerCard index={1}>
-              <div className="group flex flex-col h-full overflow-hidden rounded-lg border border-powder/50 border-t-steel/35 bg-background hover:border-steel transition-colors duration-200 shadow-[0_1px_3px_rgba(29,53,87,0.04)]">
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-surface border-b border-powder/40">
-                  <Image
-                    src="/images/infrastructure/infra-02-film-lamination-rollers.jpg"
-                    alt="Extrusion bubble through nip rollers"
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-5 border-t border-powder/40">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-powder/40 pb-2">
-                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-steel">
-                        02
-                      </span>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink/75">
-                        Extrusion
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-bold font-serif text-ink">
-                      Blown Film
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-ink/75 leading-relaxed">
-                      Extrusion bubble cooled and flattened through nip rollers.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </StaggerCard>
-
-            {/* Stage 3: Rotogravure Printing */}
-            <StaggerCard index={2}>
-              <div className="group flex flex-col h-full overflow-hidden rounded-lg border border-powder/50 border-t-steel/35 bg-background hover:border-steel transition-colors duration-200 shadow-[0_1px_3px_rgba(29,53,87,0.04)]">
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-surface border-b border-powder/40">
-                  <Image
-                    src="/images/infrastructure/infra-03-rotogravure-cylinders.jpg"
-                    alt="8-colour rotogravure printing cylinders and printed film roll"
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-5 border-t border-powder/40">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-powder/40 pb-2">
-                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-steel">
-                        03
-                      </span>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink/75">
-                        8-Colour Press
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-bold font-serif text-ink">
-                      Rotogravure Printing
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-ink/75 leading-relaxed">
-                      8-colour cylinders registering vivid print on film rolls.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </StaggerCard>
-
-            {/* Stage 4: Finished Pouch */}
-            <StaggerCard index={3}>
-              <div className="group flex flex-col h-full overflow-hidden rounded-lg border border-powder/50 border-t-steel/35 bg-background hover:border-steel transition-colors duration-200 shadow-[0_1px_3px_rgba(29,53,87,0.04)]">
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-surface border-b border-powder/40">
-                  <Image
-                    src="/images/products/laminated-rolls-and-pouches.jpg"
-                    alt="Real laminated stand-up pouches"
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-5 border-t border-powder/40">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-powder/40 pb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-steel">
-                          04
-                        </span>
-                        <span className="font-mono text-[10px] font-semibold text-steel border border-powder bg-powder/15 px-1.5 py-0.5 rounded-xs">
-                          LOT GP-1984
-                        </span>
-                      </div>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink/75">
-                        Conversion
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-bold font-serif text-ink">
-                      Finished Pouch
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-ink/75 leading-relaxed">
-                      Real laminated stand-up pouches sealed and ready for dispatch.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </StaggerCard>
-          </StaggerCardsGrid>
-        </div>
-      </section>
+        }
+      />
 
       {/* Core Products Grid — Honeydew Canvas with Subtle Drift */}
       <section id="products" className="relative overflow-hidden bg-light-atmosphere py-16 md:py-24 text-ink border-b border-powder">
@@ -404,63 +310,46 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Packaging Applications Showcase — Honeydew Surface with Subtle Horizon Drift */}
-      <section className="relative overflow-hidden bg-light-atmosphere-alt border-y border-powder py-16 md:py-24 text-ink">
+      {/* Packaging Applications Showcase — Full-Width Architectural Flowing Menu */}
+      <section id="packaging-forms" className="relative overflow-x-clip bg-light-atmosphere-alt border-y border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="max-w-3xl">
-            <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
+          <div className="max-w-3xl mb-10 md:mb-14">
+            <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E63946]" aria-hidden="true" />
               03 / APPLICATIONS &amp; FORMS
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            <h2 className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] tracking-tight font-serif font-normal text-[#1D3557]">
               Packaging Applications Showcase
             </h2>
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
+            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-[#1D3557]/80">
               Custom-tailored flexible films, multi-barrier configurations, and pre-formed containment engineered across diverse physical product states.
             </p>
           </div>
 
-          <StaggerCardsGrid className="mt-8 md:mt-12 grid grid-cols-1 gap-7 md:gap-9 sm:grid-cols-2 lg:grid-cols-4">
-            {packagingForms.map((item, idx) => (
-              <StaggerCard key={item.form} index={idx}>
-                <article
-                  className="relative flex flex-col justify-between rounded-lg border border-powder/50 border-t-steel/35 bg-background p-6 md:p-8 transition-colors duration-200 ease-in-out hover:border-steel shadow-[0_1px_3px_rgba(29,53,87,0.04)] h-full"
-                >
-                  <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-powder bg-surface font-mono text-sm font-bold text-steel">
-                      0{idx + 1}
-                    </div>
-                    <h3 className="mt-4 text-xl md:text-2xl font-serif font-normal leading-[1.2] tracking-[-0.015em] text-ink">
-                      {item.form}
-                    </h3>
-                    <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-steel">
-                      Industry Examples
-                    </p>
-                    <ul className="mt-3 space-y-2">
-                      {item.examples.map((ex) => (
-                        <li
-                           key={ex}
-                          className="flex items-center gap-2 text-sm text-ink/75"
-                        >
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-steel" />
-                          <span>{ex}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-6 border-t border-powder/40 pt-2">
-                    <Link
-                      href="/contact"
-                      className="inline-flex min-h-[44px] w-full items-center justify-between sm:justify-start gap-1 text-xs font-semibold uppercase tracking-wider text-navy hover:text-steel transition-colors duration-200 ease-in-out py-2.5"
-                    >
-                      <span>Inquire For Form</span>
-                      <span>&rarr;</span>
-                    </Link>
-                  </div>
-                </article>
-              </StaggerCard>
-            ))}
-          </StaggerCardsGrid>
+          <div className="w-full h-auto min-h-[360px] md:h-[460px] border border-[#A8DADC] rounded-xl overflow-hidden bg-[#F1FAEE] shadow-[0_4px_24px_rgba(29,53,87,0.04)]">
+            <FlowingMenu
+              items={PACKAGING_FLOWING_ITEMS}
+              speed={55}
+              direction="left"
+              duration={0.5}
+              stretch={0.5}
+              magnet={0.2}
+              textColor="#1D3557"
+              bgColor="#F1FAEE"
+              marqueeBgColor="#1D3557"
+              marqueeTextColor="#F1FAEE"
+              borderColor="#A8DADC"
+              dividers={true}
+              dimInactive={true}
+              align="left"
+              showIndex={true}
+              showArrow={true}
+              imageShape="rounded"
+              intro={false}
+              ariaLabel="Packaging Applications Showcase"
+            />
+          </div>
         </div>
       </section>
 
@@ -516,60 +405,34 @@ export default async function HomePage() {
       {/* Manufacturing Scale Stats */}
       <Stats />
 
-      {/* Trust Wall — Honeydew Band */}
-      <section id="client-network" className="relative overflow-hidden bg-light-atmosphere border-t border-powder py-16 md:py-24 text-ink">
+      {/* Enterprise Client Network — Dual-Row Logo Loop Marquee */}
+      <section id="client-network" className="relative overflow-x-clip bg-light-atmosphere border-t border-powder py-16 md:py-24 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-powder/40 pb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-powder/40 pb-8 mb-10 md:mb-14">
             <div>
-              <span className="block text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-                06 / CLIENT NETWORK
+              <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] inline-flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E63946]" aria-hidden="true" />
+                06 / CLIENT NETWORK • VERIFIED PARTNERS
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+              <h2 className="text-[clamp(2rem,4vw,3.25rem)] font-serif font-normal leading-[1.12] tracking-[-0.02em] text-[#1D3557]">
                 Enterprise Client Network
               </h2>
             </div>
-            <p className="max-w-[44ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
-              Supplying verified packaging to domestic corporations and international export growers.
-            </p>
+            <div className="sm:text-right">
+              <span className="font-mono text-xs text-[#457B9D] uppercase tracking-wider block font-semibold">
+                17 VERIFIED PARTNERS • DOMESTIC &amp; EXPORT
+              </span>
+              <p className="max-w-[44ch] text-xs sm:text-sm text-[#1D3557]/70 mt-1">
+                Supplying verified packaging to domestic corporations and international export growers.
+              </p>
+            </div>
           </div>
 
-          <div className="mt-8 md:mt-12 space-y-8">
-            {clients.map((categoryGroup) => (
-              <div
-                key={categoryGroup.category}
-                className="rounded-2xl border border-powder/50 border-t-steel/35 bg-background p-6 shadow-[0_1px_3px_rgba(29,53,87,0.04)]"
-              >
-                <div className="flex items-center gap-3 border-b border-powder/40 pb-4">
-                  <span className="h-2 w-2 rounded-full bg-steel" />
-                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-ink">
-                    {categoryGroup.category}
-                  </h3>
-                  <span className="ml-auto rounded-full border border-powder bg-powder/20 px-2.5 py-0.5 text-xs font-semibold text-navy">
-                    {categoryGroup.clients.length} Verified Partners
-                  </span>
-                </div>
-
-                <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
-                  {categoryGroup.clients.map((client) => (
-                    <div
-                      key={client}
-                      className="flex min-h-[60px] sm:min-h-[64px] items-center justify-center rounded-lg border border-powder/40 bg-surface p-2 sm:p-3 text-center transition-colors duration-200 ease-in-out hover:border-steel hover:bg-background"
-                    >
-                      <span className="text-xs sm:text-sm font-semibold tracking-tight text-ink break-words">
-                        {client}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Dual-Row Counter-Scrolling Logo Loop */}
+          <EnterpriseClientMarquee />
         </div>
       </section>
-
-      {/* Client Logo Marquee */}
-      <ClientLogoMarquee />
 
       {/* Frequently Asked Questions */}
       <HomeFAQ />
