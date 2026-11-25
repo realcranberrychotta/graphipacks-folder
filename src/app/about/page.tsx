@@ -14,13 +14,13 @@ import ScrollReveal from "@/components/ScrollReveal";
 import TimelineScroll from "@/components/TimelineScroll";
 
 export const metadata: Metadata = {
-  title: "About Us & Four Decades of Heritage | Graphipacks Private Limited",
+  title: "About Us & Four Decades of Heritage | Graphipackss Private Limited",
   description:
-    "Established in 1984 in Madurai, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
+    "Established in 1984 in Madurai, Graphipackss Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
   openGraph: {
-    title: "About Us & Four Decades of Heritage | Graphipacks Private Limited",
+    title: "About Us & Four Decades of Heritage | Graphipackss Private Limited",
     description:
-      "Established in 1984 in Madurai, Graphipacks Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
+      "Established in 1984 in Madurai, Graphipackss Private Limited brings 40+ years of industrial polymer extrusion, technical packaging engineering, and trusted B2B manufacturing.",
   },
 };
 
@@ -119,7 +119,7 @@ export default async function AboutPage() {
             {[
               {
                 src: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
-                alt: "8-colour rotogravure printing cylinders inside Graphipacks Madurai facility",
+                alt: "8-colour rotogravure printing cylinders inside Graphipackss Madurai facility",
                 label: "8-Colour Rotogravure Press",
               },
               {
@@ -129,7 +129,7 @@ export default async function AboutPage() {
               },
               {
                 src: "/images/infrastructure/infra-05-packing-conveyor.jpg",
-                alt: "Automated wicketting and packing conveyor line at Graphipacks",
+                alt: "Automated wicketting and packing conveyor line at Graphipackss",
                 label: "Automated Converting & Dispatch",
               },
             ].map((photo) => (

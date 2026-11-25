@@ -76,7 +76,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
       {
         src: "/images/infrastructure/infra-02-film-lamination-rollers.jpg",
         label: "Multi-Layer Blown Film Line",
-        alt: "Multi-layer blown film extrusion rollers at Graphipacks Madurai plant",
+        alt: "Multi-layer blown film extrusion rollers at Graphipackss Madurai plant",
       },
     ],
     variants: [
@@ -321,7 +321,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
       {
         src: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
         label: "Laminated Roll Stock Inventory",
-        alt: "Heavy-duty laminated film rolls staged inside Graphipacks Madurai warehouse",
+        alt: "Heavy-duty laminated film rolls staged inside Graphipackss Madurai warehouse",
       },
     ],
     variants: [
@@ -418,7 +418,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
       {
         src: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
         label: "8-Colour Rotogravure Cylinders",
-        alt: "Engraved rotogravure printing cylinders calibrated in Graphipacks Madurai plant",
+        alt: "Engraved rotogravure printing cylinders calibrated in Graphipackss Madurai plant",
       },
       {
         src: "/images/infrastructure/infra-06-laminated-film-rolls.jpg",
@@ -556,7 +556,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
       {
         src: "/images/infrastructure/infra-04-automated-line.jpg",
         label: "Quality Control & Line Inspection",
-        alt: "Automated bag converting and quality inspection line at Graphipacks Madurai",
+        alt: "Automated bag converting and quality inspection line at Graphipackss Madurai",
       },
     ],
     variants: [
@@ -658,7 +658,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
     slug: "wicketted-poly-bags",
     name: "Wicketted Poly Bags",
     category: "Automated Packaging Solutions",
-    tagline: "Precision Metal-Wicketed Poly Bags for Automated High-Speed Packing Lines",
+    tagline: "Precision Metal-Wicketted Poly Bags for Automated High-Speed Packing Lines",
     summary:
       "Engineered for high-throughput automatic bagging machinery, our wicketted poly bags feature precision pin holes, clean perforation tear-lines, and anti-static additives for flawless machine feeding.",
     metaDescription:
@@ -728,7 +728,7 @@ export const PRODUCTS_DATA: ProductDetailData[] = [
       },
       {
         label: "Type",
-        value: "Wicketed (stacked on metal wicket), bottom seal, side gusset optional",
+        value: "Wicketted (stacked on metal wicket), bottom seal, side gusset optional",
       },
       { label: "Colour", value: "Clear / Custom on request" },
       { label: "Print", value: "Up to 2 colours flexo" },

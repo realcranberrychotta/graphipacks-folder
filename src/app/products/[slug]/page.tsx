@@ -23,11 +23,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!product) {
     return {
-      title: "Product Not Found | Graphipacks Private Limited",
+      title: "Product Not Found | Graphipackss Private Limited",
     };
   }
 
-  const title = `${product.name} | Graphipacks Private Limited`;
+  const title = `${product.name} | Graphipackss Private Limited`;
   const description = product.metaDescription || product.summary;
   const coverImage = product.images[0]?.src || "/images/products/mulch-film.jpg";
 
@@ -165,7 +165,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-[11px] font-mono text-ink/75">
-                    <span>Graphipacks Est. 1984</span>
+                    <span>Graphipackss Est. 1984</span>
                     <span className="text-steel font-semibold">Industrial Grade</span>
                   </div>
                 </div>

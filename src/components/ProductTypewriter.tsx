@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useReducedMotion } from "framer-motion";
-import { Play, Pause } from "lucide-react";
 
 export const DEFAULT_PRODUCTS = [
   "Agriculture Mulch Film",
@@ -36,14 +35,12 @@ export default function ProductTypewriter({
 
   const [displayText, setDisplayText] = useState("");
   const [isSkipped, setIsSkipped] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(!shouldReduceMotion);
 
   const stateRef = useRef({
     itemIndex: 0,
     subIndex: 0,
     isDeleting: false,
     isPaused: false,
-    isPlaying: !shouldReduceMotion,
   });
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -100,18 +97,6 @@ export default function ProductTypewriter({
     tickRef.current = tick;
   });
 
-  const handleTogglePlay = () => {
-    if (isPlaying) {
-      setIsPlaying(false);
-      stateRef.current.isPlaying = false;
-      if (timerRef.current) clearTimeout(timerRef.current);
-    } else {
-      setIsPlaying(true);
-      stateRef.current.isPlaying = true;
-      scheduleNextTick(100);
-    }
-  };
-
   useEffect(() => {
     const handleSkip = () => {
       setIsSkipped(true);
@@ -154,7 +139,7 @@ export default function ProductTypewriter({
         <span className="text-background select-none">
           {displayText}
         </span>
-        {!shouldReduceMotion && !isSkipped && isPlaying && (
+        {!shouldReduceMotion && !isSkipped && (
           <span
             className="text-red ml-0.5 sm:ml-1 font-mono font-bold animate-pulse select-none inline-block shrink-0"
             aria-hidden="true"
@@ -164,30 +149,8 @@ export default function ProductTypewriter({
         )}
       </div>
 
-      <button
-        type="button"
-        onClick={handleTogglePlay}
-        aria-label={
-          isPlaying
-            ? "Pause product showcase"
-            : "Play product showcase"
-        }
-        title={
-          isPlaying
-            ? "Pause product showcase"
-            : "Play product showcase"
-        }
-        className="relative ml-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded border border-powder/40 bg-navy text-powder hover:border-powder hover:text-background transition-colors duration-200 cursor-pointer focus:outline-hidden focus-visible:ring-1 focus-visible:ring-powder after:content-[''] after:absolute after:-inset-2.5 sm:after:-inset-2"
-      >
-        {isPlaying ? (
-          <Pause className="h-2.5 w-2.5 sm:h-3 sm:w-3" aria-hidden="true" />
-        ) : (
-          <Play className="h-2.5 w-2.5 sm:h-3 sm:w-3 ml-0.5" aria-hidden="true" />
-        )}
-      </button>
-
       <span className="sr-only">
-        Graphipacks produces: {resolvedItems.join(", ")}
+        Graphipackss produces: {resolvedItems.join(", ")}
       </span>
     </div>
   );

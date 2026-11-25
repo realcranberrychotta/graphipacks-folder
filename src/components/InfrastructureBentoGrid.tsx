@@ -177,7 +177,7 @@ export default function InfrastructureBentoGrid({
             <div className="relative w-full h-full pt-8">
               <Image
                 src={item.image}
-                alt={`${item.title} — Graphipacks Infrastructure`}
+                alt={`${item.title} — Graphipackss Infrastructure`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1024px"
                 priority={index < 2}

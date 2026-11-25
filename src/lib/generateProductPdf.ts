@@ -41,7 +41,7 @@ export function generateProductPdf(
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
   doc.setTextColor(...navy);
-  doc.text("GRAPHIPACKS PRIVATE LIMITED", margin, y);
+  doc.text("GRAPHIPACKSS PRIVATE LIMITED", margin, y);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8.5);
@@ -302,7 +302,7 @@ export function generateProductPdf(
   doc.setFontSize(7);
   doc.setTextColor(...navy);
   doc.text(
-    "GRAPHIPACKS PRIVATE LIMITED — 4 DECADES OF INDUSTRIAL EXCELLENCE (EST. 1984)",
+    "GRAPHIPACKSS PRIVATE LIMITED — 4 DECADES OF INDUSTRIAL EXCELLENCE (EST. 1984)",
     margin,
     footerY + 2
   );
@@ -318,6 +318,6 @@ export function generateProductPdf(
   );
 
   // Trigger download
-  const filename = `Graphipacks-${product.slug}-${activeVariant.key}-specsheet.pdf`;
+  const filename = `Graphipackss-${product.slug}-${activeVariant.key}-specsheet.pdf`;
   doc.save(filename);
 }

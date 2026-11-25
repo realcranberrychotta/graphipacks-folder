@@ -402,7 +402,7 @@ function ContactFormInner({
   };
 
   const productSummary = `${formData.product || "packaging solutions"}${formData.gauge ? ` (${formData.gauge})` : ""}`;
-  const whatsappText = `Hi Graphipacks, I just submitted an inquiry for ${productSummary}.`;
+  const whatsappText = `Hi Graphipackss, I just submitted an inquiry for ${productSummary}.`;
   const whatsappDigits = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/\D/g, "");
   const whatsappUrl = whatsappDigits
     ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent(whatsappText)}`

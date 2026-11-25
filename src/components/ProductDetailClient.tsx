@@ -17,6 +17,7 @@ import type { ProductDetailData, ProductVariant } from "@/data/products";
 import { generateProductPdf } from "@/lib/generateProductPdf";
 import ContactForm from "@/components/ContactForm";
 import SpecComparisonSheet from "@/components/ui/spec-comparison-sheet";
+import { SpecTextWithTooltips } from "@/components/ui/spec-tooltip";
 
 interface ProductDetailClientProps {
   product: ProductDetailData;
@@ -410,7 +411,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   >
                     <div className="sm:col-span-4 flex items-center gap-2">
                       <span className="font-mono text-xs sm:text-sm font-bold text-ink">
-                        {row.label}
+                        <SpecTextWithTooltips text={row.label} />
                       </span>
                       {row.isOverridden && (
                         <span className="rounded-sm bg-steel px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-background">
@@ -421,7 +422,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                     <div className="sm:col-span-8 mt-1 sm:mt-0 flex items-center justify-between">
                       <span className={`font-mono font-normal text-xs sm:text-sm tabular-nums leading-relaxed ${row.isOverridden ? "text-steel font-medium" : "text-ink"
                         }`}>
-                        {row.value}
+                        <SpecTextWithTooltips text={row.value} />
                       </span>
                       {row.isOverridden && (
                         <span className="hidden sm:inline font-mono text-[10px] text-ink/75">
@@ -485,7 +486,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <div className="flex items-center justify-between p-4 border-b border-powder/30 bg-surface text-ink">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-xs font-bold text-steel">
-                    GRAPHIPACKS INSPECTION VIEW
+                    GRAPHIPACKSS INSPECTION VIEW
                   </span>
                   <span className="text-xs text-ink/75">• {activeImage.label}</span>
                 </div>

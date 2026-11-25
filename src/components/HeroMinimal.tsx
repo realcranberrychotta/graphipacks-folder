@@ -84,7 +84,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           className="inline-flex items-center gap-2 whitespace-nowrap font-mono text-[11px] tracking-[0.16em] uppercase text-[#457B9D]"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
-          <span>EST. 1984 · MADURAI PLANT · GRAPHIPACKS</span>
+          <span>EST. 1984 · MADURAI PLANT · GRAPHIPACKSS</span>
         </motion.div>
 
         {/* Display Headline */}

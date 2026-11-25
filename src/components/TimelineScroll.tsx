@@ -57,7 +57,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                   Heritage Timeline (1984 &ndash; 2016)
                 </h2>
                 <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
-                  A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipacks.
+                  A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipackss.
                 </p>
               </div>
 
@@ -131,7 +131,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                     {/* Bottom Metadata Ribbon */}
                     <div className="mt-8 border-t border-ink/10 pt-4 flex items-center justify-between text-xs text-ink/75">
                       <span className="font-mono uppercase tracking-wider text-steel">
-                        Era: {event.year} &bull; Graphipacks
+                        Era: {event.year} &bull; Graphipackss
                       </span>
                       <span className="font-semibold text-ink">
                         Verified Milestone
@@ -157,7 +157,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
             Heritage Timeline (1984 &ndash; 2016)
           </h2>
           <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
-            A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipacks.
+            A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipackss.
           </p>
 
           <div className="relative mt-12">

@@ -143,7 +143,7 @@ export default function AgenticFactory3D({
             </svg>
           </div>
           <div>
-            <strong>Graphipacks Factory</strong>
+            <strong>Graphipackss Factory</strong>
             <small>Interactive Plant Tour</small>
           </div>
         </div>
@@ -604,7 +604,7 @@ function initMachineScene(
       c.strokeStyle = PALETTE.steelBlue
       c.lineWidth = 2
       c.strokeRect(2, 2, w - 4, h - 4)
-      print(c, 'GRAPHIPACKS', 45, 79, 40, PALETTE.honeydew, 650)
+      print(c, 'GRAPHIPACKSS', 45, 79, 40, PALETTE.honeydew, 650)
       print(c, '·  FLEXIBLE PACKAGING SOLUTIONS  ·  MADURAI', 355, 79, 32, PALETTE.powderBlue, 450)
       print(c, 'MANUFACTURING EXCELLENCE    /    HIGH-BARRIER FILMS', 47, 133, 19, PALETTE.honeydew, 500)
       print(c, 'EST. 1984', 1330, 130, 23, PALETTE.imperialRed)
@@ -974,7 +974,7 @@ function initMachineScene(
         c.fillRect(rx, 68, 512, 8)
         c.fillRect(rx, 436, 512, 8)
 
-        print(c, 'GRAPHIPACKS', rx + 24, 46, 36, '#ffffff', 700)
+        print(c, 'GRAPHIPACKSS', rx + 24, 46, 36, '#ffffff', 700)
         print(c, 'FLEXO PRINTED FILM', rx + 300, 46, 16, PALETTE.powderBlue, 600)
 
         // Printed pouch layouts on roll surface
@@ -998,7 +998,7 @@ function initMachineScene(
           c.beginPath()
           c.roundRect(rx + 52, ry + 94, 150, 26, 4)
           c.fill()
-          print(c, 'GRAPHIPACKS QC OK', rx + 62, ry + 112, 12, '#ffffff', 700)
+          print(c, 'GRAPHIPACKSS QC OK', rx + 62, ry + 112, 12, '#ffffff', 700)
 
           c.fillStyle = PALETTE.darkNavy
           for (let b = 0; b < 24; b++) {
@@ -1106,7 +1106,7 @@ function initMachineScene(
       c.fillRect(0, 164, w, 4)
 
       // Brand typography in header
-      print(c, 'GRAPHIPACKS', 32, 98, 30, '#ffffff', 700)
+      print(c, 'GRAPHIPACKSS', 32, 98, 30, '#ffffff', 700)
       print(c, 'PREMIUM BARRIER PACKAGING', 32, 134, 13, PALETTE.powderBlue, 600)
 
       // Main product title
@@ -1255,7 +1255,7 @@ function initMachineScene(
         c.arc(26 + i * 19, 27, 4, 0, TAU)
         c.fill()
       }
-      print(c, 'GRAPHIPACKS', 33, 100, 22, '#22282b', 650)
+      print(c, 'GRAPHIPACKSS', 33, 100, 22, '#22282b', 650)
       print(c, 'Mulch Film   Grow Bags   Pouches', 450, 98, 14, '#6a7271')
       c.fillStyle = PALETTE.steelBlue
       c.beginPath()
@@ -1414,7 +1414,7 @@ function initMachineScene(
     const receiptTex = canvasTexture(280, 540, (c, w, h) => {
       c.fillStyle = '#f4f1ea'
       c.fillRect(0, 0, w, h)
-      print(c, 'GRAPHIPACKS', 25, 52, 24, '#333d36', 650)
+      print(c, 'GRAPHIPACKSS', 25, 52, 24, '#333d36', 650)
       print(c, 'DISPATCH MANIFEST', 32, 87, 18, '#566059')
       c.strokeStyle = '#8a9189'
       c.setLineDash([5, 6])

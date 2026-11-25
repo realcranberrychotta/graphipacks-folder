@@ -1,8 +1,12 @@
+"use client";
+
 import { Factory, Layers, PackageCheck, ShieldCheck } from "lucide-react";
 import MaskedHeading from "./masked-heading";
+import CountUp from "./count-up";
 
 interface StatItem {
-  value: string;
+  to: number;
+  suffix: string;
   unit: string;
   label: string;
   description: string;
@@ -11,28 +15,32 @@ interface StatItem {
 
 const STATS_DATA: StatItem[] = [
   {
-    value: "40+",
+    to: 40,
+    suffix: "+",
     unit: "Years",
     label: "Manufacturing Heritage",
     description: "Manufacturing heritage in Madurai since 1984",
     icon: Factory,
   },
   {
-    value: "8-Colour",
+    to: 8,
+    suffix: "-Colour",
     unit: "Rotogravure",
     label: "Print Precision",
     description: "High-precision rotogravure & flexo printing lines",
     icon: Layers,
   },
   {
-    value: "6",
+    to: 6,
+    suffix: "",
     unit: "Product Lines",
     label: "Converting Versatility",
     description: "Mulch films, grow bags, coir pith & laminated pouches",
     icon: PackageCheck,
   },
   {
-    value: "16",
+    to: 16,
+    suffix: "",
     unit: "Verified Partners",
     label: "Enterprise Trust",
     description: "Active corporate & agricultural export clients",
@@ -91,7 +99,7 @@ export function Stats({ className = "" }: StatsProps) {
                 const IconComponent = stat.icon;
                 return (
                   <div
-                    key={stat.value + stat.unit}
+                    key={stat.to + stat.unit}
                     className="flex flex-col justify-between rounded-md border border-powder/60 bg-background p-6 transition-colors duration-200 hover:border-steel shadow-[0_1px_3px_rgba(29,53,87,0.04)]"
                   >
                     <IconComponent
@@ -100,9 +108,14 @@ export function Stats({ className = "" }: StatsProps) {
                     />
                     <div>
                       <div className="flex items-baseline gap-2.5">
-                        <span className="text-3xl sm:text-4xl font-display font-bold text-navy tracking-tight">
-                          {stat.value}
-                        </span>
+                        <CountUp
+                          to={stat.to}
+                          suffix={stat.suffix}
+                          duration={0.9}
+                          easing="easeOut"
+                          trigger="view"
+                          className="text-3xl sm:text-4xl font-display font-bold text-navy tracking-tight tabular-nums"
+                        />
                         <span className="font-mono text-xs font-medium text-steel">
                           {stat.unit}
                         </span>

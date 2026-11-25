@@ -8,13 +8,13 @@ import ContactForm from "@/components/ContactForm";
 import MaskedHeading from "@/components/ui/masked-heading";
 
 export const metadata: Metadata = {
-  title: "Contact Plant & Commercial Sales | Graphipacks Private Limited",
+  title: "Contact Plant & Commercial Sales | Graphipackss Private Limited",
   description:
-    "Connect directly with Graphipacks plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
+    "Connect directly with Graphipackss plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
   openGraph: {
-    title: "Contact Plant & Commercial Sales | Graphipacks Private Limited",
+    title: "Contact Plant & Commercial Sales | Graphipackss Private Limited",
     description:
-      "Connect directly with Graphipacks plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
+      "Connect directly with Graphipackss plant engineers and B2B commercial sales in Madurai for custom polymer extrusion gauges, sample roll dispatches, and wholesale contract pricing.",
   },
 };
 
@@ -34,7 +34,7 @@ export default async function ContactPage() {
     ""
   ).replace(/\D/g, "");
   const whatsappUrl = whatsappDigits
-    ? `https://wa.me/${whatsappDigits}?text=Hello%20Graphipacks`
+    ? `https://wa.me/${whatsappDigits}?text=Hello%20Graphipackss`
     : "";
 
   return (
@@ -52,7 +52,7 @@ export default async function ContactPage() {
               as="h1"
               className="font-display font-bold text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[1.04] tracking-[-0.02em] text-[#1D3557] [text-wrap:balance] max-w-4xl mx-auto"
             >
-              Contact Graphipacks
+              Contact Graphipackss
             </MaskedHeading>
             <p className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed text-[#1D3557]/85 max-w-2xl mx-auto font-sans">
               Connect directly with our plant engineers and commercial sales team for custom film gauges, sample requests, and wholesale B2B contract pricing.
@@ -266,7 +266,7 @@ export default async function ContactPage() {
                 Looking for technical datasheets or sample rolls?
               </h3>
               <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
-                Review our agricultural mulch films, dual-tone grow bags, high-barrier laminates, and wicketed poly bag specifications.
+                Review our agricultural mulch films, dual-tone grow bags, high-barrier laminates, and wicketted poly bag specifications.
               </p>
             </div>
             <Link

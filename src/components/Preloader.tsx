@@ -206,7 +206,7 @@ export default function Preloader() {
       }}
       aria-hidden={isLifting}
       role="status"
-      aria-label="Loading Graphipacks"
+      aria-label="Loading Graphipackss"
     >
       {/* Blueprint Grid Lines Pattern (Ultra-subtle #A8DADC at 7% opacity) */}
       <div
@@ -256,7 +256,7 @@ export default function Preloader() {
           </div>
 
           <h1 className="font-display text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.18em] sm:tracking-[0.28em] text-background ml-[0.18em] sm:ml-[0.28em]">
-            GRAPHIPACKS
+            GRAPHIPACKSS
           </h1>
 
           <p className="font-mono uppercase text-[11px] sm:text-sm tracking-[0.2em] sm:tracking-[0.25em] text-powder/75 ml-[0.2em] sm:ml-[0.25em]">

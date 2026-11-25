@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, ArrowRight, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import type { ProductDetailData, ProductVariant } from "@/data/products";
 import { cn } from "@/lib/utils";
+import { SpecTextWithTooltips } from "@/components/ui/spec-tooltip";
 
 export interface SpecComparisonSheetProps {
   product: ProductDetailData;
@@ -366,7 +367,7 @@ export function SpecComparisonSheet({
                                 row.differs ? "text-navy" : "text-ink"
                               )}
                             >
-                              {row.label}
+                              <SpecTextWithTooltips text={row.label} />
                             </span>
                             {row.differs && (
                               <span className="shrink-0 rounded-xs bg-powder/35 border border-powder/60 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase text-steel">
@@ -396,7 +397,7 @@ export function SpecComparisonSheet({
                               )}
                             >
                               <span className="leading-relaxed text-ink break-words block">
-                                {val}
+                                <SpecTextWithTooltips text={val} />
                               </span>
                             </td>
                           );

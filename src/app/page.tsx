@@ -6,13 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Graphipacks Private Limited | Flexible Packaging Solutions (Est. 1984)",
+  title: "Graphipackss Private Limited | Flexible Packaging Solutions (Est. 1984)",
   description:
-    "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Madurai, India.",
+    "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketted poly bags in Madurai, India.",
   openGraph: {
-    title: "Graphipacks Private Limited | Flexible Packaging Solutions (Est. 1984)",
+    title: "Graphipackss Private Limited | Flexible Packaging Solutions (Est. 1984)",
     description:
-      "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketed poly bags in Madurai, India.",
+      "Leading manufacturer of high-barrier flexible packaging, agricultural mulch films, UV-treated grow bags, rotogravure printed pouches, and wicketted poly bags in Madurai, India.",
   },
 };
 import {
@@ -101,7 +101,7 @@ export default async function HomePage() {
           </div>
 
           {/* Vertical Technical Scale / Web Calibration Ticks */}
-          <div className="absolute top-40 left-8 flex flex-col gap-6 font-mono text-[8px] text-ink/40 tracking-wider">
+          <div className="hidden xl:flex absolute top-40 left-2 flex-col gap-6 font-mono text-[8px] text-ink/40 tracking-wider">
             <span className="flex items-center gap-1.5"><span className="h-px w-3 bg-steel/40" /> 000mm</span>
             <span className="flex items-center gap-1.5"><span className="h-px w-2 bg-steel/30" /> 250mm</span>
             <span className="flex items-center gap-1.5"><span className="h-px w-3 bg-steel/40" /> 500mm</span>

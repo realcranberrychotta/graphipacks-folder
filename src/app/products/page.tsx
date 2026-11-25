@@ -8,13 +8,13 @@ import ProductCatalog from "@/components/ProductCatalog";
 import MaskedHeading from "@/components/ui/masked-heading";
 
 export const metadata: Metadata = {
-  title: "Packaging Products Catalog & Specifications | Graphipacks Private Limited",
+  title: "Packaging Products Catalog & Specifications | Graphipackss Private Limited",
   description:
-    "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketed poly bags.",
+    "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketted poly bags.",
   openGraph: {
-    title: "Packaging Products Catalog & Specifications | Graphipacks Private Limited",
+    title: "Packaging Products Catalog & Specifications | Graphipackss Private Limited",
     description:
-      "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketed poly bags.",
+      "Explore our complete flexible packaging product catalog: agricultural mulch films, grow bags, coir pith export bags, high-barrier laminated pouches, and wicketted poly bags.",
   },
 };
 

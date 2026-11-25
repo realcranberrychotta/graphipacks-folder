@@ -49,7 +49,7 @@ export interface PrintingCapability {
 }
 
 export const company: CompanyProfile = {
-  name: "Graphipacks Private Limited",
+  name: "Graphipackss Private Limited",
   tagline: "Flexible Packaging Solution Providers",
   executiveDirector: "C.S. Arjun",
   specializations: [
@@ -63,7 +63,7 @@ export const company: CompanyProfile = {
     "Invest in effective processes and innovative technologies",
   ],
   about:
-    "Founded in Madurai in 1984 as Polygraphs with a single flexographic press, Graphipacks Private Limited brings over four decades of flexible packaging expertise. Under Executive Director C.S. Arjun, our facility integrates 3-layer and ABA blown film extrusion, 8-colour rotogravure printing, lamination, and automated wicketted bag lines for domestic and export buyers.",
+    "Founded in Madurai in 1984 as Polygraphs with a single flexographic press, Graphipackss Private Limited brings over four decades of flexible packaging expertise. Under Executive Director C.S. Arjun, our facility integrates 3-layer and ABA blown film extrusion, 8-colour rotogravure printing, lamination, and automated wicketted bag lines for domestic and export buyers.",
 };
 
 export const products: Product[] = [
@@ -154,7 +154,7 @@ export const products: Product[] = [
       "Precision-cut wicket holes and tear-lines designed for flawless performance on high-speed automated packing lines.",
     category: "Automated Packaging Solutions",
     shortDescription:
-      "Precision Metal-Wicketed Poly Bags for Automated High-Speed Packing Lines.",
+      "Precision Metal-Wicketted Poly Bags for Automated High-Speed Packing Lines.",
     description:
       "Engineered for high-throughput automatic bagging machinery with precision pin holes and clean tear-lines.",
     features: ["Metal wicket bar mounted", "Anti-static resin blend", "Precision micro-lip perforations"],
@@ -224,9 +224,9 @@ export const timeline: TimelineEvent[] = [
   },
   {
     year: 1998,
-    title: "Graphipacks Private Limited Incorporated",
+    title: "Graphipackss Private Limited Incorporated",
     description:
-      "Started Private Limited Company (Graphipacks Private Limited), installed Roto gravure.",
+      "Started Private Limited Company (Graphipackss Private Limited), installed Roto gravure.",
   },
   {
     year: 2011,

@@ -19,9 +19,9 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://graphipacks-folder.vercel.app"),
-  title: "Graphipacks Private Limited | Flexible Packaging Solution Providers",
+  title: "Graphipackss Private Limited | Flexible Packaging Solution Providers",
   description:
-    "Graphipacks Private Limited specializes in high-quality flexible packaging solutions: Agriculture Mulch Film, Grow Bags, Coir Pith Bags, Laminated Rolls & Pouches, and Poly Bags.",
+    "Graphipackss Private Limited specializes in high-quality flexible packaging solutions: Agriculture Mulch Film, Grow Bags, Coir Pith Bags, Laminated Rolls & Pouches, and Poly Bags.",
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.ico",

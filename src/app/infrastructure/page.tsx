@@ -4,17 +4,17 @@ import InfrastructureBentoGrid from "@/components/InfrastructureBentoGrid";
 import MaskedHeading from "@/components/ui/masked-heading";
 
 export const metadata: Metadata = {
-  title: "Manufacturing Infrastructure & Plant Capabilities | Graphipacks Private Limited",
+  title: "Manufacturing Infrastructure & Plant Capabilities | Graphipackss Private Limited",
   description:
-    "Tour Graphipacks' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
+    "Tour Graphipackss' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
   openGraph: {
-    title: "Manufacturing Infrastructure & Plant Capabilities | Graphipacks Private Limited",
+    title: "Manufacturing Infrastructure & Plant Capabilities | Graphipackss Private Limited",
     description:
-      "Tour Graphipacks' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
+      "Tour Graphipackss' Madurai manufacturing facility: 8-color rotogravure printing, film lamination, multi-layer blown film extrusion, and automated converting lines.",
     images: [
       {
         url: "/images/infrastructure/infra-03-rotogravure-cylinders.jpg",
-        alt: "Graphipacks 8-Color Rotogravure Printing Cylinders",
+        alt: "Graphipackss 8-Color Rotogravure Printing Cylinders",
       },
     ],
   },
@@ -45,7 +45,7 @@ export default function InfrastructurePage() {
               as="h1"
               className="font-display font-bold text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[1.04] tracking-[-0.02em] text-[#1D3557] [text-wrap:balance] max-w-4xl mx-auto"
             >
-              Graphipacks Factory
+              Graphipackss Factory
             </MaskedHeading>
 
             <p className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed text-[#1D3557]/85 max-w-2xl mx-auto font-sans">

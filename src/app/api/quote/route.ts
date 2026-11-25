@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     // Read environment variables (do NOT hardcode owner email)
     const ownerEmail = process.env.OWNER_EMAIL;
     const apiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.FROM_EMAIL || "Graphipacks Quote <onboarding@resend.dev>";
+    const fromEmail = process.env.FROM_EMAIL || "Graphipackss Quote <onboarding@resend.dev>";
 
     if (apiKey && ownerEmail) {
       try {
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
                   <p style="white-space: pre-wrap; margin: 0; line-height: 1.5;">${cleanMessage}</p>
                 </div>
                 <p style="margin-top: 25px; font-size: 11px; color: rgba(241,250,238,0.7); text-align: center;">
-                  Graphipacks Private Limited · Automated Quote Dispatch System
+                  Graphipackss Private Limited · Automated Quote Dispatch System
                 </p>
               </div>
             `,

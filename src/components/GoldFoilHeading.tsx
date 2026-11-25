@@ -69,7 +69,7 @@ export default function GoldFoilHeading({ className = "" }: GoldFoilHeadingProps
     >
       {/* Layer 1: Base Matte Sheen Layer — Always Visible */}
       <span className="block font-display font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.12em] leading-tight select-none bg-gradient-to-b from-[#F1FAEE] via-[#A8DADC] to-[#457B9D] bg-clip-text text-transparent">
-        GRAPHIPACKS PRIVATE LIMITED
+        GRAPHIPACKSS PRIVATE LIMITED
       </span>
 
       {/* Layer 2: Interactive Specular Steel Foil Overlay */}
@@ -86,7 +86,7 @@ export default function GoldFoilHeading({ className = "" }: GoldFoilHeadingProps
         animate={{ opacity: isHovered ? 1 : 0.35 }}
         transition={{ duration: 0.3 }}
       >
-        GRAPHIPACKS PRIVATE LIMITED
+        GRAPHIPACKSS PRIVATE LIMITED
       </motion.span>
     </div>
   );

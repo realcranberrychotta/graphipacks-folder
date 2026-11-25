@@ -72,7 +72,7 @@ function MachineFallbackVisual({
       <div className="relative w-full h-full rounded-xl border border-[#A8DADC]/55 bg-[#F1FAEE]/60 overflow-hidden md:w-[56%] md:h-[540px] md:max-w-[740px] md:rounded-2xl md:border-[#A8DADC]/45 md:bg-[#F1FAEE]/45">
         <Image
           src="/images/machine-3d-fallback.webp"
-          alt="Graphipacks 6-station flexible packaging manufacturing line"
+          alt="Graphipackss 6-station flexible packaging manufacturing line"
           fill
           priority
           sizes="(max-width: 767px) 92vw, (max-width: 1280px) 56vw, 720px"

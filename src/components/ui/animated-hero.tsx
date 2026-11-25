@@ -37,7 +37,7 @@ export const MOBILE_TYPEWRITER_PRODUCTS = [
 ];
 
 export const ParticleHero: React.FC<ParticleHeroProps> = ({
-  title = "GRAPHIPACKS",
+  title = "GRAPHIPACKSS",
   primaryButton,
   secondaryButton,
   interactiveHint,
@@ -233,7 +233,7 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               className="flex items-center justify-center gap-2 font-mono text-[10px] xs:text-xs font-bold uppercase tracking-[0.22em] text-steel mb-3"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-red shrink-0" aria-hidden="true" />
-              <span>EST. 1984 · MADURAI PLANT  •  GRAPHIPACKS PRIVATE LIMITED</span>
+              <span>EST. 1984 · MADURAI PLANT  •  GRAPHIPACKSS PRIVATE LIMITED</span>
             </motion.div>
 
             {/* 2. Main Headline: Word-by-word reveal */}

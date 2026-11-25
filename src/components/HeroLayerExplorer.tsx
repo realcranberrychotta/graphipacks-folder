@@ -192,7 +192,7 @@ export default function HeroLayerExplorer({}: {
             </span>
             <div className="flex flex-col">
               <span className="font-mono text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#F1FAEE]">
-                GRAPHIPACKS LAB-QC // BENCH 740
+                GRAPHIPACKSS LAB-QC // BENCH 740
               </span>
               <span className="text-[9px] font-mono text-[#457B9D]/80 tracking-wider">
                 PHYSICAL PACKAGING INSPECTION STAGE
@@ -462,7 +462,7 @@ export default function HeroLayerExplorer({}: {
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[#457B9D]/40 bg-[#1D3557]/80 px-2 py-0.5 font-mono text-[9px] font-bold text-[#F1FAEE]">
                       <CheckCircle2 className="h-3 w-3 text-[#457B9D]" />
-                      <span>GRAPHIPACKS CERTIFIED</span>
+                      <span>GRAPHIPACKSS CERTIFIED</span>
                     </span>
 
                     {/* Flexo 4-Color Target Registration Marks */}

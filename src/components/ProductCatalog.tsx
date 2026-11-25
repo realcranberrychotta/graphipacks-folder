@@ -149,7 +149,7 @@ export default function ProductCatalog({
                     {/* Why Graphipacks value proposition callout */}
                     <div className="mt-4 rounded-lg border border-powder bg-surface p-3.5">
                       <p className="text-xs font-bold uppercase tracking-wider text-steel">
-                        Why Graphipacks:
+                        Why Graphipackss:
                       </p>
                       <p className="mt-1 text-xs text-ink leading-relaxed font-medium">
                         {product.whyGraphipacks}

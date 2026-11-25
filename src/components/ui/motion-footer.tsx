@@ -4,17 +4,11 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Package, ArrowUp, Play, Pause } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { company } from "@/lib/content";
 import { openQuoteModal } from "@/components/QuoteModal";
-
-// Register ScrollTrigger safely for React
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 // -------------------------------------------------------------------------
 // 1. THEME-ADAPTIVE INLINE STYLES (Multi-Tone Coolors Sovereign Navy & Steel Blue)
@@ -205,10 +199,6 @@ const MarqueeItem = () => (
 );
 
 export function CinematicFooter() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const giantTextRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const [isTickerPlaying, setIsTickerPlaying] = useState(!shouldReduceMotion);
 
@@ -218,61 +208,6 @@ export function CinematicFooter() {
         setIsTickerPlaying(false);
       });
     }
-  }, [shouldReduceMotion]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!wrapperRef.current) return;
-
-    const isMobile = window.innerWidth < 768;
-    if (shouldReduceMotion || isMobile) {
-      gsap.set([giantTextRef.current, headingRef.current, linksRef.current], {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-      });
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      // Background Parallax
-      gsap.fromTo(
-        giantTextRef.current,
-        { y: "8vh", scale: 0.85, opacity: 0 },
-        {
-          y: "0vh",
-          scale: 1,
-          opacity: 1,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 80%",
-            end: "bottom bottom",
-            scrub: 1,
-          },
-        }
-      );
-
-      // Staggered Content Reveal
-      gsap.fromTo(
-        [headingRef.current, linksRef.current],
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 45%",
-            end: "bottom bottom",
-            scrub: 1,
-          },
-        }
-      );
-    }, wrapperRef);
-
-    return () => ctx.revert();
   }, [shouldReduceMotion]);
 
   const scrollToTop = () => {
@@ -285,37 +220,31 @@ export function CinematicFooter() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      
-      <div
-        ref={wrapperRef}
-        className="relative h-auto md:h-screen md:min-h-[640px] w-full"
-        style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
-      >
-        <footer className="relative h-auto py-12 md:py-0 md:fixed md:bottom-0 md:left-0 flex md:h-screen md:min-h-[640px] w-full flex-col justify-between overflow-hidden bg-royal-band text-background cinematic-footer-wrapper border-t border-powder/30">
-          {/* Tactile Archival Grain Layer */}
-          <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
-          
-          {/* Ambient Technical Die-Line Grid Background */}
-          <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
-          {/* Giant background text */}
-          <div
-            ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[4vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase"
-            style={{
-              maskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
-            }}
-          >
-            GRAPHIPACKS
-          </div>
+      <footer className="relative z-10 h-auto py-16 md:py-20 w-full flex flex-col justify-between overflow-hidden bg-[#1D3557] text-background cinematic-footer-wrapper border-t border-powder/30">
+        {/* Tactile Archival Grain Layer */}
+        <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
 
-          {/* 1. Diagonal Sleek Marquee (Top of footer) */}
-          <div
-            className="group/ticker relative md:absolute md:top-10 left-0 w-full overflow-hidden border-y border-powder/30 bg-navy py-3 md:py-3.5 z-10 md:-rotate-2 md:scale-110 mb-8 md:mb-0"
-            role="region"
-            aria-label="Capabilities Ticker"
-          >
+        {/* Ambient Technical Die-Line Grid Background */}
+        <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
+
+        {/* Giant background text */}
+        <div
+          className="footer-giant-bg-text absolute -bottom-[2rem] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase"
+          style={{
+            maskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+          }}
+        >
+          GRAPHIPACKSS
+        </div>
+
+        {/* 1. Capabilities Marquee (Top of footer) */}
+        <div
+          className="group/ticker relative left-0 w-full overflow-hidden border-y border-powder/30 bg-navy py-3 md:py-3.5 z-10 mb-12 md:mb-16"
+          role="region"
+          aria-label="Capabilities Ticker"
+        >
             <div
               className={`flex w-max text-[11px] md:text-xs font-mono font-bold tracking-[0.25em] text-powder uppercase transition-none ${
                 shouldReduceMotion
@@ -362,7 +291,7 @@ export function CinematicFooter() {
           </div>
 
           {/* 2. Main Center Content */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-2 md:mt-20 mb-10 md:mb-0 w-full max-w-5xl mx-auto">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mb-12 md:mb-16 w-full max-w-5xl mx-auto">
             {/* Provenance eyebrow */}
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-powder/45 bg-navy px-4 py-1 text-[11px] font-mono font-medium tracking-widest text-powder uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-red" />
@@ -370,7 +299,6 @@ export function CinematicFooter() {
             </div>
 
             <h2
-              ref={headingRef}
               className="text-2xl sm:text-6xl md:text-7xl font-bold text-background font-display tracking-[-0.015em] mb-4 text-center max-w-4xl leading-[1.16] sm:leading-[1.12]"
             >
               Ready to engineer your packaging?
@@ -381,7 +309,7 @@ export function CinematicFooter() {
             </p>
 
             {/* Interactive Magnetic Pills Layout */}
-            <div ref={linksRef} className="flex flex-col items-center gap-5 w-full">
+            <div className="flex flex-col items-center gap-5 w-full">
               {/* Primary RFQ & Product Links */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
                 <MagneticButton
@@ -445,7 +373,7 @@ export function CinematicFooter() {
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-5 border-t border-powder/25 pt-6">
+          <div className="relative z-20 w-full px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-5 border-t border-powder/25 pt-6">
             
             {/* Copyright */}
             <div className="text-[rgba(241,250,238,0.72)] text-[10px] md:text-xs font-mono font-medium tracking-wider uppercase order-2 md:order-1 text-center md:text-left">
@@ -470,8 +398,7 @@ export function CinematicFooter() {
             </MagneticButton>
 
           </div>
-        </footer>
-      </div>
+      </footer>
     </>
   );
 }

@@ -59,7 +59,7 @@ export default function Header() {
               className="font-serif font-bold tracking-[0.08em] text-base xs:text-lg sm:text-xl leading-none transition-colors duration-200 ease-in-out text-background group-hover:text-powder"
               style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
             >
-              GRAPHIPACKS
+              GRAPHIPACKSS
             </span>
             <span
               className="font-sans text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.22em] uppercase mt-0.5 sm:mt-1 leading-none text-background/85"
