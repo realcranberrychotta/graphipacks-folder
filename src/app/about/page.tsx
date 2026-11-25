@@ -30,48 +30,51 @@ export default async function AboutPage() {
   return (
     <div className="flex flex-col bg-background text-ink">
       {/* Section 01: Hero - Soft Linen Editorial Header */}
-      <header className="relative overflow-hidden bg-light-atmosphere-alt border-b border-powder pt-32 pb-20 md:pt-40 md:pb-28 text-ink">
+      <header className="relative overflow-hidden bg-light-atmosphere-alt border-b border-powder pt-28 pb-14 md:pt-32 md:pb-16 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="max-w-4xl">
-            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-              ESTABLISHED 1984 &bull; FOUR DECADES OF HERITAGE
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <span className="inline-flex items-center justify-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] mb-4">
+              <span className="h-2 w-2 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
+              <span>ESTABLISHED 1984 &bull; FOUR DECADES OF HERITAGE</span>
             </span>
 
-            <h1 className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-display font-bold leading-[1.1] tracking-[-0.015em] text-ink">
+            <h1 className="font-display font-bold text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[1.04] tracking-[-0.02em] text-[#1D3557] [text-wrap:balance] max-w-4xl mx-auto">
               About {company.name}
             </h1>
 
-            <p className="mt-4 max-w-[58ch] text-xl sm:text-2xl font-sans font-medium text-heritage">
+            <p className="mt-4 text-xl sm:text-2xl font-sans font-medium text-heritage max-w-2xl mx-auto">
               {company.tagline}
             </p>
 
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
+            <p className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed text-[#1D3557]/85 max-w-2xl mx-auto font-sans">
               {company.about}
             </p>
 
             {/* Leadership Badge */}
-            <div className="mt-6 inline-flex flex-wrap items-center gap-3 rounded-xl border border-ink/10 bg-background px-4 py-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-heritage text-background font-bold text-sm">
-                ED
-              </div>
-              <div>
-                <span className="block text-xs font-semibold uppercase tracking-wider text-steel">
-                  Executive Leadership
-                </span>
-                <span className="text-base font-bold text-ink">
-                  {company.executiveDirector}
-                </span>
-                <span className="text-xs text-ink/75 ml-2 font-sans">Executive Director</span>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <div className="inline-flex flex-wrap items-center justify-center gap-3 rounded-xl border border-ink/10 bg-background px-4 py-3 text-left">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-heritage text-background font-bold text-sm">
+                  ED
+                </div>
+                <div>
+                  <span className="block text-xs font-semibold uppercase tracking-wider text-steel">
+                    Executive Leadership
+                  </span>
+                  <span className="text-base font-bold text-ink">
+                    {company.executiveDirector}
+                  </span>
+                  <span className="text-xs text-ink/75 ml-2 font-sans">Executive Director</span>
+                </div>
               </div>
             </div>
 
             {/* Core Specializations */}
-            <div className="mt-8 border-t border-powder/40 pt-6">
-              <span className="text-xs font-mono uppercase tracking-wider text-steel">
+            <div className="mt-8 w-full border-t border-powder/40 pt-6">
+              <span className="block text-center text-xs font-mono uppercase tracking-wider text-steel">
                 Core Converting &amp; Printing Specializations
               </span>
-              <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 text-sm text-ink">
+              <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 text-sm text-ink text-left">
                 {company.specializations.map((spec, idx) => (
                   <li
                     key={idx}
@@ -95,7 +98,7 @@ export default async function AboutPage() {
               </ul>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href="/contact"
                 className="btn-press inline-flex items-center justify-center rounded-md bg-navy hover:bg-navy/90 px-6 py-3.5 text-sm font-bold text-background transition-colors"

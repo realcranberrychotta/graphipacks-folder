@@ -125,14 +125,15 @@ export default async function ProductDetailPage({ params }: PageProps) {
         {/* ================================================================= */}
         <section className="mb-24 md:mb-32 scroll-mt-32" id="applications">
           <div className="border-t border-powder/40 pt-16">
-            <div className="max-w-3xl mb-12 md:mb-16">
-              <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-                03 / TARGET APPLICATIONS
+            <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16 flex flex-col items-center">
+              <span className="inline-flex items-center justify-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] mb-4">
+                <span className="h-2 w-2 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
+                <span>03 / TARGET APPLICATIONS</span>
               </span>
-              <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
+              <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-[#1D3557] [text-wrap:balance]">
                 Field Deployments &amp; Industry Use Cases
               </h2>
-              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
+              <p className="mt-4 max-w-2xl mx-auto text-base md:text-[17px] leading-relaxed text-[#1D3557]/85">
                 Formulated and manufactured strictly for designated operating environments, commercial crops, and industrial filling lines.
               </p>
             </div>
@@ -158,7 +159,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                       {app.title}
                     </h3>
 
-                    <p className="mt-3 text-[15px] leading-[1.7] text-ink/75">
+                    <p className="mt-3 text-base md:text-[17px] leading-relaxed text-[#1D3557]/85">
                       {app.descriptor}
                     </p>
                   </div>

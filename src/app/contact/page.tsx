@@ -40,20 +40,21 @@ export default async function ContactPage() {
   return (
     <div className="flex flex-col bg-background text-ink">
       {/* Editorial Header Section on Light Atmosphere */}
-      <header className="relative overflow-hidden bg-light-atmosphere border-b border-powder pt-32 pb-20 md:pt-40 md:pb-28 text-ink">
+      <header className="relative overflow-hidden bg-light-atmosphere border-b border-powder pt-28 pb-14 md:pt-32 md:pb-16 text-ink">
         <div aria-hidden="true" className="grain-layer pointer-events-none absolute inset-0 z-[1]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="max-w-3xl">
-            <span className="block font-mono text-[11px] uppercase tracking-[0.22em] font-medium text-steel mb-4">
-              DIRECT MANUFACTURING INQUIRIES &bull; EST. 1984
+          <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <span className="inline-flex items-center justify-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-[#457B9D] mb-4">
+              <span className="h-2 w-2 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
+              <span>DIRECT MANUFACTURING INQUIRIES &bull; EST. 1984</span>
             </span>
             <MaskedHeading
               as="h1"
-              className="mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-display font-bold leading-[1.1] tracking-[-0.015em] text-ink"
+              className="font-display font-bold text-[clamp(2.75rem,5.5vw,4.75rem)] leading-[1.04] tracking-[-0.02em] text-[#1D3557] [text-wrap:balance] max-w-4xl mx-auto"
             >
               Contact Graphipacks
             </MaskedHeading>
-            <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
+            <p className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed text-[#1D3557]/85 max-w-2xl mx-auto font-sans">
               Connect directly with our plant engineers and commercial sales team for custom film gauges, sample requests, and wholesale B2B contract pricing.
             </p>
           </div>

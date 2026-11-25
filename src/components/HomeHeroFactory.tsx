@@ -314,7 +314,7 @@ export default function HomeHeroFactory() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full md:h-[720px] md:overflow-hidden"
+      className="relative w-full md:h-full md:overflow-hidden"
       style={{ contain: "layout paint" }}
     >
       <div className="relative w-full h-[280px] rounded-xl border border-[#A8DADC]/60 bg-[#F1FAEE]/50 overflow-hidden md:h-full md:rounded-none md:border-0 md:bg-transparent">

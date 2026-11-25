@@ -76,26 +76,24 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         variants={containerVariants}
         initial={instant ? "visible" : "hidden"}
         animate="visible"
-        className="flex flex-col items-start max-w-xl pointer-events-auto"
+        className="flex flex-col items-start max-w-xl pointer-events-auto space-y-4 lg:space-y-5"
       >
         {/* Provenance Indicator */}
         <motion.div
           variants={itemVariants}
-          className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-ink/80"
+          className="inline-flex items-center gap-2 whitespace-nowrap font-mono text-[11px] tracking-[0.16em] uppercase text-[#457B9D]"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-red shrink-0" aria-hidden="true" />
-          <span className="text-steel font-medium">EST. 1984 · MADURAI PLANT</span>
-          <span className="text-ink/40" aria-hidden="true">&bull;</span>
-          <span className="text-ink/90">{company.name}</span>
+          <span className="h-1.5 w-1.5 rounded-full bg-[#E63946] shrink-0" aria-hidden="true" />
+          <span>EST. 1984 · MADURAI PLANT · GRAPHIPACKS</span>
         </motion.div>
 
         {/* Display Headline */}
-        <div className="mt-8 overflow-visible">
+        <div className="mt-3 overflow-visible">
           {headline ?? <HeroHeadline />}
         </div>
 
         {/* WE MAKE: Dynamic Product Typewriter Strip */}
-        <motion.div variants={itemVariants} className="mt-6 sm:mt-7">
+        <motion.div variants={itemVariants}>
           <ProductTypewriter
             prefix="WE MAKE:"
             items={DEFAULT_PRODUCTS}
@@ -106,27 +104,24 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         <motion.div
           variants={lineScaleVariants}
           style={{ originX: 0 }}
-          className="my-8 h-px w-full max-w-xl bg-gradient-to-r from-steel/80 via-steel/30 to-transparent"
+          className="h-px w-full max-w-xl bg-gradient-to-r from-steel/80 via-steel/30 to-transparent"
           aria-hidden="true"
         />
 
         {/* Editorial Value Proposition Headline & Subline */}
-        <motion.div variants={itemVariants} className="max-w-xl">
-          <h2 className="font-display text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.25rem] font-bold leading-[1.18] tracking-[-0.015em] text-ink text-left">
-            <span className="block whitespace-nowrap">Find your spec.</span>
-            <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Book your call.</span>
-            <span className="block whitespace-nowrap mt-1 sm:mt-1.5">Done in 60 seconds.</span>
-          </h2>
-          <p className="mt-3.5 text-sm sm:text-[15px] lg:text-base font-sans font-light leading-relaxed text-ink/85 text-left max-w-xl lg:whitespace-nowrap">
-            <span className="block sm:inline">MOQ, gauge and lead time shown upfront. </span>
-            <span className="block sm:inline">No waiting 24 hours for a reply.</span>
+        <motion.div variants={itemVariants} className="max-w-md">
+          <p className="text-lg lg:text-xl font-medium leading-snug text-[#1D3557] text-left">
+            Find your spec. Book your call. Done in 60 seconds.
+          </p>
+          <p className="mt-1.5 text-sm text-[#1D3557]/80 font-sans text-left">
+            MOQ, gauge and lead time shown upfront. No waiting 24 hours for a reply.
           </p>
         </motion.div>
 
         {/* Minimalist Core Specializations Strip */}
         <motion.div
           variants={itemVariants}
-          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono uppercase tracking-widest text-ink/90"
+          className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11px] font-mono uppercase tracking-widest text-ink/90"
         >
           {company.specializations.map((spec, idx) => (
             <div key={idx} className="flex items-center gap-2">
@@ -139,12 +134,12 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         {/* Hero CTAs */}
         <motion.div
           variants={itemVariants}
-          className="mt-10 flex flex-wrap items-center gap-4"
+          className="mt-5 flex flex-wrap items-center gap-3"
         >
           <button
             type="button"
             onClick={() => openQuoteModal()}
-            className="btn-press btn-tactile group relative inline-flex items-center justify-center rounded-md bg-red px-8 py-4 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#1D3557] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+            className="btn-press btn-tactile group relative inline-flex items-center justify-center rounded-md bg-red px-7 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#1D3557] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
             style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>Get a Quote</span>
@@ -156,7 +151,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
 
           <Link
             href="/products"
-            className="btn-press btn-tactile group inline-flex items-center justify-center rounded-md border border-steel bg-transparent px-8 py-4 text-xs font-mono font-medium uppercase tracking-[0.18em] text-ink hover:text-background hover:border-[#1D3557] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            className="btn-press btn-tactile group inline-flex items-center justify-center rounded-md border border-steel bg-transparent px-7 py-3.5 text-xs font-mono font-medium uppercase tracking-[0.18em] text-ink hover:text-background hover:border-[#1D3557] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>View Products</span>
@@ -166,7 +161,7 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
         {/* Minimalist Scroll Indicator */}
         <motion.div
           variants={itemVariants}
-          className="mt-16 sm:mt-20 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-ink/60 uppercase"
+          className="pt-2 flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-ink/60 uppercase"
         >
           <span
             className="inline-block h-3.5 w-px bg-steel/60"

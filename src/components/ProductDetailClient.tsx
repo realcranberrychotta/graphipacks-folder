@@ -190,7 +190,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </p>
 
               {/* Concise Formal Summary */}
-              <p className="mt-4 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink font-sans">
+              <p className="mt-4 max-w-[62ch] text-base md:text-[17px] leading-relaxed text-[#1D3557]/85 font-sans">
                 {product.summary}
               </p>
 
@@ -366,7 +366,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <h2 className="mt-1 font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold leading-[1.15] tracking-[-0.015em] text-ink">
                 Engineering Tolerances &amp; Material Standards
               </h2>
-              <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75">
+              <p className="mt-3 max-w-[62ch] text-base md:text-[17px] leading-relaxed text-[#1D3557]/85">
                 Specifications reflect factory quality standards. Rows marked with an accent border indicate active values configured for variant{" "}
                 <span className="font-bold text-ink">{activeVariant.name}</span>.
               </p>

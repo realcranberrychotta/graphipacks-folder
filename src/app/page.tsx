@@ -93,10 +93,10 @@ export default async function HomePage() {
         {/* Technical Blueprint & Die-Line Perimeter Markings */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[2] select-none hidden lg:block">
           {/* Top Registration Corner Marks */}
-          <div className="absolute top-24 left-8 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
+          <div className="absolute top-4 left-6 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
             ┌ REGISTRATION DATUM // 00.00
           </div>
-          <div className="absolute top-24 right-8 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
+          <div className="absolute top-4 right-6 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
             1250MM ROTOGRAVURE WEB WIDTH ┐
           </div>
 
@@ -111,10 +111,10 @@ export default async function HomePage() {
           </div>
 
           {/* Bottom Technical Coordinates */}
-          <div className="absolute bottom-6 left-8 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
+          <div className="absolute bottom-3 left-6 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
             └ MADURAI WORKS // PLANT UNIT 01
           </div>
-          <div className="absolute bottom-6 right-8 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
+          <div className="absolute bottom-3 right-6 font-mono text-[9px] uppercase tracking-[0.25em] text-steel/60">
             TOLERANCE ±1.5% // ELECTRONIC REGISTER 0.05MM ┘
           </div>
         </div>
@@ -123,7 +123,7 @@ export default async function HomePage() {
         <HeroSkipControl />
 
         {/* Unified Hero Container — Single 3D Line Mount across Desktop & Mobile */}
-        <div className="relative z-10 w-full md:min-h-[720px] pt-3 pb-8 md:pt-0 md:pb-0">
+        <div className="relative z-10 w-full md:min-h-[calc(100vh-4.5rem)] pt-3 pb-8 md:pt-0 md:pb-0">
           {/* Mobile Hero Copy & CTAs (< 768px) */}
           <div className="block md:hidden">
             <MobileHero />
@@ -135,7 +135,7 @@ export default async function HomePage() {
           </div>
 
           {/* Desktop Monumental Typography Overlay (>= 768px) */}
-          <div className="hidden md:flex relative z-10 pointer-events-none pt-36 pb-28 lg:pt-40 lg:pb-32 min-h-[720px] items-center">
+          <div className="hidden md:flex relative z-10 pointer-events-none pt-20 pb-4 lg:min-h-[calc(100vh-4.5rem)] items-center">
             <div className="w-full">
               <HeroMinimal
                 company={company}
