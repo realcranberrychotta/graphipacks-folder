@@ -286,24 +286,24 @@ export const ParticleHero: React.FC<ParticleHeroProps> = ({
               <button
                 type="button"
                 onClick={handleOpenEstimator}
-                className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md bg-red hover:bg-[#d62839] text-background text-sm xs:text-base font-bold transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
+                className="btn-press group w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md border border-[#E63946] bg-[#E63946] text-[#F1FAEE] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] text-sm xs:text-base font-bold transition-[background-color,color,border-color,transform] duration-150 ease-out cursor-pointer inline-flex items-center justify-center gap-2"
               >
                 <span>{primaryButton?.text || "Get a Quote"}</span>
-                <ArrowRight className="h-4 w-4 text-background" />
+                <ArrowRight className="h-4 w-4 text-[#F1FAEE] transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" />
               </button>
 
               {/* Secondary Outline Button */}
               {secondaryButton?.href ? (
                 <Link
                   href={secondaryButton.href}
-                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md border border-steel hover:border-navy bg-transparent hover:bg-powder/20 text-ink hover:text-navy text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center transition-colors"
+                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md border border-[#1D3557] bg-transparent text-[#1D3557] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center transition-[background-color,color,border-color,transform] duration-150 ease-out"
                 >
                   {secondaryButton.text}
                 </Link>
               ) : (
                 <Link
                   href="/products"
-                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md border border-steel hover:border-navy bg-transparent hover:bg-powder/20 text-ink hover:text-navy text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center transition-colors"
+                  className="btn-press w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-md border border-[#1D3557] bg-transparent text-[#1D3557] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] text-sm xs:text-base font-semibold cursor-pointer inline-flex items-center justify-center transition-[background-color,color,border-color,transform] duration-150 ease-out"
                 >
                   {secondaryButton?.text || "View Products"}
                 </Link>

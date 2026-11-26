@@ -198,7 +198,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Section 03: Heritage Timeline 1984–2016 (Pinned Scroll Sequence) */}
+      {/* Section 03: Heritage Timeline 1984–2026 (Pinned Scroll Sequence) */}
       <TimelineScroll timeline={timeline} />
 
       {/* Section 04: Printing & Extrusion Capabilities + Client Ecosystem */}

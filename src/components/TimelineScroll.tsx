@@ -10,7 +10,10 @@ interface TimelineScrollProps {
 
 export default function TimelineScroll({ timeline }: TimelineScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [maxTranslateX, setMaxTranslateX] = useState(0);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -29,22 +32,62 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
   });
 
   useEffect(() => {
+    const updateMetrics = () => {
+      if (!trackRef.current || !viewportRef.current) return;
+      const nextMax = Math.max(
+        0,
+        trackRef.current.scrollWidth - viewportRef.current.clientWidth
+      );
+      setMaxTranslateX(nextMax);
+    };
+
+    updateMetrics();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(updateMetrics)
+        : null;
+
+    if (resizeObserver) {
+      if (viewportRef.current) resizeObserver.observe(viewportRef.current);
+      if (trackRef.current) resizeObserver.observe(trackRef.current);
+    }
+
+    window.addEventListener("resize", updateMetrics);
+    let cancelled = false;
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) updateMetrics();
+      });
+    }
+
     return () => {
+      cancelled = true;
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateMetrics);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, []);
+  }, [timeline.length]);
 
-  // Maps scroll progress across the container to horizontal translation of the cards track
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  // Maps scroll progress across the container to exact pixel horizontal travel
+  const x = useTransform(scrollYProgress, [0, 1], [0, -maxTranslateX]);
 
   return (
     <div className="relative bg-background text-ink">
       {/* ========================================================= */}
       {/* Desktop Pinned Horizontal Scroll Sequence (md and up)     */}
       {/* ========================================================= */}
-      <div ref={containerRef} className="hidden md:block relative h-[300vh]">
+      <div
+        ref={containerRef}
+        className="hidden md:block relative min-h-[320vh]"
+        style={
+          maxTranslateX > 0
+            ? { height: `calc(100vh + ${maxTranslateX}px)` }
+            : undefined
+        }
+      >
         <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
           {/* Section Heading & Progress Bar */}
           <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16 pt-12 pb-6">
@@ -54,7 +97,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                   02 / FOUR DECADES OF GROWTH
                 </span>
                 <h2 className="mt-2 text-3xl sm:text-4xl md:text-[2.75rem] font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
-                  Heritage Timeline (1984 &ndash; 2016)
+                  Heritage Timeline (1984 &ndash; 2026)
                 </h2>
                 <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
                   A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipackss.
@@ -94,10 +137,11 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
           </div>
 
           {/* Horizontal Cards Track */}
-          <div className="relative w-full overflow-hidden py-8">
+          <div ref={viewportRef} className="relative w-full overflow-hidden py-8">
             <motion.div
+              ref={trackRef}
               style={{ x, willChange: isScrolling ? "transform" : "auto" }}
-              className="flex gap-8 pl-8 sm:pl-16 lg:pl-24 pr-48 items-stretch"
+              className="flex w-max gap-8 pl-8 sm:pl-16 lg:pl-24 pr-12 lg:pr-24 items-stretch"
             >
               {timeline.map((event, idx) => (
                 <div
@@ -154,7 +198,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
             02 / FOUR DECADES OF GROWTH
           </span>
           <h2 className="text-3xl sm:text-4xl font-display font-bold leading-[1.15] tracking-[-0.015em] text-ink">
-            Heritage Timeline (1984 &ndash; 2016)
+            Heritage Timeline (1984 &ndash; 2026)
           </h2>
           <p className="mt-3 max-w-[62ch] text-[15px] md:text-base leading-[1.7] text-ink/75 font-sans">
             A historical overview of technological transitions, plant expansions, and production milestones that shaped Graphipackss.
@@ -182,7 +226,7 @@ export default function TimelineScroll({ timeline }: TimelineScrollProps) {
                         {event.year}
                       </span>
                       <span className="font-mono text-[10px] font-bold text-steel uppercase tracking-wider">
-                        Milestone 0{idx + 1}
+                        Milestone 0{idx + 1} / 0{timeline.length}
                       </span>
                     </div>
                     <h3 className="mt-4 text-xl md:text-2xl font-display font-bold leading-[1.2] tracking-[-0.01em] text-ink">

@@ -139,19 +139,19 @@ export default function HeroMinimal({ company, headline }: HeroMinimalProps) {
           <button
             type="button"
             onClick={() => openQuoteModal()}
-            className="btn-press btn-tactile group relative inline-flex items-center justify-center rounded-md bg-red px-7 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-background border border-red hover:border-[#1D3557] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+            className="btn-press btn-tactile group relative inline-flex items-center justify-center rounded-md bg-[#E63946] px-7 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#F1FAEE] border border-[#E63946] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] transition-[background-color,color,border-color,transform] duration-150 ease-out cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
             style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>Get a Quote</span>
             <ArrowRight
-              className="tactile-arrow ml-3 h-4 w-4 text-background"
+              className="tactile-arrow ml-3 h-4 w-4 text-[#F1FAEE] transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5"
               aria-hidden="true"
             />
           </button>
 
           <Link
             href="/products"
-            className="btn-press btn-tactile group inline-flex items-center justify-center rounded-md border border-steel bg-transparent px-7 py-3.5 text-xs font-mono font-medium uppercase tracking-[0.18em] text-ink hover:text-background hover:border-[#1D3557] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            className="btn-press btn-tactile group inline-flex items-center justify-center rounded-md border border-[#1D3557] bg-transparent px-7 py-3.5 text-xs font-mono font-medium uppercase tracking-[0.18em] text-[#1D3557] hover:bg-[#1D3557] hover:text-[#F1FAEE] hover:border-[#1D3557] active:bg-[#1D3557] active:text-[#F1FAEE] active:border-[#1D3557] active:scale-[0.97] transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>View Products</span>

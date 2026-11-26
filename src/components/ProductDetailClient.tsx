@@ -280,11 +280,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     type="button"
                     onClick={openModal}
-                    className="btn-press inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md bg-red hover:bg-[#d62839] px-6 py-3.5 text-sm font-bold text-background transition-colors duration-200 ease-in-out cursor-pointer"
+                    className="btn-press group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-[#E63946] bg-[#E63946] hover:bg-[#1D3557] hover:border-[#1D3557] active:bg-[#1D3557] active:border-[#1D3557] active:scale-[0.97] px-6 py-3.5 text-sm font-bold text-[#F1FAEE] hover:text-[#F1FAEE] active:text-[#F1FAEE] transition-[background-color,color,border-color,transform] duration-150 ease-out cursor-pointer"
                   >
-                    <Mail className="h-4 w-4 text-background" />
+                    <Mail className="h-4 w-4 text-[#F1FAEE]" />
                     <span>Request Quotation</span>
-                    <span aria-hidden="true">&rarr;</span>
+                    <span className="inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" aria-hidden="true">&rarr;</span>
                   </button>
 
                   {/* Secondary CTA: Download Spec Sheet (PDF) */}
@@ -587,10 +587,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <button
               type="button"
               onClick={openModal}
-              className="btn-press shrink-0 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md bg-red hover:bg-[#d62839] px-4 py-2.5 text-xs font-bold text-background transition-colors duration-200 cursor-pointer shadow-xs"
+              className="btn-press group shrink-0 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-md border border-[#E63946] bg-[#E63946] hover:bg-[#1D3557] hover:border-[#1D3557] active:bg-[#1D3557] active:border-[#1D3557] active:scale-[0.97] px-4 py-2.5 text-xs font-bold text-[#F1FAEE] hover:text-[#F1FAEE] active:text-[#F1FAEE] transition-[background-color,color,border-color,transform] duration-150 ease-out cursor-pointer shadow-xs"
             >
               <span>Get a Quote</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span className="inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" aria-hidden="true">&rarr;</span>
             </button>
           </div>
         </div>

@@ -240,6 +240,12 @@ export const timeline: TimelineEvent[] = [
     description:
       "Introduced New Products (Grow Bags, 50L/5KG Block Bags, Mulch Film), installed 3 layer & ABA Extruders with Twist Gusset.",
   },
+  {
+    year: 2026,
+    title: "Export-Scale Converting & Digital Specifications",
+    description:
+      "Serving domestic FMCG brands and international agricultural & coir export buyers across 6 core product lines—integrating multi-layer extrusion, 8-colour rotogravure, and transparent digital specification sheets.",
+  },
 ];
 
 export const clients: ClientCategory[] = [

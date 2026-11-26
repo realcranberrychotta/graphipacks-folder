@@ -83,11 +83,11 @@ export default function NavLinks() {
                 openQuoteModal();
               }
             }}
-            className="btn-press btn-tactile inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md px-4 py-1.5 text-xs font-bold transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans bg-red text-background hover:border-[#1D3557] focus-visible:outline-red shadow-sm cursor-pointer"
+            className="btn-press btn-tactile group inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md border border-[#E63946] px-4 py-1.5 text-xs font-bold transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 font-sans bg-[#E63946] text-[#F1FAEE] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] focus-visible:outline-red shadow-sm cursor-pointer"
             style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
           >
             <span>Get a Quote</span>
-            <span className="tactile-arrow ml-1" aria-hidden="true">&rarr;</span>
+            <span className="tactile-arrow ml-1 inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" aria-hidden="true">&rarr;</span>
           </Link>
         </motion.div>
       </div>
@@ -103,11 +103,11 @@ export default function NavLinks() {
               openQuoteModal();
             }
           }}
-          className="btn-press inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md bg-red hover:bg-[#d62839] px-2.5 xs:px-3 py-1.5 text-[11px] xs:text-xs font-bold text-background transition-colors duration-200 whitespace-nowrap shadow-sm cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
+          className="btn-press group inline-flex min-h-[36px] h-[36px] items-center justify-center rounded-md border border-[#E63946] bg-[#E63946] hover:bg-[#1D3557] hover:border-[#1D3557] active:bg-[#1D3557] active:border-[#1D3557] active:scale-[0.97] px-2.5 xs:px-3 py-1.5 text-[11px] xs:text-xs font-bold text-[#F1FAEE] hover:text-[#F1FAEE] active:text-[#F1FAEE] transition-[background-color,color,border-color,transform] duration-150 ease-out whitespace-nowrap shadow-sm cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
           aria-label="Get a Quote"
         >
           <span>Get a Quote</span>
-          <span className="ml-1" aria-hidden="true">&rarr;</span>
+          <span className="ml-1 inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" aria-hidden="true">&rarr;</span>
         </Link>
 
         <button
@@ -192,11 +192,11 @@ export default function NavLinks() {
                   openQuoteModal();
                 }
               }}
-              className="btn-press btn-tactile flex min-h-[44px] w-full items-center justify-center rounded-lg bg-red text-background px-4 py-2.5 text-sm font-bold transition-colors duration-200 text-center shadow-sm"
+              className="btn-press btn-tactile group flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[#E63946] bg-[#E63946] text-[#F1FAEE] hover:bg-[#1D3557] hover:border-[#1D3557] hover:text-[#F1FAEE] active:bg-[#1D3557] active:border-[#1D3557] active:text-[#F1FAEE] active:scale-[0.97] px-4 py-2.5 text-sm font-bold transition-[background-color,color,border-color,transform] duration-150 ease-out text-center shadow-sm"
               style={{ "--btn-wipe-color": "#1D3557" } as React.CSSProperties}
             >
               <span>Get a Quote</span>
-              <span className="tactile-arrow ml-1.5" aria-hidden="true">&rarr;</span>
+              <span className="tactile-arrow ml-1.5 inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-active:translate-x-0.5" aria-hidden="true">&rarr;</span>
             </Link>
           </div>
         </motion.div>
